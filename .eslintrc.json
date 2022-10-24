@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "standard-with-typescript",
+    // "plugin:prettier/recommended",
+    "prettier"
+    // "prettier/react"
+  ],
+  "overrides": [],
+  "parser": "@typescript-eslint/parser", // добавил сам
+  "parserOptions": {
+    "project": ["./tsconfig.json"], // добавил сам
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint", // добавил сам
+    "prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "require-jsdoc": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "semi": 0,
+    "@typescript-eslint/semi": "off"
+  }
+}

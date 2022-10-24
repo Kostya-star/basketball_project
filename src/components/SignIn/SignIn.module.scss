@@ -1,0 +1,59 @@
+.signIn {
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    // align-content: center;
+    justify-content: center;
+    // overflow: auto;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    // top: 0;
+    left: 0;
+  }
+
+  &__form {
+    width: 366px;
+    text-align: left;
+    padding-right: 120px;
+    &__heading {
+      font-family: 'AvenirBook', sans-serif;
+      font-size: 36px;
+      font-weight: normal;
+      margin-bottom: 32px;
+    }
+
+    &__label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    &__input {
+      width: 100%;
+      height: 40px;
+      border: none;
+      background-color: #F6F6F6;
+      border-radius: 4px;
+    }
+
+    &__submit {
+      background-color: #E4163A;
+      width: 100%;
+      padding: 8px;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      margin: 24px 0;
+      cursor: pointer;
+    }
+    &__span {
+      display: block;
+      text-align: center;
+    }
+    &__signInLink {
+      color: #E4163A;
+    }
+  }
+
+}

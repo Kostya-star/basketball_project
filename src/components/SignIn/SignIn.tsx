@@ -5,30 +5,34 @@ import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { SignInPassword } from './SignInPassword/SignInPassword';
 
 export const SignIn: React.FC = () => {
+  const [login, setLogin] = React.useState('');
+  const [loginDirty, setLoginDirty] = React.useState(false);
+  const [loginError, setLoginError] = React.useState("Can't be empty!");
 
-  const [loginInput, setLoginInput] = React.useState('');
-  const [loginInputDirty, setLoginInputDirty] = React.useState(false);
-  const [loginInputError, setLoginInputError] = React.useState("Can't be empty!");
-  const [submitBtnEnabled, setSubmitBtnEnabled] = React.useState(false)
+  const [password, setPassword] = React.useState('');
+  const [passwordDirty, setPasswordDirty] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState("Can't be empty!");
+
+  const [submitBtnEnabled, setSubmitBtnEnabled] = React.useState(false);
 
   React.useEffect(() => {
-    if  (loginInputError) setSubmitBtnEnabled(false)
-    else setSubmitBtnEnabled(true)
-  }, [loginInputError])
+    if (loginError || passwordError) setSubmitBtnEnabled(false);
+    else setSubmitBtnEnabled(true);
+  }, [loginError, passwordError]);
 
-  const onInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginInput(e.target.value);
+  const onLoginHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setLogin(e.target.value);
     const loginRegex = /^[a-zA-Z0-9]+$/;
     if (!loginRegex.test(String(e.target.value).toLowerCase())) {
-      setLoginInputError('incorrect login');
-      if (e.target.value.length === 0) {
-        setLoginInputError("Can't be empty!");
+      setLoginError('incorrect login');
+      if (!e.target.value) {
+        setLoginError("Can't be empty!");
       }
-    } else setLoginInputError('');
+    } else setLoginError('');
   };
 
   const onBlurHandler = () => {
-    setLoginInputDirty(true);
+    setLoginDirty(true);
   };
 
   return (
@@ -38,23 +42,35 @@ export const SignIn: React.FC = () => {
           <h1 className={s.signIn__form__heading}>Sign In</h1>
           <label className={s.signIn__form__label} htmlFor="username">
             Login
-            {loginInputDirty && loginInputError !== null && (
-              <div style={{ color: 'red' }}>{loginInputError}</div>
+            {loginDirty && loginError && (
+              <div style={{ color: 'red' }}>{loginError}</div>
             )}
             <input
               className={s.signIn__form__input}
               id="username"
               type="text"
-              value={loginInput}
-              onChange={(e) => onInputHandler(e)}
+              value={login}
+              onChange={(e) => onLoginHandler(e)}
               onBlur={onBlurHandler}
             />
           </label>
 
-          <SignInPassword />
+          <SignInPassword
+            password={password}
+            setPassword={password => setPassword(password)}
+            passwordDirty={passwordDirty}
+            setPasswordDirty={password => setPasswordDirty(password)}
+            passwordError={passwordError}
+            setPasswordError={error => setPasswordError(error)}
+          />
 
           <p>
-            <input disabled={!submitBtnEnabled} className={s.signIn__form__submit} type="submit" value="Sign In"></input>
+            <input
+              disabled={!submitBtnEnabled}
+              className={s.signIn__form__submit}
+              type="submit"
+              value="Sign In"
+            ></input>
           </p>
           <p>
             <span className={s.signIn__form__span}>

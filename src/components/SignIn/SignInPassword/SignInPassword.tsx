@@ -1,11 +1,49 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import s from './SignInPassword.module.scss';
 
-export const SignInPassword = () => {
+interface SignInPasswordPropsType {
+  password: string;
+  setPassword: (password: string) => void;
+  passwordDirty: boolean;
+  setPasswordDirty: (password: boolean) => void;
+  passwordError: string;
+  setPasswordError: (error: string) => void;
+}
+
+export const SignInPassword: React.FC<SignInPasswordPropsType> = ({
+  password,
+  setPassword,
+  passwordDirty,
+  setPasswordDirty,
+  passwordError,
+  setPasswordError,
+}) => {
+  const onPasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    if (e.target.value.length < 3 || e.target.value.length > 8) {
+      setPasswordError('password must be more than 3 and less than 8');
+      if (!e.target.value) {
+        setPasswordError("Can't be empty!");
+      }
+    } else setPasswordError('');
+  };
+
+  const onBlurHandler = () => {
+    setPasswordDirty(true);
+  };
+
   return (
     <label className={`${s.signIn__form__label} ${s.inputContainer}`} htmlFor="username">
       Password
-      <input className={s.secondInput} id="username" type="text" />
+      {passwordDirty && passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
+      <input
+        className={s.secondInput}
+        id="username"
+        type="text"
+        value={password}
+        onChange={(e) => onPasswordHandler(e)}
+        onBlur={onBlurHandler}
+      />
       <svg
         className={s.eyePasswordSvg}
         width="20px"

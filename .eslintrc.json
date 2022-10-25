@@ -28,11 +28,15 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/no-unused-vars" : "off",  
     "@typescript-eslint/explicit-function-return-type": "off",
     "require-jsdoc": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/ban-types": "off",
     "semi": 0,
-    "@typescript-eslint/semi": "off"
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off"
+    // "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }

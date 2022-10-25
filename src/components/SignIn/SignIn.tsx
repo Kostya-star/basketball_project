@@ -3,6 +3,7 @@ import s from './SignIn.module.scss';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 // import eyePasswordSvg from '../../assets/img/imgSignIn/close_eye.svg';
 import { SignInPassword } from './SignInPassword/SignInPassword';
+import { Link } from 'react-router-dom';
 
 export const SignIn: React.FC = () => {
   const [login, setLogin] = React.useState('');
@@ -36,15 +37,12 @@ export const SignIn: React.FC = () => {
   };
 
   return (
-    <div className={s.signIn__wrapper}>
+      <div className={s.signIn__wrapper}>
       <div className={s.signIn__form}>
         <form action="">
           <h1 className={s.signIn__form__heading}>Sign In</h1>
           <label className={s.signIn__form__label} htmlFor="username">
-            Login
-            {loginDirty && loginError && (
-              <div style={{ color: 'red' }}>{loginError}</div>
-            )}
+            <span>Login</span> 
             <input
               className={s.signIn__form__input}
               id="username"
@@ -52,16 +50,17 @@ export const SignIn: React.FC = () => {
               value={login}
               onChange={(e) => onLoginHandler(e)}
               onBlur={onBlurHandler}
-            />
+              />
+              {loginDirty && loginError && <div style={{ color: 'red' }}>{loginError}</div>}
           </label>
 
           <SignInPassword
             password={password}
-            setPassword={password => setPassword(password)}
+            setPassword={(password) => setPassword(password)}
             passwordDirty={passwordDirty}
-            setPasswordDirty={password => setPasswordDirty(password)}
+            setPasswordDirty={(password) => setPasswordDirty(password)}
             passwordError={passwordError}
-            setPasswordError={error => setPasswordError(error)}
+            setPasswordError={(error) => setPasswordError(error)}
           />
 
           <p>
@@ -73,18 +72,20 @@ export const SignIn: React.FC = () => {
             ></input>
           </p>
           <p>
-            <span className={s.signIn__form__span}>
-              Not a member yet?
-              <a className={s.signIn__form__signInLink} href="#">
+            <p className={s.signIn__form__link}>
+              Not a member yet? &nbsp;
+              <Link to='/SignUp' >
                 Sign up
-              </a>
-            </span>
+              </Link>
+            </p>
           </p>
         </form>
       </div>
 
-      <div>
-        <img className={s.signIn__img} src={signInImg} alt={s.signIn__basketballimg} />
+      <div className={s.signIn__img__block}>
+        <p>
+          <img src={signInImg} alt={s.signIn__basketballimg} />
+        </p>
       </div>
     </div>
   );

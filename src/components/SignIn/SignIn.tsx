@@ -5,6 +5,8 @@ import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { SignInPassword } from './SignInPassword/SignInPassword';
 import { Link } from 'react-router-dom';
 
+
+
 export const SignIn: React.FC = () => {
   const [login, setLogin] = React.useState('');
   const [loginDirty, setLoginDirty] = React.useState(false);
@@ -35,6 +37,8 @@ export const SignIn: React.FC = () => {
   const onBlurHandler = () => {
     setLoginDirty(true);
   };
+
+
 
   return (
       <div className={s.signIn__wrapper}>

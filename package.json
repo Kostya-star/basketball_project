@@ -11,6 +11,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/sass": "^1.43.1",
+    "@types/yup": "^0.29.8",
     "classnames": "^2.3.2",
     "csstype": "^3.1.1",
     "react": "^18.2.0",
@@ -65,7 +66,8 @@
     "formik": "^2.2.9",
     "prettier": "^2.7.1",
     "sass": "^1.55.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "yup": "^0.32.11"
   },
   "author": "",
   "license": "ISC"

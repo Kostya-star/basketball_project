@@ -15,14 +15,12 @@ export const CheckboxInput: React.FC<CheckboxInputPropsType> = ({ children, ...p
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
   return (
-    <>
-      <p>
+      <div>
         <input {...field} {...props} />
         <label className={s.form__agreement} htmlFor="">
           {children}
         </label>
         {meta.touched && meta.error && <div className={s.form__error}>{meta.error}</div>}
-      </p>
-    </>
+      </div>
   );
 };

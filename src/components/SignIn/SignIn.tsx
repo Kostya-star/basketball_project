@@ -1,15 +1,21 @@
 import React, { ChangeEvent } from 'react';
 import s from './SignIn.module.scss';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { SubmitButton } from '../FormComponents/SubmitButton';
 import * as Yup from 'yup';
 import { TextInput } from '../FormComponents/TextInput';
+import axios, {AxiosError} from 'axios'
 
 interface SignInFormikValuesType {
   login: string;
   password: string;
+}
+
+interface SignInAxiosPostType {
+  login: string
+  password: string
 }
 
 export const SignIn: React.FC = () => {
@@ -36,11 +42,19 @@ export const SignIn: React.FC = () => {
                 'Password must contain at least one number and one special char'
               ),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+          onSubmit={ async (values, { setSubmitting }) => {
+            const {...data} = values
+            const response = await axios.
+            post<SignInAxiosPostType>('http://dev.trainee.dex-it.ru/api/Auth/SignIn  ',  data)
+            .catch((err: AxiosError) => {
+              if (err) console.log('Error: ', err);
+              if (err.response?.status === '401') return <Navigate to='/SignUp'/>
+              // @ts-expect-error
+              if (response?.status === '200') {
+                console.log(response);
+                alert('You signedin successfully')
+              }
+            })
           }}
         >
           <Form>

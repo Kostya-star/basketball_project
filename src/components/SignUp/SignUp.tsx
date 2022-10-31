@@ -1,21 +1,23 @@
 import React from 'react';
 import s from './SignUp.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput } from '../FormComponents/TextInput';
 import { CheckboxInput } from '../FormComponents/CheckboxInput';
 import { SubmitButton } from './../FormComponents/SubmitButton';
+import axios from 'axios';
 
 interface SignUpFormikValuesType {
-  name: string;
+  userName: string;
   login: string;
   password: string;
   confirmPassword: string;
   checkbox: boolean;
 }
 export const SignUp = () => {
+  const navigate = useNavigate()
   return (
     <div className={s.signUp__wrapper}>
       <div className={s.form}>
@@ -24,7 +26,7 @@ export const SignUp = () => {
         <Formik
           initialValues={
             {
-              name: '',
+              userName: '',
               login: '',
               password: '',
               confirmPassword: '',
@@ -32,7 +34,7 @@ export const SignUp = () => {
             } as SignUpFormikValuesType
           }
           validationSchema={Yup.object({
-            name: Yup.string()
+            userName: Yup.string()
               .required('This field is required')
               .max(15, 'Must be 15 characters or less')
               .matches(/[a-zA-Z]/, 'Name can only contain Latin letters'),
@@ -52,14 +54,24 @@ export const SignUp = () => {
             checkbox: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+            const {...data} = values
+            axios.
+              post('http://dev.trainee.dex-it.ru/api/Auth/SignUp', data)
+              .then((response) => {
+                if (response.status === 200 || response.statusText === 'OK') {
+                  alert(`Thank you for your registration, ${response.data.name}!`)
+                  navigate('/')
+                }
+              })
+              .catch((error) => {
+                if (error.response.status === 409 || error.response.statusText === 'Conflict') {
+                  alert(`Login: '${JSON.parse(error.config.data).login}' already exists`)
+                }
+              })
           }}
         >
           <Form>
-            <TextInput label="Name" name="name" type="text" />
+            <TextInput label="Name" name="userName" type="text" />
             <TextInput label="Login" name="login" type="text" />
             <TextInput label="Password" name="password" type="text" />
             <TextInput label="Confirm password" name="confirmPassword" type="text" />

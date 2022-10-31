@@ -5,7 +5,7 @@ export const SubmitButton = () => {
   return (
     <>
       <button className={s.form__submitBtn} type="submit">
-        Sign Up
+        Sign In
       </button>
     </>
   );

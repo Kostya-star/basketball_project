@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import { SubmitButton } from '../FormComponents/SubmitButton';
 import * as Yup from 'yup';
 import { TextInput } from '../FormComponents/TextInput';
-import axios, {AxiosError} from 'axios'
+import axios, { AxiosError } from 'axios';
 
 interface SignInFormikValuesType {
   login: string;
@@ -14,12 +14,14 @@ interface SignInFormikValuesType {
 }
 
 interface SignInAxiosPostType {
-  login: string
-  password: string
+  login: string;
+  password: string;
 }
 
 export const SignIn: React.FC = () => {
-  const navigate = useNavigate()
+  const useContext = React.useContext(PasswordContext)
+  const navigate = useNavigate();
+  const baseUrl = 'http://dev.trainee.dex-it.ru/api/Auth';
 
   return (
     <div className={s.signIn__wrapper}>
@@ -44,24 +46,28 @@ export const SignIn: React.FC = () => {
                 'Password must contain at least one number and one special char'
               ),
           })}
-          onSubmit={ (values, { setSubmitting }) => {
-            const {...signInData} = values 
-            axios.
-              post('http://dev.trainee.dex-it.ru/api/Auth/SignIn ', signInData)
+          onSubmit={(values, { setSubmitting }) => {
+            const { ...signInData } = values;
+            axios
+              .post(`${baseUrl}/SignIn`, signInData)
               .then((response) => console.log('RESPONSE', response))
               .catch((error) => {
                 if (error.response.status === 401) {
-                  alert('You need to sign up first!')
-                  return navigate('/SignUp')
+                  alert('You need to sign up first!');
+                  return navigate('/SignUp');
                 }
-              })
+              });
           }}
+          validateOnMount
         >
-          <Form>
-            <TextInput label="Login" name="login" type="text" />
-            <TextInput label="Password" name="password" type="text" />
-            <SubmitButton />
-          </Form>
+          {(formik) => {
+            return (<Form>
+              <TextInput label="Login" name="login" type="text" />
+              <TextInput label="Password" name="password" type={!isPasswordVisible ? 'password': 'text'} setPasswordType={() => setIsPasswordVisible(isPasswordVisible)} />
+              <SubmitButton disabled={!formik.isValid} value="Sign In" name="button" />
+            </Form>
+)
+          }}
         </Formik>
         <p className={s.signIn__form__link}>
           Not a member yet?
@@ -77,4 +83,3 @@ export const SignIn: React.FC = () => {
     </div>
   );
 };
-

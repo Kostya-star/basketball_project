@@ -17,7 +17,9 @@ interface SignUpFormikValuesType {
   checkbox: boolean;
 }
 export const SignUp = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const baseUrl = 'http://dev.trainee.dex-it.ru/api/Auth';
+
   return (
     <div className={s.signUp__wrapper}>
       <div className={s.form}>
@@ -54,34 +56,39 @@ export const SignUp = () => {
             checkbox: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            const {...data} = values
-            axios.
-              post('http://dev.trainee.dex-it.ru/api/Auth/SignUp', data)
+            const { ...data } = values;
+            axios
+              .post(`${baseUrl}/SignUp`, data)
               .then((response) => {
                 if (response.status === 200 || response.statusText === 'OK') {
-                  alert(`Thank you for your registration, ${response.data.name}!`)
-                  navigate('/')
+                  alert(`Thank you for your registration, ${response.data.name}!`);
+                  navigate('/');
                 }
               })
               .catch((error) => {
                 if (error.response.status === 409 || error.response.statusText === 'Conflict') {
-                  alert(`Login: '${JSON.parse(error.config.data).login}' already exists`)
+                  alert(`Login: '${JSON.parse(error.config.data).login}' already exists`);
                 }
-              })
+              });
           }}
+          validateOnMount
         >
-          <Form>
-            <TextInput label="Name" name="userName" type="text" />
-            <TextInput label="Login" name="login" type="text" />
-            <TextInput label="Password" name="password" type="text" />
-            <TextInput label="Confirm password" name="confirmPassword" type="text" />
+          {(formik) => {
+            return (
+              <Form>
+              {/* <TextInput label="Name" name="userName" type="text" /> */}
+              {/* <TextInput label="Login" name="login" type="text" /> */}
+              {/* <TextInput label="Password" name="password" type="password" /> */}
+              {/* <TextInput label="Confirm password" name="confirmPassword" type="password" /> */}
 
-            <CheckboxInput name="checkbox" type="checkbox">
-              I accept the agreement
-            </CheckboxInput>
+              <CheckboxInput name="checkbox" type="checkbox">
+                I accept the agreement
+              </CheckboxInput>
 
-            <SubmitButton />
-          </Form>
+              <SubmitButton disabled={!formik.isValid} value="Sign Up" name="button" />
+            </Form>
+            )
+          }}
         </Formik>
 
         <div className={s.form__link}>

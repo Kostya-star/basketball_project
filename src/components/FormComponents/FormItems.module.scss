@@ -19,12 +19,12 @@
     border: none;
     border-radius: 4px;
   }
-  
+
   &__agreement {
     font-size: 14px;
     margin-bottom: 8px;
   }
-  
+
   &__submitBtn {
     width: 366px;
     height: 40px;
@@ -36,8 +36,14 @@
     margin-bottom: 20px;
     margin-top: 8px;
     cursor: pointer;
+
+    &__disabled {
+      background-color: #cccccc;
+      color: #666666;
+      cursor: auto;
+    }
   }
-  
+
   &__error {
     display: block;
     font-size: 12px;
@@ -48,9 +54,24 @@
 .inputBlock {
   position: relative;
 }
-.input__svg {
-  position: absolute;
-  top: 11px;  
-  bottom: 0;
-  right: 10px;
+
+.password {
+  &__eye {
+    &__closed {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 12px;
+      right: 10px;
+    }
+
+    &__opened {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 12px;
+      right: 10px;
+    }
+
+  }
 }

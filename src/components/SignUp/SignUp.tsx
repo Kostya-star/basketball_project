@@ -4,10 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput } from '../FormComponents/TextInput';
+import { InputText } from '../FormComponents/InputText';
 import { CheckboxInput } from '../FormComponents/CheckboxInput';
-import { SubmitButton } from './../FormComponents/SubmitButton';
+import { SubmitButton } from '../FormComponents/SubmitButton';
 import axios from 'axios';
+import { InputPassword } from './../FormComponents/InputPassword';
 
 interface SignUpFormikValuesType {
   userName: string;
@@ -76,16 +77,16 @@ export const SignUp = () => {
           {(formik) => {
             return (
               <Form>
-                {/* <TextInput label="Name" name="userName" type="text" /> */}
-                {/* <TextInput label="Login" name="login" type="text" /> */}
-                {/* <TextInput label="Password" name="password" type="password" /> */}
-                {/* <TextInput label="Confirm password" name="confirmPassword" type="password" /> */}
+                <InputText label="Name" name="userName" type="text" />
+                <InputText label="Login" name="login" type="text" />
+                <InputPassword label="Password" name="password" type="password" />
+                <InputPassword label="Confirm password" name="confirmPassword" type="password" />
 
                 <CheckboxInput name="checkbox" type="checkbox">
                   I accept the agreement
                 </CheckboxInput>
 
-                <SubmitButton disabled={!formik.isValid} value="Sign Up" name="button" />
+                <SubmitButton isDisabled={!formik.isValid} value="Sign Up" name="button" />
               </Form>
             );
           }}

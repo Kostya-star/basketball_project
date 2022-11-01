@@ -7,14 +7,14 @@ import s from './FormItems.module.scss'
 interface SubmitButtonPropsType {
   value: string
   name: string
-  disabled: boolean
+  isDisabled?: boolean
 }
-export const SubmitButton: React.FC<SubmitButtonPropsType> = ({disabled, value}) => {
+export const SubmitButton: React.FC<SubmitButtonPropsType> = ({isDisabled, value}) => {
   
   return (
     <>
-      <input disabled={disabled} className={classnames(s.form__submitBtn,{
-        [s.form__submitBtn__disabled]: disabled,
+      <input disabled={isDisabled} className={classnames(s.form__submitBtn,{
+        [s.form__submitBtn__disabled]: isDisabled,
       })} value={value}  type="submit"/>
     </>
   );

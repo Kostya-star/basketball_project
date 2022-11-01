@@ -13,23 +13,17 @@ interface InputCheckboxPropsType {
 }
 
 export const InputCheckbox: React.FC<InputCheckboxPropsType> = ({ label, ...props }) => {
-  const [isChecked, setIsChecked] = React.useState(false);
   const [field, meta] = useField({ ...props, type: 'checkbox' });
   console.log(meta.error);
-  console.log(isChecked);
 
 
   return (
     <div className={s.form__group}>
       <label className={s.checkbox__label} htmlFor={props.name || props.id}>
         <input
-          className={classNames(s.checkbox__input, {
-            [s.checkbox__input_checked]: isChecked
-          }) }
+          className={s.checkbox__input}
           {...field}
-          onChange={() => setIsChecked((isChecked) => !isChecked)}
           {...props}
-          checked={isChecked}
         />
         <span> {label}</span>
       </label>

@@ -10,6 +10,7 @@ interface SubmitButtonPropsType {
   isDisabled?: boolean
 }
 export const SubmitButton: React.FC<SubmitButtonPropsType> = ({isDisabled, value}) => {
+  // console.log(isDisabled);
   
   return (
     <>

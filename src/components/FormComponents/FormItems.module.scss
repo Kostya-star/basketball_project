@@ -18,11 +18,18 @@
     background-color: #F6F6F6;
     border: none;
     border-radius: 4px;
-  }
+    transition: 0.2s background-color;
 
-  &__agreement {
-    font-size: 14px;
-    margin-bottom: 8px;
+    &:hover {
+      background-color: #D1D1D1;
+      border: none
+    }
+
+    &:focus {
+      background: #F6F6F6;
+      box-shadow: 0px 0px 5px #D9D9D9;
+      border: none;
+    }
   }
 
   &__submitBtn {
@@ -50,6 +57,74 @@
     color: #FF768E;
   }
 }
+
+// .checkbox {
+//   &__label {
+//     font-size: 14px;
+//     margin-bottom: 8px;
+
+//   }
+
+  // &__input {
+  //   // appearance: none;
+  //   width: 13px;
+  //   height: 13px;
+  //   border-radius: 2px;
+  //   margin: 0;
+  //   margin-right: 5px;
+  //   border: 1px solid #9b8e8e;
+  //   outline: none;
+  //   cursor: pointer;
+
+  //   &:hover {
+  //     border: 1px solid #E4163A;
+  //   }
+
+  //   &_checked {
+  //     background-color: #E4163A;
+  //     position: relative;
+
+  //     &::before {
+  //       content: '\2713';
+  //       font-size: 13px;
+  //       font-weight: bold;
+  //       color: white;
+  //       position: absolute;
+  //       right: 1px;
+  //       top: -5px;
+  //     }
+  //   }
+  // }
+// }
+
+// span input[type='checkbox']:checked+label {
+//   background-color: red;
+// }
+
+// .checkbox__input+label {
+//   &::before {
+//     content: '';
+//     display: inline-block;
+//     width: 11px;
+//     height: 11px;
+//     flex-shrink: 0;
+//     flex-grow: 0;
+//     border: 1px solid #E4163A;
+//     margin-right: 8px;
+//     background: no-repeat center ;
+//     background-size: 50% 50%;
+//   }
+// }
+// .checkbox__input+label:checked::before {
+//   border-color: #0b76ef;
+//   background-color: #0b76ef;
+//   // background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+// }
+
+// input[type='checkbox']+label:hover {
+//   border: 1px solid #E4163A;
+// }
+
 
 .inputBlock {
   position: relative;

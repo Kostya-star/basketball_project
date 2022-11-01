@@ -5,17 +5,18 @@ import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { InputText } from '../FormComponents/InputText';
-import { CheckboxInput } from '../FormComponents/CheckboxInput';
+import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { SubmitButton } from '../FormComponents/SubmitButton';
 import axios from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
+
 
 interface SignUpFormikValuesType {
   userName: string;
   login: string;
   password: string;
   confirmPassword: string;
-  checkbox: boolean;
+  check: boolean;
 }
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export const SignUp = () => {
               login: '',
               password: '',
               confirmPassword: '',
-              checkbox: false,
+              check: false,
             } as SignUpFormikValuesType
           }
           validationSchema={Yup.object({
@@ -54,7 +55,7 @@ export const SignUp = () => {
             confirmPassword: Yup.string()
               .required('This field is required')
               .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-            checkbox: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
+            check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
             const { ...data } = values;
@@ -82,9 +83,7 @@ export const SignUp = () => {
                 <InputPassword label="Password" name="password" type="password" />
                 <InputPassword label="Confirm password" name="confirmPassword" type="password" />
 
-                <CheckboxInput name="checkbox" type="checkbox">
-                  I accept the agreement
-                </CheckboxInput>
+                <InputCheckbox name="check" id='check' type="checkbox" label='I accept the agreement' />
 
                 <SubmitButton isDisabled={!formik.isValid} value="Sign Up" name="button" />
               </Form>

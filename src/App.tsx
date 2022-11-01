@@ -4,23 +4,15 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { SignIn } from './components/SignIn/SignIn';
 import './scss/all.scss';
 import { SignUp } from './components/SignUp/SignUp';
-
-export const PasswordContext = React.createContext();
+// import { Auth } from './components/Auth/Auth';
 
 const App: React.FC = () => {
-  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
-
   return (
     <div className="container">
-      <BrowserRouter>
-        <Routes>
-          <PasswordContext.Provider value={{ isPasswordVisible, setIsPasswordVisible }}>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/SignUp" element={<SignUp />} />
-          </PasswordContext.Provider>
-
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
+      </Routes>
     </div>
   );
 };

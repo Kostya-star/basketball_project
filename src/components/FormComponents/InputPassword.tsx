@@ -1,33 +1,41 @@
 import React from 'react';
 import { useField, Field } from 'formik';
 import s from './FormItems.module.scss';
-import classnames  from 'classnames';
 import { SvgGenerator } from './SvgGenerator';
 
-interface TextInputPropsType {
+interface InputPasswordtPropsType {
   label: string;
   name: string;
   id?: string;
   type: string;
   onChange?: () => void;
   onBlur?: () => void;
-  setPasswordType: (isVisible: boolean) => void
 }
 
-export const TextInput: React.FC<TextInputPropsType> = ({ label, ...props }) => {
+export const InputPassword: React.FC<InputPasswordtPropsType> = ({ label, ...props }) => {
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
   const [field, meta] = useField(props);
-  console.log(props);
-  
+
+  const onTogglePasswordSVG = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   return (
     <div className={s.form__group}>
       <label className={s.form__label} htmlFor={props.name || props.id}>
         {label}
       </label>
       <div className={s.inputBlock}>
-        <input className={s.form__input} type={props.type} {...field}  />
-        {(props.name === 'password' || props.name === 'confirmPassword') && (
-          <SvgGenerator id='closed-eye' onClick={(isVisible: boolean) => props.setPasswordType(!isVisible)}/>
-        )}
+        <input
+          className={s.form__input}
+          type={!isPasswordVisible ? 'password' : 'text'}
+          {...field}
+        />
+          <SvgGenerator
+            id={!isPasswordVisible ? 'closed-eye' : 'opened-eye'}
+            setPasswordType={onTogglePasswordSVG}
+          />
       </div>
       {meta.touched && meta.error && <span className={s.form__error}>{meta.error}</span>}
     </div>

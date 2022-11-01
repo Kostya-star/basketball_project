@@ -5,8 +5,9 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { SubmitButton } from '../FormComponents/SubmitButton';
 import * as Yup from 'yup';
-import { TextInput } from '../FormComponents/TextInput';
 import axios, { AxiosError } from 'axios';
+import { InputPassword } from './../FormComponents/InputPassword';
+import { InputText } from './../FormComponents/InputText';
 
 interface SignInFormikValuesType {
   login: string;
@@ -19,7 +20,6 @@ interface SignInAxiosPostType {
 }
 
 export const SignIn: React.FC = () => {
-  const useContext = React.useContext(PasswordContext)
   const navigate = useNavigate();
   const baseUrl = 'http://dev.trainee.dex-it.ru/api/Auth';
 
@@ -61,12 +61,13 @@ export const SignIn: React.FC = () => {
           validateOnMount
         >
           {(formik) => {
-            return (<Form>
-              <TextInput label="Login" name="login" type="text" />
-              <TextInput label="Password" name="password" type={!isPasswordVisible ? 'password': 'text'} setPasswordType={() => setIsPasswordVisible(isPasswordVisible)} />
-              <SubmitButton disabled={!formik.isValid} value="Sign In" name="button" />
-            </Form>
-)
+            return (
+              <Form>
+                <InputText label="Login" name="login" type="text" />
+                <InputPassword label="Password" name="password" type='password' />
+                <SubmitButton isDisabled={!formik.isValid} value="Sign In" name="button" />
+              </Form>
+            );
           }}
         </Formik>
         <p className={s.signIn__form__link}>

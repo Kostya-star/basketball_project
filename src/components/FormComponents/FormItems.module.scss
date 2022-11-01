@@ -63,14 +63,18 @@
       height: 18px;
       top: 12px;
       right: 10px;
+      cursor: pointer;
+      user-select: none;
     }
 
     &__opened {
       position: absolute;
-      width: 18px;
-      height: 18px;
-      top: 12px;
-      right: 10px;
+      width: 16px;
+      height: 16px;
+      top: 13px;
+      right: 11px;
+      cursor: pointer;
+      user-select: none;
     }
 
   }

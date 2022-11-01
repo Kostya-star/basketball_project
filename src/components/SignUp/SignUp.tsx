@@ -76,18 +76,18 @@ export const SignUp = () => {
           {(formik) => {
             return (
               <Form>
-              {/* <TextInput label="Name" name="userName" type="text" /> */}
-              {/* <TextInput label="Login" name="login" type="text" /> */}
-              {/* <TextInput label="Password" name="password" type="password" /> */}
-              {/* <TextInput label="Confirm password" name="confirmPassword" type="password" /> */}
+                {/* <TextInput label="Name" name="userName" type="text" /> */}
+                {/* <TextInput label="Login" name="login" type="text" /> */}
+                {/* <TextInput label="Password" name="password" type="password" /> */}
+                {/* <TextInput label="Confirm password" name="confirmPassword" type="password" /> */}
 
-              <CheckboxInput name="checkbox" type="checkbox">
-                I accept the agreement
-              </CheckboxInput>
+                <CheckboxInput name="checkbox" type="checkbox">
+                  I accept the agreement
+                </CheckboxInput>
 
-              <SubmitButton disabled={!formik.isValid} value="Sign Up" name="button" />
-            </Form>
-            )
+                <SubmitButton disabled={!formik.isValid} value="Sign Up" name="button" />
+              </Form>
+            );
           }}
         </Formik>
 

@@ -19,7 +19,7 @@ interface SignInAxiosPostType {
 }
 
 export const SignIn: React.FC = () => {
-  const useContext = React.useContext(PasswordContext)
+  const useContext = React.useContext(PasswordContext);
   const navigate = useNavigate();
   const baseUrl = 'http://dev.trainee.dex-it.ru/api/Auth';
 
@@ -61,12 +61,18 @@ export const SignIn: React.FC = () => {
           validateOnMount
         >
           {(formik) => {
-            return (<Form>
-              <TextInput label="Login" name="login" type="text" />
-              <TextInput label="Password" name="password" type={!isPasswordVisible ? 'password': 'text'} setPasswordType={() => setIsPasswordVisible(isPasswordVisible)} />
-              <SubmitButton disabled={!formik.isValid} value="Sign In" name="button" />
-            </Form>
-)
+            return (
+              <Form>
+                <TextInput label="Login" name="login" type="text" />
+                <TextInput
+                  label="Password"
+                  name="password"
+                  type={!isPasswordVisible ? 'password' : 'text'}
+                  setPasswordType={() => setIsPasswordVisible(isPasswordVisible)}
+                />
+                <SubmitButton disabled={!formik.isValid} value="Sign In" name="button" />
+              </Form>
+            );
           }}
         </Formik>
         <p className={s.signIn__form__link}>

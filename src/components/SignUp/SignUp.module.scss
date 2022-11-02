@@ -1,16 +1,40 @@
 .signUp {
   &__wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
-    position: fixed;
+    top: 0;
+    bottom: 0;
+    // position: fixed;
+    // display: inline-block;
   }
+  &__mainImg {
+    position: relative;
+    width: 55%;
+    height: 100%;
+    &_bg {
+      text-align: center;
+      height: 100%;
+      &::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F5FBFF;
+        z-index: -1;
+      }
+  
+    }
+    }
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  width: 366px;
   margin-right: 234px;
 
   &__heading {

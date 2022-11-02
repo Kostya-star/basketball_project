@@ -1,4 +1,5 @@
-.signUp {
+// SignIn & SignUp
+.auth {
   &__wrapper {
     display: flex;
     justify-content: center;
@@ -6,7 +7,6 @@
     height: 100%;
     width: 100%;
     position: fixed;
-    // display: inline-block;
   }
 
   &__mainImg {
@@ -16,6 +16,7 @@
     position: relative;
     height: 100%;
     width: 50%;
+
     &_bg {
       &::before {
         content: "";
@@ -33,16 +34,16 @@
 }
 
 .form {
+  display: flex;
+  flex-direction: column;
+  width: 366px;
+  margin-right: 120px;
+
   &__wrapper {
     display: flex;
     justify-content: end;
     width: 50%;
   }
-  display: flex;
-  flex-direction: column;
-  width: 366px;
-  margin-right: 120px;
-  
 
   &__heading {
     font-weight: normal;

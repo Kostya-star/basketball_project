@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import s from './SignIn.module.scss';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
@@ -8,8 +7,9 @@ import * as Yup from 'yup';
 import axios, { AxiosError } from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
 import { InputText } from './../FormComponents/InputText';
+import './../../scss/auth-common.scss'
 
-interface SignInFormikValuesType {
+interface SignInFormikValues {
   login: string;
   password: string;
 }
@@ -23,41 +23,46 @@ export const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const baseUrl = 'http://dev.trainee.dex-it.ru/api/Auth';
 
+  const initialValues = {
+    login: '',
+    password: '',
+  } as SignInFormikValues;
+
+  const validationSchema = Yup.object({
+    login: Yup.string()
+      .required('This field is required')
+      .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
+    password: Yup.string()
+      .required('This field is required')
+      .min(6, 'The password must be at least 6 chars')
+      .matches(
+        /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+        'Password must contain at least one number and one special char'
+      ),
+  });
+
+  const onSubmit = (values: SignInFormikValues) => {
+    const { ...signInData } = values;
+    axios
+      .post(`${baseUrl}/SignIn`, signInData)
+      .then((response) => console.log('RESPONSE', response))
+      .catch((error) => {
+        if (error.response.status === 401) {
+          alert('You need to sign up first!');
+          return navigate('/SignUp');
+        }
+      });
+  }
+
   return (
-    <div className={s.signIn__wrapper}>
-      <div className={s.signIn__form}>
-        <h1 className={s.signIn__form__heading}>Sign In</h1>
+    <div className='auth__wrapper'>
+      <div className='form__wrapper'>
+        <div className='form'>
+        <h1 className='form__heading'>Sign In</h1>
         <Formik
-          initialValues={
-            {
-              login: '',
-              password: '',
-            } as SignInFormikValuesType
-          }
-          validationSchema={Yup.object({
-            login: Yup.string()
-              .required('This field is required')
-              .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
-            password: Yup.string()
-              .required('This field is required')
-              .min(6, 'The password must be at least 6 chars')
-              .matches(
-                /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-                'Password must contain at least one number and one special char'
-              ),
-          })}
-          onSubmit={(values, { setSubmitting }) => {
-            const { ...signInData } = values;
-            axios
-              .post(`${baseUrl}/SignIn`, signInData)
-              .then((response) => console.log('RESPONSE', response))
-              .catch((error) => {
-                if (error.response.status === 401) {
-                  alert('You need to sign up first!');
-                  return navigate('/SignUp');
-                }
-              });
-          }}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
           validateOnMount
         >
           {(formik) => {
@@ -70,15 +75,17 @@ export const SignIn: React.FC = () => {
             );
           }}
         </Formik>
-        <p className={s.signIn__form__link}>
+
+        <div className='form__link'>
           Not a member yet?
           <Link to="/SignUp"> Sign up</Link>
-        </p>
+        </div>
+        </div>
       </div>
 
-      <div className={s.signIn__img__block}>
-        <p>
-          <img src={signInImg} alt={s.signIn__basketballimg} />
+      <div className='auth__mainImg'>
+        <p className='auth__mainImg_bg'>
+          <img src={signInImg} alt='boys playing basketball' />
         </p>
       </div>
     </div>

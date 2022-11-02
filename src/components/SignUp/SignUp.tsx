@@ -1,5 +1,4 @@
 import React from 'react';
-import s from './SignUp.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
@@ -9,6 +8,8 @@ import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import axios from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
+// import s from './SignUp.module.scss';
+import './../../scss/auth-common.scss'
 
 interface SignUpFormikValuesType {
   userName: string;
@@ -28,6 +29,7 @@ export const SignUp = () => {
     confirmPassword: '',
     check: false,
   } as SignUpFormikValuesType;
+
   const validationSchema = Yup.object({
     userName: Yup.string()
       .required('Required')
@@ -48,6 +50,7 @@ export const SignUp = () => {
       .oneOf([Yup.ref('password'), null], 'Passwords must match'),
     check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
   });
+
   const onSubmit = (values: SignUpFormikValuesType) => {
     const { ...data } = values;
     axios
@@ -66,56 +69,54 @@ export const SignUp = () => {
   };
 
   return (
-    <>
-      <div className={s.signUp__wrapper}>
-        <div className={s.form__wrapper}>
-          <div className={s.form}>
-            <h1 className={s.form__heading}>Sign Up</h1>
+    <div className='auth__wrapper'>
+      <div className='form__wrapper'>
+        <div className='form'>
+          <h1 className='form__heading'>Sign Up</h1>
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={onSubmit}
-              validateOnMount
-            >
-              {(formik) => {
-                return (
-                  <Form>
-                    <InputText label="Name" name="userName" type="text" />
-                    <InputText label="Login" name="login" type="text" />
-                    <InputPassword label="Password" name="password" type="password" />
-                    <InputPassword
-                      label="Enter your password again"
-                      name="confirmPassword"
-                      type="password"
-                    />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+            validateOnMount
+          >
+            {(formik) => {
+              return (
+                <Form>
+                  <InputText label="Name" name="userName" type="text" />
+                  <InputText label="Login" name="login" type="text" />
+                  <InputPassword label="Password" name="password" type="password" />
+                  <InputPassword
+                    label="Enter your password again"
+                    name="confirmPassword"
+                    type="password"
+                  />
 
-                    <InputCheckbox
-                      name="check"
-                      id="check"
-                      type="checkbox"
-                      label="I accept the agreement"
-                    />
+                  <InputCheckbox
+                    name="check"
+                    id="check"
+                    type="checkbox"
+                    label="I accept the agreement"
+                  />
 
-                    <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
-                  </Form>
-                );
-              }}
-            </Formik>
+                  <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
+                </Form>
+              );
+            }}
+          </Formik>
 
-            <div className={s.form__link}>
-              Already a member?
-              <Link to="/"> Sign In</Link>
-            </div>
+          <div className='form__link'>
+            Already a member?
+            <Link to="/"> Sign In</Link>
           </div>
         </div>
-
-        <div className={s.signUp__mainImg}>
-          <p className={s.signUp__mainImg_bg}>
-            <img src={SignUpImg} alt="boys playing basketball" />
-          </p>
-        </div>
       </div>
-    </>
+
+      <div className='auth__mainImg'>
+        <p className='auth__mainImg_bg'>
+          <img src={SignUpImg} alt="boys playing basketball" />
+        </p>
+      </div>
+    </div>
   );
 };

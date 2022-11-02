@@ -1,21 +1,22 @@
 .signUp {
   &__wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 100%;
-    top: 0;
-    bottom: 0;
-    // position: fixed;
+    position: fixed;
     // display: inline-block;
   }
+
   &__mainImg {
     position: relative;
-    width: 55%;
-    height: 100%;
+
+    // width: 55%;
+    // height: 100%;
     &_bg {
-      text-align: center;
-      height: 100%;
+
+      // text-align: center;
+      // height: 100%;
       &::before {
         content: "";
         position: absolute;
@@ -26,9 +27,9 @@
         background-color: #F5FBFF;
         z-index: -1;
       }
-  
+
     }
-    }
+  }
 }
 
 .form {

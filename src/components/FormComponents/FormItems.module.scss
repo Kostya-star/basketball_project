@@ -1,12 +1,12 @@
 .form {
   &__group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     margin-top: 0;
   }
 
   &__label {
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 8px;
   }
 
@@ -41,7 +41,7 @@
     background-color: #E4163A;
     color: white;
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     margin-top: 8px;
     cursor: pointer;
     transition: 0.3s;
@@ -121,8 +121,8 @@
   &__eye {
     &__closed {
       position: absolute;
-      width: 18px;
-      height: 18px;
+      width: 17px;
+      height: 17px;
       top: 12px;
       right: 10px;
       cursor: pointer;
@@ -131,8 +131,8 @@
 
     &__opened {
       position: absolute;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15  px;
       top: 13px;
       right: 11px;
       cursor: pointer;

@@ -66,50 +66,56 @@ export const SignUp = () => {
   };
 
   return (
-    <div>
-    <div className={s.signUp__wrapper}>
-      <div className={s.form}>
-          <h1 className={s.form__heading}>Sign Up</h1>
+    <>
+      <div className={s.signUp__wrapper}>
+        <div className={s.form__wrapper}>
+          <div className={s.form}>
+            <h1 className={s.form__heading}>Sign Up</h1>
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-            validateOnMount
-          >
-            {(formik) => {
-              return (
-                <Form>
-                  <InputText label="Name" name="userName" type="text" />
-                  <InputText label="Login" name="login" type="text" />
-                  <InputPassword label="Password" name="password" type="password" />
-                  <InputPassword label="Confirm password" name="confirmPassword" type="password" />
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}
+              validateOnMount
+            >
+              {(formik) => {
+                return (
+                  <Form>
+                    <InputText label="Name" name="userName" type="text" />
+                    <InputText label="Login" name="login" type="text" />
+                    <InputPassword label="Password" name="password" type="password" />
+                    <InputPassword
+                      label="Enter your password again"
+                      name="confirmPassword"
+                      type="password"
+                    />
 
-                  <InputCheckbox
-                    name="check"
-                    id="check"
-                    type="checkbox"
-                    label="I accept the agreement"
-                  />
+                    <InputCheckbox
+                      name="check"
+                      id="check"
+                      type="checkbox"
+                      label="I accept the agreement"
+                    />
 
-                  <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
-                </Form>
-              );
-            }}
-          </Formik>
+                    <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
+                  </Form>
+                );
+              }}
+            </Formik>
 
-          <div className={s.form__link}>
-            Already a member?
-            <Link to="/"> Sign In</Link>
+            <div className={s.form__link}>
+              Already a member?
+              <Link to="/"> Sign In</Link>
+            </div>
           </div>
-      </div>
+        </div>
 
-      <div className={s.signUp__mainImg}>
-        <p className={s.signUp__mainImg_bg}>
-          <img src={SignUpImg} alt="boys playing basketball" />
-        </p>
+        <div className={s.signUp__mainImg}>
+          <p className={s.signUp__mainImg_bg}>
+            <img src={SignUpImg} alt="boys playing basketball" />
+          </p>
+        </div>
       </div>
-     </div>
-    </div>
+    </>
   );
 };

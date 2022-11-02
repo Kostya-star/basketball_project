@@ -8,12 +8,12 @@ import { SignUp } from './components/SignUp/SignUp';
 const App: React.FC = () => {
   return (
     <>
-      <div className="container">
+      {/* <div className="container"> */}
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
       </Routes>
-      </div>
+      {/* </div> */}
     </>
   );
 };

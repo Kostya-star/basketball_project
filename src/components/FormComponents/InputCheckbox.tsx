@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 import s from './FormItems.module.scss';
-import classNames from 'classnames';
+import classnames from 'classnames';
 
 interface InputCheckboxPropsType {
   label: string;
@@ -14,20 +14,25 @@ interface InputCheckboxPropsType {
 
 export const InputCheckbox: React.FC<InputCheckboxPropsType> = ({ label, ...props }) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
-  console.log(meta.error);
-
 
   return (
     <div className={s.form__group}>
-      <label className={s.checkbox__label} htmlFor={props.name || props.id}>
+      <label
+        className={classnames(s.checkbox__label, {
+          [s.checkbox__label_error]: meta.error && meta.touched,
+        })}
+        htmlFor={props.name || props.id}
+      >
         <input
-          className={s.checkbox__input}
+          className={classnames(s.checkbox__input, {
+            [s.checkbox__input_checked]: field.checked,
+          })}
           {...field}
           {...props}
         />
-        <span> {label}</span>
+        {label}
       </label>
-      {(meta.touched && meta.error) && <div className={s.form__error}>{meta.error}</div>}
+      {meta.touched && meta.error && <div className={s.form__error}>{meta.error}</div>}
     </div>
   );
 };

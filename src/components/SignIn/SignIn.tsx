@@ -3,7 +3,7 @@ import s from './SignIn.module.scss';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-import { SubmitButton } from '../FormComponents/SubmitButton';
+import { InputSubmit } from '../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import axios, { AxiosError } from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
@@ -64,8 +64,8 @@ export const SignIn: React.FC = () => {
             return (
               <Form>
                 <InputText label="Login" name="login" type="text" />
-                <InputPassword label="Password" name="password" type='password' />
-                <SubmitButton isDisabled={!formik.isValid} value="Sign In" name="button" />
+                <InputPassword label="Password" name="password" type="password" />
+                <InputSubmit isDisabled={!formik.isValid} value="Sign In" name="button" />
               </Form>
             );
           }}

@@ -4,18 +4,19 @@ import React from 'react';
 import s from './FormItems.module.scss'
 
 
-interface SubmitButtonPropsType {
+interface InputSubmitPropsType {
   value: string
   name: string
   isDisabled?: boolean
 }
-export const SubmitButton: React.FC<SubmitButtonPropsType> = ({isDisabled, value}) => {
-  // console.log(isDisabled);
-  
+export const InputSubmit: React.FC<InputSubmitPropsType> = ({isDisabled, value, ...props}) => {
+  const [field, meta] = useField({ ...props})
+
   return (
     <>
       <input disabled={isDisabled} className={classnames(s.form__submitBtn,{
         [s.form__submitBtn__disabled]: isDisabled,
+        [s.form__submitBtn_hover]: !isDisabled,
       })} value={value}  type="submit"/>
     </>
   );

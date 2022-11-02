@@ -6,10 +6,9 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { InputText } from '../FormComponents/InputText';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
-import { SubmitButton } from '../FormComponents/SubmitButton';
+import { InputSubmit } from '../FormComponents/InputSubmit';
 import axios from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
-
 
 interface SignUpFormikValuesType {
   userName: string;
@@ -39,21 +38,21 @@ export const SignUp = () => {
           }
           validationSchema={Yup.object({
             userName: Yup.string()
-              .required('This field is required')
+              .required('Required')
               .max(15, 'Must be 15 characters or less')
               .matches(/[a-zA-Z]/, 'Name can only contain Latin letters'),
             login: Yup.string()
-              .required('This field is required')
+              .required('Required')
               .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters'),
             password: Yup.string()
-              .required('This field is required')
+              .required('Required')
               .min(6, 'The password must be at least 6 chars')
               .matches(
                 /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
                 'Password must contain at least one number and one special char'
               ),
             confirmPassword: Yup.string()
-              .required('This field is required')
+              .required('Required')
               .oneOf([Yup.ref('password'), null], 'Passwords must match'),
             check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
           })}
@@ -83,9 +82,14 @@ export const SignUp = () => {
                 <InputPassword label="Password" name="password" type="password" />
                 <InputPassword label="Confirm password" name="confirmPassword" type="password" />
 
-                <InputCheckbox name="check" id='check' type="checkbox" label='I accept the agreement' />
+                <InputCheckbox
+                  name="check"
+                  id="check"
+                  type="checkbox"
+                  label="I accept the agreement"
+                />
 
-                <SubmitButton isDisabled={!formik.isValid} value="Sign Up" name="button" />
+                <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
               </Form>
             );
           }}

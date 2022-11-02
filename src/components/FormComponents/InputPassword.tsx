@@ -3,7 +3,7 @@ import { useField, Field } from 'formik';
 import s from './FormItems.module.scss';
 import { SvgGenerator } from './SvgGenerator';
 
-interface InputPasswordtPropsType {
+interface InputPasswordtProps {
   label: string;
   name: string;
   id?: string;
@@ -12,7 +12,7 @@ interface InputPasswordtPropsType {
   onBlur?: () => void;
 }
 
-export const InputPassword: React.FC<InputPasswordtPropsType> = ({ label, ...props }) => {
+export const InputPassword: React.FC<InputPasswordtProps> = ({ label, ...props }) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   const [field, meta] = useField(props);

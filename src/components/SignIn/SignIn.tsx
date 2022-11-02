@@ -9,14 +9,15 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputText } from './../FormComponents/InputText';
 import './../../scss/auth-common.scss'
 
-interface SignInFormikValues {
+interface ISignInFormikValues {
   login: string;
   password: string;
 }
 
-interface SignInAxiosPostType {
+interface ISignInAxiosPost {
   login: string;
   password: string;
+  name?: string
 }
 
 export const SignIn: React.FC = () => {
@@ -26,7 +27,7 @@ export const SignIn: React.FC = () => {
   const initialValues = {
     login: '',
     password: '',
-  } as SignInFormikValues;
+  } as ISignInFormikValues;
 
   const validationSchema = Yup.object({
     login: Yup.string()
@@ -41,11 +42,13 @@ export const SignIn: React.FC = () => {
       ),
   });
 
-  const onSubmit = (values: SignInFormikValues) => {
+  const onSubmit = (values: ISignInFormikValues) => {
     const { ...signInData } = values;
     axios
-      .post(`${baseUrl}/SignIn`, signInData)
-      .then((response) => console.log('RESPONSE', response))
+      .post<ISignInAxiosPost>(`${baseUrl}/SignIn`, signInData)
+      .then((response) => {
+        if (response) alert(`${response.data.name} successfully signed in!`)
+      })
       .catch((error) => {
         if (error.response.status === 401) {
           alert('You need to sign up first!');

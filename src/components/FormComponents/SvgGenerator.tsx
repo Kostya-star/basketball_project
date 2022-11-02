@@ -1,13 +1,12 @@
 import React from 'react';
 import s from './FormItems.module.scss';
 
-interface SvgGeneratorPropsType {
+interface ISvgGeneratorProps {
   id: string;
-  onClick?: Function
   setPasswordType?: () => void
 }
 
-export const SvgGenerator = ({ id, setPasswordType, ...props }: SvgGeneratorPropsType) => {
+export const SvgGenerator = ({ id, setPasswordType }: ISvgGeneratorProps) => {
   switch (id) {
     case 'closed-eye':
       return (

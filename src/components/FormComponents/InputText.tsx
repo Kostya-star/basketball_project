@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import s from './FormItems.module.scss';
 
 
-interface InputTextPropsType {
+interface InputTextProps {
   label: string;
   name: string;
   id?: string;
@@ -12,7 +12,7 @@ interface InputTextPropsType {
   onBlur?: () => void;
 }
 
-export const InputText: React.FC<InputTextPropsType> = ({ label, ...props }) => {
+export const InputText: React.FC<InputTextProps> = ({ label, ...props }) => {
 
   const [field, meta] = useField(props);
 

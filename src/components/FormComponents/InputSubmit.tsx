@@ -4,12 +4,12 @@ import React from 'react';
 import s from './FormItems.module.scss'
 
 
-interface InputSubmitPropsType {
+interface InputSubmitProps {
   value: string
   name: string
   isDisabled?: boolean
 }
-export const InputSubmit: React.FC<InputSubmitPropsType> = ({isDisabled, value, ...props}) => {
+export const InputSubmit: React.FC<InputSubmitProps> = ({isDisabled, value, ...props}) => {
   const [field, meta] = useField({ ...props})
 
   return (

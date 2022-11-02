@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import s from './FormItems.module.scss';
 import classnames from 'classnames';
 
-interface InputCheckboxPropsType {
+interface InputCheckboxProps {
   label: string;
   type: string;
   name: string;
@@ -12,7 +12,7 @@ interface InputCheckboxPropsType {
   onBlur?: () => void;
 }
 
-export const InputCheckbox: React.FC<InputCheckboxPropsType> = ({ label, ...props }) => {
+export const InputCheckbox: React.FC<InputCheckboxProps> = ({ label, ...props }) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
   return (

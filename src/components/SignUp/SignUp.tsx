@@ -8,10 +8,10 @@ import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import axios from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
-// import s from './SignUp.module.scss';
 import './../../scss/auth-common.scss'
 
-interface SignUpFormikValuesType {
+
+interface ISignUpFormikValues {
   userName: string;
   login: string;
   password: string;
@@ -28,7 +28,7 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
     check: false,
-  } as SignUpFormikValuesType;
+  } as ISignUpFormikValues;
 
   const validationSchema = Yup.object({
     userName: Yup.string()
@@ -51,7 +51,7 @@ export const SignUp = () => {
     check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
   });
 
-  const onSubmit = (values: SignUpFormikValuesType) => {
+  const onSubmit = (values: ISignUpFormikValues) => {
     const { ...data } = values;
     axios
       .post(`${baseUrl}/SignUp`, data)

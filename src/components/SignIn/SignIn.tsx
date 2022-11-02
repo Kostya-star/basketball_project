@@ -14,11 +14,11 @@ interface ISignInFormikValues {
   password: string;
 }
 
-interface ISignInAxiosPost {
-  login: string;
-  password: string;
-  name?: string
-}
+// interface ISignInAxiosPost {
+//   login: string;
+//   password: string;
+//   name?: string
+// }
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ export const SignIn: React.FC = () => {
   const onSubmit = (values: ISignInFormikValues) => {
     const { ...signInData } = values;
     axios
-      .post<ISignInAxiosPost>(`${baseUrl}/SignIn`, signInData)
+      .post(`${baseUrl}/SignIn`, signInData)
       .then((response) => {
         if (response) alert(`${response.data.name} successfully signed in!`)
       })

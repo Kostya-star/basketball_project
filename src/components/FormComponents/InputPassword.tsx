@@ -33,12 +33,11 @@ export const InputPassword: React.FC<InputPasswordtProps> = ({ label, ...props }
           type={!isPasswordVisible ? 'password' : 'text'}
           {...field}
         />
-          {/* <SvgGenerator
-            // id={!isPasswordVisible ? 'closed-eye' : 'opened-eye'}
-            id='test'
+          <Icon 
+            id={!isPasswordVisible ? 'closed-eye' : 'opened-eye'}
             setPasswordType={onTogglePasswordSVG}
-          /> */}
-          <Icon className={s.icon} name='eye-closed'/>
+          />
+          {/* <Icon className={s.password__eye__closed} name='eye-closed'/> */}
       </div>
       {meta.touched && meta.error && <span className={s.form__error}>{meta.error}</span>}
     </div>

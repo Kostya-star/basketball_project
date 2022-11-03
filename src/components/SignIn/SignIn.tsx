@@ -11,7 +11,6 @@ import './../../scss/auth-common.scss';
 import { authAPI } from '../../api/api';
 import { ISignInFormikValues } from './../../types/types';
 
-
 // interface ISignInAxiosPost extends ISignInFormikValues {
 //   name?: string
 // }
@@ -37,20 +36,16 @@ export const SignIn: React.FC = () => {
       ),
   });
 
-  const onSubmit = (values: ISignInFormikValues) => {
+  const onSubmit = async (values: ISignInFormikValues) => {
     const { ...signInUserData } = values;
-    authAPI
-      .signIn(signInUserData)
-      .then((response) => {
-        if (response) alert(`${response.name} successfully signed in!`);
-      })
-      .catch((error) => {
-        if (error && error.response.status === 404) alert('Not found, 404 error!');
-        if (error && error.response.status === 401) {
-          alert('You need to sign up first!');
-          return navigate('/SignUp');
-        }
-      });
+    const response = await authAPI.signIn(signInUserData).catch((error) => {
+      if (error && error.response.status === 404) alert('Not found, 404 error!');
+      if (error && error.response.status === 401) {
+        alert('You need to sign up first!');
+        return navigate('/SignUp');
+      }
+    });
+    if (response) alert(`${response.data.name} successfully signed in!`);
   };
 
   return (

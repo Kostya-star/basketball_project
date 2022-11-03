@@ -11,7 +11,6 @@ import './../../scss/auth-common.scss';
 import { authAPI } from './../../api/api';
 import { ISignUpFormikValues } from '../../types/types';
 
-
 export const SignUp = () => {
   const navigate = useNavigate();
 
@@ -44,22 +43,18 @@ export const SignUp = () => {
     check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
   });
 
-  const onSubmit = (values: ISignUpFormikValues) => {
+  const onSubmit = async (values: ISignUpFormikValues) => {
     const { ...signUpUserData } = values;
-    authAPI
-      .signUp(signUpUserData)
-      .then((response) => {
-        if (response) {
-          alert(`Thank you for your registration, ${response.name}!`);
-          navigate('/');
-        }
-      })
-      .catch((error) => {
-        if (error && error.response.status === 409) {
-          alert(`Login: '${JSON.parse(error.config.data).login}' already exists`);
-        }
-        if (error && error.response.status === 404) alert('Not found, 404 error!');
-      });
+    const response = await authAPI.signUp(signUpUserData).catch((error) => {
+      if (error && error.response.status === 409) {
+        alert(`Login: '${JSON.parse(error.config.data).login}' already exists`);
+      }
+      if (error && error.response.status === 404) alert('Not found, 404 error!');
+    });
+    if (response) {
+      alert(`Thank you for your registration, ${response.data.name}!`);
+      navigate('/');
+    }
   };
 
   return (

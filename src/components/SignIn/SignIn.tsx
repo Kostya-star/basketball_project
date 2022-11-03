@@ -36,7 +36,7 @@ export const SignIn: React.FC = () => {
       ),
   });
 
-  const onSubmit = async (values: ISignInFormikValues) => {
+  const onSubmit =  async (values: ISignInFormikValues) => {
     const { ...signInUserData } = values;
     const response = await authAPI.signIn(signInUserData).catch((error) => {
       if (error && error.response.status === 404) alert('Not found, 404 error!');
@@ -46,6 +46,7 @@ export const SignIn: React.FC = () => {
       }
     });
     if (response) alert(`${response.data.name} successfully signed in!`);
+    
   };
 
   return (

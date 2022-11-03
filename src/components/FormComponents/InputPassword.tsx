@@ -2,18 +2,19 @@ import {useState, FC} from 'react'
 import { useField, Field } from 'formik';
 import s from './FormItems.module.scss';
 import {Icon, closedEye, openedEye} from './Icon';
+import { GenericType } from '../../types/types';
 
 
-interface InputPasswordtProps {
+interface InputPasswordProps {
   label: string;
-  name: string;
+  name: GenericType<'password' | 'confirmPassword'>
   id?: string;
-  type: string;
+  type: GenericType<'password'>;
   onChange?: () => void;
   onBlur?: () => void;
 }
 
-export const InputPassword: FC<InputPasswordtProps> = ({ label, ...props }) => {
+export const InputPassword: FC<InputPasswordProps> = ({ label, ...props }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [field, meta] = useField(props);

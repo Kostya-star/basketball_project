@@ -1,13 +1,14 @@
 import {FC} from 'react'
 import { useField } from 'formik';
 import s from './FormItems.module.scss';
+import { GenericType } from '../../types/types';
 
 
 interface InputTextProps {
   label: string;
-  name: string;
+  name: GenericType<'login' | 'userName'>;
   id?: string;
-  type: string;
+  type: GenericType<'text'>;
   onChange?: () => void;
   onBlur?: () => void;
 }

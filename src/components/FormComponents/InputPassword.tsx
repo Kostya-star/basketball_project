@@ -1,8 +1,8 @@
 import React from 'react';
 import { useField, Field } from 'formik';
 import s from './FormItems.module.scss';
-import {Icon} from './Icon';
-// import { SvgGenerator, Icon } from './SvgGenerator';
+import {Icon, closedEye, openedEye} from './Icon';
+
 
 interface InputPasswordtProps {
   label: string;
@@ -34,7 +34,7 @@ export const InputPassword: React.FC<InputPasswordtProps> = ({ label, ...props }
           {...field}
         />
           <Icon 
-            id={!isPasswordVisible ? 'closed-eye' : 'opened-eye'}
+            id={!isPasswordVisible ? closedEye : openedEye}
             setPasswordType={onTogglePasswordSVG}
           />
           {/* <Icon className={s.password__eye__closed} name='eye-closed'/> */}

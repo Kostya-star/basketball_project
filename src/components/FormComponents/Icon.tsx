@@ -8,8 +8,8 @@ interface IconProps {
   setPasswordType?: () => void;
 }
 
-const closedEye = 'closed-eye'
-const openedEye = 'opened-eye'
+export const closedEye = 'closed-eye'
+export const openedEye = 'opened-eye'
 
 export const Icon = ({ id, setPasswordType }: IconProps) => {
   switch (id) {

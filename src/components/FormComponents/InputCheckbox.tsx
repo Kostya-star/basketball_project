@@ -1,5 +1,5 @@
 import React from 'react';
-import { useField } from 'formik';
+import { ErrorMessage, useField } from 'formik';
 import s from './FormItems.module.scss';
 import classnames from 'classnames';
 
@@ -32,7 +32,7 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = ({ label, ...props })
         />
         {label}
       </label>
-      {meta.touched && meta.error && <div className={s.form__error}>{meta.error}</div>}
+      <ErrorMessage className={s.form__error} name={props.name} component="span"/>
     </div>
   );
 };

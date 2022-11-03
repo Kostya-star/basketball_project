@@ -29,7 +29,7 @@ export const SignUp = () => {
       .matches(/[a-zA-Z]/, 'Name can only contain Latin letters'),
     login: Yup.string()
       .required('Required')
-      .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters'),
+      .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
     password: Yup.string()
       .required('Required')
       .min(6, 'The password must be at least 6 chars')

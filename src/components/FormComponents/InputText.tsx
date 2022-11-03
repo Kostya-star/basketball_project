@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import { useField } from 'formik';
+import { ErrorMessage, useField } from 'formik';
 import s from './FormItems.module.scss';
 import { GenericType } from '../../types/types';
 
@@ -25,7 +25,8 @@ export const InputText: FC<InputTextProps> = ({ label, ...props }) => {
       <div className={s.inputBlock}>
         <input className={s.form__input} type={props.type} {...field} />
       </div>
-      {meta.touched && meta.error && <span className={s.form__error}>{meta.error}</span>}
+      {/* {meta.touched && meta.error && <span className={s.form__error}>{meta.error}</span>} */}
+      <ErrorMessage className={s.form__error} name={props.name} component="span"/>
     </div>
   );
 };

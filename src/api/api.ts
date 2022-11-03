@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {client} from './baseRequest'
 import { ISignInFormikValues, ISignUpFormikValues } from './../types/types';
 

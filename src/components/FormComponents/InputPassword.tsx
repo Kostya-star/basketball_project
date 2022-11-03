@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState, FC} from 'react'
 import { useField, Field } from 'formik';
 import s from './FormItems.module.scss';
 import {Icon, closedEye, openedEye} from './Icon';
@@ -13,8 +13,8 @@ interface InputPasswordtProps {
   onBlur?: () => void;
 }
 
-export const InputPassword: React.FC<InputPasswordtProps> = ({ label, ...props }) => {
-  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+export const InputPassword: FC<InputPasswordtProps> = ({ label, ...props }) => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [field, meta] = useField(props);
 

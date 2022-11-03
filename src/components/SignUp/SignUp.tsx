@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
@@ -9,12 +8,11 @@ import { InputSubmit } from '../FormComponents/InputSubmit';
 import axios from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
 import './../../scss/auth-common.scss'
+import { ISignInFormikValues } from '../SignIn/SignIn';
 
 
-interface ISignUpFormikValues {
+interface ISignUpFormikValues extends ISignInFormikValues {
   userName: string;
-  login: string;
-  password: string;
   confirmPassword: string;
   check: boolean;
 }

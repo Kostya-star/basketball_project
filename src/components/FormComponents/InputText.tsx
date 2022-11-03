@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react'
 import { useField } from 'formik';
 import s from './FormItems.module.scss';
 
@@ -12,7 +12,7 @@ interface InputTextProps {
   onBlur?: () => void;
 }
 
-export const InputText: React.FC<InputTextProps> = ({ label, ...props }) => {
+export const InputText: FC<InputTextProps> = ({ label, ...props }) => {
 
   const [field, meta] = useField(props);
 

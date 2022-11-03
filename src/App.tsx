@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { SignIn } from './components/SignIn/SignIn';
 import './scss/all.scss';

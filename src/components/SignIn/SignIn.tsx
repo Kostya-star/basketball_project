@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import  { ChangeEvent } from 'react';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
@@ -9,16 +9,15 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputText } from './../FormComponents/InputText';
 import './../../scss/auth-common.scss'
 
-interface ISignInFormikValues {
+export interface ISignInFormikValues {
   login: string;
   password: string;
 }
 
-// interface ISignInAxiosPost {
-//   login: string;
-//   password: string;
+// interface ISignInAxiosPost extends ISignInFormikValues {
 //   name?: string
 // }
+
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();

@@ -7,18 +7,13 @@ import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import axios from 'axios';
 import { InputPassword } from './../FormComponents/InputPassword';
-import './../../scss/auth-common.scss'
-import { ISignInFormikValues } from '../SignIn/SignIn';
+import './../../scss/auth-common.scss';
+import { authAPI } from './../../api/api';
+import { ISignUpFormikValues } from '../../types/types';
 
 
-interface ISignUpFormikValues extends ISignInFormikValues {
-  userName: string;
-  confirmPassword: string;
-  check: boolean;
-}
 export const SignUp = () => {
   const navigate = useNavigate();
-  const baseUrl = 'http://dev.trainee.dex-it.ru/api/Auth';
 
   const initialValues = {
     userName: '',
@@ -50,27 +45,28 @@ export const SignUp = () => {
   });
 
   const onSubmit = (values: ISignUpFormikValues) => {
-    const { ...data } = values;
-    axios
-      .post(`${baseUrl}/SignUp`, data)
+    const { ...signUpUserData } = values;
+    authAPI
+      .signUp(signUpUserData)
       .then((response) => {
-        if (response.status === 200 || response.statusText === 'OK') {
-          alert(`Thank you for your registration, ${response.data.name}!`);
+        if (response) {
+          alert(`Thank you for your registration, ${response.name}!`);
           navigate('/');
         }
       })
       .catch((error) => {
-        if (error.response.status === 409 || error.response.statusText === 'Conflict') {
+        if (error && error.response.status === 409) {
           alert(`Login: '${JSON.parse(error.config.data).login}' already exists`);
         }
+        if (error && error.response.status === 404) alert('Not found, 404 error!');
       });
   };
 
   return (
-    <div className='auth__wrapper'>
-      <div className='form__wrapper'>
-        <div className='form'>
-          <h1 className='form__heading'>Sign Up</h1>
+    <div className="auth__wrapper">
+      <div className="form__wrapper">
+        <div className="form">
+          <h1 className="form__heading">Sign Up</h1>
 
           <Formik
             initialValues={initialValues}
@@ -103,15 +99,15 @@ export const SignUp = () => {
             }}
           </Formik>
 
-          <div className='form__link'>
+          <div className="form__link">
             Already a member?
             <Link to="/"> Sign In</Link>
           </div>
         </div>
       </div>
 
-      <div className='auth__mainImg'>
-        <p className='auth__mainImg_bg'>
+      <div className="auth__mainImg">
+        <p className="auth__mainImg_bg">
           <img src={SignUpImg} alt="boys playing basketball" />
         </p>
       </div>

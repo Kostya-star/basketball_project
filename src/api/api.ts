@@ -1,13 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
+import {client} from './baseRequest'
+import { ISignInFormikValues, ISignUpFormikValues } from './../types/types';
 
-
-const client = axios.create({
-  baseURL: 'http://dev.trainee.dex-it.ru/api/'
-})
 
 export const authAPI = {
-  
-  async signIn(values: {login:string, password: string}) {
-    return await client.post( `Auth/SignIn`, values ).then((response) => response.data)
-  }
-}
+  async signIn(signInUserData: ISignInFormikValues) {
+    return await client.post(`Auth/SignIn`, signInUserData).then((response) => response.data);
+  },
+
+  async signUp(signUpUserData: ISignUpFormikValues) {
+    return await client.post(`Auth/SignUp`, signUpUserData).then((response) => response.data);
+  },
+};

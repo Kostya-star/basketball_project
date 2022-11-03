@@ -9,11 +9,8 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputText } from './../FormComponents/InputText';
 import './../../scss/auth-common.scss';
 import { authAPI } from '../../api/api';
+import { ISignInFormikValues } from './../../types/types';
 
-export interface ISignInFormikValues {
-  login: string;
-  password: string;
-}
 
 // interface ISignInAxiosPost extends ISignInFormikValues {
 //   name?: string
@@ -41,16 +38,19 @@ export const SignIn: React.FC = () => {
   });
 
   const onSubmit = (values: ISignInFormikValues) => {
-    authAPI.signIn(values).then((response) => {
-      if(response) alert(`${response.name} successfully signed in!`)
-    })
-    .catch((error) => {
-      if(error.response.status === 404) alert('Not found, 404 error!')
-      if(error.response.status === 401) {
-        alert('You need to sign up first!')
-        return navigate('/SignUp');
-      }
-    })
+    const { ...signInUserData } = values;
+    authAPI
+      .signIn(signInUserData)
+      .then((response) => {
+        if (response) alert(`${response.name} successfully signed in!`);
+      })
+      .catch((error) => {
+        if (error && error.response.status === 404) alert('Not found, 404 error!');
+        if (error && error.response.status === 401) {
+          alert('You need to sign up first!');
+          return navigate('/SignUp');
+        }
+      });
   };
 
   return (

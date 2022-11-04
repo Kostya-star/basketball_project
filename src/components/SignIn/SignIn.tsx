@@ -7,9 +7,10 @@ import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { InputPassword } from './../FormComponents/InputPassword';
 import { InputText } from './../FormComponents/InputText';
 import { authAPI } from '../../api/api';
-import '../../scss/auth-common.scss'
+import '../../scss/auth-common.scss';
 import { ISignInFormikValues } from './../../types/types';
-import { MainImg } from '../MainImg';
+import { FormBgImg } from '../FormBgImg';
+import { FormLink } from './../FormLink';
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -65,15 +66,11 @@ export const SignIn: React.FC = () => {
               );
             }}
           </Formik>
-
-          <div className="form__link">
-            Not a member yet?
-            <Link to="/SignUp"> Sign up</Link>
-          </div>
+          <FormLink mainText="Not a member yet?" path="/SignUp" linkText="Sign up" />
         </div>
       </div>
 
-      <MainImg src={signInImg} />
+      <FormBgImg src={signInImg} />
     </div>
   );
 };

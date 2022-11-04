@@ -7,9 +7,10 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import { authAPI } from './../../api/api';
-import '../../scss/auth-common.scss'
+import '../../scss/auth-common.scss';
 import { ISignUpFormikValues } from '../../types/types';
-import { MainImg } from '../MainImg';
+import { FormBgImg } from '../FormBgImg';
+import { FormLink } from '../FormLink';
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -77,26 +78,18 @@ export const SignUp = () => {
                   <InputPassword label="Password" name="password" />
                   <InputPassword label="Enter your password again" name="confirmPassword" />
 
-                  <InputCheckbox
-                    name="check"
-                    id="check"
-                    label="I accept the agreement"
-                  />
+                  <InputCheckbox name="check" id="check" label="I accept the agreement" />
 
                   <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
                 </Form>
               );
             }}
           </Formik>
-
-          <div className="form__link">
-            Already a member?
-            <Link to="/"> Sign In</Link>
-          </div>
+          <FormLink mainText="Already a member?" path="/" linkText="Sign in" />
         </div>
       </div>
 
-      <MainImg src={SignUpImg}/>
+      <FormBgImg src={SignUpImg} />
     </div>
   );
 };

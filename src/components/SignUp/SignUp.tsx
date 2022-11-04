@@ -54,7 +54,7 @@ export const SignUp = () => {
     });
     if (response) {
       alert(`Thank you for your registration, ${response.data.name}!`);
-      navigate('/');
+      navigate('/SignIn');
     }
   };
 

@@ -4,9 +4,9 @@ import { GenericType } from '../types/types';
 import '../scss/auth-common.scss';
 
 interface IFormLinkProps {
-  mainText: GenericType<'Not a member yet?' | 'Already a member?'>;
-  path: GenericType<'/SignUp' | '/'>
-  linkText: GenericType<'Sign up' | 'Sign in'>
+  mainText: string
+  path: string
+  linkText: string
 }
 
 export const FormLink: FC<IFormLinkProps> = ({ mainText, path, linkText }) => {

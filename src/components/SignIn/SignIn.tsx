@@ -42,9 +42,11 @@ export const SignIn: React.FC = () => {
         return navigate('/SignUp');
       }
     });
-    if (response) alert(`${response.data.name} successfully signed in!`);
+    if (response) {
+      // alert(`${response.data.name} successfully signed in!`);
+      return navigate('/');
+    }
   };
-
 
   return (
     <div className="auth__wrapper">

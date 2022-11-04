@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { SignIn } from './components/SignIn/SignIn';
 import './scss/all.scss';
@@ -7,9 +7,10 @@ import { NotFound } from './pages/NotFound';
 import { MainLayout } from './components/layout/MainLayout';
 
 const App: React.FC = () => {
+  const [isSignIn, setIsSignIn] = useState(false)
+
   return (
     <>
-      {/* <div className="container"> */}
       <Routes>
         <Route path='/' element={<MainLayout/>}>
           <Route path="/SignIn" element={<SignIn />} />
@@ -17,7 +18,6 @@ const App: React.FC = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-      {/* </div> */}
     </>
   );
 };

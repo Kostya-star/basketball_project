@@ -7,13 +7,15 @@ export const MainLayout = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
-      {location.pathname === '/SignIn' || location.pathname === '/SignUp' ? null : (
-        <div>
-          <Outlet />
-        </div>
+      {location.pathname !== '/SignIn' && location.pathname !== '/SignUp' && (
+        <>
+          <Header />
+          <Menu />
+        </>
       )}
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };

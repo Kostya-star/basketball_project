@@ -1,0 +1,26 @@
+.notFound {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+  }
+  &__img {
+    margin-bottom: 48px;
+  }
+  &__heading {
+    margin-bottom: 24px;
+    color: #FF768E;
+    font-weight: 700;
+    font-size: 36px;
+  }
+  &__text {
+    color: #707070;
+    font-size: 24px;
+    font-weight: 400;
+  }
+}
+ 

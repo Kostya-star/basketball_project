@@ -72,19 +72,14 @@ export const SignUp = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText label="Name" name="userName" type="text" />
-                  <InputText label="Login" name="login" type="text" />
-                  <InputPassword label="Password" name="password" type="password" />
-                  <InputPassword
-                    label="Enter your password again"
-                    name="confirmPassword"
-                    type="password"
-                  />
+                  <InputText label="Name" name="userName" />
+                  <InputText label="Login" name="login" />
+                  <InputPassword label="Password" name="password" />
+                  <InputPassword label="Enter your password again" name="confirmPassword" />
 
                   <InputCheckbox
                     name="check"
                     id="check"
-                    type="checkbox"
                     label="I accept the agreement"
                   />
 

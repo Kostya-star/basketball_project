@@ -2,14 +2,12 @@ import React from 'react';
 import { ErrorMessage, useField } from 'formik';
 import s from './FormItems.module.scss';
 import classnames from 'classnames';
+import { GenericType } from '../../types/types';
 
 interface InputCheckboxProps {
   label: string;
-  type: string;
   name: string;
-  id?: string;
-  onChange?: () => void;
-  onBlur?: () => void;
+  id: GenericType<'check'>
 }
 
 export const InputCheckbox: React.FC<InputCheckboxProps> = ({ label, ...props }) => {
@@ -21,9 +19,10 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = ({ label, ...props })
         className={classnames(s.checkbox__label, {
           [s.checkbox__label_error]: meta.error && meta.touched,
         })}
-        htmlFor={props.name || props.id}
+        htmlFor={props.name}
       >
         <input
+          type='checkbox'
           className={classnames(s.checkbox__input, {
             [s.checkbox__input_checked]: field.checked,
           })}

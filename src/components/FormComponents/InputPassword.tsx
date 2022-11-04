@@ -9,10 +9,6 @@ import { GenericType } from '../../types/types';
 interface InputPasswordProps {
   label: string;
   name: GenericType<'password' | 'confirmPassword'>;
-  id?: string;
-  type: GenericType<'password'>;
-  onChange?: () => void;
-  onBlur?: () => void;
 }
 
 export const InputPassword: FC<InputPasswordProps> = ({ label, ...props }) => {
@@ -26,7 +22,7 @@ export const InputPassword: FC<InputPasswordProps> = ({ label, ...props }) => {
 
   return (
     <div className={s.form__group}>
-      <label className={s.form__label} htmlFor={props.name || props.id}>
+      <label className={s.form__label} htmlFor={props.name}>
         {label}
       </label>
       <div className={s.inputBlock}>

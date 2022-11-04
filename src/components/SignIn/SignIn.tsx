@@ -63,8 +63,8 @@ export const SignIn: React.FC = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText label="Login" name="login" type="text" />
-                  <InputPassword label="Password" name="password" type="password" />
+                  <InputText label="Login" name="login"/>
+                  <InputPassword label="Password" name="password"/>
                   <InputSubmit isDisabled={!formik.isValid} value="Sign In" name="button" />
                 </Form>
               );

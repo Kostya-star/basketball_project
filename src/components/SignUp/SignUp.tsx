@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -58,6 +58,7 @@ export const SignUp = () => {
     }
   };
 
+
   return (
     <div className="auth__wrapper">
       <div className="form__wrapper">
@@ -85,7 +86,7 @@ export const SignUp = () => {
               );
             }}
           </Formik>
-          <FormLink mainText="Already a member?" path="/" linkText="Sign in" />
+          <FormLink mainText="Already a member?" path="/SignIn" linkText="Sign in" />
         </div>
       </div>
 

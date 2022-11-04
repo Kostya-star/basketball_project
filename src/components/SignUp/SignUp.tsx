@@ -3,13 +3,13 @@ import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { InputText } from '../FormComponents/InputText';
+import { InputPassword } from './../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
-import axios from 'axios';
-import { InputPassword } from './../FormComponents/InputPassword';
-import './../../scss/auth-common.scss';
 import { authAPI } from './../../api/api';
+import '../../scss/auth-common.scss'
 import { ISignUpFormikValues } from '../../types/types';
+import { MainImg } from '../MainImg';
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -96,11 +96,7 @@ export const SignUp = () => {
         </div>
       </div>
 
-      <div className="auth__mainImg">
-        <p className="auth__mainImg_bg">
-          <img src={SignUpImg} alt="boys playing basketball" />
-        </p>
-      </div>
+      <MainImg src={SignUpImg}/>
     </div>
   );
 };

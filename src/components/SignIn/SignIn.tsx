@@ -1,19 +1,15 @@
 import { ChangeEvent } from 'react';
-import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import axios, { AxiosError } from 'axios';
+import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { InputPassword } from './../FormComponents/InputPassword';
 import { InputText } from './../FormComponents/InputText';
-import './../../scss/auth-common.scss';
 import { authAPI } from '../../api/api';
+import '../../scss/auth-common.scss'
 import { ISignInFormikValues } from './../../types/types';
-
-// interface ISignInAxiosPost extends ISignInFormikValues {
-//   name?: string
-// }
+import { MainImg } from '../MainImg';
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -25,10 +21,10 @@ export const SignIn: React.FC = () => {
 
   const validationSchema = Yup.object({
     login: Yup.string()
-      .required('This field is required')
+      .required('Required')
       .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
     password: Yup.string()
-      .required('This field is required')
+      .required('Required')
       .min(6, 'The password must be at least 6 chars')
       .matches(
         /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
@@ -36,7 +32,7 @@ export const SignIn: React.FC = () => {
       ),
   });
 
-  const onSubmit =  async (values: ISignInFormikValues) => {
+  const onSubmit = async (values: ISignInFormikValues) => {
     const { ...signInUserData } = values;
     const response = await authAPI.signIn(signInUserData).catch((error) => {
       if (error && error.response.status === 404) alert('Not found, 404 error!');
@@ -46,7 +42,6 @@ export const SignIn: React.FC = () => {
       }
     });
     if (response) alert(`${response.data.name} successfully signed in!`);
-    
   };
 
   return (
@@ -63,8 +58,8 @@ export const SignIn: React.FC = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText label="Login" name="login"/>
-                  <InputPassword label="Password" name="password"/>
+                  <InputText label="Login" name="login" />
+                  <InputPassword label="Password" name="password" />
                   <InputSubmit isDisabled={!formik.isValid} value="Sign In" name="button" />
                 </Form>
               );
@@ -78,11 +73,7 @@ export const SignIn: React.FC = () => {
         </div>
       </div>
 
-      <div className="auth__mainImg">
-        <p className="auth__mainImg_bg">
-          <img src={signInImg} alt="boys playing basketball" />
-        </p>
-      </div>
+      <MainImg src={signInImg} />
     </div>
   );
 };

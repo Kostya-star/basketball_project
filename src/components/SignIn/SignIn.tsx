@@ -15,10 +15,9 @@ import { Context } from '../AppRouter/AppRouter';
 
 export const SignIn: FC = () => {
   const navigate = useNavigate();
-  // @ts-expect-error
-  const {isAuth, setIsAuth} = useContext(Context)
-  console.log(isAuth);
-  console.log(setIsAuth);
+  const context = useContext(Context)
+  console.log(context?.isAuth);
+  
   
 
   const initialValues = {
@@ -49,7 +48,7 @@ export const SignIn: FC = () => {
       }
     });
     if (response) {
-      // alert(`${response.data.name} successfully signed in!`);
+      context?.setIsAuth(true)
       return navigate('/');
     }
   };

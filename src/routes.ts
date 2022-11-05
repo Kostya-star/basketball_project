@@ -1,4 +1,4 @@
-// @ts-expect-check
+export {}
 // import { MainLayout } from './components/layout/MainLayout';
 // import { SignIn } from './components/SignIn/SignIn';
 // import { SignUp } from './components/SignUp/SignUp';

@@ -5,6 +5,7 @@ import { MainLayout } from '../layout/MainLayout';
 import { SignIn } from '../SignIn/SignIn';
 import { SignUp } from '../SignUp/SignUp';
 
+
 interface IAuthContext {
   isAuth: boolean;
   setIsAuth: (isAuth: boolean) => void;
@@ -15,20 +16,20 @@ export const AppRouter = () => {
   const [isAuth, setIsAuth] = useState(false);
 
   return (
-    <Routes>
-      {isAuth && <Route path="/" element={<MainLayout />}></Route>}
+    <Context.Provider value={{ isAuth, setIsAuth }}>
+      <Routes>
+        {isAuth && <Route path="/" element={<MainLayout />}></Route>}
 
-      <Context.Provider value={ {isAuth, setIsAuth} }>
         {!isAuth && (
           <>
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/SignIn" element={<SignIn />} />
           </>
         )}
-      </Context.Provider>
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Context.Provider>
   );
 };
 

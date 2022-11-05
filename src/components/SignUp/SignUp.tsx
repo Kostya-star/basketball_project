@@ -67,7 +67,7 @@ export const SignUp = () => {
 
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
             onSubmit={onSubmit}
             validateOnMount
           >

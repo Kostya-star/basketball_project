@@ -4,7 +4,8 @@ import { ISignInFormikValues, ISignUpFormikValues } from './../types/types';
 
 interface ISignInRequest extends ISignInFormikValues{}
 
-interface ISignUpRequest extends ISignUpFormikValues{}
+type ISignUpRequest = Omit<ISignUpFormikValues, 'confirmPassword' |  'check'>
+
 
 interface IResponseType {
   name: string

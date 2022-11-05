@@ -45,7 +45,9 @@ export const SignUp = () => {
   });
 
   const onSubmit = async (values: ISignUpFormikValues) => {
-    const { ...signUpUserData } = values;
+    const { userName, login, password } = values;
+    const signUpUserData = { userName, login, password };
+
     const response = await authAPI.signUp(signUpUserData).catch((error) => {
       if (error && error.response.status === 409) {
         alert(`Login: '${JSON.parse(error.config.data).login}' already exists`);
@@ -57,7 +59,6 @@ export const SignUp = () => {
       navigate('/SignIn');
     }
   };
-
 
   return (
     <div className="auth__wrapper">

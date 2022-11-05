@@ -2,12 +2,14 @@
   &__wrapper {
     display: flex;
     width: 100%;
-    padding: 18px 55px 18px 50px;
     box-shadow: 0px 1px 10px rgba(209, 209, 209, 0.5);
   }
 
   &__logo {
     width: 50%;
+    p {
+      padding-left: 80px;
+    }
   }
 
   &__credentials {
@@ -20,6 +22,9 @@
       margin-right: 19px;
       font-size: 14px;
       font-weight: 500;
+    }
+    svg {
+      padding-right: 50px;
     }
   }
 }

@@ -16,7 +16,7 @@ import { Context } from '../AppRouter/AppRouter';
 export const SignIn: FC = () => {
   const navigate = useNavigate();
   const context = useContext(Context)
-  console.log(context?.isAuth);
+  // console.log(context?.isAuth);
   
   
 
@@ -49,6 +49,7 @@ export const SignIn: FC = () => {
     });
     if (response) {
       context?.setIsAuth(true)
+      console.log('ISAUTH IS CHANGED');
       return navigate('/');
     }
   };

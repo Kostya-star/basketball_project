@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { FC, useContext } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
@@ -11,9 +11,15 @@ import '../../scss/auth-common.scss';
 import { ISignInFormikValues } from './../../types/types';
 import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
+import { Context } from '../AppRouter/AppRouter';
 
-export const SignIn: React.FC = () => {
+export const SignIn: FC = () => {
   const navigate = useNavigate();
+  // @ts-expect-error
+  const {isAuth, setIsAuth} = useContext(Context)
+  console.log(isAuth);
+  console.log(setIsAuth);
+  
 
   const initialValues = {
     login: '',

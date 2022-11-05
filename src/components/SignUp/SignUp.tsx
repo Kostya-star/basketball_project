@@ -7,12 +7,13 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import { authAPI } from './../../api/api';
+import { FC } from 'react';
 import '../../scss/auth-common.scss';
 import { ISignUpFormikValues } from '../../types/types';
 import { FormBgImg } from '../FormBgImg';
 import { FormLink } from '../FormLink';
 
-export const SignUp = () => {
+export const SignUp: FC = () => {
   const navigate = useNavigate();
 
   const initialValues = {

@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, memo } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
@@ -13,12 +13,10 @@ import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
 import { Context } from '../AppRouter/AppRouter';
 
-export const SignIn: FC = () => {
+export const SignIn: FC = memo(() => {
+  SignIn.displayName = 'SignIn';
   const navigate = useNavigate();
   const context = useContext(Context)
-  // console.log(context?.isAuth);
-  
-  
 
   const initialValues = {
     login: '',
@@ -49,10 +47,10 @@ export const SignIn: FC = () => {
     });
     if (response) {
       context?.setIsAuth(true)
-      console.log('ISAUTH IS CHANGED');
       return navigate('/');
     }
   };
+
 
   return (
     <div className="auth__wrapper">
@@ -82,4 +80,4 @@ export const SignIn: FC = () => {
       <FormBgImg src={signInImg} />
     </div>
   );
-};
+});

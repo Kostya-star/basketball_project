@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, FC, memo, useEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { NotFound } from '../../pages/NotFound';
 import { MainLayout } from '../layout/MainLayout';
@@ -11,32 +11,32 @@ interface IAuthContext {
 }
 export const Context = createContext<IAuthContext | null>(null);
 
-export const AppRouter = () => {
+export const AppRouter: FC = memo(() => {
+  AppRouter.displayName = 'AppRouter';
   const [isAuth, setIsAuth] = useState(false);
-  const location = useLocation()
-  console.log(location);
   
-  // useEffect(() => {
-  //   if(isAuth && location.pathname === '/') setIsAuth(false)
-  // }, [isAuth, location.pathname]);
+  useEffect(() => {
+    const data = window.localStorage.getItem('isAuth');
+    if (data !== null) setIsAuth(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('isAuth', JSON.stringify(isAuth));
+  }, [isAuth]);
 
   return (
     <Context.Provider value={{ isAuth, setIsAuth }}>
       <Routes>
         {isAuth && <Route path="/" element={<MainLayout />}></Route>}
 
-        {!isAuth && (
-          <>
-            <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/SignIn" element={<SignIn />} />
-          </>
-        )}
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/SignIn" element={<SignIn />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Context.Provider>
   );
-};
+});
 
 // import React from 'react';
 // import { Route, Routes } from 'react-router-dom';

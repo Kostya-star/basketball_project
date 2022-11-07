@@ -61,6 +61,7 @@ export const SignUp: FC = () => {
     }
   };
 
+  
   return (
     <div className="auth__wrapper">
       <div className="form__wrapper">

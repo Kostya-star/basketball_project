@@ -1,12 +1,17 @@
 import { ReactComponent as SignOutSVG } from '../../../assets/icons/menu__signOut.svg';
 import '../../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
+import { FC, memo } from 'react';
 
-export const SignOut = () => {
+export const SignOut: FC = memo(() => {
+  SignOut.displayName = 'SignOut'
   const navigate = useNavigate()
 
   const onHandleSignOut = () => {
-    if(confirm('Do you really want to sign out?')) return navigate('/SignIn');
+    if(confirm('Do you really want to sign out?')) {
+      window.localStorage.setItem('isAuth', JSON.stringify(false))
+      return navigate('/SignIn');
+    }
   }
   
   return (
@@ -19,4 +24,4 @@ export const SignOut = () => {
       </div>
     </>
   );
-};
+});

@@ -3,7 +3,7 @@ import '../../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
 import { FC, memo } from 'react';
 
-export const SignOut: FC = memo(() => {
+export const SignOut: FC = () => {
   SignOut.displayName = 'SignOut'
   const navigate = useNavigate()
 
@@ -24,4 +24,4 @@ export const SignOut: FC = memo(() => {
       </div>
     </>
   );
-});
+};

@@ -5,8 +5,8 @@ import { MainLayout } from '../layout/MainLayout';
 import { SignIn } from '../SignIn/SignIn';
 import { SignUp } from '../SignUp/SignUp';
 
+
 interface IAuthContext {
-  isAuth: boolean;
   setIsAuth: (isAuth: boolean) => void
 }
 export const Context = createContext<IAuthContext | null >(null);
@@ -14,20 +14,14 @@ export const Context = createContext<IAuthContext | null >(null);
 export const AppRouter: FC = () => {
   AppRouter.displayName = 'AppRouter';
 
-  const [isAuth, setIsAuth] = useState(false)
-
-  useEffect(() => {
-    const data = window.localStorage.getItem('isAuth');
-    if (data !== null) setIsAuth(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('isAuth', JSON.stringify(isAuth));
-  }, [isAuth]);
-
+  const [isAuth, setIsAuth] = useState(() => {
+    const  authState = window.localStorage.getItem('isAuth')
+    if(authState && JSON.parse(authState) === true) return true 
+    else return false
+  })
 
   return (
-    <Context.Provider value={ {isAuth, setIsAuth} }>
+    <Context.Provider value={ {setIsAuth} }>
       <Routes>
         {isAuth && <Route path="/" element={<MainLayout />}></Route>}
 

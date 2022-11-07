@@ -14,7 +14,7 @@ import { FormLink } from './../FormLink';
 import { Context } from '../AppRouter/AppRouter';
 
 
-export const SignIn: FC = memo(() => {
+export const SignIn: FC = () => {
   SignIn.displayName = 'SignIn';
   const navigate = useNavigate();
   const context = useContext(Context)
@@ -82,4 +82,4 @@ export const SignIn: FC = memo(() => {
       <FormBgImg src={signInImg} />
     </div>
   );
-});
+};

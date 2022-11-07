@@ -13,6 +13,7 @@ import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
 import { Context } from '../AppRouter/AppRouter';
 
+
 export const SignIn: FC = memo(() => {
   SignIn.displayName = 'SignIn';
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export const SignIn: FC = memo(() => {
       }
     });
     if (response) {
-      context?.setIsAuth(true)
+      window.localStorage.setItem('isAuth', JSON.stringify(context?.isAuth));
       return navigate('/');
     }
   };

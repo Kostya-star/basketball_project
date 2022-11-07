@@ -7,14 +7,15 @@ import { SignUp } from '../SignUp/SignUp';
 
 interface IAuthContext {
   isAuth: boolean;
-  setIsAuth: (isAuth: boolean) => void;
+  setIsAuth: (isAuth: boolean) => void
 }
-export const Context = createContext<IAuthContext | null>(null);
+export const Context = createContext<IAuthContext | null >(null);
 
-export const AppRouter: FC = memo(() => {
+export const AppRouter: FC = () => {
   AppRouter.displayName = 'AppRouter';
-  const [isAuth, setIsAuth] = useState(false);
-  
+
+  const [isAuth, setIsAuth] = useState(false)
+
   useEffect(() => {
     const data = window.localStorage.getItem('isAuth');
     if (data !== null) setIsAuth(JSON.parse(data));
@@ -24,8 +25,9 @@ export const AppRouter: FC = memo(() => {
     window.localStorage.setItem('isAuth', JSON.stringify(isAuth));
   }, [isAuth]);
 
+
   return (
-    <Context.Provider value={{ isAuth, setIsAuth }}>
+    <Context.Provider value={ {isAuth, setIsAuth} }>
       <Routes>
         {isAuth && <Route path="/" element={<MainLayout />}></Route>}
 
@@ -34,9 +36,9 @@ export const AppRouter: FC = memo(() => {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </Context.Provider>
+    </Context.Provider>  
   );
-});
+};
 
 // import React from 'react';
 // import { Route, Routes } from 'react-router-dom';

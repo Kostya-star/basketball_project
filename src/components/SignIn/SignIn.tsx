@@ -47,7 +47,8 @@ export const SignIn: FC = memo(() => {
       }
     });
     if (response) {
-      window.localStorage.setItem('isAuth', JSON.stringify(context?.isAuth));
+      context?.setIsAuth(true)
+      window.localStorage.setItem('isAuth', JSON.stringify(true));
       return navigate('/');
     }
   };

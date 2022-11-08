@@ -8,15 +8,18 @@
     text-align: center;
     border-right: 1px solid grey;
     border-bottom: 1px solid grey;
+
     button {
       background: none;
       border: none;
       cursor: pointer;
     }
+
     span {
       display: block;
     }
   }
+
   &__group {
     height: 50%;
   }
@@ -29,5 +32,24 @@
     height: 50%;
     display: flex;
     align-items: end;
+  }
+
+  &__button {
+    &:hover {
+      color: #FF768E;
+
+      svg path {
+        fill: #FF768E;
+      }
+    }
+
+    &_keepFocus {
+      color: #E4163A;
+
+      svg path {
+        fill: #E4163A;
+      }
+    }
+
   }
 }

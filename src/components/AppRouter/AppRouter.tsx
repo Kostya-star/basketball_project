@@ -1,5 +1,5 @@
 import { createContext, FC, memo, useEffect, useRef, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { NotFound } from '../../pages/NotFound';
 import { MainLayout } from '../layout/MainLayout';
 import { SignIn } from '../SignIn/SignIn';
@@ -13,11 +13,17 @@ export const Context = createContext<IAuthContext | null >(null);
 
 export const AppRouter: FC = () => {
   AppRouter.displayName = 'AppRouter';
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const [isAuth, setIsAuth] = useState(() => {
     const  authState = window.localStorage.getItem('isAuth')
     if(authState && JSON.parse(authState) === true) return true 
     else return false
+  })
+
+  useEffect(() => {
+    if(location.pathname === '/' && !isAuth) return navigate('/signIn')
   })
 
   return (

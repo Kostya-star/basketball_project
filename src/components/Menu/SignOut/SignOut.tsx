@@ -1,19 +1,33 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { ReactComponent as SignOutSVG } from '../../../assets/icons/menu__signOut.svg';
 import '../../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
-import { FC, memo } from 'react';
+import { FC } from 'react';
 
 export const SignOut: FC = () => {
-  SignOut.displayName = 'SignOut'
-  const navigate = useNavigate()
+  SignOut.displayName = 'SignOut';
+  const navigate = useNavigate();
+
+  const clearCache = () => {
+    if ('caches' in window) {
+      caches.keys().then((names) => {
+        names.forEach((name) => {
+          caches.delete(name);
+        });
+      });
+    }
+    window.location.reload();
+  };
 
   const onHandleSignOut = () => {
-    if(confirm('Do you really want to sign out?')) {
-      window.localStorage.clear()
-      return navigate('/SignIn');
+    if (confirm('Do you really want to sign out?')) {
+      window.localStorage.removeItem('isAuth');
+      navigate('/SignIn');
+      clearCache()
     }
-  }
-  
+  };
+
+
   return (
     <>
       <div className="menu__signOut">

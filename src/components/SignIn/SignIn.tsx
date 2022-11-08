@@ -1,4 +1,4 @@
-import { FC, useContext, memo } from 'react';
+import { FC, useContext, memo, useEffect } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
@@ -13,11 +13,10 @@ import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
 import { Context } from '../AppRouter/AppRouter';
 
-
 export const SignIn: FC = () => {
   SignIn.displayName = 'SignIn';
   const navigate = useNavigate();
-  const context = useContext(Context)
+  const context = useContext(Context);
 
   const initialValues = {
     login: '',
@@ -43,16 +42,15 @@ export const SignIn: FC = () => {
       if (error && error.response.status === 404) alert('Not found, 404 error!');
       if (error && error.response.status === 401) {
         alert('You need to sign up first!');
-        return navigate('/SignUp');
+        navigate('/SignUp');
       }
     });
     if (response) {
-      context?.setIsAuth(true)
+      context?.setIsAuth(true);
       window.localStorage.setItem('isAuth', JSON.stringify(true));
       return navigate('/');
     }
   };
-
 
   return (
     <div className="auth__wrapper">

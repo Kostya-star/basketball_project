@@ -35,7 +35,7 @@ export const SignOut: FC = () => {
   return (
     <>
       <div className="menu__signOut">
-        <button onClick={onHandleSignOut} type="submit">
+        <button onClick={onHandleSignOut} type="submit" className='menu__button'>
           <SignOutSVG/>
           <span>Sign out</span>
         </button>

@@ -35,9 +35,11 @@
   }
 
   &__button {
+    transition: 0.2s;
     &:hover {
       color: #FF768E;
-
+      transition: 0.2s;
+      
       svg path {
         fill: #FF768E;
       }

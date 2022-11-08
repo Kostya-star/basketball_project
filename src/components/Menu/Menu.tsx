@@ -13,13 +13,13 @@ export interface IMenuButtonProps {
 }
 
 export const Menu = () => {
-  const [isActive, setIsActive] = useState<boolean | number>(false);
+  const [isActive, setIsActive] = useState<boolean | number>();
+
   const menuCategories = ['Teams', 'Players'];
+  
   return (
     <div className="menu__wrapper">
       <div className="menu__group">
-        {/* <Teams isActive={isActive} setIsActive={setIsActive}/>
-        <Players isActive={isActive} setIsActive={setIsActive}/> */}
         {menuCategories.map((categoryName, index) => (
           <div key={index}>
             <button

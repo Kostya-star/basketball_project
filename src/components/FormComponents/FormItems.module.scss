@@ -19,7 +19,7 @@
     outline: none;
     border: none;
     border-radius: 4px;
-    transition: 0.3s ;
+    transition: 0.3s;
 
     &:hover {
       background-color: #D1D1D1;
@@ -45,10 +45,12 @@
     margin-top: 8px;
     cursor: pointer;
     transition: 0.3s;
+
     &_hover {
       &:hover {
         background-color: #FF5761;
       }
+
       &:active {
         background-color: #C60E2E;
       }
@@ -73,6 +75,7 @@
     font-size: 14px;
     margin-bottom: 8px;
     cursor: pointer;
+
     &_error {
       display: block;
       color: #E4163A;

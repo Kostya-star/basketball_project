@@ -6,7 +6,7 @@ export const Players = () => {
     <>
       <div className="menu__players">
         <button type="submit">
-          <PlayersSVG />
+          <PlayersSVG/>
           <span>Players</span>
         </button>
       </div>

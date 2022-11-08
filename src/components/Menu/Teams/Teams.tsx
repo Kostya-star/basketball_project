@@ -1,4 +1,4 @@
-import { ReactComponent as TeamsSVG } from '../../../assets/icons/menu__teams.svg';
+import{ReactComponent as TeamsSVG} from '../../../assets/icons/menu__team.svg'
 import '../../../scss/menu-common.scss'
 
 export const Teams = () => {
@@ -6,7 +6,7 @@ export const Teams = () => {
     <>
     <div className='menu__teams'>
       <button type="submit">
-        <TeamsSVG />
+        <TeamsSVG/>
         <span>Teams</span>
       </button>
     </div>

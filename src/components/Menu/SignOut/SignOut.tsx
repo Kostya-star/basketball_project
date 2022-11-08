@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { ReactComponent as SignOutSVG } from '../../../assets/icons/menu__signOut.svg';
 import '../../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +9,17 @@ export const SignOut: FC = () => {
 
   const clearCache = () => {
     if ('caches' in window) {
-      caches.keys().then((names) => {
-        names.forEach((name) => {
-          caches.delete(name);
+      caches
+        .keys()
+        .then((names) => {
+          names.forEach((name) => {
+            void caches.delete(name);
+          });
+        })
+        .catch((error) => {
+          alert('Error when signing out');
+          console.log(error);
         });
-      });
     }
     window.location.reload();
   };
@@ -23,16 +28,15 @@ export const SignOut: FC = () => {
     if (confirm('Do you really want to sign out?')) {
       window.localStorage.removeItem('isAuth');
       navigate('/SignIn');
-      clearCache()
+      clearCache();
     }
   };
-
 
   return (
     <>
       <div className="menu__signOut">
         <button onClick={onHandleSignOut} type="submit">
-          <SignOutSVG />
+          <SignOutSVG/>
           <span>Sign out</span>
         </button>
       </div>

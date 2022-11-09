@@ -2,15 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 export interface ICounterState {
-  isPasswordVisible: boolean
-  // isAuth: boolean 
+  test: number
 }
 
-const isAuthInitial = window.localStorage.getItem('isAuth')
 
 const initialState: ICounterState = {
-  isPasswordVisible: false,
-  // isAuth: isAuthInitial && JSON.parse(isAuthInitial)
+  test: 0,
 }
 
 
@@ -18,16 +15,13 @@ export const authSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    onTogglePasswordVisible: (state) => {
-      state.isPasswordVisible = !state.isPasswordVisible
+    testAction: (state, action: PayloadAction<number>) => {
+      console.log(state.test);
+      state.test = state.test + action.payload
     },
-  //   onToggleIsAuth: (state) => {
-  //     const isAuthIData = window.localStorage.getItem('isAuth')
-  //     if(isAuthIData && JSON.parse(isAuthIData)) state.isAuth = true 
-  // }
 }
 })
 
-export const { onTogglePasswordVisible } = authSlice.actions
+export const { testAction } = authSlice.actions
 
 export default authSlice.reducer

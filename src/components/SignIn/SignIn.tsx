@@ -11,8 +11,8 @@ import '../../scss/auth-common.scss';
 import { ISignInFormikValues } from './../../types/types';
 import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
-import { useAppDispatch } from './../../redux/hooks';
-// import { onToggleIsAuth } from './../../redux/slices/authSlice'
+import { useAppDispatch, useAppSelector } from './../../redux/hooks';
+import { testAction } from '../../redux/slices/authSlice';
 
 
 export const SignIn: FC = () => {
@@ -20,7 +20,6 @@ export const SignIn: FC = () => {
 
   const navigate = useNavigate();
 
-  // const dispatch = useAppDispatch()
 
   const initialValues = {
     login: '',
@@ -51,7 +50,6 @@ export const SignIn: FC = () => {
     });
     if (response) {
       window.localStorage.setItem('isAuth', JSON.stringify(true))
-      // dispatch(onToggleIsAuth())
       return navigate('/');
     }
   };

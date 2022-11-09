@@ -13,7 +13,7 @@ export interface IMenuButtonProps {
 }
 
 export const Menu = () => {
-  const [isActive, setIsActive] = useState<boolean | number>();
+  const [isActive, setIsActive] = useState<number>();
 
   const menuCategories = ['Teams', 'Players'];
   

@@ -13,7 +13,8 @@ export interface IMenuButtonProps {
 }
 
 export const Menu = () => {
-  const [isActive, setIsActive] = useState<number>();
+  const [activeCategory, setActiveCategory] = useState<number | boolean>(0);
+  
 
   const menuCategories = ['Teams', 'Players'];
   
@@ -25,10 +26,10 @@ export const Menu = () => {
             <button
               type="submit"
               className={classnames({
-                'menu__button': Number(isActive) !== index,
-                'menu__button_keepFocus': Number(isActive) === index
+                'menu__button': Number(activeCategory) !== index,
+                'menu__button_keepFocus': Number(activeCategory) === index
               }) }
-              onClick={() => setIsActive(index)}
+              onClick={() => setActiveCategory(index)}
             >
               {categoryName === 'Teams' && (<div className='menu__teams'><TeamsSVG /><span>{categoryName}</span></div>)}
 

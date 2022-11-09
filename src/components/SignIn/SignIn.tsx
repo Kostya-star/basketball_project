@@ -1,4 +1,4 @@
-import { FC} from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
@@ -12,14 +12,19 @@ import { ISignInFormikValues } from './../../types/types';
 import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
-import { testAction } from '../../redux/slices/authSlice';
-
+import { login } from '../../redux/slices/authSlice';
 
 export const SignIn: FC = () => {
   SignIn.displayName = 'SignIn';
 
   const navigate = useNavigate();
 
+  const {isAuth, unauthorized} = useAppSelector((state) => ({
+    isAuth: state.auth.isAuth,
+    unauthorized: state.auth.error.unauthorized,
+    // notFound: state.auth.error.notFound
+  }));
+  const dispatch = useAppDispatch();
 
   const initialValues = {
     login: '',
@@ -39,21 +44,14 @@ export const SignIn: FC = () => {
       ),
   });
 
-  const onSubmit = async (values: ISignInFormikValues) => {
-    const { ...signInUserData } = values;
-    const response = await authAPI.signIn(signInUserData).catch((error) => {
-      if (error && error.response.status === 404) alert('Not found, 404 error!');
-      if (error && error.response.status === 401) {
-        alert('You need to sign up first!');
-        navigate('/SignUp');
-      }
-    });
-    if (response) {
-      window.localStorage.setItem('isAuth', JSON.stringify(true))
-      return navigate('/');
-    }
+  const onSubmit = async (loginData: ISignInFormikValues) => {
+    await dispatch(login(loginData));
   };
 
+  if (isAuth) navigate('/')
+
+  if(unauthorized) navigate('/SignUp')
+  // if(notFound) navigate('/notFound')
 
   return (
     <div className="auth__wrapper">

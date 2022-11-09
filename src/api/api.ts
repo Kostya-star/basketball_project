@@ -1,5 +1,5 @@
 import {client} from './baseRequest'
-import { ISignInFormikValues, ISignUpFormikValues } from './../types/types';
+import { ISignInFormikValues, ISignUpFormikValues } from './../types/types'
 
 
 interface ISignInRequest extends ISignInFormikValues{}
@@ -22,3 +22,9 @@ export const authAPI = {
     return await client.post<IResponseType>(`Auth/SignUp`, signUpUserData);
   },
 };
+
+export const authTeam = {
+  async getTeams() {
+    return await client.get(`/Team/GetTeams`)
+  }
+}

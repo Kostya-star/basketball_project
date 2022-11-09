@@ -10,3 +10,8 @@ export interface ISignUpFormikValues extends ISignInFormikValues {
   confirmPassword: string;
   check: boolean;
 }
+
+export enum ServerResponseEnum {
+  Success = 200,
+  Error = 401,
+}

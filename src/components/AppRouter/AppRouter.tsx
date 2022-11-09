@@ -16,8 +16,10 @@ export const AppRouter: FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const isAuth = useAppSelector(state => state.auth.isAuth)
-  
+  // const isAuth = useAppSelector(state => state.auth.isAuth)
+
+  const isAuth = window.localStorage.getItem('isAuth')
+
   useEffect(() => {
     if(location.pathname === '/' && !isAuth) return navigate('/signIn')
   })

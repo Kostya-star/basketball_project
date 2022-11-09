@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ICounterState {
   isPasswordVisible: boolean
-  isAuth: boolean 
+  // isAuth: boolean 
 }
 
 const isAuthInitial = window.localStorage.getItem('isAuth')
 
 const initialState: ICounterState = {
   isPasswordVisible: false,
-  isAuth: isAuthInitial && JSON.parse(isAuthInitial)
+  // isAuth: isAuthInitial && JSON.parse(isAuthInitial)
 }
 
 
@@ -21,13 +21,13 @@ export const authSlice = createSlice({
     onTogglePasswordVisible: (state) => {
       state.isPasswordVisible = !state.isPasswordVisible
     },
-    onToggleIsAuth: (state) => {
-      const isAuthIData = window.localStorage.getItem('isAuth')
-      if(isAuthIData && JSON.parse(isAuthIData)) state.isAuth = true 
-  }
+  //   onToggleIsAuth: (state) => {
+  //     const isAuthIData = window.localStorage.getItem('isAuth')
+  //     if(isAuthIData && JSON.parse(isAuthIData)) state.isAuth = true 
+  // }
 }
 })
 
-export const { onTogglePasswordVisible, onToggleIsAuth } = authSlice.actions
+export const { onTogglePasswordVisible } = authSlice.actions
 
 export default authSlice.reducer

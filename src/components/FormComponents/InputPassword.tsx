@@ -1,10 +1,11 @@
-import { useState, FC } from 'react';
-import { useField, Field, ErrorMessage } from 'formik';
+import { FC } from 'react';
+import { useField, ErrorMessage } from 'formik';
 import s from './FormItems.module.scss';
-// import {Icon, closedEye, openedEye} from './Icon';
 import { ReactComponent as EyeClosed } from '../../assets/icons/eye-closed.svg';
 import { ReactComponent as EyeOpened } from '../../assets/icons/eye-open.svg';
 import { GenericType } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { onTogglePasswordVisible } from '../../redux/slices/authSlice';
 
 interface InputPasswordProps {
   label: string;
@@ -12,13 +13,14 @@ interface InputPasswordProps {
 }
 
 export const InputPassword: FC<InputPasswordProps> = ({ label, ...props }) => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const isPasswordVisible = useAppSelector(state => state.auth.isPasswordVisible)
+  const dispatch = useAppDispatch()
 
   const [field, meta] = useField(props);
 
-  const onTogglePasswordSVG = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
+  const onHandlePasswordVisible = () => {
+    dispatch(onTogglePasswordVisible())
+  }
 
   return (
     <div className={s.form__group}>
@@ -31,7 +33,7 @@ export const InputPassword: FC<InputPasswordProps> = ({ label, ...props }) => {
           type={!isPasswordVisible ? 'password' : 'text'}
           {...field}
         />
-        <div onClick={onTogglePasswordSVG}>
+        <div onClick={onHandlePasswordVisible}>
           {isPasswordVisible ? (
             <EyeOpened className={s.password__eye__opened} />
           ) : (

@@ -1,5 +1,5 @@
-import { FC, useContext, memo, useEffect } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { FC} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import * as Yup from 'yup';
@@ -11,12 +11,16 @@ import '../../scss/auth-common.scss';
 import { ISignInFormikValues } from './../../types/types';
 import { FormBgImg } from '../FormBgImg';
 import { FormLink } from './../FormLink';
-import { Context } from '../AppRouter/AppRouter';
+import { useAppDispatch } from './../../redux/hooks';
+import { onToggleIsAuth } from './../../redux/slices/authSlice';
+
 
 export const SignIn: FC = () => {
   SignIn.displayName = 'SignIn';
+
   const navigate = useNavigate();
-  const context = useContext(Context);
+
+  const dispatch = useAppDispatch()
 
   const initialValues = {
     login: '',
@@ -46,11 +50,12 @@ export const SignIn: FC = () => {
       }
     });
     if (response) {
-      context?.setIsAuth(true);
-      window.localStorage.setItem('isAuth', JSON.stringify(true));
+      window.localStorage.setItem('isAuth', JSON.stringify(true))
+      dispatch(onToggleIsAuth())
       return navigate('/');
     }
   };
+
 
   return (
     <div className="auth__wrapper">

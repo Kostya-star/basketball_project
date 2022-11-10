@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import * as Yup from 'yup';
@@ -9,27 +9,40 @@ import { InputText } from './../FormComponents/InputText';
 import { authAPI } from '../../api/api';
 import '../../scss/auth-common.scss';
 import { ISignInFormikValues } from './../../types/types';
-import { FormBgImg } from '../FormBgImg';
+import { FormBg } from '../FormBg';
 import { FormLink } from './../FormLink';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
-import { login } from '../../redux/slices/authSlice';
+import { login, authSlice } from '../../redux/slices/authSlice';
+import { RespError } from './../RespError';
 
-export const SignIn: FC = () => {
+interface ISignInProps {
+  // children: JSX.Element|JSX.Element[];
+  children?: React.ReactNode;
+}
+
+export const SignIn: FC<ISignInProps> = () => {
   SignIn.displayName = 'SignIn';
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const {isAuth, unauthorized} = useAppSelector((state) => ({
+  const { isAuth, unauthorized } = useAppSelector((state) => ({
     isAuth: state.auth.isAuth,
     unauthorized: state.auth.error.unauthorized,
   }));
   const dispatch = useAppDispatch();
 
   // gives an important error. Fix later!
-    if (isAuth) navigate('/')
+  if (isAuth) navigate('/');
 
-    // if(unauthorized) navigate('/SignUp')
-
+  useEffect(() => {
+    if (unauthorized) {
+      const authTimer = setTimeout(() => {
+        dispatch(authSlice.actions.setError({ unauthorized: false }));
+      }, 2500);
+      return () => clearTimeout(authTimer);
+    }
+  }, [unauthorized]);
 
   const initialValues = {
     login: '',
@@ -52,7 +65,6 @@ export const SignIn: FC = () => {
   const onSubmit = async (loginData: ISignInFormikValues) => {
     await dispatch(login(loginData));
   };
-
 
   return (
     <div className="auth__wrapper">
@@ -79,9 +91,9 @@ export const SignIn: FC = () => {
         </div>
       </div>
 
-      <div>dfghsdfgfdfgfddfgn
-        <FormBgImg src={signInImg} />
-      </div>
+          <RespError text="User with the specified username / password was not found." />
+
+      <FormBg src={signInImg} />
     </div>
   );
 };

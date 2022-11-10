@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import '../scss/auth-common.scss';
 
-interface IFormBgImgProps {
+interface IFormBgProps {
   src: string;
 }
 
-export const FormBgImg: FC<IFormBgImgProps> = ({ src }) => {
+export const FormBg: FC<IFormBgProps> = ({ src }) => {
+
   return (
-    <div className="auth__mainImg">
-      <p className="auth__mainImg_bg">
+    <div className="auth__background">
+      <p className="auth__background_img">
         <img src={src} alt="boys playing basketball" />
       </p>
     </div>

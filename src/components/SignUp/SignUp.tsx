@@ -7,18 +7,19 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import { authAPI } from './../../api/api';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import '../../scss/auth-common.scss';
 import { ISignUpFormikValues } from '../../types/types';
-import { FormBgImg } from '../FormBgImg';
+import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { signUp } from '../../redux/slices/authSlice';
+import { signUp, authSlice } from '../../redux/slices/authSlice';
+import { RespError } from '../RespError';
 
 export const SignUp: FC = () => {
   const navigate = useNavigate();
 
-  const { isSignedUp } = useAppSelector(({ auth }) => ({
+  const { isSignedUp, userExists } = useAppSelector(({ auth }) => ({
     isSignedUp: auth.isSignedUp,
     userExists: auth.error.userExists,
     userName: auth.signUpResp.name,
@@ -26,9 +27,17 @@ export const SignUp: FC = () => {
 
   const dispatch = useAppDispatch();
 
-    // if (isSignedUp) {
-    //   navigate('/SignIn');
-    // }
+
+  useEffect(() => {
+    if (userExists) {
+      const authTimer = setTimeout(() => {
+        dispatch(authSlice.actions.setError({userExists: false}))
+      }, 2500);
+      return () => clearTimeout(authTimer);
+    }
+  }, [userExists]);
+
+  if(isSignedUp) navigate('/SignIn')
 
   const initialValues = {
     userName: '',
@@ -97,7 +106,9 @@ export const SignUp: FC = () => {
         </div>
       </div>
 
-      <FormBgImg src={SignUpImg} />
+      <RespError text="User with the specified login already exists." />
+
+      <FormBg src={SignUpImg} />
     </div>
   );
 };

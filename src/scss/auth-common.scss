@@ -9,7 +9,7 @@
     position: fixed;
   }
 
-  &__mainImg {
+  &__background {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,7 @@
     height: 100%;
     width: 50%;
 
-    &_bg {
+    &_img {
       &::before {
         content: "";
         position: absolute;
@@ -29,6 +29,40 @@
         z-index: -1;
       }
 
+    }
+
+
+  }
+
+  &__error {
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    border-radius: 4px;
+    padding: 10px 15px;
+    color: white;
+    background-color: #FF5761;
+
+    &_show {
+      animation: fadeInUp 0.5s ease backwards;
+
+      @keyframes fadeInUp {
+        0% {
+          transform: translate(50px, 0px);
+          opacity: 0;
+        }
+
+        100% {
+          transform: translate(0px, 0);
+          opacity: 1;
+        }
+      }
+    }
+
+    &_hide {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 2s, opacity 2s linear;
     }
   }
 }

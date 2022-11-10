@@ -75,7 +75,6 @@ export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispat
     }
   });
   if (response?.status === RespStatusEnum.SUCCESS) {
-    dispatch(authSlice.actions.setError({userExists: false}))
     dispatch(authSlice.actions.signUpSuccess({signedUp: true, SignUpData: response.data}))
   }
 

@@ -1,10 +1,5 @@
 import {client} from './baseRequest'
-import { IResponseType, ISignInFormikValues, ISignUpFormikValues } from './../types/types'
-
-
-interface ISignInRequest extends ISignInFormikValues{}
-
-type ISignUpRequest = Omit<ISignUpFormikValues, 'confirmPassword' |  'check'>
+import { IResponseType, ISignInFormikValues, ISignInRequest, ISignUpFormikValues, ISignUpRequest } from './../types/types'
 
 
 export const authAPI = {

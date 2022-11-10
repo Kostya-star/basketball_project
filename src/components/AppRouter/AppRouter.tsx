@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { NotFound } from '../../pages/NotFound';
+import { useAppSelector } from '../../redux/hooks';
 import { MainLayout } from '../layout/MainLayout';
 import { SignIn } from '../SignIn/SignIn';
 import { SignUp } from '../SignUp/SignUp';
@@ -10,7 +11,9 @@ export const AppRouter: FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const isAuth = window.localStorage.getItem('isAuth')
+  const {isAuth} = useAppSelector(({auth}) => ({
+    isAuth: auth.isAuth
+  }))
 
   useEffect(() => {
     if(location.pathname === '/' && !isAuth) return navigate('/signIn')

@@ -7,14 +7,28 @@ import { InputPassword } from './../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import { authAPI } from './../../api/api';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import '../../scss/auth-common.scss';
 import { ISignUpFormikValues } from '../../types/types';
 import { FormBgImg } from '../FormBgImg';
 import { FormLink } from '../FormLink';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { signUp } from '../../redux/slices/authSlice';
 
 export const SignUp: FC = () => {
   const navigate = useNavigate();
+
+  const { isSignedUp } = useAppSelector(({ auth }) => ({
+    isSignedUp: auth.isSignedUp,
+    userExists: auth.error.userExists,
+    userName: auth.signUpResp.name,
+  }));
+
+  const dispatch = useAppDispatch();
+
+    // if (isSignedUp) {
+    //   navigate('/SignIn');
+    // }
 
   const initialValues = {
     userName: '',
@@ -49,19 +63,9 @@ export const SignUp: FC = () => {
     const { userName, login, password } = values;
     const signUpUserData = { userName, login, password };
 
-    const response = await authAPI.signUp(signUpUserData).catch((error) => {
-      if (error && error.response.status === 409) {
-        alert(`Login: '${JSON.parse(error.config.data).login}' already exists`);
-      }
-      if (error && error.response.status === 404) alert('Not found, 404 error!');
-    });
-    if (response) {
-      alert(`Thank you for your registration, ${response.data.name}!`);
-      navigate('/SignIn');
-    }
+    await dispatch(signUp(signUpUserData));
   };
 
-  
   return (
     <div className="auth__wrapper">
       <div className="form__wrapper">

@@ -11,6 +11,11 @@ export interface ISignUpFormikValues extends ISignInFormikValues {
   check: boolean;
 }
 
+// REQUESTS TYPES ---------------------------
+export interface ISignInRequest extends ISignInFormikValues{}
+export type ISignUpRequest = Omit<ISignUpFormikValues, 'confirmPassword' |  'check'>
+//  -----------------------------------
+
 export interface IResponseType {
   name: string
   avatarUrl: string
@@ -18,6 +23,7 @@ export interface IResponseType {
 }
 
 export enum RespStatusEnum {
-  Success = 200,
-  Error = 401,
+  SUCCESS = 200,
+  UNREGISTRED = 401,
+  EXISTS = 409,
 }

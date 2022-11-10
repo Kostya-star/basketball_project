@@ -28,7 +28,7 @@ export const SignIn: FC = () => {
   // gives an important error. Fix later!
     if (isAuth) navigate('/')
 
-    if(unauthorized) navigate('/SignUp')
+    // if(unauthorized) navigate('/SignUp')
 
 
   const initialValues = {
@@ -79,7 +79,9 @@ export const SignIn: FC = () => {
         </div>
       </div>
 
-      <FormBgImg src={signInImg} />
+      <div>dfghsdfgfdfgfddfgn
+        <FormBgImg src={signInImg} />
+      </div>
     </div>
   );
 };

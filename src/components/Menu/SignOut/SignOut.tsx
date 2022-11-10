@@ -26,7 +26,7 @@ export const SignOut: FC = memo(() => {
 
   const onHandleSignOut = () => {
     if (confirm('Do you really want to sign out?')) {
-      window.localStorage.removeItem('isAuth');
+      window.localStorage.setItem('isAuth', JSON.stringify(false));
       navigate('/SignIn');
       clearCache();
     }

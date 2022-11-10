@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
@@ -22,9 +22,14 @@ export const SignIn: FC = () => {
   const {isAuth, unauthorized} = useAppSelector((state) => ({
     isAuth: state.auth.isAuth,
     unauthorized: state.auth.error.unauthorized,
-    // notFound: state.auth.error.notFound
   }));
   const dispatch = useAppDispatch();
+
+  // gives an important error. Fix later!
+    if (isAuth) navigate('/')
+
+    if(unauthorized) navigate('/SignUp')
+
 
   const initialValues = {
     login: '',
@@ -48,10 +53,6 @@ export const SignIn: FC = () => {
     await dispatch(login(loginData));
   };
 
-  if (isAuth) navigate('/')
-
-  if(unauthorized) navigate('/SignUp')
-  // if(notFound) navigate('/notFound')
 
   return (
     <div className="auth__wrapper">

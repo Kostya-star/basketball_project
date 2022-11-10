@@ -11,7 +11,13 @@ export interface ISignUpFormikValues extends ISignInFormikValues {
   check: boolean;
 }
 
-export enum ServerResponseEnum {
+export interface IResponseType {
+  name: string
+  avatarUrl: string
+  token: string
+}
+
+export enum RespStatusEnum {
   Success = 200,
   Error = 401,
 }

@@ -1,53 +1,56 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authAPI } from '../../api/api';
-import { ISignInFormikValues, ServerResponseEnum } from '../../types/types';
+import { IResponseType, ISignInFormikValues, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
 export interface ICounterState {
   isAuth: boolean;
-  error: {unauthorized: boolean}
+  error: { unauthorized: boolean };
+  response: IResponseType;
 }
 
 const initialState: ICounterState = {
   isAuth: false,
   error: {
     unauthorized: false,
-    // notFound: false
-  }
+  },
+  response: {
+    name: '',
+    avatarUrl: '',
+    token: '',
+  },
 };
 
 export const authSlice = createSlice({
-  name: 'counter',
+  name: 'auth',
   initialState,
   reducers: {
-    signInSuccess(state, action) {
-      window.localStorage.setItem('isAuth', JSON.stringify(true))
-      state.isAuth = action.payload
+    signInSuccess(state, action: PayloadAction<{ isAuth: boolean; signInData: IResponseType }>) {
+      window.localStorage.setItem('isAuth', JSON.stringify(true));
+      state.isAuth = action.payload.isAuth;
+      state.response = action.payload.signInData;
     },
-    signInFail(state, action) {
-      // state.error.notFound = action.payload
-      state.error.unauthorized = action.payload
+    signInFail(state, action: PayloadAction<boolean>) {
+      state.error.unauthorized = action.payload;
     },
   },
 });
 
-export const { signInSuccess } = authSlice.actions;
-
 export const login = (loginData: ISignInFormikValues) => async (dispatch: AppDispatch) => {
-  const loginDataResp = await authAPI.signIn(loginData).catch((error) => {
-    
-    // if (error.response.status === 404) {
-    //   dispatch(authSlice.actions.signInFail(true))
-    // }
-    if (error.response.status === ServerResponseEnum.Error) {
-      dispatch(authSlice.actions.signInFail(true))
-    };
+  const response = await authAPI.signIn(loginData)
+    .catch((error) => {
+      if (error.response.status === RespStatusEnum.Error) {
+        dispatch(authSlice.actions.signInFail(true));
+      }
   });
 
-  if (loginDataResp && loginDataResp.status === ServerResponseEnum.Success) {
-    dispatch(authSlice.actions.signInSuccess(true));
+  if (response?.status === RespStatusEnum.Success) {
+    dispatch(authSlice.actions.signInSuccess({ isAuth: true, signInData: response.data }));
   }
-
 };
+
+// export 
+
+export const { signInSuccess, signInFail } = authSlice.actions;
 
 export default authSlice.reducer;

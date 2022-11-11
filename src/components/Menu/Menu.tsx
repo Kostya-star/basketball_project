@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Players } from './Players/Players';
+import { useState, useEffect } from 'react';
 import { SignOut } from './SignOut/SignOut';
-import { Teams } from './Teams/Teams';
 import '../../scss/menu-common.scss';
 import classnames from 'classnames';
 import { ReactComponent as TeamsSVG } from '../../assets/icons/menu__team.svg';
 import { ReactComponent as PlayersSVG } from '../../assets/icons/menu__players.svg';
+import { useNavigate } from 'react-router-dom'
+
 
 export interface IMenuButtonProps {
   isActive: boolean;
@@ -14,10 +14,19 @@ export interface IMenuButtonProps {
 
 export const Menu = () => {
   const [activeCategory, setActiveCategory] = useState<number | boolean>(0);
+  const navigate = useNavigate()
   
+  useEffect(() => {
+    navigate('/Teams')
+  }, [])
 
-  const menuCategories = ['Teams', 'Players'];
   
+  const onToggleRoute = (categoryName: string) => {
+    categoryName === 'Teams' ? navigate('/Teams') : navigate('/Players')
+  }
+  
+  const menuCategories = ['Teams', 'Players'];
+
   return (
     <div className="menu__wrapper">
       <div className="menu__group">
@@ -31,9 +40,9 @@ export const Menu = () => {
               }) }
               onClick={() => setActiveCategory(index)}
             >
-              {categoryName === 'Teams' && (<div className='menu__teams'><TeamsSVG /><span>{categoryName}</span></div>)}
+              {categoryName === 'Teams' && (<div className='menu__teams' onClick={() => onToggleRoute(categoryName)}><TeamsSVG /><span>{categoryName}</span></div>)}
 
-              {categoryName === 'Players' && (<><PlayersSVG /><span>{categoryName}</span></>)}
+              {categoryName === 'Players' && (<div onClick={() => onToggleRoute(categoryName)}><PlayersSVG /><span>{categoryName}</span></div>)}
 
             </button>
           </div>

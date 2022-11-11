@@ -3,8 +3,10 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { NotFound } from '../../pages/NotFound';
 import { useAppSelector } from '../../redux/hooks';
 import { MainLayout } from '../layout/MainLayout';
+import { Players } from '../Players/Players';
 import { SignIn } from '../SignIn/SignIn';
 import { SignUp } from '../SignUp/SignUp';
+import { Teams } from '../Teams/Teams';
 
 
 export const AppRouter: FC = () => {
@@ -22,7 +24,10 @@ export const AppRouter: FC = () => {
 
   return (
       <Routes>
-        {isAuth && <Route path="/" element={<MainLayout />}></Route>}
+        {isAuth && <Route path="/" element={<MainLayout />}>
+            <Route path='/Teams' element={<Teams/>}/>
+            <Route path='/Players' element={<Players/>}/>
+          </Route>}
 
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/SignIn" element={<SignIn />} />

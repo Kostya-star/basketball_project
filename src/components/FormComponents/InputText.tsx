@@ -6,7 +6,7 @@ import { GenericType } from '../../types/types';
 
 interface InputTextProps {
   label: string;
-  name: GenericType<'login' | 'userName'>;
+  name: GenericType<'login' | 'userName' | 'team_name' | 'team_division' | 'team_conference' | 'team_year'>;
 }
 
 export const InputText: FC<InputTextProps> = ({ label, ...props }) => {

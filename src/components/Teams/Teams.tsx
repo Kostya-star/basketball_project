@@ -1,21 +1,41 @@
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { setTeams } from '../../redux/slices/teamsSlice';
+import { useAppDispatch, useAppSelector } from './../../redux/hooks';
 
 export const Teams = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { teams } = useAppSelector(({ teams }) => ({
+    teams: teams.teams,
+  }));
+
+  const getTeams = async () =>
+    await axios
+      .get('http://dev.trainee.dex-it.ru/api/Team/GetTeams', {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
+        },
+      })
+      .then((resp) => {
+        console.log(resp.data.data);
+
+        if (JSON.stringify(resp.data.data) !== '[]') dispatch(setTeams(resp.data.data));
+        else return navigate('/NoTeams');
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('error when fetching teams');
+      });
 
   useEffect(() => {
-    void axios.get('Team/GetTeams/')
-    .then(resp => console.log(resp))
+    void getTeams();
   }, []);
 
-  // useEffect(() => {
-  //   void fetch(
-  //     'https://thawing-gorge-05089.herokuapp.com/http://dev.trainee.dex-it.ru/api/Team/GetTeams/')
-  //     .then(async (resp) =>  await resp.json().then(data => console.log(data)))
-  //   // .then(data => console.log(data))
-  //   // void axios.get('https://thawing-gorge-05089.herokuapp.com/http://dev.trainee.dex-it.ru/api/Team/GetTeams/')
-  //   //   .then(resp => console.log(resp))
-  // }, []);
-
-  return <div>Teams</div>;
+  return (
+    <div>
+      Teams
+    </div>
+  );
 };

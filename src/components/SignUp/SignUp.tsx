@@ -37,7 +37,6 @@ export const SignUp: FC = () => {
     }
   }, [userExists]);
 
-  if(isSignedUp) navigate('/SignIn')
 
   const initialValues = {
     userName: '',

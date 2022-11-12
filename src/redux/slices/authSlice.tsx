@@ -32,6 +32,7 @@ const initialState: ICounterState = {
   isSignedUp: false 
 };
 
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -41,7 +42,6 @@ export const authSlice = createSlice({
       state.signInResp = action.payload.signInData;
     },
     signUpSuccess(state, action: PayloadAction<{signedUp: boolean, SignUpData: IResponseType}>) {
-      state.isSignedUp = action.payload.signedUp
       state.signUpResp = action.payload.SignUpData
     },
     setError(state, action: PayloadAction<{unauthorized?: boolean, userExists?: boolean}>) {
@@ -62,7 +62,8 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
 
   if (response?.status === RespStatusEnum.SUCCESS) {
     window.localStorage.setItem('isAuth', JSON.stringify(true));
-    dispatch(authSlice.actions.signInSuccess({ isAuth: true, signInData: response.data }));
+    dispatch(authSlice.actions.signInSuccess({ isAuth: true, signInData: response.data}));
+    window.localStorage.setItem('TOKEN', response.data.token)
   }
 };
 
@@ -75,6 +76,7 @@ export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispat
     }
   });
   if (response?.status === RespStatusEnum.SUCCESS) {
+    alert('you sucessfully signed up')
     dispatch(authSlice.actions.signUpSuccess({signedUp: true, SignUpData: response.data}))
   }
 

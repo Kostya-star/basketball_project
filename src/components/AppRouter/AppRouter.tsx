@@ -6,8 +6,9 @@ import { MainLayout } from '../layout/MainLayout';
 import { Players } from '../Players/Players';
 import { SignIn } from '../SignIn/SignIn';
 import { SignUp } from '../SignUp/SignUp';
-import { NoTeams } from '../Teams/NoTeams';
+import { TeamsEmpty } from '../Teams/TeamsEmpty/TeamsEmpty';
 import { Teams } from '../Teams/Teams';
+import { TeamCreate } from '../Teams/TeamCreate/TeamCreate';
 
 export const AppRouter: FC = () => {
   const location = useLocation();
@@ -25,9 +26,10 @@ export const AppRouter: FC = () => {
     <Routes>
       {isAuth && (
         <Route path="/" element={<MainLayout />}>
-          <Route path="/Teams" element={<Teams />} />
-          <Route path="/NoTeams" element={<NoTeams />} />
-          <Route path="/Players" element={<Players />} />
+          <Route path="Teams" element={<Teams />} />
+          <Route path="TeamsEmpty" element={<TeamsEmpty />} />
+          <Route path="/TeamCreate" element={<TeamCreate />} />
+          <Route path="Players" element={<Players />} />
         </Route>
       )}
 

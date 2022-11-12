@@ -2,12 +2,11 @@
   &__wrapper {
     display: flex;
     flex-direction: column;
-    padding: 30px 50px;
-    position: fixed;
+    width: 140px;
+    // padding: 30px 50px;
+    // position: fixed;
     height: calc(100vh - 145px);
     text-align: center;
-    border-right: 1px solid grey;
-    border-bottom: 1px solid grey;
 
     button {
       background: none;
@@ -21,7 +20,10 @@
   }
 
   &__group {
+    display: flex;
+    flex-direction: column;
     height: 50%;
+    padding-top: 35px;
   }
 
   &__teams {
@@ -29,6 +31,8 @@
   }
 
   &__signOut {
+    display: flex;
+    justify-content: center;
     height: 50%;
     display: flex;
     align-items: end;

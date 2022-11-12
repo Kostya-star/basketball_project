@@ -1,4 +1,13 @@
-.layout__container {
-  background-color: red;
-  width: 1300px;
+.layout {
+  &__container {
+    display: flex;
+    height: calc(100vh - 84px);
+  }
+  &__children__container {
+    display: flex;
+    padding: 32px 80px;
+    background-color: #F6F6F6;
+    width: 100%;
+  }
+
 }

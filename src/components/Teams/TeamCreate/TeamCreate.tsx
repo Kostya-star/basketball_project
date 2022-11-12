@@ -1,8 +1,8 @@
-import s from './TeamCreate.module.scss';
-import team_createIMG from '../../../assets/img/TeamCreate/team_createIMG.png';
-import { InputText } from '../../FormComponents/InputText';
-import { Form, Formik } from 'formik';
-import { InputSubmit } from '../../FormComponents/InputSubmit';
+import { Form, Formik } from 'formik'
+import team_createIMG from '../../../assets/img/TeamCreate/team_createIMG.png'
+import { InputText } from '../../FormComponents/InputText'
+import { InputSubmit } from '../../FormComponents/InputSubmit'
+import s from './TeamCreate.module.scss'
 
 interface INewTeamValues {
   team_name: string;
@@ -51,7 +51,7 @@ export const TeamCreate = () => {
                   <InputText label="Year of foundation" name="team_year" />
                   <InputSubmit value='Save' name='button'/>
                 </Form>
-              );
+              )
             }}
           </Formik>
           <button>Cancel</button>
@@ -59,5 +59,5 @@ export const TeamCreate = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

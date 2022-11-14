@@ -49,13 +49,14 @@ export const TeamCreate = () => {
                   <InputText label="Division" name="team_division" />
                   <InputText label="Conference" name="team_conference" />
                   <InputText label="Year of foundation" name="team_year" />
-                  <InputSubmit value='Save' name='button'/>
+                  <div className={s.team__create__buttons}>
+                    <button>Cancel</button>
+                    <InputSubmit value="Save" name="button" />
+                  </div>
                 </Form>
               );
             }}
           </Formik>
-          <button>Cancel</button>
-          <button>Save</button>
         </div>
       </div>
     </div>

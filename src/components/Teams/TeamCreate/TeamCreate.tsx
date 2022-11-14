@@ -1,9 +1,12 @@
 import s from './TeamCreate.module.scss';
 import team_createIMG from '../../../assets/img/TeamCreate/team_createIMG.png';
 import { InputText } from '../../FormComponents/InputText';
-import { Form, Formik } from 'formik';  
+import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { ChangeEvent } from 'react';
+import { saveImage } from '../../../redux/slices/teamsSlice';
 
 interface INewTeamValues {
   team_name: string;
@@ -16,19 +19,29 @@ const validationSchema = Yup.object({
   team_name: Yup.string()
     .required('Required')
     .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
-    team_division: Yup.string()
+  team_division: Yup.string()
     .required('Required')
     .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
-    team_conference: Yup.string()
+  team_conference: Yup.string()
     .required('Required')
     .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
-    team_year: Yup.string()
+  team_year: Yup.string()
     .required('Required')
     .matches(/^[0-9]+$/, 'Field can only contain numbers'),
 });
 
-
 export const TeamCreate = () => {
+  const dispatch = useAppDispatch();
+  const {teamImg} = useAppSelector(({teams}) => ({
+    teamImg: teams.teamImg
+  }))
+
+  const onSavePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      void dispatch(saveImage(e.target.files[0]))
+    }
+  }
+
   return (
     <div className={s.team__create}>
       <div className={s.team__create__header}>
@@ -40,9 +53,12 @@ export const TeamCreate = () => {
       </div>
 
       <div className={s.team__create__content}>
-        <div>
-          <img src={team_createIMG} alt="" />
-        </div>
+      {/* <form action="/" method="post" encType="multipart/form-data"> */}
+        <label htmlFor="file">
+        <input id="file" name='file' type="file" onChange={onSavePhoto} />
+          <img src={teamImg !== null ? teamImg : team_createIMG} alt="" />
+        </label>
+        {/* </form> */}
         <div>
           <Formik
             initialValues={
@@ -53,7 +69,7 @@ export const TeamCreate = () => {
                 team_year: '',
               } as INewTeamValues
             }
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
             onSubmit={(values) => {
               alert(JSON.stringify(values, null, 2));
             }}

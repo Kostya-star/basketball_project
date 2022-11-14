@@ -19,6 +19,9 @@
       margin-right: 136px;
       cursor: pointer;
     }
+    input[type='file'] {
+      display: none;
+    }
   }
   &__buttons {
     display: flex;

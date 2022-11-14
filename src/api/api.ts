@@ -12,8 +12,24 @@ export const authAPI = {
   },
 };
 
-export const authTeam = {
+
+export const teamsAPI = {
   async getTeams() {
-    return await client.get(`/Team/GetTeams`)
+    return await client.get(`/Team/GetTeams`, {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`
+      }
+    })
+  },
+  async saveImage(photoFile: any) {
+    const formData = new FormData();    
+    formData.append('image', photoFile)
+
+    return await client.post('Image/SaveImage', formData, {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   }
 }

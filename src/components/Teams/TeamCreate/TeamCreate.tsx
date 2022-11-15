@@ -5,8 +5,9 @@ import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { saveImage } from '../../../redux/slices/teamsSlice';
+import {ReactComponent as AddPhotoSVG} from '../../../assets/icons/svgAdd.svg'
 
 interface INewTeamValues {
   team_name: string;
@@ -32,15 +33,17 @@ const validationSchema = Yup.object({
 
 export const TeamCreate = () => {
   const dispatch = useAppDispatch();
-  const {teamImg} = useAppSelector(({teams}) => ({
-    teamImg: teams.teamImg
-  }))
+  const { teamImg } = useAppSelector(({ teams }) => ({
+    teamImg: teams.teamImg,
+  }));
+
+  const [image, setImage] = useState<File>();
 
   const onSavePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      void dispatch(saveImage(e.target.files[0]))
-    }
-  }
+    if(e.target.files) {
+      setImage(e.target.files[0])
+    } 
+  };
 
   return (
     <div className={s.team__create}>
@@ -53,12 +56,14 @@ export const TeamCreate = () => {
       </div>
 
       <div className={s.team__create__content}>
-      {/* <form action="/" method="post" encType="multipart/form-data"> */}
-        <label htmlFor="file">
-        <input id="file" name='file' type="file" onChange={onSavePhoto} />
-          <img src={teamImg !== null ? teamImg : team_createIMG} alt="" />
-        </label>
-        {/* </form> */}
+        <div className={s.team__create__image}>
+          <label htmlFor="file">
+            <input id="file" name="file" type="file" onChange={onSavePhoto} />
+            <div className={s.before}>
+              <img src={image ? URL.createObjectURL(image) : ''} alt="" />
+            </div>
+          </label>
+        </div>
         <div>
           <Formik
             initialValues={

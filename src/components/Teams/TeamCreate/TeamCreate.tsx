@@ -4,9 +4,11 @@ import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { saveImage } from '../../../redux/slices/teamsSlice';
 import {ReactComponent as svgTest} from '../../../assets/icons/menu__players.svg'
+import axios from 'axios';
+import FormData from 'form-data'
 
 interface INewTeamValues {
   team_name: string;
@@ -36,13 +38,32 @@ export const TeamCreate = () => {
     teamImg: teams.teamImg,
   }));
 
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState<Blob | MediaSource | File>();
 
   const onSavePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if(e.target.files) {
+    if(e.target.files?.length) {
       setImage(e.target.files[0])
     } 
   };
+
+  const postImage = async () => {
+    const data = new FormData()
+    data.append('file', image)
+
+    const resp = await axios.post('http://dev.trainee.dex-it.ru/api/Image/SaveImage', data,  {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
+        'Content-Type': 'multipart/form-data',
+      }
+    })
+    console.log(resp);
+  }
+
+  useEffect(() => {
+    if(image) {
+      void postImage()
+    }
+  }, [image])
 
   return (
     <div className={s.team__create}>
@@ -59,7 +80,7 @@ export const TeamCreate = () => {
           <label htmlFor="file">
             <input id="file" name="file" type="file" onChange={onSavePhoto} />
             <div className={s.before}>
-              <img src={image && URL.createObjectURL(image)} alt="" />
+              <img src={image ? URL.createObjectURL(image) : ''} alt="" />
             </div>
           </label>
         </div>

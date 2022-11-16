@@ -4,34 +4,34 @@ import { GenericType } from '../../types/types';
 import { ErrorMessage, Field, useField } from 'formik';
 
 interface InputFileProps {
-  name: GenericType<'file'>;
+  name: GenericType<'imageUrl'>;
   image: File | null;
   formik: any;
   onSavePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputFile: FC<InputFileProps> = ({ onSavePhoto, formik, ...props }) => {
-  console.log(formik);
+export const InputFile: FC<InputFileProps> = ({ name, image, onSavePhoto, formik }) => {
+console.log(formik.values);
 
   return (
     <>
       <label htmlFor="file">
         <input
-          id="file"
-          name='file'
+          id='file'
+          name='imageUrl'
           type="file"
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             onSavePhoto(e);
-            formik.setFieldValue('file', e.target.files?.[0]);
+            formik.setFieldValue('imageUrl', e.target.files?.[0]);
           }}
           onBlur={formik.handleBlur}
         />
         <div className={s.setImage}>
-          <img src={props.image ? URL.createObjectURL(props.image) : ''} />
+          <img src={image ? URL.createObjectURL(image) : ''} />
         </div>
       </label>
-      {formik.touched.file && formik.errors.file ? (
-         <div className={s.form__error}>{formik.errors.file}</div>
+      {formik.touched.imageUrl && formik.errors.imageUrl ? (
+         <div className={s.form__error}>{formik.errors.imageUrl}</div>
        ) : null}
     </>
   );

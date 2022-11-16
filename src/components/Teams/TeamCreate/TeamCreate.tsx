@@ -6,14 +6,14 @@ import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { ChangeEvent, useState, useEffect } from 'react';
 import { setTeamImage } from '../../../redux/slices/teamsSlice';
-import { InputFile } from '../../FormComponents/InputFile'
+import { InputFile } from '../../FormComponents/InputFile';
 
 interface INewTeamValues {
   team_name: string;
   team_division: string;
   team_conference: string;
-  team_year: string;
-  file: File;
+  team_foundationYear: string;
+  file: File | null;
 }
 
 const validationSchema = Yup.object({
@@ -26,13 +26,15 @@ const validationSchema = Yup.object({
   team_conference: Yup.string()
     .required('Required')
     .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
-  team_year: Yup.string()
+  team_foundationYear: Yup.string()
     .required('Required')
     .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+  file: Yup.mixed().required('Required')
 });
 
 export const TeamCreate = () => {
   const dispatch = useAppDispatch();
+  
   const { teamImg } = useAppSelector(({ teams }) => ({
     teamImg: teams.teamImg,
   }));
@@ -42,6 +44,7 @@ export const TeamCreate = () => {
       void dispatch(setTeamImage(e.target.files[0]));
     }
   };
+
 
   return (
     <div className={s.team__create}>
@@ -59,23 +62,23 @@ export const TeamCreate = () => {
             team_name: '',
             team_division: '',
             team_conference: '',
-            team_year: '',
-            file: teamImg,
+            team_foundationYear: '',
+            file: teamImg !== null ? teamImg : '',
           } as INewTeamValues
         }
-        // validationSchema={validationSchema}
+        validationSchema={validationSchema}
         onSubmit={(values) => {
           alert(JSON.stringify(values, null, 2));
           console.log(values);
         }}
-        validateOnMount
+        // validateOnMount
       >
         {(formik) => {
           return (
             <Form>
               <div className={s.team__create__content}>
                 <div className={s.team__create__image}>
-                  <InputFile image={teamImg} onSavePhoto={onSaveTeamPhoto}/>
+                  <InputFile name='file' image={teamImg} formik={formik} onSavePhoto={onSaveTeamPhoto}/>
                 </div>
 
                 <div>
@@ -84,8 +87,8 @@ export const TeamCreate = () => {
                   <InputText label="Conference" name="team_conference" />
                   <InputText label="Year of foundation" name="team_foundationYear" />
                   <div className={s.team__create__buttons}>
-                    <button>Cancel</button>
-                    <InputSubmit isDisabled={!formik.isValid} value="Save" name="button" />
+                    <button disabled={!formik.isValid}>Cancel</button>
+                    <InputSubmit isDisabled={!formik.isValid}  value="Save" name="button" />
                   </div>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { teamsAPI } from '../../api/api';
+import { RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
 export interface ITeamState {
@@ -21,8 +22,6 @@ export const teamsSlice = createSlice({
       state.teams = action.payload
     },
     saveImage(state, action) {
-      console.log(action.payload);
-      
       state.teamImg = action.payload
     }
   },
@@ -42,15 +41,14 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
   }
 }
 
-// export const setImage = (photoFile: any) => async (dispatch: AppDispatch) => {
-//   const resp = await teamsAPI.saveImage(photoFile).catch(error => {
-//     alert('Error when uploading photo')
-//     console.log(error);
-//   })
-//   if(resp) {
-//     console.log(resp);
-//     dispatch(saveImage(resp.data.photos))
-//   }
-// }
+export const setImage = (photoFile: File) => async (dispatch: AppDispatch) => {
+  const resp = await teamsAPI.saveImage(photoFile).catch(error => {
+    alert('Error when uploading photo')
+    console.log(error);
+  })
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    dispatch(saveImage(photoFile))
+  }
+}
 
 export default teamsSlice.reducer;

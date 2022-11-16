@@ -21,11 +21,11 @@ export const teamsAPI = {
       }
     })
   },
-  async saveImage(photoFile: any) {
-    const formData = new FormData();    
-    formData.append('image', photoFile)
+  async saveImage(photoFile: File) {
+    const data = new FormData();  
+    data.append('file', photoFile)
 
-    return await client.post('Image/SaveImage', formData, {
+    return await client.post('Image/SaveImage', data, {
       headers: {
         Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
         'Content-Type': 'multipart/form-data'

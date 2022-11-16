@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { ChangeEvent, useState } from 'react';
 import { saveImage } from '../../../redux/slices/teamsSlice';
+import {ReactComponent as svgTest} from '../../../assets/icons/menu__players.svg'
 
 interface INewTeamValues {
   team_name: string;
@@ -58,7 +59,7 @@ export const TeamCreate = () => {
           <label htmlFor="file">
             <input id="file" name="file" type="file" onChange={onSavePhoto} />
             <div className={s.before}>
-              <img src={image ? URL.createObjectURL(image) : ''} alt="" />
+              <img src={image && URL.createObjectURL(image)} alt="" />
             </div>
           </label>
         </div>

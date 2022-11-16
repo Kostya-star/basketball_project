@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react'
 import { saveImage } from '../../../redux/slices/teamsSlice';
 import {ReactComponent as AddPhotoSVG} from '../../../assets/icons/svgAdd.svg'
 

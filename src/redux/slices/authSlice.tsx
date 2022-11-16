@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authAPI } from '../../api/api';
-import { IResponseType, ISignInRequest, ISignUpRequest, RespStatusEnum } from '../../types/types';
+import { IAuthResponseType, ISignInRequest, ISignUpRequest, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
 export interface ICounterState {
   isAuth: boolean;
   error: { unauthorized?: boolean, userExists?: boolean };
-  signInResp: IResponseType;
-  signUpResp: IResponseType;
+  signInResp: IAuthResponseType;
+  signUpResp: IAuthResponseType;
   isSignedUp: boolean
 }
 
@@ -37,11 +37,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signInSuccess(state, action: PayloadAction<{ isAuth: boolean; signInData: IResponseType }>) {
+    signInSuccess(state, action: PayloadAction<{ isAuth: boolean; signInData: IAuthResponseType }>) {
       state.isAuth = action.payload.isAuth;
       state.signInResp = action.payload.signInData;
     },
-    signUpSuccess(state, action: PayloadAction<{signedUp: boolean, SignUpData: IResponseType}>) {
+    signUpSuccess(state, action: PayloadAction<{signedUp: boolean, SignUpData: IAuthResponseType}>) {
       state.signUpResp = action.payload.SignUpData
     },
     setError(state, action: PayloadAction<{unauthorized?: boolean, userExists?: boolean}>) {

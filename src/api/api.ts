@@ -1,14 +1,14 @@
 import {client} from './baseRequest'
-import { IResponseType, ISignInFormikValues, ISignInRequest, ISignUpFormikValues, ISignUpRequest } from './../types/types'
+import { IAuthResponseType, ISignInFormikValues, ISignInRequest, ISignUpFormikValues, ISignUpRequest } from './../types/types'
 
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
-    return await client.post<IResponseType>(`Auth/SignIn`, signInUserData);
+    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData);
   },
 
   async signUp(signUpUserData: ISignUpRequest) {
-    return await client.post<IResponseType>(`Auth/SignUp`, signUpUserData);
+    return await client.post<IAuthResponseType>(`Auth/SignUp`, signUpUserData);
   },
 };
 

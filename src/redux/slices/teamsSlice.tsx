@@ -41,7 +41,7 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
   }
 }
 
-export const setImage = (photoFile: File) => async (dispatch: AppDispatch) => {
+export const setTeamImage = (photoFile: File) => async (dispatch: AppDispatch) => {
   const resp = await teamsAPI.saveImage(photoFile).catch(error => {
     alert('Error when uploading photo')
     console.log(error);

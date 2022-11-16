@@ -5,16 +5,15 @@ import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { saveImage, setImage } from '../../../redux/slices/teamsSlice';
-import {ReactComponent as svgTest} from '../../../assets/icons/menu__players.svg'
-import axios from 'axios';
-// import FormData from 'form-data'
+import { setTeamImage } from '../../../redux/slices/teamsSlice';
+import { InputFile } from '../../FormComponents/InputFile'
 
 interface INewTeamValues {
   team_name: string;
   team_division: string;
   team_conference: string;
   team_year: string;
+  file: File;
 }
 
 const validationSchema = Yup.object({
@@ -37,14 +36,12 @@ export const TeamCreate = () => {
   const { teamImg } = useAppSelector(({ teams }) => ({
     teamImg: teams.teamImg,
   }));
-  
 
-  const onSavePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if(e.target.files?.length) {
-      void dispatch(setImage(e.target.files[0]))
-    } 
+  const onSaveTeamPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      void dispatch(setTeamImage(e.target.files[0]));
+    }
   };
-
 
   return (
     <div className={s.team__create}>
@@ -56,48 +53,46 @@ export const TeamCreate = () => {
         </p>
       </div>
 
-      <div className={s.team__create__content}>
-        <div className={s.team__create__image}>
-          <label htmlFor="file">
-            <input id="file" name="file" type="file" onChange={onSavePhoto} />
-            <div className={s.before}>
-              <img src={teamImg ? URL.createObjectURL(teamImg) : ''} alt="" />
-            </div>
-          </label>
-        </div>
-        <div>
-          <Formik
-            initialValues={
-              {
-                team_name: '',
-                team_division: '',
-                team_conference: '',
-                team_year: '',
-              } as INewTeamValues
-            }
-            // validationSchema={validationSchema}
-            onSubmit={(values) => {
-              alert(JSON.stringify(values, null, 2));
-            }}
-            validateOnMount
-          >
-            {(formik) => {
-              return (
-                <Form>
+      <Formik
+        initialValues={
+          {
+            team_name: '',
+            team_division: '',
+            team_conference: '',
+            team_year: '',
+            file: teamImg,
+          } as INewTeamValues
+        }
+        // validationSchema={validationSchema}
+        onSubmit={(values) => {
+          alert(JSON.stringify(values, null, 2));
+          console.log(values);
+        }}
+        validateOnMount
+      >
+        {(formik) => {
+          return (
+            <Form>
+              <div className={s.team__create__content}>
+                <div className={s.team__create__image}>
+                  <InputFile image={teamImg} onSavePhoto={onSaveTeamPhoto}/>
+                </div>
+
+                <div>
                   <InputText label="Name" name="team_name" />
                   <InputText label="Division" name="team_division" />
                   <InputText label="Conference" name="team_conference" />
-                  <InputText label="Year of foundation" name="team_year" />
+                  <InputText label="Year of foundation" name="team_foundationYear" />
                   <div className={s.team__create__buttons}>
                     <button>Cancel</button>
                     <InputSubmit isDisabled={!formik.isValid} value="Save" name="button" />
                   </div>
-                </Form>
-              )
-            }}
-          </Formik>
-        </div>
-      </div>
+                </div>
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
-  )
-}
+  );
+};

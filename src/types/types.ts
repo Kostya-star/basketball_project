@@ -16,7 +16,7 @@ export interface ISignInRequest extends ISignInFormikValues{}
 export type ISignUpRequest = Omit<ISignUpFormikValues, 'confirmPassword' |  'check'>
 //  -----------------------------------
 
-export interface IResponseType {
+export interface IAuthResponseType {
   name: string
   avatarUrl: string
   token: string

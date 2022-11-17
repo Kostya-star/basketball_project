@@ -15,9 +15,9 @@ export const Teams = () => {
     void dispatch(fetchTeams())
   }, []);
 
-  useEffect(() => {
-    if(JSON.stringify(teams) === '[]') return navigate('/TeamsEmpty')
-  }, [teams]);
+  // useEffect(() => {
+    // if(JSON.stringify(teams) === '[]') return navigate('/TeamsEmpty')
+  // }, [teams]);
 
   return (
     <div>

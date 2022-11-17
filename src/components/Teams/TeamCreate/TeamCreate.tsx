@@ -15,7 +15,7 @@ interface INewTeamValues {
   division: string;
   conference: string;
   foundationYear: string;
-  imageUrl: File | null;
+  imageUrl: string;
 }
 
 const validationSchema = Yup.object({
@@ -38,8 +38,9 @@ export const TeamCreate = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch();
   
-  const { teamImg } = useAppSelector(({ teams }) => ({
+  const { teamImg, imageUrl } = useAppSelector(({ teams }) => ({
     teamImg: teams.teamImg,
+    imageUrl: teams.imageUrl,
   }));
 
   const onSaveTeamPhoto = (e: ChangeEvent<HTMLInputElement>) => {
@@ -69,16 +70,15 @@ export const TeamCreate = () => {
             foundationYear: '',
             division: '',
             conference: '',
-            imageUrl: teamImg !== null ? teamImg : '',
+            imageUrl: '',
           } as INewTeamValues
         }
         validationSchema={validationSchema}
         onSubmit={async (values) => {
-          alert(JSON.stringify(values, null, 2));
+          values.imageUrl = imageUrl
           const resp = await axios.post('http://dev.trainee.dex-it.ru/api/Team/Add', values,  {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
-              // 'Content-Type': 'multipart/form-data'
             }
           })
           console.log(resp);

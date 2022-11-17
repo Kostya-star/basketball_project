@@ -3,14 +3,41 @@ import { teamsAPI } from '../../api/api';
 import { RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
+
+interface ITeamData {
+  name: string,
+  foundationYear: number,
+  division: string,
+  conference: string,
+  imageUrl: string,
+  id: number,
+}
+
 export interface ITeamState {
-  teams: [] | Array<{}>
+  teams: ITeamData[]
+  count: number,
+  page: number,
+  size: number,
   teamImg: File | null
+  imageUrl: string 
 }
 
 const initialState: ITeamState = {
-  teams: [],
-  teamImg: null
+  teams: [
+    {
+      name: '',
+      foundationYear: 0,
+      division: '',
+      conference: '',
+      imageUrl: '',
+      id: 0,
+    } as ITeamData
+  ],
+  count: 0,
+  page: 0,
+  size: 0,
+  teamImg: null,
+  imageUrl: ''
 };
 
 
@@ -18,11 +45,15 @@ export const teamsSlice = createSlice({
   name: 'teams',
   initialState,
   reducers: {
-    setTeams(state, action: PayloadAction<Array<{}> | []>) {
-      state.teams = action.payload
+    setTeams(state, action: PayloadAction<{teams: ITeamData[], count: number, page: number, size: number}>) {
+      state.teams = action.payload.teams
+      state.count = action.payload.count
+      state.page = action.payload.page
+      state.size = action.payload.size
     },
-    saveImage(state, action) {
-      state.teamImg = action.payload
+    saveImage(state, action: PayloadAction<{file: File, imageUrl: string}>) {
+      state.teamImg = action.payload.file
+      state.imageUrl =  action.payload.imageUrl
     }
   },
 });
@@ -35,9 +66,11 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
     alert('error when fetching teams')
     console.log(error);
   })
-  const {data} = resp?.data
-  if(JSON.stringify(data) !== '[]') {
-    dispatch(setTeams(data))
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    const {data} = resp
+    if(JSON.stringify(data) !== '[]') {
+      dispatch(setTeams({ teams: data.data, count: data.count, page: data.page, size: data.size }))
+    }
   }
 }
 
@@ -47,7 +80,7 @@ export const setTeamImage = (photoFile: File) => async (dispatch: AppDispatch) =
     console.log(error);
   })
   if(resp && resp.status === RespStatusEnum.SUCCESS) {
-    dispatch(saveImage(photoFile))
+    dispatch(saveImage({file: photoFile, imageUrl: resp.data}))
   }
 }
 

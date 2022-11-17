@@ -11,13 +11,14 @@ interface InputFileProps {
 }
 
 export const InputFile: FC<InputFileProps> = ({ name, image, onSavePhoto, formik }) => {
-console.log(formik.values);
+
+  const imgPreview = image ? URL.createObjectURL(image) : ''
 
   return (
     <>
-      <label htmlFor="file">
+      <label htmlFor="imageUrl">
         <input
-          id='file'
+          id='imageUrl'
           name='imageUrl'
           type="file"
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +28,7 @@ console.log(formik.values);
           onBlur={formik.handleBlur}
         />
         <div className={s.setImage}>
-          <img src={image ? URL.createObjectURL(image) : ''} />
+          <img src={imgPreview} />
         </div>
       </label>
       {formik.touched.imageUrl && formik.errors.imageUrl ? (

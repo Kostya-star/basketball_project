@@ -28,7 +28,7 @@ export const AppRouter: FC = () => {
         <Route path="/" element={<MainLayout />}>
           <Route path="Teams" element={<Teams />} />
           <Route path="TeamsEmpty" element={<TeamsEmpty />} />
-          <Route path="/TeamCreate" element={<TeamCreate />} />
+          <Route path="TeamCreate" element={<TeamCreate />} />
           <Route path="Players" element={<Players />} />
         </Route>
       )}

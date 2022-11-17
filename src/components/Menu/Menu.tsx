@@ -16,9 +16,9 @@ export const Menu = () => {
   const [activeCategory, setActiveCategory] = useState<number | boolean>(0);
   const navigate = useNavigate()
   
-  useEffect(() => {
-    navigate('/Teams')
-  }, [])
+  // useEffect(() => {
+  //   navigate('/Teams')
+  // }, [])
 
   
   const onToggleRoute = (categoryName: string) => {
@@ -40,7 +40,7 @@ export const Menu = () => {
               }) }
               onClick={() => setActiveCategory(index)}
             >
-              {categoryName === 'Teams' && (<div className='menu__teams' onClick={() => onToggleRoute(categoryName)}><TeamsSVG /><span>{categoryName}</span></div>)}
+              {categoryName === 'Teams' && (<div onClick={() => onToggleRoute(categoryName)} className='menu__teams'><TeamsSVG /><span>{categoryName}</span></div>)}
 
               {categoryName === 'Players' && (<div onClick={() => onToggleRoute(categoryName)}><PlayersSVG /><span>{categoryName}</span></div>)}
 

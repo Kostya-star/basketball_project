@@ -25,7 +25,7 @@ export const teamsAPI = {
     const data = new FormData();  
     data.append('file', photoFile)
 
-    return await client.post('Image/SaveImage', data, {
+    return await client.post<string>('Image/SaveImage', data, {
       headers: {
         Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
         'Content-Type': 'multipart/form-data'

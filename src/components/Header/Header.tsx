@@ -7,7 +7,6 @@ export const Header = () => {
   const {name} = useAppSelector(({auth}) => ({
     name: auth.signInResp.name
   }))
-
   return (
     <div className={s.header__wrapper}>
       <div className={s.header__logo}>

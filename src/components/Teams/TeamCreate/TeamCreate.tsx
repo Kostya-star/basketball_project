@@ -47,6 +47,12 @@ export const TeamCreate = () => {
     navigate('/TeamsEmpty')
   }
 
+//   function inputVal<T = string>(string: T): T {
+//     return string;
+// }
+// inputVal('userName')
+
+
   return (
     <div className={s.team__create}>
       <div className={s.team__create__header}>

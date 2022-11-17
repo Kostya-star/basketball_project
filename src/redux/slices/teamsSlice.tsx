@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { teamsAPI } from '../../api/api';
-import { RespStatusEnum } from '../../types/types';
+import { INewTeamValues, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
 
@@ -54,7 +54,7 @@ export const teamsSlice = createSlice({
     saveImage(state, action: PayloadAction<{file: File, imageUrl: string}>) {
       state.teamImg = action.payload.file
       state.imageUrl =  action.payload.imageUrl
-    }
+    },
   },
 });
 
@@ -83,5 +83,16 @@ export const setTeamImage = (photoFile: File) => async (dispatch: AppDispatch) =
     dispatch(saveImage({file: photoFile, imageUrl: resp.data}))
   }
 }
+
+export const createTeam = (teamValues: INewTeamValues) => async (dispatch: AppDispatch) => {
+  const resp = await teamsAPI.addTeam(teamValues).catch((error) => {
+    if(error && error.response.status === RespStatusEnum.EXISTS) {
+      alert('This team already exists')
+    }
+  })
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    alert('The team is created successfully')
+  }
+} 
 
 export default teamsSlice.reducer;

@@ -5,18 +5,12 @@ import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { setTeamImage } from '../../../redux/slices/teamsSlice';
+import { createTeam, setTeamImage } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { INewTeamValues } from '../../../types/types';
 
-interface INewTeamValues {
-  name: string;
-  division: string;
-  conference: string;
-  foundationYear: string;
-  imageUrl: string;
-}
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -76,13 +70,8 @@ export const TeamCreate = () => {
         validationSchema={validationSchema}
         onSubmit={async (values) => {
           values.imageUrl = imageUrl
-          const resp = await axios.post('http://dev.trainee.dex-it.ru/api/Team/Add', values,  {
-            headers: {
-              Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
-            }
-          })
-          console.log(resp);
-          
+          console.log(values);
+          await dispatch(createTeam(values))
         }}
         // validateOnMount
       >

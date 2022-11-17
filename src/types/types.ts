@@ -12,8 +12,22 @@ export interface ISignUpFormikValues extends ISignInFormikValues {
 }
 
 // REQUESTS TYPES ---------------------------
+
+// AUTH -------------------------------
 export interface ISignInRequest extends ISignInFormikValues{}
 export type ISignUpRequest = Omit<ISignUpFormikValues, 'confirmPassword' |  'check'>
+// ---------------------------------------
+
+// TEAMS
+export interface INewTeamValues {
+  name: string;
+  division: string;
+  conference: string;
+  foundationYear: number | string;
+  imageUrl: string;
+}
+// ---------------------------------------
+
 //  -----------------------------------
 
 export interface IAuthResponseType {

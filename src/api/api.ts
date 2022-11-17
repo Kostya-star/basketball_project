@@ -1,5 +1,5 @@
 import {client} from './baseRequest'
-import { IAuthResponseType, ISignInFormikValues, ISignInRequest, ISignUpFormikValues, ISignUpRequest } from './../types/types'
+import { IAuthResponseType, INewTeamValues, ISignInFormikValues, ISignInRequest, ISignUpFormikValues, ISignUpRequest } from './../types/types'
 
 
 export const authAPI = {
@@ -15,11 +15,7 @@ export const authAPI = {
 
 export const teamsAPI = {
   async getTeams() {
-    return await client.get(`/Team/GetTeams`, {
-      headers: {
-        Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`
-      }
-    })
+    return await client.get(`Team/GetTeams`)
   },
   async saveImage(photoFile: File) {
     const data = new FormData();  
@@ -27,9 +23,11 @@ export const teamsAPI = {
 
     return await client.post<string>('Image/SaveImage', data, {
       headers: {
-        Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`,
         'Content-Type': 'multipart/form-data'
       }
     })
+  },
+  async addTeam(values : INewTeamValues) {
+    return await client.post('Team/Add', values)
   }
 }

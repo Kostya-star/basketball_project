@@ -17,7 +17,7 @@ export const teamsAPI = {
   async getTeams() {
     return await client.get(`Team/GetTeams`)
   },
-  async saveImage(photoFile: File) {
+  async saveImage(photoFile: any) {
     const data = new FormData();  
     data.append('file', photoFile)
 

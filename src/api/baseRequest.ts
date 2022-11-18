@@ -6,3 +6,7 @@ export const client = axios.create({
     Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`
   }
 });
+
+axios.defaults.headers.common.Authorization = `Bearer ${window.localStorage.getItem('TOKEN')}`;
+axios.defaults.headers.post.Authorization = `Bearer ${localStorage.getItem('TOKEN')}`
+client.defaults.headers.common['Auth-Token'] = 'new token';

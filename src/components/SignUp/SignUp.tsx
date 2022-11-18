@@ -3,10 +3,10 @@ import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { InputText } from '../FormComponents/InputText';
-import { InputPassword } from './../FormComponents/InputPassword';
+import { InputPassword } from '../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
-import { authAPI } from './../../api/api';
+import { authAPI } from '../../api/api';
 import { FC, useEffect, useState } from 'react';
 import '../../scss/auth-common.scss';
 import { ISignUpFormikValues } from '../../types/types';
@@ -27,16 +27,14 @@ export const SignUp: FC = () => {
 
   const dispatch = useAppDispatch();
 
-
   useEffect(() => {
     if (userExists) {
       const authTimer = setTimeout(() => {
-        dispatch(authSlice.actions.setError({userExists: false}))
+        dispatch(authSlice.actions.setError({ userExists: false }));
       }, 2500);
       return () => clearTimeout(authTimer);
     }
   }, [userExists]);
-
 
   const initialValues = {
     userName: '',
@@ -92,7 +90,10 @@ export const SignUp: FC = () => {
                   <InputText<'userName'> label="Name" name="userName" />
                   <InputText<'login'> label="Login" name="login" />
                   <InputPassword<'password'> label="Password" name="password" />
-                  <InputPassword<'confirmPassword'> label="Enter your password again" name="confirmPassword" />
+                  <InputPassword<'confirmPassword'>
+                    label="Enter your password again"
+                    name="confirmPassword"
+                  />
 
                   <InputCheckbox<'check'> name="check" id="check" label="I accept the agreement" />
 

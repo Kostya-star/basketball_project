@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { fetchTeams, setTeams } from '../../redux/slices/teamsSlice';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
 

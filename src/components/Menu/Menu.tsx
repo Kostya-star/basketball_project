@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { SignOut } from './SignOut/SignOut';
 import '../../scss/menu-common.scss';
 import classnames from 'classnames';
@@ -20,7 +20,6 @@ export const Menu = () => {
   //   navigate('/Teams')
   // }, [])
 
-  
   const onToggleRoute = (categoryName: string) => {
     categoryName === 'Teams' ? navigate('/Teams') : navigate('/Players')
   }

@@ -4,16 +4,16 @@ import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
-import { InputPassword } from './../FormComponents/InputPassword';
-import { InputText } from './../FormComponents/InputText';
+import { InputPassword } from '../FormComponents/InputPassword';
+import { InputText } from '../FormComponents/InputText';
 import { authAPI } from '../../api/api';
 import '../../scss/auth-common.scss';
-import { ISignInFormikValues } from './../../types/types';
+import { ISignInFormikValues } from '../../types/types';
 import { FormBg } from '../FormBg';
-import { FormLink } from './../FormLink';
-import { useAppDispatch, useAppSelector } from './../../redux/hooks';
+import { FormLink } from '../FormLink';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login, authSlice } from '../../redux/slices/authSlice';
-import { RespError } from './../RespError';
+import { RespError } from '../RespError';
 
 interface ISignInProps {
   // children: JSX.Element|JSX.Element[];
@@ -73,7 +73,7 @@ export const SignIn: FC<ISignInProps> = () => {
           <h1 className="form__heading">Sign In</h1>
           <Formik
             initialValues={initialValues}
-            // validationSchema={validationSchema}  
+            // validationSchema={validationSchema}
             onSubmit={onSubmit}
             validateOnMount
           >
@@ -91,7 +91,7 @@ export const SignIn: FC<ISignInProps> = () => {
         </div>
       </div>
 
-          <RespError text="User with the specified username / password was not found." />
+      <RespError text="User with the specified username / password was not found." />
 
       <FormBg src={signInImg} />
     </div>

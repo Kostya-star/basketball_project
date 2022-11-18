@@ -1,10 +1,11 @@
-import notFound from '../../assets/img/NotFound/notFound.png'
 import s from './NotFoundBlock.module.scss'
+import notFound from '../../assets/img/NotFound/notFound.png'
+
 
 export const NotFoundBlock = () => {
   return (
     <div className={s.notFound__wrapper}>
-      <div >
+      <div>
         <p className={s.notFound__img}>
           <img src={notFound} alt="" />
         </p>
@@ -13,4 +14,4 @@ export const NotFoundBlock = () => {
       </div>
     </div>
   );
-};
+}

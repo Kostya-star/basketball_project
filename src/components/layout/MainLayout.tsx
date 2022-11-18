@@ -1,22 +1,31 @@
 import { FC } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Outlet} from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Menu } from '../Menu/Menu';
 import s from './layout.module.scss';
-import { Teams } from './../Teams/Teams';
-import { TeamsEmpty } from '../Teams/TeamsEmpty/TeamsEmpty';
-import { Players } from '../Players/Players';
+
+
 
 export const MainLayout: FC = () => {
+  
   return (
     <div>
-      <Header />
+      <Header/>
       <div className={s.layout__container}>
-        <Menu />
+        <Menu/>
         <div className={s.layout__children__container}>
-          <Outlet />
+          <Outlet/>
         </div>
       </div>
     </div>
   );
 };
+
+
+
+// interface ContextType {
+//   setHeading: (heading: string) => void;
+// }
+// export function useHeading() {
+//   return useOutletContext<ContextType>()
+// }

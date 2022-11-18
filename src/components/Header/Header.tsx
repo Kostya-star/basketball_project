@@ -1,7 +1,10 @@
+import { FC } from 'react';
 import { ReactComponent as HeaderAvatar } from '../../assets/icons/header__avatar.svg';
 import headerLogo from '../../assets/img/Header/header__logo.png';
 import { useAppSelector } from '../../redux/hooks';
 import s from './Header.module.scss';
+
+
 
 export const Header = () => {
   const {name} = useAppSelector(({auth}) => ({

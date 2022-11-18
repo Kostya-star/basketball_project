@@ -1,5 +1,3 @@
-export type GenericType<T> = T
-
 export interface ISignInFormikValues {
   login: string;
   password: string;

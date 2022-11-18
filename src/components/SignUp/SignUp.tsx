@@ -89,14 +89,14 @@ export const SignUp: FC = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText label="Name" name="userName" />
-                  <InputText label="Login" name="login" />
-                  <InputPassword label="Password" name="password" />
-                  <InputPassword label="Enter your password again" name="confirmPassword" />
+                  <InputText<'userName'> label="Name" name="userName" />
+                  <InputText<'login'> label="Login" name="login" />
+                  <InputPassword<'password'> label="Password" name="password" />
+                  <InputPassword<'confirmPassword'> label="Enter your password again" name="confirmPassword" />
 
-                  <InputCheckbox name="check" id="check" label="I accept the agreement" />
+                  <InputCheckbox<'check'> name="check" id="check" label="I accept the agreement" />
 
-                  <InputSubmit isDisabled={!formik.isValid} value="Sign Up" name="button" />
+                  <InputSubmit isDisabled={!formik.isValid} value="Sign Up" />
                 </Form>
               );
             }}

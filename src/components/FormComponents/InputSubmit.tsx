@@ -1,16 +1,15 @@
 import {FC} from 'react'
 import classnames from 'classnames';
-import { useField } from 'formik';
+// import { useField } from 'formik';
 import s from './FormItems.module.scss'
 
 
 interface InputSubmitProps {
   value: string
-  name: string
   isDisabled?: boolean
 }
-export const InputSubmit: FC<InputSubmitProps> = ({isDisabled, value, ...props}) => {
-  const [field, meta] = useField({ ...props})
+export const InputSubmit: FC<InputSubmitProps> = ({isDisabled, value}) => {
+  // const [field, meta] = useField({ ...props})
 
   return (
     <>

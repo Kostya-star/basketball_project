@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { GenericType } from '../types/types';
 import '../scss/auth-common.scss';
 
 interface IFormLinkProps {

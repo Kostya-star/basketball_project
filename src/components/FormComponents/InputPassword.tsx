@@ -3,14 +3,13 @@ import { useField, ErrorMessage } from 'formik';
 import s from './FormItems.module.scss';
 import { ReactComponent as EyeClosed } from '../../assets/icons/eye-closed.svg';
 import { ReactComponent as EyeOpened } from '../../assets/icons/eye-open.svg';
-import { GenericType } from '../../types/types';
 
-interface InputPasswordProps {
+interface InputPasswordProps<T> {
   label: string;
-  name: GenericType<'password' | 'confirmPassword'>;
+  name: T
 }
 
-export const InputPassword: FC<InputPasswordProps> = ({ label, ...props }) => {
+export const InputPassword = <T extends string>({ label, ...props }:InputPasswordProps<T> ) => {
   const [field, meta] = useField(props);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)

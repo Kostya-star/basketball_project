@@ -80,9 +80,9 @@ export const SignIn: FC<ISignInProps> = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText label="Login" name="login" />
-                  <InputPassword label="Password" name="password" />
-                  <InputSubmit isDisabled={!formik.isValid} value="Sign In" name="button" />
+                  <InputText<'login'> label="Login" name="login" />
+                  <InputPassword<'password'> label="Password" name="password" />
+                  <InputSubmit isDisabled={!formik.isValid} value="Sign In" />
                 </Form>
               );
             }}

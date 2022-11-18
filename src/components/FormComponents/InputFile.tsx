@@ -1,16 +1,15 @@
 import { ChangeEvent, FC } from 'react';
 import s from './FormItems.module.scss';
-import { GenericType } from '../../types/types';
 import { ErrorMessage, Field, useField } from 'formik';
 
-interface InputFileProps {
-  name: GenericType<'imageUrl'>;
+interface InputFileProps<T> {
+  name: T;
   image: File | null;
   formik: any;
   onSavePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputFile: FC<InputFileProps> = ({ name, image, onSavePhoto, formik }) => {
+export const InputFile = <T extends string>({ name, image, onSavePhoto, formik }: InputFileProps<T>) => {
 
   const imgPreview = image ? URL.createObjectURL(image) : ''
 

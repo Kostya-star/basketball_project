@@ -1,18 +1,14 @@
 import {FC, InputHTMLAttributes} from 'react'
 import { ErrorMessage, useField } from 'formik';
 import s from './FormItems.module.scss';
-import { GenericType } from '../../types/types';
 
-// type test = 'login' | 'userName' | 'name' | 'division' | 'conference' | 'foundationYear'
-interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  // name: GenericType<'login' | 'userName' | 'name' | 'division' | 'conference' | 'foundationYear'>;
-  name: string;
-  // name: T 
+
+interface InputTextProps<T>{
+  label: string
+  name: T
 }
-type CustomInputProps<name = string> = Omit<InputTextProps, 'name'>  & { name: name }
 
-export const InputText: FC<InputTextProps> = ({ label, ...props }) => {
+export const InputText = <T extends string>({ label, ...props }: InputTextProps<T>) => {
 
   const [field, meta] = useField(props);
 

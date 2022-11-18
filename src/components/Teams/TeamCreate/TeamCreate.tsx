@@ -86,17 +86,17 @@ export const TeamCreate = () => {
             <Form>
               <div className={s.team__create__content}>
                 <div className={s.team__create__image}>
-                  <InputFile name='imageUrl' image={teamImg} formik={formik} onSavePhoto={onSaveTeamPhoto}/>
+                  <InputFile<'imageUrl'> name='imageUrl' image={teamImg} formik={formik} onSavePhoto={onSaveTeamPhoto}/>
                 </div>
 
                 <div>
-                  <InputText label="Name" name="name" />
-                  <InputText label="Division" name="division" />
-                  <InputText label="Conference" name="conference" />
-                  <InputText label="Year of foundation" name="foundationYear" />
+                  <InputText<'name'> label="Name" name="name" />
+                  <InputText<'division'> label="Division" name="division" />
+                  <InputText<'conference'> label="Conference" name="conference" />
+                  <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className={s.team__create__buttons}>
                     <button onClick={onCancelHandle}>Cancel</button>
-                    <InputSubmit isDisabled={!formik.isValid}  value="Save" name="button" />
+                    <InputSubmit isDisabled={!formik.isValid}  value="Save"/>
                   </div>
                 </div>
               </div>

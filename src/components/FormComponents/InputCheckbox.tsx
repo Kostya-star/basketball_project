@@ -2,15 +2,15 @@ import React from 'react';
 import { ErrorMessage, useField } from 'formik';
 import s from './FormItems.module.scss';
 import classnames from 'classnames';
-import { GenericType } from '../../types/types';
 
-interface InputCheckboxProps {
+
+interface InputCheckboxProps<T> {
   label: string;
   name: string;
-  id: GenericType<'check'>
+  id: T
 }
 
-export const InputCheckbox: React.FC<InputCheckboxProps> = ({ label, ...props }) => {
+export const InputCheckbox = <T extends string> ({ label, ...props }: InputCheckboxProps<T>) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
   return (

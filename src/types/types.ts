@@ -1,3 +1,4 @@
+// AUTH TYPES
 export interface ISignInFormikValues {
   login: string;
   password: string;
@@ -8,6 +9,30 @@ export interface ISignUpFormikValues extends ISignInFormikValues {
   confirmPassword: string;
   check: boolean;
 }
+// ----------------------------------
+
+
+// TEAMS TYPES--------------------------
+export interface INewTeamValues {
+  name: string;
+  division: string;
+  conference: string;
+  foundationYear: number | string;
+  imageUrl: string;
+}
+
+export interface ITeamData extends INewTeamValues{
+  id: number;
+}
+
+export interface ITeamState {
+  teams: ITeamData[];
+  count: number;
+  page: number;
+  size: number;
+}
+// -----------------------------
+
 
 // REQUESTS TYPES ---------------------------
 
@@ -17,13 +42,9 @@ export type ISignUpRequest = Omit<ISignUpFormikValues, 'confirmPassword' |  'che
 // ---------------------------------------
 
 // TEAMS
-export interface INewTeamValues {
-  name: string;
-  division: string;
-  conference: string;
-  foundationYear: number | string;
-  imageUrl: string;
-}
+export interface IGetTeamsResponse extends ITeamState{}
+export interface ITeamAddResponse extends ITeamData{}
+export interface INewTeamValuesRequest extends INewTeamValues{}
 // ---------------------------------------
 
 //  -----------------------------------

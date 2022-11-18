@@ -1,23 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { teamsAPI } from '../../api/api';
-import { INewTeamValues, RespStatusEnum } from '../../types/types';
+import { INewTeamValues, ITeamData, ITeamState, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
-interface ITeamData {
-  name: string;
-  foundationYear: number;
-  division: string;
-  conference: string;
-  imageUrl: string;
-  id: number;
-}
-
-export interface ITeamState {
-  teams: ITeamData[];
-  count: number;
-  page: number;
-  size: number;
-}
 
 const initialState: ITeamState = {
   teams: [

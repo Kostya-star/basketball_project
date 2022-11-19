@@ -4,9 +4,7 @@ import { IAuthResponseType, IGetTeamsResponse, INewTeamValuesRequest, ISignInReq
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
-    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData, {
-      withCredentials: true,
-    });
+    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData);
   },
 
   async signUp(signUpUserData: ISignUpRequest) {
@@ -17,6 +15,7 @@ export const authAPI = {
 
 export const teamsAPI = {
   async getTeams() {
+  
     return await client.get<IGetTeamsResponse>(`Team/GetTeams`)
   },
   async saveImage(photoFile: File) {

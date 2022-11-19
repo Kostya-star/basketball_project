@@ -7,6 +7,14 @@ import s from './layout.module.scss';
 
 
 export const MainLayout: FC = () => {
+
+  // useEffect(() => {
+  //   (
+  //     async() => {
+        
+  //     }
+  //   )()
+  // }, [])
   
   return (
     <div>

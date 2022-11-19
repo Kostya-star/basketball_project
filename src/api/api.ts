@@ -1,10 +1,12 @@
 import {client} from './baseRequest'
-import { IAuthResponseType, IGetTeamsResponse, INewTeamValues, INewTeamValuesRequest, ISignInRequest, ISignUpRequest, ITeamAddResponse, ITeamData, ITeamState } from './../types/types'
+import { IAuthResponseType, IGetTeamsResponse, INewTeamValuesRequest, ISignInRequest, ISignUpRequest, ITeamAddResponse, ITeamData, ITeamState } from './../types/types'
 
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
-    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData);
+    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData, {
+      withCredentials: true,
+    });
   },
 
   async signUp(signUpUserData: ISignUpRequest) {

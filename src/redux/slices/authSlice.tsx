@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { authAPI } from '../../api/api';
+import { client } from '../../api/baseRequest';
 import { IAuthResponseType, ISignInRequest, ISignUpRequest, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
@@ -59,12 +61,16 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
         dispatch(authSlice.actions.setError({unauthorized: true}));
       }
   });
-
-  if (response?.status === RespStatusEnum.SUCCESS) {
-    window.localStorage.setItem('isAuth', JSON.stringify(true));
-    dispatch(authSlice.actions.signInSuccess({ isAuth: true, signInData: response.data}));
-    window.localStorage.setItem('TOKEN', response.data.token)
-  }
+    if(response && response.status === RespStatusEnum.SUCCESS) {
+      if (response?.status === RespStatusEnum.SUCCESS) {
+        window.localStorage.setItem('isAuth', JSON.stringify(true));
+        dispatch(signInSuccess({ isAuth: true, signInData: response.data}));
+        window.localStorage.setItem('TOKEN', response.data.token)
+      }
+      
+      // client.defaults.headers.common.Authorization = `Bearer ${String(response?.data.token)}`;
+    } 
+  
 };
 
 

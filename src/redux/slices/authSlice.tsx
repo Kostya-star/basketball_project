@@ -1,37 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { authAPI } from '../../api/api';
-import { client } from '../../api/baseRequest';
 import { IAuthResponseType, ISignInRequest, ISignUpRequest, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 
-export interface ICounterState {
+export interface IAuthState {
   isAuth: boolean;
   error: { unauthorized?: boolean, userExists?: boolean };
   signInResp: IAuthResponseType;
   signUpResp: IAuthResponseType;
-  isSignedUp: boolean
 }
 
-const lsIsAuth = window.localStorage.getItem('isAuth')
-const isAuth = (lsIsAuth !== null) ? JSON.parse(lsIsAuth) : false 
-const initialState: ICounterState = {
+const LSIsAuth = window.localStorage.getItem('isAuth')
+const isAuth = (LSIsAuth !== null) ? JSON.parse(LSIsAuth) : false 
+const initialState: IAuthState = {
   isAuth,
   error: {
     unauthorized: false,
     userExists: false
   },
-  signInResp: {
-    name: '',
-    avatarUrl: '',
-    token: '',
-  },
-  signUpResp: {
-    name: '',
-    avatarUrl: '',
-    token: '',
-  },
-  isSignedUp: false 
+  signInResp: {} as IAuthResponseType,
+  signUpResp: {} as IAuthResponseType,
 };
 
 
@@ -43,8 +31,8 @@ export const authSlice = createSlice({
       state.isAuth = action.payload.isAuth;
       state.signInResp = action.payload.signInData;
     },
-    signUpSuccess(state, action: PayloadAction<{signedUp: boolean, SignUpData: IAuthResponseType}>) {
-      state.signUpResp = action.payload.SignUpData
+    signUpSuccess(state, action: PayloadAction<IAuthResponseType>) {
+      state.signUpResp = action.payload
     },
     setError(state, action: PayloadAction<{unauthorized?: boolean, userExists?: boolean}>) {
       state.error.unauthorized = action.payload.unauthorized;
@@ -68,7 +56,6 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
         window.localStorage.setItem('TOKEN', response.data.token)
       }
       
-      // client.defaults.headers.common.Authorization = `Bearer ${String(response?.data.token)}`;
     } 
   
 };
@@ -83,7 +70,7 @@ export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispat
   });
   if (response?.status === RespStatusEnum.SUCCESS) {
     alert('you sucessfully signed up')
-    dispatch(authSlice.actions.signUpSuccess({signedUp: true, SignUpData: response.data}))
+    dispatch(authSlice.actions.signUpSuccess(response.data))
   }
 
 }

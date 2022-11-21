@@ -32,8 +32,9 @@ export const SignIn: FC<ISignInProps> = () => {
   }));
   const dispatch = useAppDispatch();
 
-  // gives an important error. Fix later!
-  if (isAuth) navigate('/');
+  useEffect(() => {
+    if(isAuth) navigate('/')
+  }, [isAuth])
 
   useEffect(() => {
     if (unauthorized) {

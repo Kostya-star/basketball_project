@@ -13,16 +13,14 @@ import { ISignUpFormikValues } from '../../types/types';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { signUp, authSlice } from '../../redux/slices/authSlice';
+import { signUp, authSlice, setError } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 
 export const SignUp: FC = () => {
   const navigate = useNavigate();
 
-  const { isSignedUp, userExists } = useAppSelector(({ auth }) => ({
-    isSignedUp: auth.isSignedUp,
+  const { userExists } = useAppSelector(({ auth }) => ({
     userExists: auth.error.userExists,
-    userName: auth.signUpResp.name,
   }));
 
   const dispatch = useAppDispatch();
@@ -30,7 +28,7 @@ export const SignUp: FC = () => {
   useEffect(() => {
     if (userExists) {
       const authTimer = setTimeout(() => {
-        dispatch(authSlice.actions.setError({ userExists: false }));
+        dispatch(setError({ userExists: false }));
       }, 2500);
       return () => clearTimeout(authTimer);
     }

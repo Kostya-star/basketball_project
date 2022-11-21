@@ -20,9 +20,9 @@ export const AppRouter: FC = () => {
     isAuth: auth.isAuth,
   }));
 
-  useEffect(() => {
-    if (location.pathname === '/' && !isAuth) return navigate('/signIn');
-  });
+  // useEffect(() => {
+  //   if (location.pathname === '/' && !isAuth) return navigate('/signIn');
+  // });
 
   return (
     <Routes>

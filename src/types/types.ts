@@ -26,10 +26,11 @@ export interface ITeamData extends INewTeamValues{
 }
 
 export interface ITeamState {
-  teams: ITeamData[];
+  data: ITeamData[];
   count: number;
   page: number;
   size: number;
+  isNavigateTeams?: boolean
 }
 // -----------------------------
 

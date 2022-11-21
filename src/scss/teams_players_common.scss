@@ -1,14 +1,29 @@
-.teamsEmpty {
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    // background-color: blue;
-  }
+.common {
+  // teams and players header with search and AddBtn
   &__container {
     width: 100%;
   }
-
-  &__content {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  // teams and players filled content
+  &__filled_content {
+    background-color: grey;
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 0px 0px 0px;
+    flex-wrap: wrap;
+    height: 724px;
+    &__block {
+      height: 380px;
+      width: 364px;
+      margin-bottom: 20px;
+      background-color: red;
+    }
+  }
+// teams and players Empty
+  &__empty_content {
     display: flex;
     justify-content: center;
     align-items: center;

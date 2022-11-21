@@ -5,7 +5,7 @@ import { AppDispatch } from '../store';
 
 
 const initialState: ITeamState = {
-  teams: [
+  data: [
     {
       name: '',
       foundationYear: 0,
@@ -18,6 +18,7 @@ const initialState: ITeamState = {
   count: 0,
   page: 0,
   size: 0,
+  isNavigateTeams: false
 };
 
 export const teamsSlice = createSlice({
@@ -25,15 +26,18 @@ export const teamsSlice = createSlice({
   initialState,
   reducers: {
     setTeams(state, action: PayloadAction<ITeamState>) {
-      state.teams = action.payload.teams;
+      state.data = action.payload.data;
       state.count = action.payload.count;
       state.page = action.payload.page;
       state.size = action.payload.size;
     },
+    toggleNavigate(state, action: PayloadAction<boolean>) {
+      state.isNavigateTeams = action.payload 
+    }
   },
 });
 
-export const { setTeams } = teamsSlice.actions;
+export const { setTeams, toggleNavigate } = teamsSlice.actions;
 
 export const fetchTeams = () => async (dispatch: AppDispatch) => {
   const resp = await teamsAPI.getTeams().catch((error) => {
@@ -41,9 +45,10 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
     console.log(error);
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    const { data } = resp;
-    if (JSON.stringify(data) !== '[]') {
-      dispatch(setTeams(data));
+    console.log(resp);
+    
+    if (JSON.stringify(resp.data.data) !== '[]') {
+      dispatch(setTeams(resp.data));
     }
   }
 };
@@ -65,7 +70,8 @@ export const createTeam = (teamValues: INewTeamValues, image: File | null) => as
           }
         });
         if (resp && resp.status === RespStatusEnum.SUCCESS) {
-          alert('The team is created successfully');
+          // alert('The team is created successfully');
+          dispatch(toggleNavigate(true))
         }
       }
     }

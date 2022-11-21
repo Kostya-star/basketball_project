@@ -16,7 +16,11 @@ export const authAPI = {
 export const teamsAPI = {
   async getTeams() {
   
-    return await client.get<IGetTeamsResponse>(`Team/GetTeams`)
+    return await client.get<IGetTeamsResponse>(`Team/GetTeams?Page=1&PageSize=6`, {
+      params: {
+        per_page: 6
+       }
+    })
   },
   async saveImage(photoFile: File) {
     const data = new FormData();  

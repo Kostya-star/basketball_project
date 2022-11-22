@@ -2,13 +2,15 @@ import teams__empty from '../../../assets/img/TeamsEmpty/teams__empty.png';
 import { InputSearch } from '../../InputSearch/InputSearch';
 import { AddBtn } from '../../AddBtn/AddBtn';
 import '../../../scss/teams_players_common.scss'
+import { useNavigate } from 'react-router-dom';
 
 export const TeamsEmpty = () => {
+
   return (
     <div className='common__container'>
       <div className='common__header'>
         <InputSearch />
-        <AddBtn />
+        {/* <AddBtn /> */}
       </div>
 
       <div className='common__empty_content'>

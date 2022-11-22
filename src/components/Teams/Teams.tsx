@@ -4,7 +4,7 @@ import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
-import '../../scss/teams_players_common.scss'
+import '../../scss/teams_players_common.scss';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export const Teams = () => {
     <div className='common__container'>
       <div className='common__header'>
         <InputSearch />
-        <AddBtn />
+        {/* <AddBtn /> */}
       </div>
 
       <div className='common__filled_content'>

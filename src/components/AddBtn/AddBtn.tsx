@@ -1,13 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import s from './AddBtn.module.scss';
 
 
-export const AddBtn = () => {
-  const navigate = useNavigate()
+interface IAddBtnProps {
+  onAdd: () => void
+}
 
-  const onAdd = () => {
-    navigate('/TeamCreate')
-  }
+export const AddBtn: FC<IAddBtnProps> = ({ onAdd }) => {
+  const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <button onClick={onAdd} className={s.addBtn}>Add &nbsp;&nbsp;&nbsp;<strong>+</strong></button>

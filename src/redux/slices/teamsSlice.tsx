@@ -52,7 +52,6 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
     
     if (JSON.stringify(resp.data.data) !== '[]') {
       dispatch(setTeams(resp.data));
-      console.log(resp.data);
     }
   }
 };

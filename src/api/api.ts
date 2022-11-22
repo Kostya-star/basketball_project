@@ -15,8 +15,7 @@ export const authAPI = {
 
 export const teamsAPI = {
   async getTeams() {
-    return await client.get<IGetTeamsResponse>(`Team/GetTeams`, {
-    })
+    return await client.get<IGetTeamsResponse>(`Team/GetTeams`)
   },
 
   async saveImage(photoFile: File) {
@@ -36,5 +35,11 @@ export const teamsAPI = {
 
   async deleteTeam(id: number) {
     return await client.delete(`Team/Delete?id=${id}`)
+  }
+}
+
+export const playersAPI = {
+  async getPlayers() {
+    return await client.get('Player/GetPlayers')
   }
 }

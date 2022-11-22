@@ -47,13 +47,13 @@ export const TeamCreate = () => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .required('Required')
-      .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
+      .matches(/^[a-zA-Z$\s*]+$/, 'Field can only contain Latin letters'),
     division: Yup.string()
       .required('Required')
-      .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
+      .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
     conference: Yup.string()
       .required('Required')
-      .matches(/^[a-zA-Z]+$/, 'Field can only contain Latin letters'),
+      .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
     foundationYear: Yup.string()
       .required('Required')
       .matches(/^[0-9]+$/, 'Field can only contain numbers'),

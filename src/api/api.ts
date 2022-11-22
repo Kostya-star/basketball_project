@@ -15,13 +15,10 @@ export const authAPI = {
 
 export const teamsAPI = {
   async getTeams() {
-  
-    return await client.get<IGetTeamsResponse>(`Team/GetTeams?Page=1&PageSize=6`, {
-      params: {
-        per_page: 6
-       }
+    return await client.get<IGetTeamsResponse>(`Team/GetTeams`, {
     })
   },
+
   async saveImage(photoFile: File) {
     const data = new FormData();  
     data.append('file', photoFile)
@@ -32,7 +29,12 @@ export const teamsAPI = {
       }
     })
   },
+
   async addTeam(values : INewTeamValuesRequest) {
     return await client.post<ITeamAddResponse>('Team/Add', values)
+  },
+
+  async deleteTeam(id: number) {
+    return await client.delete(`Team/Delete?id=${id}`)
   }
 }

@@ -33,11 +33,15 @@ export const teamsSlice = createSlice({
     },
     toggleNavigate(state, action: PayloadAction<boolean>) {
       state.isNavigateTeams = action.payload 
+    },
+    deleteTeam(state, {payload}: PayloadAction<number>) {
+      const teamId = payload
+      state.data = state.data.filter(team => team.id !== teamId)
     }
   },
 });
 
-export const { setTeams, toggleNavigate } = teamsSlice.actions;
+export const { setTeams, toggleNavigate, deleteTeam } = teamsSlice.actions;
 
 export const fetchTeams = () => async (dispatch: AppDispatch) => {
   const resp = await teamsAPI.getTeams().catch((error) => {
@@ -45,10 +49,10 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
     console.log(error);
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    console.log(resp);
     
     if (JSON.stringify(resp.data.data) !== '[]') {
       dispatch(setTeams(resp.data));
+      console.log(resp.data);
     }
   }
 };
@@ -70,11 +74,23 @@ export const createTeam = (teamValues: INewTeamValues, image: File | null) => as
           }
         });
         if (resp && resp.status === RespStatusEnum.SUCCESS) {
-          // alert('The team is created successfully');
+          alert('The team is created successfully');
           dispatch(toggleNavigate(true))
         }
       }
     }
   };
+
+  export const removeTeam = (id: number) => async(dispatch: AppDispatch) => {
+    const resp = await teamsAPI.deleteTeam(id).catch(error => {
+      console.log(error);
+      alert('Error when deleting the team')
+    })
+
+    if(resp && resp.status === RespStatusEnum.SUCCESS) {
+      dispatch(deleteTeam(id))
+      // alert('The team was successfully deleted')
+    }
+  }
 
 export default teamsSlice.reducer;

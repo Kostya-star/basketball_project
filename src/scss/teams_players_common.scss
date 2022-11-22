@@ -10,16 +10,15 @@
   // teams and players filled content
   &__filled_content {
     display: flex;
-    justify-content: space-between;
-    padding-top: 32px;
+    padding-top: 32px;  
     flex-wrap: wrap;
+    gap: 55.5px;
     &__block {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      width: 364px;
-      margin-bottom: 20px;
+      flex-basis: 364px;
       background: linear-gradient(121.57deg, #707070 1.62%, #393939 81.02%);
       border-radius: 4px;
       cursor: pointer;

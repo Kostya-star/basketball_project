@@ -39,11 +39,11 @@ export const Teams = () => {
                                           onClick={() => deleteTeam(team.id)}
                                           className='common__filled_content__block'
                                           key={index}>
-                                            <p>
-                                              <img src={`http://dev.trainee.dex-it.ru${team.imageUrl}`} alt="" />
-                                            </p>
-                                          <span>{team.name}</span>
-                                          <span>Year of foundation: {team.foundationYear}</span>
+                                            <img src={`http://dev.trainee.dex-it.ru${team.imageUrl}`} alt="team" />
+                                            <div>
+                                              <p>{team.name}</p>
+                                              <span>Year of foundation: {team.foundationYear}</span>
+                                            </div>
                                         </div> )
         }
       </div>

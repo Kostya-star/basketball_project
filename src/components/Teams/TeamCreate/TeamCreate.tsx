@@ -5,7 +5,7 @@ import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector} from '../../../redux/hooks';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { createTeam } from '../../../redux/slices/teamsSlice';
+import { createTeam, toggleNavigate } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { INewTeamValues } from '../../../types/types';
@@ -23,7 +23,10 @@ export const TeamCreate = () => {
   }))
 
   useEffect(() => {
-    if(isNavigateTeams) navigate('/Teams')
+    if(isNavigateTeams) {
+      navigate('/Teams')
+      dispatch(toggleNavigate(false))
+    }
   }, [isNavigateTeams])
 
   const onSaveTeamPhoto = (e: ChangeEvent<HTMLInputElement>) => {

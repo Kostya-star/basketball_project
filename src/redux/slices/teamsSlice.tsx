@@ -89,7 +89,7 @@ export const createTeam = (teamValues: INewTeamValues, image: File | null) => as
 
     if(resp && resp.status === RespStatusEnum.SUCCESS) {
       dispatch(deleteTeam(id))
-      // alert('The team was successfully deleted')
+      alert('The team was successfully deleted')
     }
   }
 

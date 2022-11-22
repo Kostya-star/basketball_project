@@ -9,20 +9,45 @@
   }
   // teams and players filled content
   &__filled_content {
-    background-color: grey;
     display: flex;
     justify-content: space-between;
-    padding: 32px 0px 0px 0px;
+    padding-top: 32px;
     flex-wrap: wrap;
-    height: 724px;
     &__block {
-      height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
       width: 364px;
       margin-bottom: 20px;
-      background-color: red;
+      background: linear-gradient(121.57deg, #707070 1.62%, #393939 81.02%);
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Avenir', sans-serif;
       img {
+        display: block;
+        margin-top: 65px;
+        margin-bottom: 70px;
         width: 150px;
         height: 150px;
+      }
+      p {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: white;
+      }
+      span {
+        font-size: 14px;
+        color: #9C9C9C;
+      }
+      div {
+        text-align: center;
+        width: 100%;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        background-color: #303030;
+        border-radius: 4px;
       }
     }
   }

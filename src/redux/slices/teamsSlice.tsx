@@ -4,22 +4,11 @@ import { INewTeamValues, ITeamData, ITeamState, RespStatusEnum } from '../../typ
 import { AppDispatch } from '../store';
 import { toggleLoading } from './loadingSlice';
 
-
 const initialState: ITeamState = {
-  data: [
-    {
-      name: '',
-      foundationYear: 0,
-      division: '',
-      conference: '',
-      imageUrl: '',
-      id: 0,
-    },
-  ],
+  data: [],
   count: 0,
   page: 0,
   size: 0,
-  isNavigateTeams: false
 };
 
 export const teamsSlice = createSlice({
@@ -32,9 +21,6 @@ export const teamsSlice = createSlice({
       state.page = action.payload.page;
       state.size = action.payload.size;
     },
-    toggleNavigate(state, action: PayloadAction<boolean>) {
-      state.isNavigateTeams = action.payload 
-    },
     deleteTeam(state, {payload}: PayloadAction<number>) {
       const teamId = payload
       state.data = state.data.filter(team => team.id !== teamId)
@@ -42,7 +28,7 @@ export const teamsSlice = createSlice({
   },
 });
 
-export const { setTeams, toggleNavigate, deleteTeam } = teamsSlice.actions;
+export const { setTeams, deleteTeam } = teamsSlice.actions;
 
 export const fetchTeams = () => async (dispatch: AppDispatch) => {
   const resp = await teamsAPI.getTeams().catch((error) => {
@@ -55,20 +41,21 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
       dispatch(setTeams(resp.data));
     } 
   }
+  return resp
 };
 
-export const createTeam = (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {
-  dispatch(toggleLoading(true))  
-  if (image) {
-    const imageResp = await teamsAPI.saveImage(image).catch((error) => {
-      alert('Error when uploading photo');
-      console.log(error);
-    });
+export const createTeam =
+  (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {
+    dispatch(toggleLoading(true));
+    if (image) {
+      const imageResp = await teamsAPI.saveImage(image).catch((error) => {
+        alert('Error when uploading photo');
+        console.log(error);
+      });
       if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
+        const imageUrl = imageResp.data;
+        teamValues.imageUrl = imageUrl;
 
-        const imageUrl = imageResp.data
-        teamValues.imageUrl = imageUrl
-        
         const resp = await teamsAPI.addTeam(teamValues).catch((error) => {
           if (error && error.response.status === RespStatusEnum.EXISTS) {
             alert('This team already exists');
@@ -76,11 +63,11 @@ export const createTeam = (teamValues: INewTeamValues, image: File | null) => as
         });
         if (resp && resp.status === RespStatusEnum.SUCCESS) {
           alert('The team is created successfully');
-          dispatch(toggleNavigate(true))
         }
+        dispatch(toggleLoading(false));
+        return resp
       }
     }
-    dispatch(toggleLoading(false))  
   };
 
   export const removeTeam = (id: number) => async(dispatch: AppDispatch) => {

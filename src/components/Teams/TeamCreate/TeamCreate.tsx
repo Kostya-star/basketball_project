@@ -4,8 +4,8 @@ import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector} from '../../../redux/hooks';
-import { ChangeEvent, useState, useEffect } from 'react';
-import { createTeam, toggleNavigate } from '../../../redux/slices/teamsSlice';
+import { ChangeEvent, useState, useEffect, FC } from 'react';
+import { createTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { INewTeamValues } from '../../../types/types';
@@ -22,12 +22,6 @@ export const TeamCreate = () => {
     isNavigateTeams: teams.isNavigateTeams
   }))
 
-  useEffect(() => {
-    if(isNavigateTeams) {
-      navigate('/Teams')
-      dispatch(toggleNavigate(false))
-    }
-  }, [isNavigateTeams])
 
   const onSaveTeamPhoto = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length && location.pathname === '/TeamCreate') {
@@ -36,7 +30,7 @@ export const TeamCreate = () => {
   };
   
   const onCancelHandle = () => {
-    navigate('/TeamsEmpty')
+    return navigate('/Teams')
   }
 
   const initialValues = {
@@ -63,8 +57,9 @@ export const TeamCreate = () => {
     imageUrl: Yup.mixed().required('Required')
   });
   
-  const onSubmit = (values: INewTeamValues) => {
-    void dispatch(createTeam(values, teamImage))
+  const onSubmit = async (values: INewTeamValues) => {
+    const resp = await dispatch(createTeam(values, teamImage))
+    if(resp?.data) return navigate('/Teams')
   }
   
   return (

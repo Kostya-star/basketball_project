@@ -15,43 +15,44 @@ export const Teams = () => {
   
   
   useEffect(() => {
-    void dispatch(fetchTeams())
-  }, []);
-
-  useEffect(() => {
-    if(JSON.stringify(teams) === '[]') return navigate('/TeamsEmpty')
-  }, [teams]);
-
+    const fetchData = async() => {
+      const resp = await dispatch(fetchTeams())
+      const data = resp?.data.data
+      if(JSON.stringify(data) === '[]') return navigate('/TeamsEmpty') 
+    }
+    fetchData().catch(error => console.log(error))
+  }, [teams])
+    
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id))
   }
 
   const onRedirectCreateTeam = () => {
-    navigate('/TeamCreate')
+    return navigate('/TeamCreate')
   }
 
   return (
-    <div className='common__container'>
-      <div className='common__header'>
+    <div className="common__container">
+      <div className="common__header">
         <InputSearch />
-        <AddBtn onRedirect={onRedirectCreateTeam}/>     
+        <AddBtn onRedirect={onRedirectCreateTeam} />
       </div>
 
-      <div className='common__filled_content'>
-        {
-          teams?.map((team, index) => <div
-                                          onClick={() => deleteTeam(team.id)}
-                                          className='common__filled_content__block'
-                                          key={index}>
-                                            <img src={`http://dev.trainee.dex-it.ru${team.imageUrl}`} alt="team" />
-                                            <div>
-                                              <p>{team.name}</p>
-                                              <span>Year of foundation: {team.foundationYear}</span>
-                                            </div>
-                                        </div> )
-        }
+      <div className="common__filled_content">
+        {teams?.map((team, index) => (
+          <div
+            onClick={() => deleteTeam(team.id)}
+            className="common__filled_content__block"
+            key={index}
+          >
+            <img src={`http://dev.trainee.dex-it.ru${team.imageUrl}`} alt="team" />
+            <div>
+              <p>{team.name}</p>
+              <span>Year of foundation: {team.foundationYear}</span>
+            </div>
+          </div>
+        ))}
       </div>
-
     </div>
   );
 };

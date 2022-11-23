@@ -26,11 +26,15 @@ export const Teams = () => {
     void dispatch(removeTeam(id))
   }
 
+  const onRedirectCreateTeam = () => {
+    navigate('/TeamCreate')
+  }
+
   return (
     <div className='common__container'>
       <div className='common__header'>
         <InputSearch />
-        {/* <AddBtn /> */}
+        <AddBtn onRedirect={onRedirectCreateTeam}/>     
       </div>
 
       <div className='common__filled_content'>

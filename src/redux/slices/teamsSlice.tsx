@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { teamsAPI } from '../../api/api';
 import { INewTeamValues, ITeamData, ITeamState, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
+import { toggleLoading } from './loadingSlice';
 
 
 const initialState: ITeamState = {
@@ -52,16 +53,17 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
     
     if (JSON.stringify(resp.data.data) !== '[]') {
       dispatch(setTeams(resp.data));
-    }
+    } 
   }
 };
 
 export const createTeam = (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {
-    if (image) {
-      const imageResp = await teamsAPI.saveImage(image).catch((error) => {
-        alert('Error when uploading photo');
-        console.log(error);
-      });
+  dispatch(toggleLoading(true))  
+  if (image) {
+    const imageResp = await teamsAPI.saveImage(image).catch((error) => {
+      alert('Error when uploading photo');
+      console.log(error);
+    });
       if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
 
         const imageUrl = imageResp.data
@@ -78,6 +80,7 @@ export const createTeam = (teamValues: INewTeamValues, image: File | null) => as
         }
       }
     }
+    dispatch(toggleLoading(false))  
   };
 
   export const removeTeam = (id: number) => async(dispatch: AppDispatch) => {

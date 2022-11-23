@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authAPI } from '../../api/api';
 import { IAuthResponseType, ISignInRequest, ISignUpRequest, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
+import { toggleLoading } from './loadingSlice';
 
 export interface IAuthState {
   isAuth: boolean;
@@ -12,6 +13,7 @@ export interface IAuthState {
 
 const LSIsAuth = window.localStorage.getItem('isAuth')
 const isAuth = (LSIsAuth !== null) ? JSON.parse(LSIsAuth) : false 
+
 const initialState: IAuthState = {
   isAuth,
   error: {
@@ -43,6 +45,7 @@ export const authSlice = createSlice({
 
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
+  dispatch(toggleLoading(true))
   const response = await authAPI.signIn(loginData)
     .catch((error) => {
       if (error.response.status === RespStatusEnum.UNREGISTRED) {
@@ -57,11 +60,12 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
       }
       
     } 
-  
+  dispatch(toggleLoading(false))
 };
 
 
 export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispatch) => {
+  dispatch(toggleLoading(true))
   const response = await authAPI.signUp(signupData)
   .catch((error) => {
     if (error.response.status === RespStatusEnum.EXISTS) {
@@ -72,7 +76,7 @@ export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispat
     alert('you sucessfully signed up')
     dispatch(authSlice.actions.signUpSuccess(response.data))
   }
-
+  dispatch(toggleLoading(false))
 }
 
 export const { signInSuccess, setError } = authSlice.actions;

@@ -45,22 +45,23 @@ export const authSlice = createSlice({
 
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
-  dispatch(toggleLoading(true))
-  const response = await authAPI.signIn(loginData)
-    .catch((error) => {
-      if (error.response.status === RespStatusEnum.UNREGISTRED) {
-        dispatch(authSlice.actions.setError({unauthorized: true}));
-      }
+  dispatch(toggleLoading(true));
+  const response = await authAPI.signIn(loginData).catch((error) => {
+    if (error.response.status === RespStatusEnum.UNREGISTRED) {
+      dispatch(authSlice.actions.setError({ unauthorized: true }));
+    }
   });
-    if(response && response.status === RespStatusEnum.SUCCESS) {
-      if (response?.status === RespStatusEnum.SUCCESS) {
-        window.localStorage.setItem('isAuth', JSON.stringify(true));
-        dispatch(signInSuccess({ isAuth: true, signInData: response.data}));
-        window.localStorage.setItem('TOKEN', response.data.token)
-      }
-      
-    } 
-  dispatch(toggleLoading(false))
+
+  if (response && response.status === RespStatusEnum.SUCCESS) {
+    if (response?.status === RespStatusEnum.SUCCESS) {
+      window.localStorage.setItem('isAuth', JSON.stringify(true));
+      dispatch(signInSuccess({ isAuth: true, signInData: response.data }));
+      window.localStorage.setItem('TOKEN', response.data.token);
+    }
+  }
+
+  dispatch(toggleLoading(false));
+  return response;
 };
 
 

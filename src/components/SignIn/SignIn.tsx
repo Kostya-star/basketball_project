@@ -12,7 +12,7 @@ import { ISignInFormikValues } from '../../types/types';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { login, authSlice } from '../../redux/slices/authSlice';
+import { login, authSlice, setError } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 
 interface ISignInProps {
@@ -33,13 +33,9 @@ export const SignIn: FC<ISignInProps> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if(isAuth) navigate('/')
-  }, [isAuth])
-
-  useEffect(() => {
     if (unauthorized) {
       const authTimer = setTimeout(() => {
-        dispatch(authSlice.actions.setError({ unauthorized: false }));
+        dispatch(setError({ unauthorized: false }));
       }, 2500);
       return () => clearTimeout(authTimer);
     }
@@ -64,7 +60,10 @@ export const SignIn: FC<ISignInProps> = () => {
   });
 
   const onSubmit = async (loginData: ISignInFormikValues) => {
-    await dispatch(login(loginData));
+    const resp = await dispatch(login(loginData))
+    if(resp?.data) {
+      return navigate('/Teams')
+    }
   };
 
   return (

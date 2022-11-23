@@ -11,7 +11,6 @@ interface InputSubmitProps {
 }
 export const InputSubmit: FC<InputSubmitProps> = ({isDisabled, value}) => {
   const toggleLoading = useAppSelector(({loading}) => loading)
-  console.log(toggleLoading);
   
   return (
     <>

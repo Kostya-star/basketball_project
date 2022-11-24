@@ -4,12 +4,7 @@ import { INewTeamValues, ITeamData, ITeamState, RespStatusEnum } from '../../typ
 import { AppDispatch } from '../store';
 import { toggleLoading } from './loadingSlice';
 
-const initialState: ITeamState = {
-  data: [],
-  count: 0,
-  page: 0,
-  size: 0,
-};
+const initialState = {} as ITeamState
 
 export const teamsSlice = createSlice({
   name: 'teams',

@@ -6,7 +6,8 @@ import { INewTeamValues } from './../../types/types';
 interface InputFileProps<T> {
   name: T;
   image: File | null;
-  formik: FormikProps<INewTeamValues>;
+  // formik: FormikProps<INewTeamValues>;
+  formik: any;
   onSavePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,7 +20,7 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto, formik }
     formik.setFieldValue('imageUrl', e.target.files?.[0]);
   }
 
-  const fieldError = formik.touched.imageUrl && formik.errors.imageUrl
+  // const fieldError = formik.touched.imageUrl && formik.errors.imageUrl
 
   return (
     <>
@@ -35,9 +36,10 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto, formik }
           <img src={imgPreview} />
         </div>
       </label>
-      {fieldError ? (
+      {/* {fieldError ? (
          <div className={s.form__error}>{formik.errors.imageUrl}</div>
-       ) : null}
+       ) : null} */}
+       <ErrorMessage className={s.form__error} name={name} component="span"/>
     </>
   );
 };

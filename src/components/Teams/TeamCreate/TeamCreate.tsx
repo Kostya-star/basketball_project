@@ -72,6 +72,7 @@ export const TeamCreate = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
+        validateOnMount
       >
         {(formik) => {
           return (

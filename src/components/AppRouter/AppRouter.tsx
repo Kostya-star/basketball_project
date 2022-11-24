@@ -24,7 +24,7 @@ export const AppRouter: FC = () => {
 
   useEffect(() => {
     if (!isAuth) {
-      return navigate('/signIn');
+      return navigate('/SignIn');
     }
   }, [])
 

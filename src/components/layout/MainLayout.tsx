@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { Outlet} from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Outlet, useNavigate} from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Menu } from '../Menu/Menu';
 import s from './layout.module.scss';
@@ -7,15 +7,11 @@ import s from './layout.module.scss';
 
 
 export const MainLayout: FC = () => {
+  const navigate = useNavigate()
+    useEffect(() => {
+      return navigate('/Teams')
+    }, [])
 
-  // useEffect(() => {
-  //   (
-  //     async() => {
-        
-  //     }
-  //   )()
-  // }, [])
-  
   return (
     <div>
       <Header/>

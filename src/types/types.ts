@@ -30,7 +30,6 @@ export interface ITeamState {
   count: number;
   page: number;
   size: number;
-  isNavigateTeams?: boolean
 }
 // -----------------------------
 

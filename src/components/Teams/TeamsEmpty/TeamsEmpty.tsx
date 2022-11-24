@@ -5,12 +5,17 @@ import '../../../scss/teams_players_common.scss'
 import { useNavigate } from 'react-router-dom';
 
 export const TeamsEmpty = () => {
+  const navigate = useNavigate()
+
+  const onRedirectCreateTeam = () => {
+    navigate('/TeamCreate')
+  }
 
   return (
     <div className='common__container'>
       <div className='common__header'>
         <InputSearch />
-        {/* <AddBtn /> */}
+        <AddBtn onRedirect={onRedirectCreateTeam}/>       
       </div>
 
       <div className='common__empty_content'>

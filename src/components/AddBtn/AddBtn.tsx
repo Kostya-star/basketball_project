@@ -4,14 +4,13 @@ import s from './AddBtn.module.scss';
 
 
 interface IAddBtnProps {
-  onAdd: () => void
+  onRedirect: () => void
 }
 
-export const AddBtn: FC<IAddBtnProps> = ({ onAdd }) => {
+export const AddBtn: FC<IAddBtnProps> = ({ onRedirect }) => {
   const navigate = useNavigate()
-  const location = useLocation()
 
   return (
-    <button onClick={onAdd} className={s.addBtn}>Add &nbsp;&nbsp;&nbsp;<strong>+</strong></button>
+    <button onClick={onRedirect} className={s.addBtn}>Add &nbsp;&nbsp;&nbsp;<strong>+</strong></button>
   )
 }

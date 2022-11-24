@@ -9,7 +9,7 @@ export const PlayersEmpty = () => {
 
   const navigate = useNavigate()
 
-  const onAddPlayer = () => {
+  const onRedirectCreatePlayer = () => {
     navigate('/PlayersCreate')
   }
 
@@ -17,7 +17,7 @@ export const PlayersEmpty = () => {
     <div className='common__container'>
     <div className='common__header'>
       <InputSearch />
-      <AddBtn onAdd={onAddPlayer}/>
+      <AddBtn onRedirect={onRedirectCreatePlayer}/>
     </div>
 
     <div className='common__empty_content'>

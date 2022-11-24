@@ -18,10 +18,6 @@ export const TeamCreate = () => {
   
   const[teamImage, setTeamImage] = useState<File | null>(null)
 
-  const{isNavigateTeams} = useAppSelector(({teams}) => ({
-    isNavigateTeams: teams.isNavigateTeams
-  }))
-
 
   const onSaveTeamPhoto = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length && location.pathname === '/TeamCreate') {

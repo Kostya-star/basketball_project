@@ -15,11 +15,8 @@ export const teamsSlice = createSlice({
   name: 'teams',
   initialState,
   reducers: {
-    setTeams(state, action: PayloadAction<ITeamState>) {
-      state.data = action.payload.data;
-      state.count = action.payload.count;
-      state.page = action.payload.page;
-      state.size = action.payload.size;
+    setTeams(state, {payload}: PayloadAction<ITeamState>) {
+      return payload
     },
     deleteTeam(state, {payload}: PayloadAction<number>) {
       const teamId = payload
@@ -36,10 +33,7 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
     console.log(error);
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    
-    if (JSON.stringify(resp.data.data) !== '[]') {
-      dispatch(setTeams(resp.data));
-    } 
+    dispatch(setTeams(resp.data));
   }
   return resp
 };

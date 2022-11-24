@@ -13,15 +13,23 @@ export const Teams = () => {
     teams: teams.data,
   }));
   
+  const onFetchData = () => {
+    const fetchData = async () => {
+      const resp = await dispatch(fetchTeams());
+      if(JSON.stringify(resp?.data.data) === '[]') return navigate('/TeamsEmpty')
+    };
+    fetchData().catch(error => console.log(error));
+  }
+
+  useEffect(() => {
+    onFetchData()
+  }, []);
   
   useEffect(() => {
-    const fetchData = async() => {
-      const resp = await dispatch(fetchTeams())
-      const data = resp?.data.data
-      if(JSON.stringify(data) === '[]') return navigate('/TeamsEmpty') 
-    }
-    fetchData().catch(error => console.log(error))
-  }, [teams])
+    if(JSON.stringify(teams) === '[]') {
+      onFetchData()
+    } 
+  }, [teams]);
     
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id))

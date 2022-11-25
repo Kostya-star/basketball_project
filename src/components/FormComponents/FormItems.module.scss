@@ -1,6 +1,5 @@
 .form {
   &__group {
-    // margin-bottom: 25px;
     height: 95px;
     margin-top: 0;
   }
@@ -119,6 +118,39 @@
 
 .inputBlock {
   position: relative;
+  input[type='date'] {
+    cursor: pointer;
+  }
+}
+
+::-webkit-calendar-picker-indicator {
+  height: 13px;
+  width: 13px;
+  right: 15px;
+  cursor: pointer;
+  // padding-left: 140px;
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+// ::-webkit-datetime-edit {
+//   visibility: hidden;
+//   &:hover {
+//     visibility: visible;
+//     display: block;
+//     background-color: red;
+//   }
+// }
+
+.showDate {
+  ::-webkit-datetime-edit {
+    visibility: visible;
+  }
+}
+.hideDate {
+  ::-webkit-datetime-edit {
+    visibility: hidden;
+  }
 }
 
 .password {

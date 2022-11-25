@@ -1,5 +1,5 @@
 import { InputText } from '../../FormComponents/InputText';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector} from '../../../redux/hooks';

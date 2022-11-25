@@ -1,20 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RespStatusEnum } from '../../types/types';
+import { IPlayerState, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
 import { playersAPI } from './../../api/api';
 
-
-interface IPlayerState {
-  name: string,
-  number: number,
-  position: string,
-  team: number,
-  birthday: number,
-  height: number,
-  weight: number,
-  avatarUrl: string,
-  id: number
-}
 
 interface IPlayersSliceState {
   data: IPlayerState[],

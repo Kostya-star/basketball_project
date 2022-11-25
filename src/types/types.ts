@@ -33,6 +33,20 @@ export interface ITeamState {
 }
 // -----------------------------
 
+// PLAYERS TYPES ---------------------------
+export interface IPlayerState {
+  name: string,
+  number: number,
+  position: string,
+  team: number,
+  birthday: number,
+  height: number,
+  weight: number,
+  avatarUrl: string,
+  id: number
+}
+// ----------------------------------
+
 
 // REQUESTS TYPES ---------------------------
 

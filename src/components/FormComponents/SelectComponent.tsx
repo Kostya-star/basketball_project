@@ -1,16 +1,23 @@
-import { ErrorMessage} from 'formik';
+import { ErrorMessage, Field} from 'formik';
 import { FC, useState } from 'react';
 import s from './FormItems.module.scss';
 import Select  from 'react-select';
 
 
-interface ISelectComponentProps<T> {
-  label: string;
-  name: T;
+
+// export const SelectFC = () => {
+//   return <Field name=/>
+// }
+
+
+interface ISelectComponentProps {
+  label: string
+  name: string
+  formik: any
 }
 
-export const SelectComponent = <T extends string>({ label, name, ...rest }: ISelectComponentProps<T>) => {
-
+export const SelectComponent: FC<ISelectComponentProps> = ({ label, name, formik}) => {
+  
   const[selectedOption, setSelectedOption] = useState() 
 
   const options = [
@@ -25,8 +32,21 @@ export const SelectComponent = <T extends string>({ label, name, ...rest }: ISel
     return selectedOption ? options.find(option => option === selectedOption) : ''
   }
 
-  const onChangeOption = (newVal: any) => {
-    setSelectedOption(newVal)
+  const onChangeOption = (option: any) => {
+    setSelectedOption(option)
+    if(name === 'position') {
+      formik.setFieldValue('position', option.value)
+    } else if(name === 'team') {
+      formik.setFieldValue('team', option.value)
+    }
+  }
+
+  const onBlurOption = () => {
+    if(name === 'position') {
+      formik.setFieldTouched('position', true)
+    } else if(name === 'team') {
+      formik.setFieldTouched('team', true)
+    }
   }
 
   const classNames = {
@@ -55,6 +75,7 @@ export const SelectComponent = <T extends string>({ label, name, ...rest }: ISel
       backgroundColor: state.isSelected ? '#C60E2E' : 'white',
       fontWeight: '500',
       color: state.isSelected ? 'white' : '#9C9C9C',
+      transition: '0.2s',
       "&:hover": {
         backgroundColor: '#FF768E',
         color: 'white',
@@ -80,37 +101,18 @@ export const SelectComponent = <T extends string>({ label, name, ...rest }: ISel
       <Select
         options={options}
         value={getValue()}
-        onChange={onChangeOption}
         styles={classNames}
         name={name}
         isClearable={true}
         isLoading={!selectedOption}
+        onChange={onChangeOption}
+        onBlur={onBlurOption}
         />
 
-      <ErrorMessage className={s.form__error} name={name} component="span" />
+<ErrorMessage className={s.form__error} name={name} component="span" />
+    {/* { 
+      (!!formik.errors.position && formik.touched.position) && (<div>{formik.errors.position}</div>)
+    } */}
     </div>
   );
 };
-// export const InputSelect: FC<InputSelectProps> = ({ label, name, options, ...rest }) => {
-//   return (
-//     <div className={s.select}>
-//       <label htmlFor={name}>
-//         {label}
-//       </label>
-//       <div className={s.select__group}>
-//         <Field  placeholder='Select...' as="select" id={name} name={name} {...rest}>
-//           {options.map((option) => {
-//             return (
-//               <option key={option.value} value={option.value}>
-//                 {option.key}
-//               </option>
-//             );
-//           })}
-//         </Field>
-//         <div className={s.select__tickSVG}><SelectTickSVG/></div>
-//         <div className={s.select__tubeSVG}><SelectTubeSVG/></div>
-//       </div>
-//       <ErrorMessage className={s.form__error} name={name} component="span" />
-//     </div>
-//   );
-// };

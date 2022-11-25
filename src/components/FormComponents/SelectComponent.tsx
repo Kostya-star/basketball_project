@@ -1,25 +1,17 @@
-import { ErrorMessage, Field } from 'formik';
+import { ErrorMessage} from 'formik';
 import { FC, useState } from 'react';
 import s from './FormItems.module.scss';
-import {ReactComponent as SelectTickSVG} from '../../assets/icons/select__options.svg'
-import {ReactComponent as SelectTubeSVG} from '../../assets/icons/select__tubeSVG.svg'
-import Select, {OnChangeValue} from 'react-select';
+import Select  from 'react-select';
 
 
-interface InputSelectProps {
+interface ISelectComponentProps<T> {
   label: string;
-  name: string;
+  name: T;
 }
 
-// interface IOptions {
-//   value: string
-//   label: string
-// }
+export const SelectComponent = <T extends string>({ label, name, ...rest }: ISelectComponentProps<T>) => {
 
-export const InputSelect: FC<InputSelectProps> = ({ label, name, ...rest }) => {
-const[selectedOption, setSelectedOption] = useState() 
-console.log(selectedOption);
-
+  const[selectedOption, setSelectedOption] = useState() 
 
   const options = [
     {value: 'center_forward', label: 'Center Forward'},
@@ -37,24 +29,62 @@ console.log(selectedOption);
     setSelectedOption(newVal)
   }
 
-  // const classNames = {
-  //   control: (baseStyles: any, state: any) => ({
-  //     ...baseStyles,
-  //     borderColor: state.isFocused ? 'grey' : 'red',
-  //     ...baseStyles,
-  //     color: 'red'
-  //   })
-  // }
+  const classNames = {
+    control: (baseStyles: any, state: any) => ({
+      ...baseStyles,
+      color: '#707070',
+      backgroundColor: '#F6F6F6',
+      fontSize: '14px',
+      fontWeight: '500',
+      border: 0,
+      boxShadow: 'none',
+      '&:hover': {
+        backgroundColor: '#D1D1D1',
+        border: 'none'
+      },  
+      '&:focus': {
+        background: '#F6F6F6',
+        boxShadow: '0px 0px 5px #D9D9D9',
+        border: 'none'
+      },
+      cursor: 'pointer'
+    }),
+    option: (baseStyles: any, state: any) => ({
+      ...baseStyles,
+      cursor: 'pointer',
+      backgroundColor: state.isSelected ? '#C60E2E' : 'white',
+      fontWeight: '500',
+      color: state.isSelected ? 'white' : '#9C9C9C',
+      "&:hover": {
+        backgroundColor: '#FF768E',
+        color: 'white',
+      }
+    }),
+    dropdownIndicator: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "inherit"
+    }),
+    loadingIndicator: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "inherit"
+    }),
+    clearIndicator: (baseStyles: any) => ({
+      ...baseStyles,
+      color: "inherit"
+    })
+  }
 
   return (
     <div className={s.select}>
-      <span>Positions</span>
+      <span className={s.select__label}>{label}</span>
       <Select
         options={options}
         value={getValue()}
         onChange={onChangeOption}
-        // styles={classNames}
+        styles={classNames}
         name={name}
+        isClearable={true}
+        isLoading={!selectedOption}
         />
 
       <ErrorMessage className={s.form__error} name={name} component="span" />

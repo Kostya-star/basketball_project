@@ -205,52 +205,9 @@ input[type='file'] {
 .select {
   height: 95px;
   margin-top: 0;
-  label {
+  &__label {
     display: inline-block;
     font-size: 13px;
     margin-bottom: 8px;
-  }
-  select {
-    appearance: none;
-    width: 370px;
-    height: 42px;
-    margin-bottom: 5px;
-    background-color: #F6F6F6;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    transition: 0.3s;
-    cursor: pointer;
-    font-family: 'Avenir', sans-serif;
-
-    &:hover {
-      background-color: #D1D1D1;
-      border: none
-    }
-
-    &:focus {
-      background: #F6F6F6;
-      box-shadow: 0px 0px 5px #D9D9D9;
-      border: none;
-    }
-    option[value] {
-      font-size: 14px;
-      color: #303030;
-      line-height: 24px;
-      font-weight: 500;
-    }
-  }
-  &__group {
-    position: relative;
-    .select__tickSVG {
-      position: absolute;
-      top: 8px;
-      right: 18px;
-    }
-    .select__tubeSVG {
-      position: absolute;
-      top: 8px;
-      right: 40px;
-    }
   }
 }

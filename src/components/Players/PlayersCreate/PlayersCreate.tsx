@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import { ChangeEvent, useState } from "react";
 import { InputFile } from "../../FormComponents/InputFile";
-import { InputSelect } from "../../FormComponents/InputSelect";
+import { SelectComponent } from "../../FormComponents/SelectComponent";
 import { InputSubmit } from "../../FormComponents/InputSubmit";
 import { InputText } from "../../FormComponents/InputText";
 import { InfoHeader } from "../../InfoHeader/InfoHeader";
@@ -46,9 +46,8 @@ export const PlayersCreate = () => {
 
                 <div>
                   <InputText<'name'> label="Name" name="name" />
-                  <InputSelect label='Position'  name='position'/>
-                  {/* <InputSelect<'division'> label="Division" name="division" /> */}
-                  {/* <InputSelect<'division'> label="Division" name="division" /> */}
+                  <SelectComponent<'position'> label='Positions'  name='position'/>
+                  <SelectComponent<'team'> label='Team'  name='team'/>
                   <InputText<'conference'> label="Conference" name="conference" />
                   <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className='common__create__buttons'>

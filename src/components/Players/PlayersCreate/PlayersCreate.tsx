@@ -1,5 +1,5 @@
 import { Field, Form, Formik, FormikProps } from "formik";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { InputFile } from "../../FormComponents/InputFile";
 import { SelectComponent } from "../../FormComponents/SelectComponent";
 import { InputSubmit } from "../../FormComponents/InputSubmit";
@@ -14,11 +14,11 @@ import { IPlayerState } from "../../../types/types";
 export const PlayersCreate = () => {
   const[playersImage, setPlayersImage] = useState<File | null>(null)
 
-  const onSavePlayerPhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      setPlayersImage(e.target.files[0])
-    }
-  };
+  // const onSavePlayerPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files?.length) {
+  //     setPlayersImage(e.target.files[0])
+  //   }
+  // };
 
   const initialValues = {
     name: '',
@@ -73,13 +73,16 @@ export const PlayersCreate = () => {
         validateOnMount
       >
         {(formik) => {
-          console.log(formik);
+          const onSavePlayerPhoto = (image: File | null) => {
+            formik.setFieldValue('avatarUrl', image)
+            setPlayersImage(image)
+          }
           
           return (
             <Form>
               <div className='common__create__content'>
                 <div className='common__create__image'>
-                  <InputFile<'avatarUrl'> name='avatarUrl' image={playersImage} formik={formik} onSavePhoto={onSavePlayerPhoto}/>
+                  <InputFile<'avatarUrl'> name='avatarUrl' image={playersImage} onSavePhoto={onSavePlayerPhoto}/>
                 </div>
 
                 <div>

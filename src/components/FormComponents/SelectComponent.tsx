@@ -42,11 +42,8 @@ export const SelectComponent: FC<ISelectComponentProps> = ({ label, name, formik
   }
 
   const onBlurOption = () => {
-    if(name === 'position') {
-      formik.setFieldTouched('position', true)
-    } else if(name === 'team') {
-      formik.setFieldTouched('team', true)
-    }
+    formik.setFieldTouched(name, true)
+    console.log('touched');
   }
 
   const classNames = {
@@ -100,7 +97,7 @@ export const SelectComponent: FC<ISelectComponentProps> = ({ label, name, formik
       <span className={s.select__label}>{label}</span>
       <Select
         options={options}
-        value={getValue()}
+        // value={getValue()}
         styles={classNames}
         name={name}
         isClearable={true}

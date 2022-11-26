@@ -1,5 +1,6 @@
 import { client } from './baseRequest';
 import {
+  IAddPLayerRequest,
   IAuthResponseType,
   IGetTeamsResponse,
   INewTeamValuesRequest,
@@ -24,17 +25,6 @@ export const teamsAPI = {
     return await client.get<IGetTeamsResponse>(`Team/GetTeams`);
   },
 
-  async saveImage(photoFile: File) {
-    const data = new FormData();
-    data.append('file', photoFile);
-
-    return await client.post<string>('Image/SaveImage', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  },
-
   async addTeam(values: INewTeamValuesRequest) {
     return await client.post<ITeamAddResponse>('Team/Add', values);
   },
@@ -51,5 +41,25 @@ export const playersAPI = {
 
   async getPositions() {
     return await client.get<string[]>('Player/GetPositions')
+  },
+
+  async addPlayer(newPlayer: IAddPLayerRequest) {
+    return await client.post('Player/Add', newPlayer)
   }
 };
+
+
+export const imageAPI = {
+  async saveImage(photoFile: File) {
+    const data = new FormData();
+    data.append('file', photoFile);
+
+    return await client.post<string>('Image/SaveImage', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+};
+
+

@@ -7,10 +7,11 @@ import { InputText } from '../../FormComponents/InputText';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { InputDate } from '../../FormComponents/InputDate';
 import * as Yup from 'yup';
-import { IPlayerState } from '../../../types/types';
+import { IAddPLayerRequest, IPlayerState } from '../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
-import { getPositions } from '../../../redux/slices/playersSlice';
+import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
+
 
 export const PlayersCreate = () => {
   const navigate = useNavigate();
@@ -23,7 +24,10 @@ export const PlayersCreate = () => {
 
   const positionOptions = positions?.map((p) => ({value: p, label: p}))
   const teamsOptions = teams?.map((t) => ({value: t.name, label: t.name}))
-  console.log(teamsOptions);
+  const teamId = teams?.find(team => team.id)
+
+  console.log(teamId);
+  
 
   useEffect(() => {
     void dispatch(getPositions())
@@ -32,11 +36,11 @@ export const PlayersCreate = () => {
   const initialValues = {
     name: '',
     position: '',
-    team: '',
-    height: '',
-    weight: '',
-    birthday: '',
-    number: '',
+    team: 0,
+    height: 0,
+    weight: 0,
+    birthday: 0,
+    number: 0,
     avatarUrl: '',
   };
 
@@ -59,8 +63,9 @@ export const PlayersCreate = () => {
     avatarUrl: Yup.mixed().required('Required'),
   });
 
-  const onSubmit = () => {
-    alert('values');
+  const onSubmit = async(newPlayer: IAddPLayerRequest) => {
+    // @ts-expect-error
+    await dispatch(createPlayer(newPlayer, playersImage, teamId))
   };
 
   const onCancelHandle = () => {

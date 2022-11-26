@@ -9,7 +9,7 @@ import { fetchPlayers } from '../../redux/slices/playersSlice';
 
 export const Players = () => {
   const dispatch = useAppDispatch()
-  const players = useAppSelector((state) => state.players.data)
+  const players = useAppSelector((state) => state.players.playersData.data)
 
   const navigate = useNavigate()
 

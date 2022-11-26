@@ -61,6 +61,10 @@ export interface ITeamAddResponse extends ITeamData{}
 export interface INewTeamValuesRequest extends INewTeamValues{}
 // ---------------------------------------
 
+// PLAYERS 
+export type IAddPLayerRequest = Omit<IPlayerState, 'id'>
+// ---------------------------------------
+
 //  -----------------------------------
 
 export interface IAuthResponseType {

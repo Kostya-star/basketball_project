@@ -16,23 +16,11 @@ export const TeamCreate = () => {
 
   const [teamImage, setTeamImage] = useState<File | null>(null);
 
-  // const onSaveTeamPhoto = (e: ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files?.length) {
-  //     setTeamImage(e.target.files[0])
-  //   }
-  // };
-
   const onCancelHandle = () => {
     return navigate('/Teams');
   };
 
-  const initialValues = {
-    name: '',
-    foundationYear: '',
-    division: '',
-    conference: '',
-    imageUrl: '',
-  } as INewTeamValues;
+  const initialValues = {} as INewTeamValues;
 
   const validationSchema = Yup.object({
     name: Yup.string()

@@ -18,7 +18,7 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto}: InputFi
   const imgPreview = image ? URL.createObjectURL(image) : ''
 
   return (
-    <>
+    <div className={s.setImage}>
       <label htmlFor={name}>
         <input
           id={name}
@@ -26,15 +26,11 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto}: InputFi
           type="file"
           onChange={(e) => (e.target.files?.[0]) && onSavePhoto(e.target.files?.[0])}
         />
-        <div className={s.setImage}>
+        <div >
           <img src={imgPreview} />
         </div>
       </label>
        <ErrorMessage className={s.form__error} name={name} component="span"/>
-       {
-        // (formik.errors.avatarUrl && formik.touched.avatarUrl) && (<div>{formik.errors.position}</div>)
-      }
-        
-    </>
+    </div>
   );
 };

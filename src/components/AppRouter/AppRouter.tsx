@@ -37,7 +37,6 @@ export const AppRouter: FC = () => {
           <Route path="TeamCreate" element={<TeamCreatePage />} />
           <Route path="Players" element={<PlayersPage />} />
           <Route path="PlayersEmpty" element={<PlayersEmptyPage />} />
-          <Route path="PlayersEmpty" element={<PlayersEmptyPage />} />
           <Route path="PlayersCreate" element={<PlayersCreatePage />} />
         </Route>
       )}

@@ -74,5 +74,3 @@ export enum RespStatusEnum {
   UNREGISTRED = 401,
   EXISTS = 409,
 }
-
-// SELECT COMPONENT TYPES

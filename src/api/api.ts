@@ -48,4 +48,8 @@ export const playersAPI = {
   async getPlayers() {
     return await client.get('Player/GetPlayers');
   },
+
+  async getPositions() {
+    return await client.get<string[]>('Player/GetPositions')
+  }
 };

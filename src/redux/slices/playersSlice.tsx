@@ -1,33 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPlayerState, RespStatusEnum } from '../../types/types';
 import { AppDispatch } from '../store';
-import { playersAPI } from './../../api/api';
+import { playersAPI, teamsAPI } from './../../api/api';
 
 
 interface IPlayersSliceState {
   data: IPlayerState[],
   count: number,
   page: number,
-  size: number
+  size: number,
+  positions: string[]
 }
 
 const initialState: IPlayersSliceState = {
-  data: [
-    {
-      name: '',
-      number: 0,
-      position: '',
-      team: 0,
-      birthday: 0,
-      height: 0,
-      weight: 0,
-      avatarUrl: '',
-      id: 0
-    }
-  ],
+  data: [],
   count: 0,
   page: 0,
-  size: 0
+  size: 0,
+  positions: []
 };
 
 export const playersSlice = createSlice({
@@ -36,11 +26,14 @@ export const playersSlice = createSlice({
   reducers: {
     setPlayers(state, action: PayloadAction<IPlayersSliceState>){
       state.data = action.payload.data
+    },
+    setPositions(state, {payload}: PayloadAction<string[]>) {
+      state.positions = payload
     }
   },
 });
 
-export const {setPlayers} = playersSlice.actions;
+export const {setPlayers, setPositions} = playersSlice.actions;
 
 export const fetchPlayers = () => async (dispatch: AppDispatch) => {
   const resp = await playersAPI.getPlayers().catch(error => {
@@ -50,6 +43,16 @@ export const fetchPlayers = () => async (dispatch: AppDispatch) => {
   if(resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setPlayers(resp.data))
   }
+}
+
+export const getPositions = () => async(dispatch: AppDispatch) => {
+  const resp = await playersAPI.getPositions().catch(error => {
+    console.log(error);
+    alert(error)
+  })
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    dispatch(setPositions(resp.data))
+  } 
 }
 
 export default playersSlice.reducer;

@@ -15,18 +15,19 @@ interface ISelectComponentProps<T> {
   name: T;
   onChange: (option: string, name: string) => void
   onBlur: (name: string) => void
+  options: any
 }
 
-export const SelectComponent = <T extends string>({ label, name, onChange, onBlur }: ISelectComponentProps<T>) => {
+export const SelectComponent = <T extends string>({ label, name, options, onChange, onBlur }: ISelectComponentProps<T>) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const options = [
-    { value: 'center_forward', label: 'Center Forward' },
-    { value: 'guard_forward', label: 'Guard Forward' },
-    { value: 'forward', label: 'Forward' },
-    { value: 'center', label: 'Center' },
-    { value: 'guard', label: 'Guard' },
-  ];
+  // const options = [
+  //   { value: 'center_forward', label: 'Center Forward' },
+  //   { value: 'guard_forward', label: 'Guard Forward' },
+  //   { value: 'forward', label: 'Forward' },
+  //   { value: 'center', label: 'Center' },
+  //   { value: 'guard', label: 'Guard' },
+  // ];
 
   const classNames = {
     control: (baseStyles: any, state: any) => ({
@@ -38,6 +39,7 @@ export const SelectComponent = <T extends string>({ label, name, onChange, onBlu
       border: 0,
       marginBottom: '5px',
       boxShadow: 'none',
+      transition: '0.2s',
       '&:hover': {
         backgroundColor: '#D1D1D1',
         border: 'none',
@@ -90,6 +92,7 @@ export const SelectComponent = <T extends string>({ label, name, onChange, onBlu
         styles={classNames}
         name={name}
         isLoading={!selectedOption}
+        // @ts-expect-error
         onChange={(option) => setOnChange(option)}
         onBlur={() => onBlur(name)}
       />

@@ -9,10 +9,25 @@ import { InputDate } from '../../FormComponents/InputDate';
 import * as Yup from 'yup';
 import { IPlayerState } from '../../../types/types';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
+import { getPositions } from '../../../redux/slices/playersSlice';
 
 export const PlayersCreate = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+
   const [playersImage, setPlayersImage] = useState<File | null>(null);
+
+  const positions = useAppSelector(({players}) => players.positions) 
+  const teams = useAppSelector(({teams}) => teams.data) 
+
+  const positionOptions = positions?.map((p) => ({value: p, label: p}))
+  const teamsOptions = teams?.map((t) => ({value: t.name, label: t.name}))
+  console.log(teamsOptions);
+
+  useEffect(() => {
+    void dispatch(getPositions())
+  }, [])
 
   const initialValues = {
     name: '',
@@ -51,6 +66,7 @@ export const PlayersCreate = () => {
   const onCancelHandle = () => {
     return navigate('/Players');
   };
+
 
   return (
     <div className="common__create">
@@ -95,12 +111,14 @@ export const PlayersCreate = () => {
                     name="position"
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
+                    options={positionOptions}
                   />
                   <SelectComponent<'team'>
                     label="Teams"
                     name="team"
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
+                    options={teamsOptions}
                   />
                   <div className="common__create__groupParameters">
                     <InputText<'height'> label="Height (cm)" name="height" />

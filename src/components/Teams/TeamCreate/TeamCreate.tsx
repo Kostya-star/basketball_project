@@ -20,7 +20,13 @@ export const TeamCreate = () => {
     return navigate('/Teams');
   };
 
-  const initialValues = {} as INewTeamValues;
+  const initialValues = {
+    name: '',
+    division: '',
+    conference: '',
+    foundationYear: '',
+    imageUrl: '',
+  };
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -77,7 +83,7 @@ export const TeamCreate = () => {
                   <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className="common__create__buttons">
                     <button onClick={onCancelHandle}>Cancel</button>
-                    <InputSubmit isDisabled={!formik.isValid} value="Save" />
+                    <InputSubmit value="Save" />
                   </div>
                 </div>
               </div>

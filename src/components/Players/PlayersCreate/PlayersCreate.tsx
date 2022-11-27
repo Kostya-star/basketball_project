@@ -11,6 +11,7 @@ import { IAddPLayerRequest, IPlayerState } from '../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
 import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
+import { log } from 'console';
 
 
 export const PlayersCreate = () => {
@@ -24,10 +25,6 @@ export const PlayersCreate = () => {
 
   const positionOptions = positions?.map((p) => ({value: p, label: p}))
   const teamsOptions = teams?.map((t) => ({value: t.name, label: t.name}))
-  const teamId = teams?.find(team => team.id)
-
-  console.log(teamId);
-  
 
   useEffect(() => {
     void dispatch(getPositions())
@@ -36,11 +33,11 @@ export const PlayersCreate = () => {
   const initialValues = {
     name: '',
     position: '',
-    team: 0,
-    height: 0,
-    weight: 0,
-    birthday: 0,
-    number: 0,
+    team: '',
+    height: '',
+    weight: '',
+    birthday: '',
+    number: '',
     avatarUrl: '',
   };
 
@@ -64,8 +61,13 @@ export const PlayersCreate = () => {
   });
 
   const onSubmit = async(newPlayer: IAddPLayerRequest) => {
-    // @ts-expect-error
-    await dispatch(createPlayer(newPlayer, playersImage, teamId))
+    const teamId = teams?.find(team => team.name === String(newPlayer.team))
+    if(teamId) {
+      const resp = await dispatch(createPlayer(newPlayer, playersImage, teamId.id))
+      if(resp?.data) {
+        return navigate('/Players')
+      }
+    }
   };
 
   const onCancelHandle = () => {

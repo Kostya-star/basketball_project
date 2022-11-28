@@ -36,12 +36,12 @@ export interface ITeamState {
 // PLAYERS TYPES ---------------------------
 export interface IPlayerState {
   name: string,
-  number: number | string,
+  number: number,
   position: string,
-  team: number | string,
-  birthday: number | string,
-  height: number | string,
-  weight: number | string,
+  team: number,
+  birthday: string,
+  height: number,
+  weight: number,
   avatarUrl: string,
   id: number
 }

@@ -15,19 +15,11 @@ interface ISelectComponentProps<T> {
   name: T;
   onChange: (option: string, name: string) => void
   onBlur: (name: string) => void
-  options: any
+  options: ISelectOption[]
 }
 
 export const SelectComponent = <T extends string>({ label, name, options, onChange, onBlur }: ISelectComponentProps<T>) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-  // const options = [
-  //   { value: 'center_forward', label: 'Center Forward' },
-  //   { value: 'guard_forward', label: 'Guard Forward' },
-  //   { value: 'forward', label: 'Forward' },
-  //   { value: 'center', label: 'Center' },
-  //   { value: 'guard', label: 'Guard' },
-  // ];
 
   const classNames = {
     control: (baseStyles: any, state: any) => ({
@@ -92,8 +84,7 @@ export const SelectComponent = <T extends string>({ label, name, options, onChan
         styles={classNames}
         name={name}
         isLoading={!selectedOption}
-        // @ts-expect-error
-        onChange={(option) => setOnChange(option)}
+        onChange={setOnChange}
         onBlur={() => onBlur(name)}
       />
 

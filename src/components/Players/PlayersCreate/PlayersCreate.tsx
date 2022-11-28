@@ -14,63 +14,68 @@ import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
 import { log } from 'console';
 
 
-export const PlayersCreate = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch()
-
-  const [playersImage, setPlayersImage] = useState<File | null>(null);
-
-  const positions = useAppSelector(({players}) => players.positions) 
-  const teams = useAppSelector(({teams}) => teams.data) 
-
-  const positionOptions = positions?.map((p) => ({value: p, label: p}))
-  const teamsOptions = teams?.map((t) => ({value: t.name, label: t.name}))
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .required('Required')
+    .matches(/^[a-zA-Z$\s*]+$/, 'Field can only contain Latin letters'),
+  position: Yup.string().required('Required'),
+  team: Yup.string().required('Required'),
+  height: Yup.string()
+    .required('Required')
+    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+  weight: Yup.string()
+    .required('Required')
+    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+  birthday: Yup.string().required('Required'),
+  number: Yup.string()
+    .required('Required')
+    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+    avatarUrl: Yup.mixed().required('Required'),
+  });
+  
+  
+  
+  export const PlayersCreate = () => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch()
+    
+    const [playersImage, setPlayersImage] = useState<File | null>(null);
+    
+    const positions = useAppSelector(({players}) => players.positions) 
+    const teams = useAppSelector(({teams}) => teams.data) 
+    
+    const positionOptions = positions?.map((p) => ({value: p, label: p}))
+    const teamsOptions = teams?.map((t) => ({value: t.name, label: t.name}))
+    
+    const initialValues = {
+      name: '',
+      position: '',
+      team: undefined,
+      height: undefined,
+      weight: undefined,
+      birthday: '',
+      number: undefined,
+      avatarUrl: '',
+    } as unknown as IAddPLayerRequest;
 
   useEffect(() => {
     void dispatch(getPositions())
   }, [])
 
-  const initialValues = {
-    name: '',
-    position: '',
-    team: '',
-    height: '',
-    weight: '',
-    birthday: '',
-    number: '',
-    avatarUrl: '',
-  };
 
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .required('Required')
-      .matches(/^[a-zA-Z$\s*]+$/, 'Field can only contain Latin letters'),
-    position: Yup.string().required('Required'),
-    team: Yup.string().required('Required'),
-    height: Yup.string()
-      .required('Required')
-      .matches(/^[0-9]+$/, 'Field can only contain numbers'),
-    weight: Yup.string()
-      .required('Required')
-      .matches(/^[0-9]+$/, 'Field can only contain numbers'),
-    birthday: Yup.string().required('Required'),
-    number: Yup.string()
-      .required('Required')
-      .matches(/^[0-9]+$/, 'Field can only contain numbers'),
-    avatarUrl: Yup.mixed().required('Required'),
-  });
 
   const onSubmit = async(newPlayer: IAddPLayerRequest) => {
     const teamId = teams?.find(team => team.name === String(newPlayer.team))
     if(teamId) {
-      const resp = await dispatch(createPlayer(newPlayer, playersImage, teamId.id))
+      const newPlayerWithTeamId = {...newPlayer, team: teamId.id}
+      const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage))
       if(resp?.data) {
-        return navigate('/Players')
+        return onCancelButton()
       }
     }
   };
 
-  const onCancelHandle = () => {
+  const onCancelButton = () => {
     return navigate('/Players');
   };
 
@@ -136,7 +141,7 @@ export const PlayersCreate = () => {
                     <InputText<'number'> label="Number" name="number" />
                   </div>
                   <div className="common__create__buttons">
-                    <button onClick={onCancelHandle}>Cancel</button>
+                    <button onClick={onCancelButton}>Cancel</button>
                     <InputSubmit value="Save" />
                   </div>
                 </div>

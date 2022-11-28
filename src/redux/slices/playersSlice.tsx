@@ -46,7 +46,7 @@ export const fetchPlayers = () => async (dispatch: AppDispatch) => {
 };
 
 export const createPlayer =
-  (newPlayer: IAddPLayerRequest, image: File | null, teamId: number) => async (dispatch: AppDispatch) => {
+  (newPlayer: IAddPLayerRequest, image: File | null) => async (dispatch: AppDispatch) => {
     if (image) {
       const imageResp = await imageAPI.saveImage(image).catch((error) => {
         alert('Error when uploading photo');
@@ -55,7 +55,6 @@ export const createPlayer =
       if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
         const imageURL = imageResp.data;
         newPlayer.avatarUrl = imageURL;
-        newPlayer.team = teamId;
         
         const resp = await playersAPI.addPlayer(newPlayer).catch((error) => {
           console.log(error);

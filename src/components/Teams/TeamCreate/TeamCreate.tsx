@@ -10,43 +10,49 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { INewTeamValues } from '../../../types/types';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 
+
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .required('Required')
+    .matches(/^[a-zA-Z$\s*]+$/, 'Field can only contain Latin letters'),
+  division: Yup.string()
+    .required('Required')
+    .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
+  conference: Yup.string()
+    .required('Required')
+    .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
+  foundationYear: Yup.string()
+    .required('Required')
+    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+  imageUrl: Yup.mixed().required('Required'),
+});
+
+const initialValues = {
+  name: '',
+  division: '',
+  conference: '',
+  foundationYear: '',
+  imageUrl: '',
+};
+
+
 export const TeamCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [teamImage, setTeamImage] = useState<File | null>(null);
 
-  const onCancelHandle = () => {
+  const onCancelButton = () => {
     return navigate('/Teams');
   };
 
-  const initialValues = {
-    name: '',
-    division: '',
-    conference: '',
-    foundationYear: '',
-    imageUrl: '',
-  };
 
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .required('Required')
-      .matches(/^[a-zA-Z$\s*]+$/, 'Field can only contain Latin letters'),
-    division: Yup.string()
-      .required('Required')
-      .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
-    conference: Yup.string()
-      .required('Required')
-      .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
-    foundationYear: Yup.string()
-      .required('Required')
-      .matches(/^[0-9]+$/, 'Field can only contain numbers'),
-    imageUrl: Yup.mixed().required('Required'),
-  });
 
   const onSubmit = async (values: INewTeamValues) => {
     const resp = await dispatch(createTeam(values, teamImage));
-    if (resp?.data) return navigate('/Teams');
+    if (resp?.data) {
+      return onCancelButton()
+    }
   };
 
   return (
@@ -82,7 +88,7 @@ export const TeamCreate = () => {
                   <InputText<'conference'> label="Conference" name="conference" />
                   <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className="common__create__buttons">
-                    <button onClick={onCancelHandle}>Cancel</button>
+                    <button onClick={onCancelButton}>Cancel</button>
                     <InputSubmit value="Save" />
                   </div>
                 </div>

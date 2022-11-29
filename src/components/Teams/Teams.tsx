@@ -44,7 +44,7 @@ export const Teams = () => {
     <div className="common__container">
       <div className="common__header">
         <InputSearch />
-        <AddBtn onRedirect={onRedirectCreateTeam} />
+        <AddBtn onClick={onRedirectCreateTeam} />
       </div>
 
       <div className="common__filled_content">

@@ -44,6 +44,10 @@ export const playersAPI = {
   async addPlayer(newPlayer: IAddPLayerRequest) {
     return await client.post('Player/Add', newPlayer);
   },
+  
+  async deletePlayer(id: number) {
+    return await client.delete(`Player/Delete?id=${id}`);
+  }
 };
 
 export const imageAPI = {

@@ -37,6 +37,7 @@ export const fetchPlayers = () => async (dispatch: AppDispatch) => {
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setPlayers(resp.data));
+    return resp
   }
 };
 
@@ -72,5 +73,15 @@ export const getPositions = () => async (dispatch: AppDispatch) => {
     dispatch(setPositions(resp.data));
   }
 };
+
+export const removePlayer = (id: number) => async(dispatch: AppDispatch) => {
+  const resp = await playersAPI.deletePlayer(id).catch((error) => {
+    console.log(error);
+    alert('Error when deleting the player');
+  });
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    void dispatch(fetchPlayers())
+  }
+}
 
 export default playersSlice.reducer;

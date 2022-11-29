@@ -15,7 +15,7 @@ export const TeamsEmpty = () => {
     <div className='common__container'>
       <div className='common__header'>
         <InputSearch />
-        <AddBtn onRedirect={onRedirectCreateTeam}/>       
+        <AddBtn onClick={onRedirectCreateTeam}/>       
       </div>
 
       <div className='common__empty_content'>

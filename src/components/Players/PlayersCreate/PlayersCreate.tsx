@@ -59,7 +59,7 @@ export const PlayersCreate = () => {
   const onGetPositions = () => {
     if(!positions.length) {
       void dispatch(getPositions());
-    }
+        }
   }
 
   const onSubmit = async (newPlayer: IAddPLayerRequest) => {

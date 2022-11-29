@@ -11,6 +11,7 @@
     "@types/node": "^16.18.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@types/react-select": "^5.0.1",
     "@types/sass": "^1.43.1",
     "@types/yup": "^0.29.8",
     "classnames": "^2.3.2",

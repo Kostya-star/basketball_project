@@ -1,7 +1,7 @@
 import { ErrorMessage} from 'formik';
 import { useState } from 'react';
 import s from './FormItems.module.scss';
-import Select from 'react-select';
+import Select, { StylesConfig } from 'react-select';
 
 
 
@@ -19,11 +19,14 @@ interface ISelectComponentProps<T> {
   getPositions?: () => void
 }
 
+type IsMulti = false;
+
 export const SelectComponent = <T extends string>({ label, name, options, getPositions, onChange, onBlur }: ISelectComponentProps<T>) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const classNames = {
-    control: (baseStyles: any, state: any) => ({
+
+  const classNames: StylesConfig<ISelectOption, IsMulti> = {
+    control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
       backgroundColor: '#F6F6F6',
@@ -44,7 +47,7 @@ export const SelectComponent = <T extends string>({ label, name, options, getPos
       },
       cursor: 'pointer',
     }),
-    option: (baseStyles: any, state: any) => ({
+    option: (baseStyles, state) => ({
       ...baseStyles,
       cursor: 'pointer',
       backgroundColor: state.isSelected ? '#C60E2E' : 'white',
@@ -56,15 +59,15 @@ export const SelectComponent = <T extends string>({ label, name, options, getPos
         color: 'white',
       },
     }),
-    dropdownIndicator: (baseStyles: any) => ({
+    dropdownIndicator: (baseStyles) => ({
       ...baseStyles,
       color: 'inherit',
     }),
-    loadingIndicator: (baseStyles: any) => ({
+    loadingIndicator: (baseStyles) => ({
       ...baseStyles,
       color: 'inherit',
     }),
-    clearIndicator: (baseStyles: any) => ({
+    clearIndicator: (baseStyles) => ({
       ...baseStyles,
       color: 'inherit',
     }),

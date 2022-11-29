@@ -18,7 +18,7 @@ export const Players = () => {
   }, [])
 
   useEffect(() => {
-    if(JSON.stringify(players) === '[]') {
+    if(players && !players.length) {
       return navigate('/PlayersEmpty')
     }
   }, [players])

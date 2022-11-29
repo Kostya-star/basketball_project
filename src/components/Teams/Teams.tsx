@@ -12,34 +12,32 @@ export const Teams = () => {
   const { teams } = useAppSelector(({ teams }) => ({
     teams: teams.data,
   }));
-  
-  const onFetchData = () => {
-    const fetchData = async () => {
-      const resp = await dispatch(fetchTeams());
-      if(JSON.stringify(resp?.data.data) === '[]') return navigate('/TeamsEmpty')
-    };
-    fetchData().catch(error => console.log(error));
-  }
+  console.log(teams);
+
+  const onFetchData = async() => {
+    const resp = await dispatch(fetchTeams());
+    if (!resp?.data.data.length) return navigate('/TeamsEmpty');
+  };
 
   useEffect(() => {
-    onFetchData()
+    void onFetchData();
   }, []);
-  
+
   useEffect(() => {
-    if(JSON.stringify(teams) === '[]') {
-      onFetchData()
-    } 
+    if (teams && !teams.length) {
+      void onFetchData();
+    }
   }, [teams]);
-    useEffect(() => {
-      navigate('/PlayersCreate')
-    }, [])
+  useEffect(() => {
+    navigate('/PlayersCreate')
+  }, [])
   const deleteTeam = (id: number) => {
-    void dispatch(removeTeam(id))
-  }
+    void dispatch(removeTeam(id));
+  };
 
   const onRedirectCreateTeam = () => {
-    return navigate('/TeamCreate')
-  }
+    return navigate('/TeamCreate');
+  };
 
   return (
     <div className="common__container">

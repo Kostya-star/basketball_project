@@ -88,7 +88,6 @@ export const PlayersCreate = () => {
         validateOnMount
       >
         {(formik) => {
-          // console.log(formik);
           const onSavePlayerPhoto = (image: File | null) => {
             formik.setFieldValue('avatarUrl', image);
             setPlayersImage(image);

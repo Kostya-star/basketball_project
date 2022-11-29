@@ -19,15 +19,15 @@
     }
   }
 
+  &__block {
+    height: 100px;
+  }
+
   &__group {
     display: flex;
     flex-direction: column;
     height: 50%;
     padding-top: 35px;
-  }
-
-  &__teams {
-    margin-bottom: 40px;
   }
 
   &__signOut {

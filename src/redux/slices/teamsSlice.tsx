@@ -14,14 +14,10 @@ export const teamsSlice = createSlice({
     setTeams(state, { payload }: PayloadAction<ITeamState>) {
       return payload;
     },
-    deleteTeam(state, { payload }: PayloadAction<number>) {
-      const teamId = payload;
-      state.data = state.data.filter((team) => team.id !== teamId);
-    },
   },
 });
 
-export const { setTeams, deleteTeam } = teamsSlice.actions;
+export const { setTeams } = teamsSlice.actions;
 
 export const fetchTeams = () => async (dispatch: AppDispatch) => {
   const resp = await teamsAPI.getTeams().catch((error) => {
@@ -67,8 +63,7 @@ export const removeTeam = (id: number) => async (dispatch: AppDispatch) => {
   });
 
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    dispatch(deleteTeam(id));
-    alert('The team was successfully deleted');
+    void dispatch(fetchTeams());
   }
 };
 

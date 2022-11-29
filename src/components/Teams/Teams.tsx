@@ -9,10 +9,10 @@ import '../../scss/teams_players_common.scss';
 export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  
   const { teams } = useAppSelector(({ teams }) => ({
     teams: teams.data,
   }));
-  console.log(teams);
 
   const onFetchData = async() => {
     const resp = await dispatch(fetchTeams());
@@ -28,9 +28,10 @@ export const Teams = () => {
       void onFetchData();
     }
   }, [teams]);
-  useEffect(() => {
-    navigate('/PlayersCreate')
-  }, [])
+
+  // useEffect(() => {
+  //   navigate('/PlayersCreate')
+  // }, [])
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id));
   };

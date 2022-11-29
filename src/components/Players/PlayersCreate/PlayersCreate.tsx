@@ -31,6 +31,18 @@ const validationSchema = Yup.object({
   avatarUrl: Yup.mixed().required('Required'),
 });
 
+const initialValues = {
+  name: '',
+  position: '',
+  team: '',
+  height: '',
+  weight: '',
+  birthday: '',
+  number: '',
+  avatarUrl: '',
+} as unknown as IAddPLayerRequest;
+
+
 export const PlayersCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -43,20 +55,12 @@ export const PlayersCreate = () => {
   const positionOptions = positions?.map((p) => ({ value: p, label: p }));
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
 
-  const initialValues = {
-    name: '',
-    position: '',
-    team: '',
-    height: '',
-    weight: '',
-    birthday: '',
-    number: '',
-    avatarUrl: '',
-  } as unknown as IAddPLayerRequest;
 
-  useEffect(() => {
-    void dispatch(getPositions());
-  }, []);
+  const onGetPositions = () => {
+    if(!positions.length) {
+      void dispatch(getPositions());
+    }
+  }
 
   const onSubmit = async (newPlayer: IAddPLayerRequest) => {
     const teamId = teams?.find((team) => team.name === String(newPlayer.team));
@@ -116,6 +120,7 @@ export const PlayersCreate = () => {
                     name="position"
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
+                    getPositions={onGetPositions}
                     options={positionOptions}
                   />
                   <SelectComponent<'team'>

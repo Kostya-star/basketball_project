@@ -30,9 +30,9 @@ export const Teams = () => {
       onFetchData()
     } 
   }, [teams]);
-    // useEffect(() => {
-    //   navigate('/PlayersCreate')
-    // }, [])
+    useEffect(() => {
+      navigate('/PlayersCreate')
+    }, [])
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id))
   }

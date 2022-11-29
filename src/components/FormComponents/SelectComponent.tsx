@@ -1,7 +1,7 @@
-import { ErrorMessage, Field } from 'formik';
-import { FC, useState } from 'react';
+import { ErrorMessage} from 'formik';
+import { useState } from 'react';
 import s from './FormItems.module.scss';
-import Select, { SingleValue } from 'react-select';
+import Select from 'react-select';
 
 
 
@@ -16,9 +16,10 @@ interface ISelectComponentProps<T> {
   onChange: (option: string, name: string) => void
   onBlur: (name: string) => void
   options: ISelectOption[]
+  getPositions?: () => void
 }
 
-export const SelectComponent = <T extends string>({ label, name, options, onChange, onBlur }: ISelectComponentProps<T>) => {
+export const SelectComponent = <T extends string>({ label, name, options, getPositions, onChange, onBlur }: ISelectComponentProps<T>) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const classNames = {
@@ -77,7 +78,7 @@ export const SelectComponent = <T extends string>({ label, name, options, onChan
   };
 
   return (
-    <div className={s.select}>
+    <div onClick={getPositions} className={s.select}>
       <span className={s.select__label}>{label}</span>
       <Select
         options={options}

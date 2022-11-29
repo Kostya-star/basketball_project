@@ -1,14 +1,14 @@
 import { InputText } from '../../FormComponents/InputText';
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { ChangeEvent, useState, useEffect, FC } from 'react';
+import { useAppDispatch } from '../../../redux/hooks';
+import { useState } from 'react';
 import { createTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { INewTeamValues } from '../../../types/types';
+import { useNavigate } from 'react-router-dom';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
+import { INewTeamValues } from '../../../types/teams/teams';
 
 
 const validationSchema = Yup.object({

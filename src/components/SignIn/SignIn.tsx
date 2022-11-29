@@ -8,15 +8,15 @@ import { InputPassword } from '../FormComponents/InputPassword';
 import { InputText } from '../FormComponents/InputText';
 import { authAPI } from '../../api/api';
 import '../../scss/auth-common.scss';
-import { ISignInFormikValues } from '../../types/types';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login, authSlice, setError } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
+import { ISignInFormikValues } from '../../types/auth/auth';
+
 
 interface ISignInProps {
-  // children: JSX.Element|JSX.Element[];
   children?: React.ReactNode;
 }
 
@@ -24,10 +24,8 @@ export const SignIn: FC<ISignInProps> = () => {
   SignIn.displayName = 'SignIn';
 
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const { isAuth, unauthorized } = useAppSelector((state) => ({
-    isAuth: state.auth.isAuth,
+  const { unauthorized } = useAppSelector((state) => ({
     unauthorized: state.auth.error.unauthorized,
   }));
   const dispatch = useAppDispatch();
@@ -60,9 +58,9 @@ export const SignIn: FC<ISignInProps> = () => {
   });
 
   const onSubmit = async (loginData: ISignInFormikValues) => {
-    const resp = await dispatch(login(loginData))
-    if(resp?.data) {
-      return navigate('/Teams')
+    const resp = await dispatch(login(loginData));
+    if (resp?.data) {
+      return navigate('/Teams');
     }
   };
 

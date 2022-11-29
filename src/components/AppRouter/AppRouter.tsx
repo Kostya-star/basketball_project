@@ -15,12 +15,13 @@ import { PlayersEmptyPage } from '../../pages/PlayersEmptyPage';
 import { PlayersCreatePage } from '../../pages/PlayersCreatePage';
 
 export const AppRouter: FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const { isAuth } = useAppSelector(({ auth }) => ({
-    isAuth: auth.isAuth,
-  }));
+  // const { isAuth } = useAppSelector(({ auth }) => ({
+  //   isAuth: auth.isAuth,
+  // }));
+
+  const isAuth = window.localStorage.getItem('isAuth')
 
   useEffect(() => {
     if (!isAuth) {

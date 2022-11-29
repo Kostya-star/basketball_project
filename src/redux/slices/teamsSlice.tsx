@@ -1,22 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { imageAPI, teamsAPI } from '../../api/api';
-import { INewTeamValues, ITeamData, ITeamState, RespStatusEnum } from '../../types/types';
+import { INewTeamValues, ITeamState } from '../../types/teams/teams';
+import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 import { toggleLoading } from './loadingSlice';
 
-const initialState = {} as ITeamState
+const initialState = {} as ITeamState;
 
 export const teamsSlice = createSlice({
   name: 'teams',
   initialState,
   reducers: {
-    setTeams(state, {payload}: PayloadAction<ITeamState>) {
-      return payload
+    setTeams(state, { payload }: PayloadAction<ITeamState>) {
+      return payload;
     },
-    deleteTeam(state, {payload}: PayloadAction<number>) {
-      const teamId = payload
-      state.data = state.data.filter(team => team.id !== teamId)
-    }
+    deleteTeam(state, { payload }: PayloadAction<number>) {
+      const teamId = payload;
+      state.data = state.data.filter((team) => team.id !== teamId);
+    },
   },
 });
 
@@ -30,7 +31,7 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setTeams(resp.data));
   }
-  return resp
+  return resp;
 };
 
 export const createTeam =
@@ -54,21 +55,21 @@ export const createTeam =
           alert('The team is created successfully');
         }
         dispatch(toggleLoading(false));
-        return resp
+        return resp;
       }
     }
   };
 
-  export const removeTeam = (id: number) => async(dispatch: AppDispatch) => {
-    const resp = await teamsAPI.deleteTeam(id).catch(error => {
-      console.log(error);
-      alert('Error when deleting the team')
-    })
+export const removeTeam = (id: number) => async (dispatch: AppDispatch) => {
+  const resp = await teamsAPI.deleteTeam(id).catch((error) => {
+    console.log(error);
+    alert('Error when deleting the team');
+  });
 
-    if(resp && resp.status === RespStatusEnum.SUCCESS) {
-      dispatch(deleteTeam(id))
-      alert('The team was successfully deleted')
-    }
+  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    dispatch(deleteTeam(id));
+    alert('The team was successfully deleted');
   }
+};
 
 export default teamsSlice.reducer;

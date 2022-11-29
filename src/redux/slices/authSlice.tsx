@@ -1,48 +1,48 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authAPI } from '../../api/api';
-import { IAuthResponseType, ISignInRequest, ISignUpRequest, RespStatusEnum } from '../../types/types';
+import { ISignInRequest } from '../../types/auth/SignInRequest';
+import { IAuthResponseType } from '../../types/auth/authResp';
+import { ISignUpRequest } from '../../types/auth/SignUpRequest';
+import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 import { toggleLoading } from './loadingSlice';
 
 export interface IAuthState {
-  isAuth: boolean;
-  error: { unauthorized?: boolean, userExists?: boolean };
+  // isAuth: boolean;
+  error: { unauthorized?: boolean; userExists?: boolean };
   signInResp: IAuthResponseType;
   signUpResp: IAuthResponseType;
 }
 
-const LSIsAuth = window.localStorage.getItem('isAuth')
-const isAuth = (LSIsAuth !== null) ? JSON.parse(LSIsAuth) : false 
+// const LSIsAuth = window.localStorage.getItem('isAuth');
+// const isAuth = LSIsAuth !== null ? JSON.parse(LSIsAuth) : false;
 
 const initialState: IAuthState = {
-  isAuth,
+  // isAuth,
   error: {
     unauthorized: false,
-    userExists: false
+    userExists: false,
   },
   signInResp: {} as IAuthResponseType,
   signUpResp: {} as IAuthResponseType,
 };
 
-
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signInSuccess(state, action: PayloadAction<{ isAuth: boolean; signInData: IAuthResponseType }>) {
-      state.isAuth = action.payload.isAuth;
+    signInSuccess(state, action: PayloadAction<{ signInData: IAuthResponseType }>) {
       state.signInResp = action.payload.signInData;
     },
     signUpSuccess(state, action: PayloadAction<IAuthResponseType>) {
-      state.signUpResp = action.payload
+      state.signUpResp = action.payload;
     },
-    setError(state, action: PayloadAction<{unauthorized?: boolean, userExists?: boolean}>) {
+    setError(state, action: PayloadAction<{ unauthorized?: boolean; userExists?: boolean }>) {
       state.error.unauthorized = action.payload.unauthorized;
-      state.error.userExists = action.payload.userExists
+      state.error.userExists = action.payload.userExists;
     },
   },
 });
-
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
   dispatch(toggleLoading(true));
@@ -55,7 +55,7 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
   if (response && response.status === RespStatusEnum.SUCCESS) {
     if (response?.status === RespStatusEnum.SUCCESS) {
       window.localStorage.setItem('isAuth', JSON.stringify(true));
-      dispatch(signInSuccess({ isAuth: true, signInData: response.data }));
+      dispatch(signInSuccess({ signInData: response.data }));
       window.localStorage.setItem('TOKEN', response.data.token);
     }
   }
@@ -64,21 +64,19 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
   return response;
 };
 
-
 export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispatch) => {
-  dispatch(toggleLoading(true))
-  const response = await authAPI.signUp(signupData)
-  .catch((error) => {
+  dispatch(toggleLoading(true));
+  const response = await authAPI.signUp(signupData).catch((error) => {
     if (error.response.status === RespStatusEnum.EXISTS) {
-      dispatch(authSlice.actions.setError({userExists: true}))
+      dispatch(authSlice.actions.setError({ userExists: true }));
     }
   });
   if (response?.status === RespStatusEnum.SUCCESS) {
-    alert('you sucessfully signed up')
-    dispatch(authSlice.actions.signUpSuccess(response.data))
+    alert('you sucessfully signed up');
+    dispatch(authSlice.actions.signUpSuccess(response.data));
   }
-  dispatch(toggleLoading(false))
-}
+  dispatch(toggleLoading(false));
+};
 
 export const { signInSuccess, setError } = authSlice.actions;
 

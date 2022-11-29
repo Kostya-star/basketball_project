@@ -1,20 +1,18 @@
 import { client } from './baseRequest';
-import {
-  IAddPLayerRequest,
-  IAuthResponseType,
-  IGetTeamsResponse,
-  INewTeamValuesRequest,
-  ISignInRequest,
-  ISignUpRequest,
-  ITeamAddResponse,
-  ITeamData,
-  ITeamState,
-} from './../types/types';
+import { ISignInRequest } from '../types/auth/SignInRequest';
+import { IAuthResponseType } from '../types/auth/authResp';
+import { ISignUpRequest } from '../types/auth/SignUpRequest';
+import { IGetTeamsResponse } from '../types/teams/getTeamsResp';
+import { INewTeamValuesRequest } from '../types/teams/addTeamRequest';
+import { IGetPlayersResponse } from '../types/players/getPlayersResp';
+import { IAddPLayerRequest } from '../types/players/addPLayerRequest';
+
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
-    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData)
+    return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData);
   },
+
   async signUp(signUpUserData: ISignUpRequest) {
     return await client.post<IAuthResponseType>(`Auth/SignUp`, signUpUserData);
   },
@@ -26,7 +24,7 @@ export const teamsAPI = {
   },
 
   async addTeam(values: INewTeamValuesRequest) {
-    return await client.post<ITeamAddResponse>('Team/Add', values);
+    return await client.post('Team/Add', values);
   },
 
   async deleteTeam(id: number) {
@@ -36,18 +34,17 @@ export const teamsAPI = {
 
 export const playersAPI = {
   async getPlayers() {
-    return await client.get('Player/GetPlayers');
+    return await client.get<IGetPlayersResponse>('Player/GetPlayers');
   },
 
   async getPositions() {
-    return await client.get<string[]>('Player/GetPositions')
+    return await client.get<string[]>('Player/GetPositions');
   },
 
   async addPlayer(newPlayer: IAddPLayerRequest) {
-    return await client.post('Player/Add', newPlayer)
-  }
+    return await client.post('Player/Add', newPlayer);
+  },
 };
-
 
 export const imageAPI = {
   async saveImage(photoFile: File) {
@@ -61,5 +58,3 @@ export const imageAPI = {
     });
   },
 };
-
-

@@ -1,22 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAddPLayerRequest, IPlayerState, RespStatusEnum } from '../../types/types';
+import { RespStatusEnum } from '../../types/enum';
+import { IAddPLayerRequest } from '../../types/players/addPLayerRequest';
+import { IPlayersState } from '../../types/players/players';
 import { AppDispatch } from '../store';
 import { imageAPI, playersAPI, teamsAPI } from './../../api/api';
 
-interface IPlayersData {
-  data: IPlayerState[];
-  count: number;
-  page: number;
-  size: number;
-}
-
 interface IPlayersSliceState {
-  playersData: IPlayersData;
+  playersData: IPlayersState;
   positions: string[];
 }
 
 const initialState: IPlayersSliceState = {
-  playersData: {} as IPlayersData,
+  playersData: {} as IPlayersState,
   positions: [],
 };
 
@@ -24,7 +19,7 @@ export const playersSlice = createSlice({
   name: 'players',
   initialState,
   reducers: {
-    setPlayers(state, action: PayloadAction<IPlayersData>) {
+    setPlayers(state, action: PayloadAction<IPlayersState>) {
       state.playersData = action.payload;
     },
     setPositions(state, { payload }: PayloadAction<string[]>) {
@@ -55,14 +50,14 @@ export const createPlayer =
       if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
         const imageURL = imageResp.data;
         newPlayer.avatarUrl = imageURL;
-        
+
         const resp = await playersAPI.addPlayer(newPlayer).catch((error) => {
           console.log(error);
           alert(error);
         });
         if (resp && resp.status === RespStatusEnum.SUCCESS) {
-          alert('Player is successfully added ')
-          return resp
+          alert('Player is successfully added ');
+          return resp;
         }
       }
     }

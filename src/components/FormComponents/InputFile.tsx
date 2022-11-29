@@ -1,7 +1,6 @@
-import { ChangeEvent, FC, FocusEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import s from './FormItems.module.scss';
-import { ErrorMessage, Field, FormikProps, useField } from 'formik';
-import { INewTeamValues, IPlayerState } from './../../types/types';
+import { ErrorMessage } from 'formik';
 
 
 interface InputFileProps<T> {

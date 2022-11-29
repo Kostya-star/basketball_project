@@ -1,4 +1,3 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import SignUpImg from '../../assets/img/imgSignUp/signup-Img.png';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -6,19 +5,17 @@ import { InputText } from '../FormComponents/InputText';
 import { InputPassword } from '../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
-import { authAPI } from '../../api/api';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import '../../scss/auth-common.scss';
-import { ISignUpFormikValues } from '../../types/types';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { signUp, authSlice, setError } from '../../redux/slices/authSlice';
+import { signUp, setError } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
+import { ISignUpFormikValues } from '../../types/auth/auth';
 
 
 export const SignUp: FC = () => {
-  const navigate = useNavigate();
 
   const { userExists } = useAppSelector(({ auth }) => ({
     userExists: auth.error.userExists,

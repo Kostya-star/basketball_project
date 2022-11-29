@@ -1,5 +1,5 @@
-import { Field, Form, Formik, FormikProps } from 'formik';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
 import { InputFile } from '../../FormComponents/InputFile';
 import { SelectComponent } from '../../FormComponents/SelectComponent';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
@@ -7,12 +7,10 @@ import { InputText } from '../../FormComponents/InputText';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { InputDate } from '../../FormComponents/InputDate';
 import * as Yup from 'yup';
-import { IAddPLayerRequest, IPlayerState } from '../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
 import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
-import { log } from 'console';
-
+import { IAddPLayerRequest } from '../../../types/players/addPLayerRequest';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -30,47 +28,43 @@ const validationSchema = Yup.object({
   number: Yup.string()
     .required('Required')
     .matches(/^[0-9]+$/, 'Field can only contain numbers'),
-    avatarUrl: Yup.mixed().required('Required'),
-  });
-  
-  
-  
-  export const PlayersCreate = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch()
-    
-    const [playersImage, setPlayersImage] = useState<File | null>(null);
-    
-    const positions = useAppSelector(({players}) => players.positions) 
-    const teams = useAppSelector(({teams}) => teams.data) 
-    
-    const positionOptions = positions?.map((p) => ({value: p, label: p}))
-    const teamsOptions = teams?.map((t) => ({value: t.name, label: t.name}))
-    
-    const initialValues = {
-      name: '',
-      position: '',
-      team: '',
-      height: '',
-      weight: '',
-      birthday: '',
-      number: '',
-      avatarUrl: '',
-    } as unknown as IAddPLayerRequest;
+  avatarUrl: Yup.mixed().required('Required'),
+});
+
+export const PlayersCreate = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [playersImage, setPlayersImage] = useState<File | null>(null);
+
+  const positions = useAppSelector(({ players }) => players.positions);
+  const teams = useAppSelector(({ teams }) => teams.data);
+
+  const positionOptions = positions?.map((p) => ({ value: p, label: p }));
+  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
+
+  const initialValues = {
+    name: '',
+    position: '',
+    team: '',
+    height: '',
+    weight: '',
+    birthday: '',
+    number: '',
+    avatarUrl: '',
+  } as unknown as IAddPLayerRequest;
 
   useEffect(() => {
-    void dispatch(getPositions())
-  }, [])
+    void dispatch(getPositions());
+  }, []);
 
-
-
-  const onSubmit = async(newPlayer: IAddPLayerRequest) => {
-    const teamId = teams?.find(team => team.name === String(newPlayer.team))
-    if(teamId) {
-      const newPlayerWithTeamId = {...newPlayer, team: teamId.id}
-      const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage))
-      if(resp?.data) {
-        return onCancelButton()
+  const onSubmit = async (newPlayer: IAddPLayerRequest) => {
+    const teamId = teams?.find((team) => team.name === String(newPlayer.team));
+    if (teamId) {
+      const newPlayerWithTeamId = { ...newPlayer, team: teamId.id };
+      const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage));
+      if (resp?.data) {
+        return onCancelButton();
       }
     }
   };
@@ -78,7 +72,6 @@ const validationSchema = Yup.object({
   const onCancelButton = () => {
     return navigate('/Players');
   };
-
 
   return (
     <div className="common__create">

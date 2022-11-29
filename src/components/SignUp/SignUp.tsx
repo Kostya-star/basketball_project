@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { signUp, authSlice, setError } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 
+
 export const SignUp: FC = () => {
   const navigate = useNavigate();
 

@@ -71,6 +71,8 @@
 }
 
 .checkbox {
+  height: 50px;
+  margin-top: 0;
   &__label {
     font-size: 14px;
     margin-bottom: 8px;
@@ -129,7 +131,6 @@
   width: 13px;
   right: 15px;
   cursor: pointer;
-  // padding-left: 140px;
   padding-right: 15px;
   padding-top: 15px;
   padding-bottom: 15px;

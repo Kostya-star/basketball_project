@@ -14,7 +14,7 @@ export const InputCheckbox = <T extends string> ({ label, ...props }: InputCheck
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
   return (
-    <div className={s.form__group}>
+    <div className={s.checkbox}>
       <label
         className={classnames(s.checkbox__label, {
           [s.checkbox__label_error]: meta.error && meta.touched,

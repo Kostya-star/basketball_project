@@ -50,11 +50,11 @@ const validationSchema = Yup.object({
     const initialValues = {
       name: '',
       position: '',
-      team: undefined,
-      height: undefined,
-      weight: undefined,
+      team: '',
+      height: '',
+      weight: '',
       birthday: '',
-      number: undefined,
+      number: '',
       avatarUrl: '',
     } as unknown as IAddPLayerRequest;
 

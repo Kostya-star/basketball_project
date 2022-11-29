@@ -33,7 +33,7 @@ const initialValues = {
   conference: '',
   foundationYear: '',
   imageUrl: '',
-};
+} as unknown as INewTeamValues;
 
 
 export const TeamCreate = () => {
@@ -45,8 +45,6 @@ export const TeamCreate = () => {
   const onCancelButton = () => {
     return navigate('/Teams');
   };
-
-
 
   const onSubmit = async (values: INewTeamValues) => {
     const resp = await dispatch(createTeam(values, teamImage));

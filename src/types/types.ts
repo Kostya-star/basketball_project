@@ -17,7 +17,7 @@ export interface INewTeamValues {
   name: string;
   division: string;
   conference: string;
-  foundationYear: number | string;
+  foundationYear: number;
   imageUrl: string;
 }
 

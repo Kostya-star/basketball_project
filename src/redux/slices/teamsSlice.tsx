@@ -3,7 +3,6 @@ import { imageAPI, teamsAPI } from '../../api/api';
 import { INewTeamValues, ITeamState } from '../../types/teams/teams';
 import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
-import { toggleLoading } from './loadingSlice';
 
 const initialState = {} as ITeamState;
 
@@ -12,7 +11,10 @@ export const teamsSlice = createSlice({
   initialState,
   reducers: {
     setTeams(state, { payload }: PayloadAction<ITeamState>) {
-      return payload;
+      return {
+        ...state,
+        ...payload
+      };
     },
   },
 });
@@ -32,7 +34,6 @@ export const fetchTeams = () => async (dispatch: AppDispatch) => {
 
 export const createTeam =
   (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {
-    dispatch(toggleLoading(true));
     if (image) {
       const imageResp = await imageAPI.saveImage(image).catch((error) => {
         alert('Error when uploading photo');
@@ -50,7 +51,6 @@ export const createTeam =
         if (resp && resp.status === RespStatusEnum.SUCCESS) {
           alert('The team is created successfully');
         }
-        dispatch(toggleLoading(false));
         return resp;
       }
     }

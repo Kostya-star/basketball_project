@@ -41,16 +41,19 @@ export const TeamCreate = () => {
   const dispatch = useAppDispatch();
 
   const [teamImage, setTeamImage] = useState<File | null>(null);
+  const [disabledSubmit, setDisabledSubmit] = useState(false)
 
   const onCancelButton = () => {
     return navigate('/Teams');
   };
 
   const onSubmit = async (values: INewTeamValues) => {
+    setDisabledSubmit(true)
     const resp = await dispatch(createTeam(values, teamImage));
     if (resp?.data) {
-      return onCancelButton()
+      onCancelButton()
     }
+    setDisabledSubmit(false)
   };
 
   return (
@@ -87,7 +90,7 @@ export const TeamCreate = () => {
                   <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className="common__create__buttons">
                     <button onClick={onCancelButton}>Cancel</button>
-                    <InputSubmit value="Save" />
+                    <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>
               </div>

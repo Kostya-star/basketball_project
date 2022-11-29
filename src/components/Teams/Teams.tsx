@@ -9,7 +9,7 @@ import '../../scss/teams_players_common.scss';
 export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+
   const { teams } = useAppSelector(({ teams }) => ({
     teams: teams.data,
   }));
@@ -29,9 +29,9 @@ export const Teams = () => {
     }
   }, [teams]);
 
-  // useEffect(() => {
-  //   navigate('/PlayersCreate')
-  // }, [])
+  useEffect(() => {
+    navigate('/PlayersCreate')
+  }, [])
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id));
   };

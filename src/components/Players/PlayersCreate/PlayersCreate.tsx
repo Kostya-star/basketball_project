@@ -48,6 +48,7 @@ export const PlayersCreate = () => {
   const dispatch = useAppDispatch();
 
   const [playersImage, setPlayersImage] = useState<File | null>(null);
+  const [disabledSubmit, setDisabledSubmit] = useState(false)
 
   const positions = useAppSelector(({ players }) => players.positions);
   const teams = useAppSelector(({ teams }) => teams.data);
@@ -63,14 +64,16 @@ export const PlayersCreate = () => {
   }
 
   const onSubmit = async (newPlayer: IAddPLayerRequest) => {
+    setDisabledSubmit(true)
     const teamId = teams?.find((team) => team.name === String(newPlayer.team));
     if (teamId) {
       const newPlayerWithTeamId = { ...newPlayer, team: teamId.id };
       const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage));
       if (resp?.data) {
-        return onCancelButton();
+        onCancelButton();
       }
     }
+    setDisabledSubmit(false)
   };
 
   const onCancelButton = () => {
@@ -139,7 +142,7 @@ export const PlayersCreate = () => {
                   </div>
                   <div className="common__create__buttons">
                     <button onClick={onCancelButton}>Cancel</button>
-                    <InputSubmit value="Save" />
+                    <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>
               </div>

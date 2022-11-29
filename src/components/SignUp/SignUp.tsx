@@ -5,7 +5,7 @@ import { InputText } from '../FormComponents/InputText';
 import { InputPassword } from '../FormComponents/InputPassword';
 import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import '../../scss/auth-common.scss';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
@@ -16,6 +16,7 @@ import { ISignUpFormikValues } from '../../types/auth/auth';
 
 
 export const SignUp: FC = () => {
+  const [disabledSubmit, setDisabledSubmit] = useState(false)
 
   const { userExists } = useAppSelector(({ auth }) => ({
     userExists: auth.error.userExists,
@@ -62,10 +63,12 @@ export const SignUp: FC = () => {
   });
 
   const onSubmit = async (values: ISignUpFormikValues) => {
+    setDisabledSubmit(true)
     const { userName, login, password } = values;
     const signUpUserData = { userName, login, password };
-
+    
     await dispatch(signUp(signUpUserData));
+    setDisabledSubmit(false)
   };
 
   return (
@@ -93,7 +96,7 @@ export const SignUp: FC = () => {
 
                   <InputCheckbox<'check'> name="check" id="check" label="I accept the agreement" />
 
-                  <InputSubmit isDisabled={!formik.isValid} value="Sign Up" />
+                  <InputSubmit isDisabled={disabledSubmit} value="Sign Up" />
                 </Form>
               );
             }}

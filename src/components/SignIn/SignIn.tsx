@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login, authSlice, setError } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 import { ISignInFormikValues } from '../../types/auth/auth';
+import { log } from 'console';
 
 
 interface ISignInProps {
@@ -21,7 +22,7 @@ interface ISignInProps {
 }
 
 export const SignIn: FC<ISignInProps> = () => {
-  SignIn.displayName = 'SignIn';
+  const [disabledSubmit, setDisabledSubmit] = useState(false)
 
   const navigate = useNavigate();
 
@@ -58,10 +59,12 @@ export const SignIn: FC<ISignInProps> = () => {
   });
 
   const onSubmit = async (loginData: ISignInFormikValues) => {
+    setDisabledSubmit(true)
     const resp = await dispatch(login(loginData));
     if (resp?.data) {
-      return navigate('/Teams');
+      navigate('/Teams');
     }
+    setDisabledSubmit(false)
   };
 
   return (
@@ -80,7 +83,7 @@ export const SignIn: FC<ISignInProps> = () => {
                 <Form>
                   <InputText<'login'> label="Login" name="login" />
                   <InputPassword<'password'> label="Password" name="password" />
-                  <InputSubmit isDisabled={!formik.isValid} value="Sign In" />
+                  <InputSubmit isDisabled={disabledSubmit} value="Sign In" />
                 </Form>
               );
             }}

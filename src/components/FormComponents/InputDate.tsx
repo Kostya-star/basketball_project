@@ -18,7 +18,7 @@ export const InputDate = <T extends string>({ label, ...props }: InputDateProps<
       </label>
       <div className={s.inputBlock}>
         <Field className={classnames(s.form__input, {
-          // [s.form__submitBtn__disabled]: isDisabled || toggleLoading,
+          // [s.form__submitBtn__disabled]: isDisabled,
           [s.showDate]: field.value,
           [s.hideDate]: !field.value
         })} type='date' id="date-input" {...field} />

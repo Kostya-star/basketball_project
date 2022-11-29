@@ -5,7 +5,6 @@ import { IAuthResponseType } from '../../types/auth/authResp';
 import { ISignUpRequest } from '../../types/auth/SignUpRequest';
 import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
-import { toggleLoading } from './loadingSlice';
 
 export interface IAuthState {
   // isAuth: boolean;
@@ -45,7 +44,6 @@ export const authSlice = createSlice({
 });
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
-  dispatch(toggleLoading(true));
   const response = await authAPI.signIn(loginData).catch((error) => {
     if (error.response.status === RespStatusEnum.UNREGISTRED) {
       dispatch(authSlice.actions.setError({ unauthorized: true }));
@@ -60,12 +58,10 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
     }
   }
 
-  dispatch(toggleLoading(false));
   return response;
 };
 
 export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispatch) => {
-  dispatch(toggleLoading(true));
   const response = await authAPI.signUp(signupData).catch((error) => {
     if (error.response.status === RespStatusEnum.EXISTS) {
       dispatch(authSlice.actions.setError({ userExists: true }));
@@ -75,7 +71,6 @@ export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispat
     alert('you sucessfully signed up');
     dispatch(authSlice.actions.signUpSuccess(response.data));
   }
-  dispatch(toggleLoading(false));
 };
 
 export const { signInSuccess, setError } = authSlice.actions;

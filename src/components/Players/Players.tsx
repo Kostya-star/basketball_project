@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchPlayers, removePlayer } from '../../redux/slices/playersSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
+import { SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';
 
 export const Players = () => {
@@ -11,24 +12,14 @@ export const Players = () => {
   const teams = useAppSelector(({ teams }) => teams.data);
   const navigate = useNavigate();
 
-  // const teamNameByPlayerId = teams?.find((team) => players?.find((player) => team.id === player.team))
-  // console.log(teamNameByPlayerId?.name);
-  
-  const teamNameByPlayerId = teams
-    ?.filter((team) => players?.find((player) => team.id === player.team)).map(arr => arr.name)
-  console.log(teamNameByPlayerId);
-  
-  
-  // const findTeamNameByPlayerId = () => {
-  //   if (players) {
-  //     for (let i = 0; i <= players.length; i++) {
-  //       players.forEach((player) => {
-  //         const teamNameByPlayerId = teams.find((team) => team.id === player.team);
-  //         return teamNameByPlayerId?.name;
-  //       });
-  //     }
-  //   }
-  // }
+  const obj = teams?.reduce((acc, team) => {
+    // @ts-expect-error
+    acc[team.id] = {
+      name: team.name,
+      id: team.id,
+    };
+    return acc;
+  }, {});
 
   const onFecthPlayers = async () => {
     const resp = await dispatch(fetchPlayers());
@@ -41,7 +32,7 @@ export const Players = () => {
 
   useEffect(() => {
     if (players && !players.length) {
-      return navigate('/PlayersEmpty');
+      void onFecthPlayers();
     }
   }, [players]);
 
@@ -50,13 +41,26 @@ export const Players = () => {
   };
 
   const deletePlayer = (id: number) => {
-    void dispatch(removePlayer(id))
-  }
+    void dispatch(removePlayer(id));
+  };
+
+  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
+
+  // const onSelectOption = () => {
+
+  // }
 
   return (
     <div className="common__container">
       <div className="common__header">
-        <InputSearch />
+        <div className="common__header__group">
+          <InputSearch />
+          <SelectComponent<'multi_select'>
+            name="multi_select"
+            isMulti={true}
+            options={teamsOptions}
+          />
+        </div>
         <AddBtn onClick={onRedirectCreatePlayer} />
       </div>
       <div className="common__filled_content">
@@ -67,11 +71,12 @@ export const Players = () => {
             key={index}
           >
             <img src={`http://dev.trainee.dex-it.ru${player.avatarUrl}`} alt="team" />
-            <div className="common__player    ">
+            <div className="common__player">
               <p>
-                {player.name} <span>#{player.number}</span>{' '}
+                {player.name} <span>#{player.number}</span>
               </p>
-              <span>{teamNameByPlayerId[index] }</span>
+              {/* @ts-expect-error */}
+              <span>{obj[player.team].name}</span>
             </div>
           </div>
         ))}

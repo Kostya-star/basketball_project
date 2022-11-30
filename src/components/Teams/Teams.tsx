@@ -29,9 +29,6 @@ export const Teams = () => {
     }
   }, [teams]);
 
-  // useEffect(() => {
-  //   navigate('/PlayersCreate')
-  // }, [])
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id));
   };

@@ -145,17 +145,6 @@
 //   }
 // }
 
-.showDate {
-  ::-webkit-datetime-edit {
-    visibility: visible;
-  }
-}
-
-.hideDate {
-  ::-webkit-datetime-edit {
-    visibility: hidden;
-  }
-}
 
 .password {
   &__eye {
@@ -247,9 +236,13 @@ input[type='file'] {
   height: 95px;
   margin-top: 0;
 
-  &__label {
+  label {
     display: inline-block;
     font-size: 13px;
     margin-bottom: 8px;
+  }
+  &__multi {
+    width: 364px;
+    margin-left: 24px;
   }
 }

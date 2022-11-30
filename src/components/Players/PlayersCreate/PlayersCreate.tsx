@@ -120,14 +120,16 @@ export const PlayersCreate = () => {
                   <SelectComponent<'position'>
                     label="Positions"
                     name="position"
+                    isMulti={false}
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
                     getPositions={onGetPositions}
                     options={positionOptions}
-                  />
+                    />
                   <SelectComponent<'team'>
                     label="Teams"
                     name="team"
+                    isMulti={false}
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
                     options={teamsOptions}

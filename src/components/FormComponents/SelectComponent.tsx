@@ -1,9 +1,8 @@
-import { ErrorMessage} from 'formik';
+import { ErrorMessage } from 'formik';
 import { useState } from 'react';
 import s from './FormItems.module.scss';
 import Select, { StylesConfig } from 'react-select';
-
-
+import classnames from 'classnames';
 
 export interface ISelectOption {
   value: string;
@@ -11,25 +10,34 @@ export interface ISelectOption {
 }
 
 interface ISelectComponentProps<T> {
-  label: string;
+  label?: string;
   name: T;
-  onChange: (option: string, name: string) => void
-  onBlur: (name: string) => void
-  options: ISelectOption[]
-  getPositions?: () => void
+  isMulti: boolean;
+  onChange?: (option: string, name: string) => void;
+  onBlur?: (name: string) => void;
+  options: ISelectOption[];
+  getPositions?: () => void;
 }
 
-type IsMulti = false;
+export const SelectComponent = <T extends string>({
+  label,
+  name,
+  options,
+  isMulti,
+  getPositions,
+  onChange,
+  onBlur,
+}: ISelectComponentProps<T>) => {
+  const [selectedOption, setSelectedOption] = useState<string | ISelectOption[] | null>(null);
+  console.log(selectedOption);
 
-export const SelectComponent = <T extends string>({ label, name, options, getPositions, onChange, onBlur }: ISelectComponentProps<T>) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const IsMulti = isMulti;
 
-
-  const classNames: StylesConfig<ISelectOption, IsMulti> = {
+  const classNames: StylesConfig<ISelectOption, typeof IsMulti> = {
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
-      backgroundColor: '#F6F6F6',
+      backgroundColor: IsMulti ? 'white' : '#F6F6F6',
       fontSize: '14px',
       fontWeight: '500',
       border: 0,
@@ -71,28 +79,73 @@ export const SelectComponent = <T extends string>({ label, name, options, getPos
       ...baseStyles,
       color: 'inherit',
     }),
+    valueContainer: (baseStyles, state) => ({
+      ...baseStyles,
+      flexWrap: 'nowrap',
+      // textOverflow: "-",
+      // display: `${state.hasValue ? 'initial' : 'flex'}`,
+    }),
+    multiValue: (baseStyles) => ({
+      ...baseStyles,
+      backgroundColor: '#E4163A',
+      borderRadius: '4px',
+      color: 'white',
+      minWidth: '30%',
+      // display: `${selectedOption?.length >= 2 ? 'none' : 'flex'}`,
+      // justifyContent: 'space-between',
+    }),
+    multiValueLabel: (baseStyles) => ({
+      ...baseStyles,
+      color: 'white',
+      fontSize: '15px',
+      lineHeight: '19px',
+      fontFamily: 'Avenir, sans-serif',
+    }),
+    multiValueRemove: (baseStyles) => ({
+      ...baseStyles,
+    }),
   };
 
-  const setOnChange = (option: ISelectOption | null) => {
+  // const setOnChange = (option: ISelectOption | null) => {
+  const setOnChange = (option: any) => {
+    // console.log(option);
+
     if (option) {
-      setSelectedOption(option.value);
-      onChange(option.value, name);
+      if (IsMulti) {
+        setSelectedOption(option);
+      } else {
+        setSelectedOption(option.value);
+        onChange?.(option.value, name);
+      }
     }
   };
 
   return (
-    <div onClick={getPositions} className={s.select}>
-      <span className={s.select__label}>{label}</span>
+    <div
+      onClick={getPositions}
+      className={classnames({
+        [s.select]: !IsMulti,
+        [s.select__multi]: IsMulti,
+      })}
+    >
+      <label>{label}</label>
       <Select
         options={options}
         styles={classNames}
         name={name}
-        isLoading={!selectedOption}
+        isMulti={IsMulti}
+        isLoading={!selectedOption?.length}
+        hideSelectedOptions={false}
+        // menuIsOpen={true}
+        closeMenuOnSelect={!IsMulti}
+        isSearchable={false}
         onChange={setOnChange}
-        onBlur={() => onBlur(name)}
+        onBlur={() => onBlur?.(name)}
       />
 
-      <ErrorMessage className={s.form__error} name={name} component="span" />
+      {name !== 'multi_select' && (
+        <ErrorMessage className={s.form__error} name={name} component="span" />
+      )}
     </div>
   );
 };

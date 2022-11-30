@@ -6,6 +6,9 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    &__group {
+      display: flex;
+    }
   }
   // teams and players filled content
   &__filled_content {
@@ -47,6 +50,14 @@
         padding-bottom: 25px;
         background-color: #303030;
         border-radius: 4px;
+      }
+    }
+  }
+  &__player {
+    p{
+      span {
+        font-size: 18px;
+        color: #FF5761;
       }
     }
   }

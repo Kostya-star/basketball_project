@@ -90,9 +90,9 @@ export const SelectComponent = <T extends string>({
       backgroundColor: '#E4163A',
       borderRadius: '4px',
       color: 'white',
-      minWidth: '30%',
-      // display: `${selectedOption?.length >= 2 ? 'none' : 'flex'}`,
-      // justifyContent: 'space-between',
+      minWidth: '25%',
+      display: 'flex',
+      justifyContent: 'space-between',
     }),
     multiValueLabel: (baseStyles) => ({
       ...baseStyles,

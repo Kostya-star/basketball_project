@@ -6,6 +6,8 @@ import { IGetTeamsResponse } from '../types/teams/getTeamsResp';
 import { INewTeamValuesRequest } from '../types/teams/addTeamRequest';
 import { IGetPlayersResponse } from '../types/players/getPlayersResp';
 import { IAddPLayerRequest } from '../types/players/addPLayerRequest';
+import { IDeleteTeamRequest } from '../types/teams/deleteTeamRequest';
+import { IDeletePlayerRequest } from '../types/players/deletePlayerRequest';
 
 
 export const authAPI = {
@@ -27,7 +29,7 @@ export const teamsAPI = {
     return await client.post('Team/Add', values);
   },
 
-  async deleteTeam(id: number) {
+  async deleteTeam(id: IDeleteTeamRequest) {
     return await client.delete(`Team/Delete?id=${id}`);
   },
 };
@@ -45,7 +47,7 @@ export const playersAPI = {
     return await client.post('Player/Add', newPlayer);
   },
   
-  async deletePlayer(id: number) {
+  async deletePlayer(id: IDeletePlayerRequest) {
     return await client.delete(`Player/Delete?id=${id}`);
   }
 };

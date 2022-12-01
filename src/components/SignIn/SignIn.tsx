@@ -1,66 +1,69 @@
 import { FC, useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { InputPassword } from '../FormComponents/InputPassword';
 import { InputText } from '../FormComponents/InputText';
-import { authAPI } from '../../api/api';
 import '../../scss/auth-common.scss';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { login, authSlice, setError } from '../../redux/slices/authSlice';
+import { useAppDispatch } from '../../redux/hooks';
+import { login} from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 import { ISignInFormikValues } from '../../types/auth/auth';
-import { log } from 'console';
 
 
 interface ISignInProps {
   children?: React.ReactNode;
 }
 
+const initialValues = {
+  login: '',
+  password: '',
+} as ISignInFormikValues;
+
+const validationSchema = Yup.object({
+  login: Yup.string()
+    .required('Required')
+    .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
+  password: Yup.string()
+    .required('Required')
+    .min(6, 'The password must be at least 6 chars')
+    .matches(
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+      'Password must contain at least one number and one special char'
+    ),
+});
+
+
 export const SignIn: FC<ISignInProps> = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false)
+  const [serverResponse, setServerResponse] = useState('')
 
   const navigate = useNavigate();
 
-  const { unauthorized } = useAppSelector((state) => ({
-    unauthorized: state.auth.error.unauthorized,
-  }));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (unauthorized) {
+    if (serverResponse) {
       const authTimer = setTimeout(() => {
-        dispatch(setError({ unauthorized: false }));
+        setServerResponse('')
       }, 2500);
       return () => clearTimeout(authTimer);
     }
-  }, [unauthorized]);
+  }, [serverResponse]);
 
-  const initialValues = {
-    login: '',
-    password: '',
-  } as ISignInFormikValues;
-
-  const validationSchema = Yup.object({
-    login: Yup.string()
-      .required('Required')
-      .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
-    password: Yup.string()
-      .required('Required')
-      .min(6, 'The password must be at least 6 chars')
-      .matches(
-        /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-        'Password must contain at least one number and one special char'
-      ),
-  });
 
   const onSubmit = async (loginData: ISignInFormikValues) => {
     setDisabledSubmit(true)
-    const resp = await dispatch(login(loginData));
+    const resp = await dispatch(login(loginData))
+      .catch(error => {
+        if(error) {
+          setServerResponse(error.response.statusText);
+        }
+      })
     if (resp?.data) {
       navigate('/Teams');
     }
@@ -92,7 +95,7 @@ export const SignIn: FC<ISignInProps> = () => {
         </div>
       </div>
 
-      <RespError text="User with the specified username / password was not found." />
+      {serverResponse && <RespError text={serverResponse} />}
 
       <FormBg src={signInImg} />
     </div>

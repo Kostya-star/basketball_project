@@ -46,10 +46,6 @@ export const Players = () => {
 
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
 
-  // const onSelectOption = () => {
-
-  // }
-
   return (
     <div className="common__container">
       <div className="common__header">

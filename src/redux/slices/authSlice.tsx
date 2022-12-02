@@ -7,17 +7,12 @@ import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 
 export interface IAuthState {
-  // isAuth: boolean;
   error: { unauthorized?: boolean; userExists?: boolean };
   signInResp: IAuthResponseType;
   signUpResp: IAuthResponseType;
 }
 
-// const LSIsAuth = window.localStorage.getItem('isAuth');
-// const isAuth = LSIsAuth !== null ? JSON.parse(LSIsAuth) : false;
-
 const initialState: IAuthState = {
-  // isAuth,
   error: {
     unauthorized: false,
     userExists: false,

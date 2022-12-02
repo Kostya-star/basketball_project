@@ -1,19 +1,27 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import '../scss/serverRespPopUp.scss';
 import classnames from 'classnames';
 
 
 interface IRespErrorProps {
-  text: string;
+  response: string
+  setResponse: (resp: string) => void
 }
 
-export const RespError: FC<IRespErrorProps> = ({ text }) => {
+export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
 
-  const userNotExist = text === 'User with the specified login already exists'
-  const userSuccess = text === 'User was created successfully'
-  const userUnauthorized = text === 'Unauthorized'
-  console.log(userUnauthorized);
+  const userNotExist = response === 'User with the specified login already exists'
+  const userSuccess = response === 'User was created successfully'
+  const userUnauthorized = response === 'Unauthorized'
   
+  useEffect(() => {
+    if (response) {
+      const authTimer = setTimeout(() => {
+        setResponse('')
+      }, 2500);
+      return () => clearTimeout(authTimer);
+    }
+  }, [response]);
 
   return (
     <div
@@ -24,7 +32,7 @@ export const RespError: FC<IRespErrorProps> = ({ text }) => {
         "server__success": userSuccess,
       })}
     >
-      {text}
+      {response}
     </div>
   );
 };

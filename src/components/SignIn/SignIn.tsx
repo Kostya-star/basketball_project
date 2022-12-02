@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../FormComponents/InputSubmit';
@@ -10,10 +10,9 @@ import '../../scss/auth-common.scss';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch } from '../../redux/hooks';
-import { login} from '../../redux/slices/authSlice';
+import { login } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 import { ISignInFormikValues } from '../../types/auth/auth';
-
 
 interface ISignInProps {
   children?: React.ReactNode;
@@ -37,37 +36,25 @@ const validationSchema = Yup.object({
     ),
 });
 
-
 export const SignIn: FC<ISignInProps> = () => {
-  const [disabledSubmit, setDisabledSubmit] = useState(false)
-  const [serverResponse, setServerResponse] = useState('')
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [serverResponse, setServerResponse] = useState('');
 
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (serverResponse) {
-      const authTimer = setTimeout(() => {
-        setServerResponse('')
-      }, 2500);
-      return () => clearTimeout(authTimer);
-    }
-  }, [serverResponse]);
-
-
   const onSubmit = async (loginData: ISignInFormikValues) => {
-    setDisabledSubmit(true)
-    const resp = await dispatch(login(loginData))
-      .catch(error => {
-        if(error) {
-          setServerResponse(error.response.statusText);
-        }
-      })
+    setDisabledSubmit(true);
+    const resp = await dispatch(login(loginData)).catch((error) => {
+      if (error) {
+        setServerResponse(error.response.statusText);
+      }
+    });
     if (resp?.data) {
       navigate('/Teams');
     }
-    setDisabledSubmit(false)
+    setDisabledSubmit(false);
   };
 
   return (
@@ -95,7 +82,7 @@ export const SignIn: FC<ISignInProps> = () => {
         </div>
       </div>
 
-      {serverResponse && <RespError text={serverResponse} />}
+      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
 
       <FormBg src={signInImg} />
     </div>

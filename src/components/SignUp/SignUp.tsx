@@ -14,6 +14,7 @@ import { signUp } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 import { ISignUpFormikValues } from '../../types/auth/auth';
 import { RespStatusEnum } from '../../types/enum';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
   userName: '',
@@ -48,16 +49,8 @@ export const SignUp: FC = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
+  const navigate = useNavigate()
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (serverResponse) {
-      const authTimer = setTimeout(() => {
-        setServerResponse('')
-      }, 2500);
-      return () => clearTimeout(authTimer);
-    }
-  }, [serverResponse]);
 
   const onSubmit = async (values: ISignUpFormikValues) => {
     setDisabledSubmit(true);
@@ -112,7 +105,12 @@ export const SignUp: FC = () => {
         </div>
       </div>
 
-      {serverResponse && <RespError text={serverResponse} />}
+      {serverResponse && (
+        <RespError
+          response={serverResponse}
+          setResponse={setServerResponse}
+        />
+      )}
 
       <FormBg src={SignUpImg} />
     </div>

@@ -1,0 +1,21 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  font-weight: 500;
+  &__page {
+    user-select: none;
+    color: #707070;
+    padding: 10px 20px;
+  }
+  &__link {
+    cursor: pointer;  
+  }
+
+}
+
+.selected {
+  background-color: #E4163A;
+  color: white;
+  border-radius: 4px;
+}

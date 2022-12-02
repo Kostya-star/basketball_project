@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchPlayers, removePlayer } from '../../redux/slices/playersSlice';
+import { IPlayerData } from '../../types/players/players';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';

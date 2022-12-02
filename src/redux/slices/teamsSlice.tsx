@@ -47,12 +47,14 @@ export const createTeam =
   };
 
 export const removeTeam = (id: number) => async (dispatch: AppDispatch) => {
-  const resp = await teamsAPI.deleteTeam(id).catch((error) => {
+  const resp = await teamsAPI.deleteTeam({id}).catch((error) => {
     console.log(error);
     alert('Error when deleting the team');
   });
 
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    console.log(resp);
+    
     void dispatch(fetchTeams());
   }
 };

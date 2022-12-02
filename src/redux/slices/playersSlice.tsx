@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RespStatusEnum } from '../../types/enum';
 import { IAddPLayerRequest } from '../../types/players/addPLayerRequest';
-import { IPlayersState } from '../../types/players/players';
+import { IPlayerData, IPlayersState } from '../../types/players/players';
 import { AppDispatch } from '../store';
 import { imageAPI, playersAPI, teamsAPI } from './../../api/api';
 
@@ -69,7 +69,7 @@ export const getPositions = () => async (dispatch: AppDispatch) => {
 };
 
 export const removePlayer = (id: number) => async (dispatch: AppDispatch) => {
-  const resp = await playersAPI.deletePlayer(id).catch((error) => {
+  const resp = await playersAPI.deletePlayer({id}).catch((error) => {
     console.log(error);
     alert('Error when deleting the player');
   });

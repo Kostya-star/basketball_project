@@ -1,1 +1,3 @@
-export type IDeletePlayerRequest = number
+export interface IDeletePlayerRequest {
+  id: number
+}

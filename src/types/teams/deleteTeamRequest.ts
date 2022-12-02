@@ -1,1 +1,3 @@
-export type IDeleteTeamRequest = number
+export interface IDeleteTeamRequest {
+  id: number
+}

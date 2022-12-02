@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
 import '../../scss/teams_players_common.scss';
+import { RespError } from '../RespError';
 
 export const Teams = () => {
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -15,7 +17,7 @@ export const Teams = () => {
   }));
 
   const onFetchData = async() => {
-    const resp = await dispatch(fetchTeams());
+    const resp = await dispatch(fetchTeams())
     if (!resp?.data.data.length) return navigate('/TeamsEmpty');
   };
 

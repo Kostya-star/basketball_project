@@ -1,0 +1,34 @@
+.server {
+  &__response {
+    position: absolute;
+    top: 60px;
+    right: 36px;
+    border-radius: 4px;
+    padding: 10px 15px;
+    color: white;
+    animation: fadeInUp 0.5s ease backwards;
+
+    @keyframes fadeInUp {
+      0% {
+        transform: translate(50px, 0px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translate(0px, 0);
+        opacity: 1;
+      }
+
+    }
+
+  }
+
+  &__error {
+    background-color: #FF5761;
+  }
+
+  &__success {
+    background-color: #4CAF50;
+  }
+
+}

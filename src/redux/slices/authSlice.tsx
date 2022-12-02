@@ -7,16 +7,11 @@ import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 
 export interface IAuthState {
-  error: { unauthorized?: boolean; userExists?: boolean };
   signInResp: IAuthResponseType;
   signUpResp: IAuthResponseType;
 }
 
 const initialState: IAuthState = {
-  error: {
-    unauthorized: false,
-    userExists: false,
-  },
   signInResp: {} as IAuthResponseType,
   signUpResp: {} as IAuthResponseType,
 };
@@ -31,19 +26,14 @@ export const authSlice = createSlice({
     signUpSuccess(state, action: PayloadAction<IAuthResponseType>) {
       state.signUpResp = action.payload;
     },
-    setError(state, action: PayloadAction<{ unauthorized?: boolean; userExists?: boolean }>) {
-      state.error.unauthorized = action.payload.unauthorized;
-      state.error.userExists = action.payload.userExists;
     },
-  },
-});
+  });
+  
+  export const { signInSuccess} = authSlice.actions;
+
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
-  const response = await authAPI.signIn(loginData).catch((error) => {
-    if (error.response.status === RespStatusEnum.UNREGISTRED) {
-      dispatch(authSlice.actions.setError({ unauthorized: true }));
-    }
-  });
+  const response = await authAPI.signIn(loginData)
 
   if (response && response.status === RespStatusEnum.SUCCESS) {
     if (response?.status === RespStatusEnum.SUCCESS) {
@@ -52,22 +42,16 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
       window.localStorage.setItem('TOKEN', response.data.token);
     }
   }
-
   return response;
 };
 
 export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispatch) => {
-  const response = await authAPI.signUp(signupData).catch((error) => {
-    if (error.response.status === RespStatusEnum.EXISTS) {
-      dispatch(authSlice.actions.setError({ userExists: true }));
-    }
-  });
+  const response = await authAPI.signUp(signupData)
   if (response?.status === RespStatusEnum.SUCCESS) {
-    alert('you sucessfully signed up');
     dispatch(authSlice.actions.signUpSuccess(response.data));
   }
+  return response
 };
 
-export const { signInSuccess, setError } = authSlice.actions;
 
 export default authSlice.reducer;

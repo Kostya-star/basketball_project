@@ -9,7 +9,8 @@ import { InputFile } from '../../FormComponents/InputFile';
 import { useNavigate } from 'react-router-dom';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { INewTeamValues } from '../../../types/teams/teams';
-
+import { RespStatusEnum } from '../../../types/enum';
+import { RespError } from '../../RespError';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -35,25 +36,29 @@ const initialValues = {
   imageUrl: '',
 } as unknown as INewTeamValues;
 
-
 export const TeamCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [teamImage, setTeamImage] = useState<File | null>(null);
-  const [disabledSubmit, setDisabledSubmit] = useState(false)
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [serverResponse, setServerResponse] = useState('');
 
   const onCancelButton = () => {
     return navigate('/Teams');
   };
 
   const onSubmit = async (values: INewTeamValues) => {
-    setDisabledSubmit(true)
-    const resp = await dispatch(createTeam(values, teamImage));
+    setDisabledSubmit(true);
+    const resp = await dispatch(createTeam(values, teamImage)).catch((error) => {
+      if (error && error.response.status === RespStatusEnum.EXISTS) {
+        setServerResponse('User with the specified login already exists');
+      }
+    });
     if (resp?.data) {
-      onCancelButton()
+      onCancelButton();
     }
-    setDisabledSubmit(false)
+    setDisabledSubmit(false);
   };
 
   return (
@@ -98,6 +103,7 @@ export const TeamCreate = () => {
           );
         }}
       </Formik>
+      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
     </div>
   );
 };

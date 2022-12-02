@@ -22,10 +22,7 @@ export const teamsSlice = createSlice({
 export const { setTeams } = teamsSlice.actions;
 
 export const fetchTeams = () => async (dispatch: AppDispatch) => {
-  const resp = await teamsAPI.getTeams().catch((error) => {
-    alert('error when fetching teams');
-    console.log(error);
-  });
+  const resp = await teamsAPI.getTeams()
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setTeams(resp.data));
   }
@@ -43,14 +40,7 @@ export const createTeam =
         const imageUrl = imageResp.data;
         teamValues.imageUrl = imageUrl;
 
-        const resp = await teamsAPI.addTeam(teamValues).catch((error) => {
-          if (error && error.response.status === RespStatusEnum.EXISTS) {
-            alert('This team already exists');
-          }
-        });
-        if (resp && resp.status === RespStatusEnum.SUCCESS) {
-          alert('The team is created successfully');
-        }
+        const resp = await teamsAPI.addTeam(teamValues)
         return resp;
       }
     }

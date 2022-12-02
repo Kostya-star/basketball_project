@@ -37,7 +37,7 @@ export const fetchPlayers = () => async (dispatch: AppDispatch) => {
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setPlayers(resp.data));
-    return resp
+    return resp;
   }
 };
 
@@ -52,14 +52,8 @@ export const createPlayer =
         const imageURL = imageResp.data;
         newPlayer.avatarUrl = imageURL;
 
-        const resp = await playersAPI.addPlayer(newPlayer).catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-        if (resp && resp.status === RespStatusEnum.SUCCESS) {
-          alert('Player is successfully added ');
-          return resp;
-        }
+        const resp = await playersAPI.addPlayer(newPlayer);
+        return resp;
       }
     }
   };
@@ -74,14 +68,14 @@ export const getPositions = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const removePlayer = (id: number) => async(dispatch: AppDispatch) => {
+export const removePlayer = (id: number) => async (dispatch: AppDispatch) => {
   const resp = await playersAPI.deletePlayer(id).catch((error) => {
     console.log(error);
     alert('Error when deleting the player');
   });
-  if(resp && resp.status === RespStatusEnum.SUCCESS) {
-    void dispatch(fetchPlayers())
+  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    void dispatch(fetchPlayers());
   }
-}
+};
 
 export default playersSlice.reducer;

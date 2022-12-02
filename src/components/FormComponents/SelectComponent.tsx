@@ -29,7 +29,6 @@ export const SelectComponent = <T extends string>({
   onBlur,
 }: ISelectComponentProps<T>) => {
   const [selectedOption, setSelectedOption] = useState<string | ISelectOption[] | null>(null);
-  console.log(selectedOption);
 
   const IsMulti = isMulti;
 
@@ -41,7 +40,6 @@ export const SelectComponent = <T extends string>({
       fontSize: '14px',
       fontWeight: '500',
       border: 0,
-      marginBottom: '5px',
       boxShadow: 'none',
       transition: '0.2s',
       '&:hover': {

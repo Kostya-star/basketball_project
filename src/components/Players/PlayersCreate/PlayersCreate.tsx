@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
 import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
 import { IAddPLayerRequest } from '../../../types/players/addPLayerRequest';
+import { RespStatusEnum } from '../../../types/enum';
+import { RespError } from '../../RespError';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -42,13 +44,13 @@ const initialValues = {
   avatarUrl: '',
 } as unknown as IAddPLayerRequest;
 
-
 export const PlayersCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [playersImage, setPlayersImage] = useState<File | null>(null);
-  const [disabledSubmit, setDisabledSubmit] = useState(false)
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [serverResponse, setServerResponse] = useState('');
 
   const positions = useAppSelector(({ players }) => players.positions);
   const teams = useAppSelector(({ teams }) => teams.data);
@@ -56,24 +58,29 @@ export const PlayersCreate = () => {
   const positionOptions = positions?.map((p) => ({ value: p, label: p }));
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
 
-
   const onGetPositions = () => {
-    if(!positions.length) {
+    if (!positions.length) {
       void dispatch(getPositions());
-        }
-  }
+    }
+  };
 
   const onSubmit = async (newPlayer: IAddPLayerRequest) => {
-    setDisabledSubmit(true)
+    setDisabledSubmit(true);
     const teamId = teams?.find((team) => team.name === String(newPlayer.team));
     if (teamId) {
       const newPlayerWithTeamId = { ...newPlayer, team: teamId.id };
-      const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage));
+      const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage)).catch(
+        (error) => {
+          if (error && error.response.status === RespStatusEnum.EXISTS) {
+            setServerResponse('User with the specified login already exists');
+          }
+        }
+      );
       if (resp?.data) {
         onCancelButton();
       }
     }
-    setDisabledSubmit(false)
+    setDisabledSubmit(false);
   };
 
   const onCancelButton = () => {
@@ -125,7 +132,7 @@ export const PlayersCreate = () => {
                     onBlur={onBlurOption}
                     getPositions={onGetPositions}
                     options={positionOptions}
-                    />
+                  />
                   <SelectComponent<'team'>
                     label="Teams"
                     name="team"
@@ -152,6 +159,7 @@ export const PlayersCreate = () => {
           );
         }}
       </Formik>
+      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
     </div>
   );
 };

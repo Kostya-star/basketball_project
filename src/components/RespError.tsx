@@ -1,28 +1,39 @@
-import { FC } from 'react';
-import '../scss/auth-common.scss';
+import { FC, useEffect } from 'react';
+import '../scss/serverRespPopUp.scss';
 import classnames from 'classnames';
-import { useAppSelector } from '../redux/hooks';
 
 
 interface IRespErrorProps {
-  text: string;
+  response: string
+  setResponse: (resp: string) => void
 }
 
-export const RespError: FC<IRespErrorProps> = ({ text }) => {
-  const { unauthorized, userExists } = useAppSelector(({ auth }) => ({
-    unauthorized: auth.error.unauthorized,
-    userExists: auth.error.userExists,
-  }));
+export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
 
-
+  const userNotExist = response === 'User with the specified login already exists'
+  const userSuccess = response === 'User was created successfully'
+  const userUnauthorized = response === 'Unauthorized'
+  const notFound = response === 'Not Found'
+  
+  useEffect(() => {
+    if (response) {
+      const authTimer = setTimeout(() => {
+        setResponse('')
+      }, 3000);
+      return () => clearTimeout(authTimer);
+    }
+  }, [response]);
+  
   return (
     <div
-      className={classnames('auth__error', {
-        "auth__error_show": unauthorized ?? userExists,
-        "auth__error_hide": unauthorized === false || userExists === false
+      className={classnames('server__response', {
+        // "auth__error_show": unauthorized ?? userExists,
+        // "auth__error_hide": unauthorized === false || userExists === false
+        "server__error": userNotExist || userUnauthorized || notFound,
+        "server__success": userSuccess,
       })}
     >
-      {text}
+      {response}
     </div>
   );
 };

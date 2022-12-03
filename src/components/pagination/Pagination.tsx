@@ -1,22 +1,24 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import '../../scss/pagination.scss'
 
-export const Pagination = () => {
 
-  const onPageChange = (page: {selected: number}) => {
-    console.log(page.selected);
-    
-  }
+interface IPaginationProps {
+  onPageChange: (currentPage: number) => void 
+  currentPage: number
+}
+
+export const Pagination: FC<IPaginationProps> = ({ currentPage, onPageChange }) => {
 
   return (
     <div>
       <ReactPaginate
         pageCount={10}
+        onPageChange={(currentPage) => onPageChange(currentPage.selected + 1)}
+        forcePage={currentPage - 1}
+        breakLabel={'...'}
         previousLabel={'<'}
         nextLabel={'>'}
-        breakLabel={'...'}
-        onPageChange={onPageChange}
         containerClassName={'pagination'}
         pageClassName={'pagination__page'}
         pageLinkClassName={'pagination__link'}

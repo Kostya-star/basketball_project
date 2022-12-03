@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
+import { fetchTeams, removeTeam, setCurrentPage } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
@@ -11,12 +11,13 @@ export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { teams } = useAppSelector(({ teams }) => ({
+  const {teams, currentPage} = useAppSelector(({ teams }) => ({
     teams: teams.data,
+    currentPage: teams.page
   }));
 
   const onFetchData = async () => {
-    const resp = await dispatch(fetchTeams());
+    const resp = await dispatch(fetchTeams(currentPage));
     if (!resp?.data.data.length) return navigate('/TeamsEmpty');
   };
 
@@ -37,6 +38,16 @@ export const Teams = () => {
   const onRedirectCreateTeam = () => {
     return navigate('/TeamCreate');
   };
+
+  // PAGINATION ------------------------------------
+
+  const onPageChange = (currentPage: number) => {
+    dispatch(setCurrentPage(currentPage))
+  }
+
+  useEffect(() => {
+    void onFetchData()
+  }, [currentPage])
 
   return (
     <div className="common__container">
@@ -60,7 +71,7 @@ export const Teams = () => {
           </div>
         ))}
       </div>
-      <Pagination />
+      <Pagination currentPage={currentPage} onPageChange={onPageChange}/>
     </div>
   );
 };

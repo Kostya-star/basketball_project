@@ -4,7 +4,12 @@ import { INewTeamValues, ITeamState } from '../../types/teams/teams';
 import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 
-const initialState = {} as ITeamState;
+const initialState = {
+  data: [],
+  count: 0,
+  page: 1,          
+  size: 0, 
+} as ITeamState;
 
 export const teamsSlice = createSlice({
   name: 'teams',
@@ -16,13 +21,16 @@ export const teamsSlice = createSlice({
         ...payload
       };
     },
+    setCurrentPage(state, {payload}: PayloadAction<number>) {
+      state.page = payload
+    }
   },
 });
 
-export const { setTeams } = teamsSlice.actions;
+export const { setTeams, setCurrentPage } = teamsSlice.actions;
 
-export const fetchTeams = () => async (dispatch: AppDispatch) => {
-  const resp = await teamsAPI.getTeams()
+export const fetchTeams = (currentPage: number) => async (dispatch: AppDispatch) => {
+  const resp = await teamsAPI.getTeams(currentPage)
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setTeams(resp.data));
   }
@@ -53,9 +61,7 @@ export const removeTeam = (id: number) => async (dispatch: AppDispatch) => {
   });
 
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    console.log(resp);
-    
-    void dispatch(fetchTeams());
+    // void dispatch(fetchTeams());
   }
 };
 

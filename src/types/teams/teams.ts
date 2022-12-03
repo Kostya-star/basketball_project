@@ -6,7 +6,7 @@ export interface INewTeamValues {
   imageUrl: string;
 }
 
-export interface ITeamData extends INewTeamValues{
+export interface ITeamData extends INewTeamValues {
   id: number;
 }
 

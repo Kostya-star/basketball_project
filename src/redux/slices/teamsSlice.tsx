@@ -8,7 +8,7 @@ const initialState = {
   data: [],
   count: 0,
   page: 1,          
-  size: 0, 
+  size: 6, 
 } as ITeamState;
 
 export const teamsSlice = createSlice({
@@ -21,16 +21,13 @@ export const teamsSlice = createSlice({
         ...payload
       };
     },
-    setCurrentPage(state, {payload}: PayloadAction<number>) {
-      state.page = payload
-    }
   },
 });
 
-export const { setTeams, setCurrentPage } = teamsSlice.actions;
+export const { setTeams } = teamsSlice.actions;
 
-export const fetchTeams = (currentPage: number) => async (dispatch: AppDispatch) => {
-  const resp = await teamsAPI.getTeams(currentPage)
+export const fetchTeams = (currentPage: number, pageSize: number) => async (dispatch: AppDispatch) => {
+  const resp = await teamsAPI.getTeams(currentPage, pageSize)
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setTeams(resp.data));
   }

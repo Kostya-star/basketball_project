@@ -12,6 +12,7 @@ import { IAddTeamResponse } from '../types/teams/addTeamResp';
 import { IDeleteTeamResponse } from '../types/teams/deleteTeamResp';
 import { IAddPlayerResponse } from '../types/players/addPlayerResp';
 import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
+import { ITeamsParamsGetRequest } from '../types/IBaseParamsGetRequest';
 
 
 export const authAPI = {
@@ -25,18 +26,25 @@ export const authAPI = {
 };
 
 export const teamsAPI = {
-  async getTeams(currentPage: number) {
-    const PageSize = 6
-    return await client.get<IGetTeamsResponse>(`Team/GetTeams?Page=${currentPage}&PageSize=${PageSize}`);
+  async getTeams(currentPage: number, pageSize: number) {
+
+    const teamParams = {
+      Page: currentPage,
+      PageSize: pageSize
+    } as ITeamsParamsGetRequest
+
+    return await client.get<IGetTeamsResponse>(
+      `Team/GetTeams?Page=${teamParams.Page}&PageSize=${teamParams.PageSize}`
+    );
   },
 
   async addTeam(values: INewTeamValuesRequest) {
     return await client.post<IAddTeamResponse>('Team/Add', values);
   },
 
-  async deleteTeam({id}: IDeleteTeamRequest) {
+  async deleteTeam({ id }: IDeleteTeamRequest) {
     return await client.delete<IDeleteTeamResponse>(`Team/Delete?id=${id}`);
-  }
+  },
 };
 
 export const playersAPI = {
@@ -51,10 +59,10 @@ export const playersAPI = {
   async addPlayer(newPlayer: IAddPLayerRequest) {
     return await client.post<IAddPlayerResponse>('Player/Add', newPlayer);
   },
-  
-  async deletePlayer({id}: IDeletePlayerRequest) {
+
+  async deletePlayer({ id }: IDeletePlayerRequest) {
     return await client.delete<IDeletePlayerResponse>(`Player/Delete?id=${id}`);
-  }
+  },
 };
 
 export const imageAPI = {

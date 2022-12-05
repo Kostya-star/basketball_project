@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import '../../scss/pagination.scss'
-
+import s from './Pagination.module.scss'
 
 interface IPaginationProps {
   onPageChange: (currentPage: number) => void 
@@ -20,6 +19,7 @@ export const Pagination: FC<IPaginationProps> = ({ currentPage, pagesAmount, onP
         breakLabel={'...'}
         previousLabel={'<'}
         nextLabel={'>'}
+        className={s.pagination}
         containerClassName={'pagination'}
         pageClassName={'pagination__page'}
         pageLinkClassName={'pagination__link'}

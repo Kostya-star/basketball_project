@@ -1,21 +1,26 @@
 .common {
+
   // teams and players header with search and AddBtn
   &__container {
     width: 100%;
   }
+
   &__header {
     display: flex;
     justify-content: space-between;
+
     &__group {
       display: flex;
     }
   }
+
   // teams and players filled content
   &__filled_content {
     display: flex;
-    padding-top: 32px;  
+    padding-top: 32px;
     flex-wrap: wrap;
     gap: 55.5px;
+
     &__block {
       display: flex;
       flex-direction: column;
@@ -26,6 +31,7 @@
       border-radius: 4px;
       cursor: pointer;
       font-family: 'Avenir', sans-serif;
+
       img {
         display: block;
         margin-top: 65px;
@@ -33,16 +39,19 @@
         width: 150px;
         height: 150px;
       }
+
       p {
         margin: 0;
         margin-bottom: 10px;
         font-size: 18px;
         color: white;
       }
+
       span {
         font-size: 14px;
         color: #9C9C9C;
       }
+
       div {
         text-align: center;
         width: 100%;
@@ -53,20 +62,23 @@
       }
     }
   }
+
   &__player {
-    p{
+    p {
       span {
         font-size: 18px;
         color: #FF5761;
       }
     }
   }
-// teams and players Empty
+
+  // teams and players Empty
   &__empty_content {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 99%;
+
     // background-color: yellow;
     &__container {
       display: flex;
@@ -99,6 +111,7 @@
     }
 
   }
+
   // create for teams and players
 
   &__create {
@@ -106,18 +119,21 @@
     height: 650px;
     background-color: #fff;
     border-radius: 5px;
+
     &__content {
       display: flex;
       padding: 48px 230px 48px 73px;
     }
+
     &__image {
       margin-right: 136px;
     }
+
     &__buttons {
       display: flex;
       justify-content: space-between;
       // margin-top: 20px;
-  
+
       button {
         width: 171px;
         height: 40px;
@@ -129,24 +145,28 @@
         border-radius: 4px;
         cursor: pointer;
         transition: 0.3s;
+
         &:hover {
           background-color: #D1D1D1;
           color: white;
         }
+
         &:active {
           background-color: #9C9C9C;
           color: white;
         }
       }
-  
+
       input {
         width: 175px;
         margin: 0px;
       }
     }
+
     &__groupParameters {
       display: flex;
       justify-content: space-between;
+
       input {
         width: 171px;
       }

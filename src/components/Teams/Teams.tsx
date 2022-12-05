@@ -94,7 +94,7 @@ export const Teams = () => {
           </div>
         ))}
       </div>
-      <div>
+      <div className='common__pagination'>
       <Pagination currentPage={currentPage} pagesAmount={pagesAmount} onPageChange={onPageChange} />
       
       </div>

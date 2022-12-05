@@ -132,6 +132,7 @@ export const SelectComponent = <T extends string>({
         styles={classNames}
         name={name}
         isMulti={IsMulti}
+        // menuPlacement="top"
         isLoading={!selectedOption?.length}
         hideSelectedOptions={false}
         // menuIsOpen={true}

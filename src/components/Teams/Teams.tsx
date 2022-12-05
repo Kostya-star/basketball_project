@@ -94,7 +94,10 @@ export const Teams = () => {
           </div>
         ))}
       </div>
+      <div>
       <Pagination currentPage={currentPage} pagesAmount={pagesAmount} onPageChange={onPageChange} />
+      
+      </div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { ReactComponent as TeamsSVG } from '../../assets/icons/menu__team.svg';
 import { ReactComponent as PlayersSVG } from '../../assets/icons/menu__players.svg';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../redux/hooks';
 
 export interface IMenuButtonProps {
   isActive: boolean;

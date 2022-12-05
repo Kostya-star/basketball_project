@@ -2,7 +2,7 @@ import { InputText } from '../../FormComponents/InputText';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { useState } from 'react';
 import { createTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
@@ -45,7 +45,7 @@ export const TeamCreate = () => {
   const [serverResponse, setServerResponse] = useState('');
 
   const onCancelButton = () => {
-    return navigate('/Teams');
+    navigate(`/Teams`);
   };
 
   const onSubmit = async (values: INewTeamValues) => {

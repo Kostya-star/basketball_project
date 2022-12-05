@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
@@ -12,63 +12,65 @@ import { createBrowserHistory } from 'history';
 export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const history = createBrowserHistory();
 
-  const {teams, currentPage, pageSize} = useAppSelector(({ teams }) => ({
+  const { teams, currentPage, pageSize, teamsCount } = useAppSelector(({ teams }) => ({
     teams: teams.data,
     currentPage: teams.page,
-    pageSize: teams.size
+    pageSize: teams.size,
+    teamsCount: teams.count
   }));
 
-  const onFetchData = async (currentPage: number) => {
-      const resp = await dispatch(fetchTeams(currentPage, pageSize));
-      navigate(`/Teams?Page=${currentPage}&PageSize=${pageSize}`)
+  const pagesAmount = Math.ceil(teamsCount / pageSize)
+
+  // URL---------------------
+  const history = createBrowserHistory();
+
+  const onFetchTeams = (currentPage: number, pageSize: number) => {
+    void dispatch(fetchTeams(currentPage, pageSize)).then((resp) => {
       if (!resp?.data.data.length) {
         return navigate('/TeamsEmpty');
       }
-
+      navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
+    });
   };
 
   useEffect(() => {
-    void onFetchData(currentPage);
+    if(history.location.search) {
+      const UrlString = history.location.search.substring(1);
+      const UrlObjFromString = qs.parse(UrlString);
+      if (UrlObjFromString.Page && UrlObjFromString.PageSize) {
+        void dispatch(
+          fetchTeams(Number(UrlObjFromString.Page), Number(UrlObjFromString.PageSize))
+        ).then((resp) => {
+          if (!resp?.data.data.length) {
+            return navigate('/TeamsEmpty');
+          }
+          navigate(
+            `?Page=${Number(UrlObjFromString.Page)}&PageSize=${Number(UrlObjFromString.PageSize)}`
+          );
+        });
+      }
+    } else {
+      onFetchTeams(currentPage, pageSize)
+    }
   }, []);
 
   useEffect(() => {
-    if (teams && !teams.length) {
-      void onFetchData(currentPage);
-    }
-  }, [teams]);
+    navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
+  }, [currentPage, pageSize]);
 
-  // PERSISTING THE URL PARAMS
-  
+  const onPageChange = (currentPage: number) => {
+    onFetchTeams(currentPage, pageSize)
+  };
+  // ---------------------
+
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id));
   };
-  
+
   const onRedirectCreateTeam = () => {
     return navigate('/TeamCreate');
   };
-  
-  // PAGINATION ------------------------------------
-  useEffect(() => {
-    const URL = history.location.search.substring(1); 
-    const params = qs.parse(URL)
-    if(params.Page && params.PageSize) {
-      console.log('USE EFFECT 1:',  params.Page, params.PageSize);
-      
-      void dispatch(fetchTeams(Number(params.Page), Number(params.PageSize)))
-    }
-  }, [])
-  
-  useEffect(() => {
-    // console.log(currentPage, pageSize);
-    console.log('USE EFFECT 2:',  currentPage, pageSize);
-    navigate(`?Page=${currentPage}&PageSize=${pageSize}`)
-  }, [currentPage, pageSize])
-  
-  const onPageChange = (currentPage: number) => {
-    void onFetchData(currentPage)
-  }
 
   return (
     <div className="common__container">
@@ -92,7 +94,7 @@ export const Teams = () => {
           </div>
         ))}
       </div>
-      <Pagination currentPage={currentPage} onPageChange={onPageChange}/>
+      <Pagination currentPage={currentPage} pagesAmount={pagesAmount} onPageChange={onPageChange} />
     </div>
   );
 };

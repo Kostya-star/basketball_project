@@ -26,16 +26,16 @@ export const authAPI = {
 };
 
 export const teamsAPI = {
-  async getTeams(currentPage: number, pageSize: number) {
+  async getTeams(currentPage?: number, pageSize?: number) {
 
     const teamParams = {
       Page: currentPage,
       PageSize: pageSize
     } as ITeamsParamsGetRequest
 
-    return await client.get<IGetTeamsResponse>(
-      `Team/GetTeams?Page=${teamParams.Page}&PageSize=${teamParams.PageSize}`
-    );
+      return await client.get<IGetTeamsResponse>(
+        `Team/GetTeams?Page=${teamParams?.Page}&PageSize=${teamParams?.PageSize}`
+      );
   },
 
   async addTeam(values: INewTeamValuesRequest) {

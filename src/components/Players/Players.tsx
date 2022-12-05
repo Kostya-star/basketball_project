@@ -6,6 +6,7 @@ import { IPlayerData } from '../../types/players/players';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';
+import { fetchTeams } from './../../redux/slices/teamsSlice';
 
 export const Players = () => {
   const dispatch = useAppDispatch();

@@ -9,7 +9,7 @@ import { InputText } from '../FormComponents/InputText';
 import '../../scss/auth-common.scss';
 import { FormBg } from '../FormBg';
 import { FormLink } from '../FormLink';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login } from '../../redux/slices/authSlice';
 import { RespError } from '../RespError';
 import { ISignInFormikValues } from '../../types/auth/auth';
@@ -52,7 +52,7 @@ export const SignIn: FC<ISignInProps> = () => {
       }
     });
     if (resp?.data) {
-      navigate('/Teams');
+      navigate(`/Teams`);
     }
     setDisabledSubmit(false);
   };

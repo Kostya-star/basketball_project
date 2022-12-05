@@ -1,15 +1,18 @@
 .pagination {
+  user-select: none;
   display: flex;
-  align-items: center;
+  // align-items: center;
+  gap: 20px;
   list-style: none;
   font-weight: 500;
 
   li {
-    user-select: none;
     color: #707070;
-    padding: 10px 20px;
 
     a {
+      display: inline-block;
+      text-align: center;
+      padding: 10px 15px;
       cursor: pointer;
     }
   }
@@ -24,36 +27,3 @@
 
 }
 
-.root {
-  user-select: none;
-  li {
-    display: inline-block;
-    }
-   
-    a {
-      text-align: center;
-      width: 40px;
-      line-height: 38px;
-      height: 40px;
-      border: 1px solid #fe5f1e;
-      border-radius: 30px;
-      margin-right: 10px;
-      cursor: pointer;
-      display: inline-block;
-      color: #fe5f1e;
-      background-color: white;
-
-      &:hover {
-        background-color: #fe5f1e;
-        color: white;
-    }
-  }
-  :global {
-    .selected {
-      a {
-        background-color: #fe5f1e;
-        color: white;
-      }
-    }
-  }
-}

@@ -8,6 +8,7 @@ import '../../scss/teams_players_common.scss';
 import { Pagination } from '../pagination/Pagination';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
+import { SelectComponent } from '../FormComponents/SelectComponent';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -72,6 +73,12 @@ export const Teams = () => {
     return navigate('/TeamCreate');
   };
 
+  const paginationSelectOptions = [
+    { value: 6, label: 6 },
+    { value: 12, label: 12 },
+    { value: 24, label: 24 }
+  ]
+
   return (
     <div className="common__container">
       <div className="common__header">
@@ -94,9 +101,17 @@ export const Teams = () => {
           </div>
         ))}
       </div>
-      <div className='common__pagination'>
-      <Pagination currentPage={currentPage} pagesAmount={pagesAmount} onPageChange={onPageChange} />
-      
+      <div className="common__pagination">
+        <Pagination
+          currentPage={currentPage}
+          pagesAmount={pagesAmount}
+          onPageChange={onPageChange}
+        />
+        <SelectComponent<'pagination_select'>
+          name="pagination_select"
+          isMulti={false}
+          options={paginationSelectOptions}
+        />
       </div>
     </div>
   );

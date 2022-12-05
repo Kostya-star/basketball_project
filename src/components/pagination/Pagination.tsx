@@ -20,15 +20,6 @@ export const Pagination: FC<IPaginationProps> = ({ currentPage, pagesAmount, onP
         previousLabel={'<'}
         nextLabel={'>'}
         className={s.pagination}
-        containerClassName={'pagination'}
-        pageClassName={'pagination__page'}
-        pageLinkClassName={'pagination__link'}
-        previousClassName={'pagination__page'}
-        previousLinkClassName={'pagination__link'}
-        nextClassName={'pagination__page'}
-        nextLinkClassName={'pagination__link'}
-        // breakClassName={'pagination__page'}
-        // breakLinkClassName={'pagination__link'}
       />
     </div>
   );

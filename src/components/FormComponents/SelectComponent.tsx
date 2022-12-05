@@ -5,8 +5,8 @@ import Select, { StylesConfig } from 'react-select';
 import classnames from 'classnames';
 
 export interface ISelectOption {
-  value: string;
-  label: string;
+  value: string | number;
+  label: string | number;
 }
 
 interface ISelectComponentProps<T> {
@@ -132,7 +132,7 @@ export const SelectComponent = <T extends string>({
         styles={classNames}
         name={name}
         isMulti={IsMulti}
-        // menuPlacement="top"
+        menuPlacement={name === 'pagination_select' ? 'top' : 'bottom'}
         isLoading={!selectedOption?.length}
         hideSelectedOptions={false}
         // menuIsOpen={true}
@@ -142,7 +142,7 @@ export const SelectComponent = <T extends string>({
         onBlur={() => onBlur?.(name)}
       />
 
-      {name !== 'multi_select' && (
+      {name !== 'multi_select' && name !== 'pagination_select' && (
         <ErrorMessage className={s.form__error} name={name} component="span" />
       )}
     </div>

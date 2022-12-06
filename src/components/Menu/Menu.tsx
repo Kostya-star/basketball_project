@@ -26,29 +26,43 @@ export const Menu = () => {
     <div className="menu__wrapper">
       <div className="menu__group">
         {menuCategories.map((categoryName, index) => (
-          <div className='menu__block' key={categoryName + '_' + index}>
+          <div className="menu__block" key={categoryName + '_' + index}>
             <div key={index}>
-              <button
-                className={classnames({
-                  menu__button: activeCategory !== index,
-                  menu__button_keepFocus: activeCategory === index,
-                })}
-                onClick={() => setActiveCategory(index)}
-              >
+              <div>
                 {categoryName === 'Teams' && (
-                  <div onClick={() => onToggleRoute(categoryName)}>
+                  <button
+                    onClick={() => {
+                      setActiveCategory(index);
+                      onToggleRoute(categoryName);
+                    }}
+                    className={classnames({
+                      menu__button: activeCategory !== index,
+                      menu__button_selected: activeCategory === index,
+                    })}
+                    disabled={activeCategory === index}
+                  >
                     <TeamsSVG />
                     <span>{categoryName}</span>
-                  </div>
+                  </button>
                 )}
 
                 {categoryName === 'Players' && (
-                  <div onClick={() => onToggleRoute(categoryName)}>
+                  <button
+                    onClick={() => {
+                      setActiveCategory(index);
+                      onToggleRoute(categoryName);
+                    }}
+                    className={classnames({
+                      menu__button: activeCategory !== index,
+                      menu__button_selected: activeCategory === index,
+                    })}
+                    disabled={activeCategory === index}
+                  >
                     <PlayersSVG />
                     <span>{categoryName}</span>
-                  </div>
+                  </button>
                 )}
-              </button>
+              </div>
             </div>
           </div>
         ))}

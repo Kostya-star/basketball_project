@@ -1,7 +1,7 @@
 import { ErrorMessage } from 'formik';
 import { useState } from 'react';
 import s from './FormItems.module.scss';
-import Select, { StylesConfig } from 'react-select';
+import Select, { MenuPlacement, PropsValue, StylesConfig } from 'react-select';
 import classnames from 'classnames';
 
 export interface ISelectOption {
@@ -13,6 +13,8 @@ interface ISelectComponentProps<T> {
   label?: string;
   name: T;
   isMulti: boolean;
+  value?: PropsValue<ISelectOption>
+  menuPlacement?: MenuPlacement 
   onChange?: (option: string, name: string) => void;
   onBlur?: (name: string) => void;
   options: ISelectOption[];
@@ -24,6 +26,8 @@ export const SelectComponent = <T extends string>({
   name,
   options,
   isMulti,
+  value,
+  menuPlacement,
   getPositions,
   onChange,
   onBlur,
@@ -36,7 +40,7 @@ export const SelectComponent = <T extends string>({
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
-      backgroundColor: IsMulti ? 'white' : '#F6F6F6',
+      backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
       fontSize: '14px',
       fontWeight: '500',
       border: 0,
@@ -106,14 +110,12 @@ export const SelectComponent = <T extends string>({
 
   // const setOnChange = (option: ISelectOption | null) => {
   const setOnChange = (option: any) => {
-    // console.log(option);
-
     if (option) {
       if (IsMulti) {
         setSelectedOption(option);
       } else {
         setSelectedOption(option.value);
-        onChange?.(option.value, name);
+        onChange?.(String(option.value), name);
       }
     }
   };
@@ -132,10 +134,9 @@ export const SelectComponent = <T extends string>({
         styles={classNames}
         name={name}
         isMulti={IsMulti}
-        menuPlacement={name === 'pagination_select' ? 'top' : 'bottom'}
-        isLoading={!selectedOption?.length}
+        menuPlacement={menuPlacement}
+        value={value}
         hideSelectedOptions={false}
-        // menuIsOpen={true}
         closeMenuOnSelect={!IsMulti}
         isSearchable={false}
         onChange={setOnChange}

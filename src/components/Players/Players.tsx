@@ -29,7 +29,9 @@ export const Players = () => {
   };
 
   useEffect(() => {
-    void onFecthPlayers();
+    void  dispatch(fetchTeams()).then(() => {
+      void onFecthPlayers();
+    });
   }, []);
 
   useEffect(() => {
@@ -74,7 +76,7 @@ export const Players = () => {
                 {player.name} <span>#{player.number}</span>
               </p>
               {/* @ts-expect-error */}
-              <span>{obj[player.team].name}</span>
+              <span>{obj[player.team]?.name}</span>
             </div>
           </div>
         ))}

@@ -8,24 +8,27 @@
     height: calc(100vh - 145px);
     text-align: center;
 
+    span {
+      display: block;
+    }
+
     button {
       background: none;
       border: none;
       cursor: pointer;
     }
-
-    span {
-      display: block;
-    }
   }
 
   &__block {
     height: 100px;
+    font-size: 14px;
+    width: 55px;
   }
 
   &__group {
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 50%;
     padding-top: 35px;
   }
@@ -42,15 +45,16 @@
     &:hover {
       color: #FF768E;
       transition: 0.2s;
-      
+
       svg path {
         fill: #FF768E;
         transition: 0.2s;
       }
     }
 
-    &_keepFocus {
+    &_selected {
       color: #E4163A;
+      cursor: pointer;
 
       svg path {
         fill: #E4163A;

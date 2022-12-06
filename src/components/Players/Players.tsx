@@ -54,7 +54,7 @@ export const Players = () => {
     <div className="common__container">
       <div className="common__header">
         <div className="common__header__group">
-          <InputSearch />
+          {/* <InputSearch /> */}
           <SelectComponent<'multi_select'>
             name="multi_select"
             isMulti={true}

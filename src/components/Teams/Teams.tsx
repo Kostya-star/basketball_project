@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
@@ -23,22 +23,19 @@ export const Teams = () => {
     teamsCount: teams.count
   }));
 
-  
   // URL---------------------
   const history = createBrowserHistory();
   
-  const onFetchTeams = (currentPage: number, pageSize: number) => {
-    void dispatch(fetchTeams(currentPage, pageSize)).then((resp) => {
-      if (!resp?.data.data.length) {
-        // if(teamsCount > 0) {
-        //   void dispatch(fetchTeams(1, pageSize))
-        //   .then(() => {
-        //     return navigate(`?Page=${1}&PageSize=${pageSize}`);
-        //   })
-        // }
-      }
-      navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
-    })
+  const onFetchTeams = (currentPage?: number, pageSize?: number, value?: string) => {
+    if(value) {
+      void dispatch(fetchTeams(currentPage, pageSize, value)).then(() => {
+        navigate(`?Name=${value}&Page=${currentPage}&PageSize=${pageSize}`);
+      })
+    } else {
+      void dispatch(fetchTeams(currentPage, pageSize)).then(() => {
+        navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
+      })
+    }
   };
   
   useEffect(() => {
@@ -75,6 +72,17 @@ export const Teams = () => {
   ]
   // --------------
 
+  // SEARCH INPUT
+  const onChangeInput = (value: string) => {
+    if (value) {
+      const searchTimer = setTimeout(() => {
+        onFetchTeams(currentPage, pageSize, value)
+      }, 1000);
+      return () => clearTimeout(searchTimer);
+    }
+  };
+// ----------------
+
   const pagesAmount = Math.ceil(teamsCount / pageSize)
 
   const deleteTeam = (id: number) => {
@@ -89,7 +97,7 @@ export const Teams = () => {
   return (
     <div className="common__container">
       <div className="common__header">
-        <InputSearch />
+        <InputSearch onChangeInput={onChangeInput}/>
         <AddBtn onClick={onRedirectCreateTeam} />
       </div>
 

@@ -26,13 +26,20 @@ export const authAPI = {
 };
 
 export const teamsAPI = {
-  async getTeams(currentPage?: number, pageSize?: number) {
+  async getTeams(currentPage?: number, pageSize?: number, value?: string) {
     const teamParams = {
+      Name: value,
       Page: currentPage,
       PageSize: pageSize,
     } as ITeamsParamsGetRequest;
 
-    if (teamParams.Page && teamParams.PageSize) {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    if ((teamParams.Page && teamParams.PageSize)) {
+      if(teamParams.Name) {
+        return await client.get<IGetTeamsResponse>(
+          `Team/GetTeams?Page=${teamParams?.Page}&PageSize=${teamParams?.PageSize}&Name=${teamParams?.Name}`
+        );
+      }
       return await client.get<IGetTeamsResponse>(
         `Team/GetTeams?Page=${teamParams?.Page}&PageSize=${teamParams?.PageSize}`
       );

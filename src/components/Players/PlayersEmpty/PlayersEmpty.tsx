@@ -16,7 +16,7 @@ export const PlayersEmpty = () => {
   return (
     <div className='common__container'>
     <div className='common__header'>
-      <InputSearch />
+      {/* <InputSearch /> */}
       <AddBtn onClick={onRedirectCreatePlayer}/>
     </div>
 

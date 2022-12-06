@@ -1,11 +1,13 @@
 import s from './InputSearch.module.scss';
 import { ReactComponent as SearchSVG } from '../../assets/icons/searchSvg.svg';
+import { FC } from 'react';
 
-export const InputSearch = () => {
 
-  const onChangeInput = (value: string) => {
-    console.log(value);
-  };
+interface InputSearchProps {
+  onChangeInput: (value: string) => void
+}
+
+export const InputSearch: FC<InputSearchProps> = ({ onChangeInput }) => {
 
   return (
     <div className={s.search__container}>

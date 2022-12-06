@@ -26,9 +26,9 @@ export const teamsSlice = createSlice({
 
 export const { setTeams } = teamsSlice.actions;
 
-export const fetchTeams = (currentPage?: number, pageSize?: number) => async (dispatch: AppDispatch) => {
+export const fetchTeams = (currentPage?: number, pageSize?: number, value?: string) => async (dispatch: AppDispatch) => {
   if(currentPage && pageSize) {
-    const resp = await teamsAPI.getTeams(currentPage, pageSize)
+    const resp = await teamsAPI.getTeams(currentPage, pageSize, value)
     if (resp && resp.status === RespStatusEnum.SUCCESS) {
       dispatch(setTeams(resp.data));
     }

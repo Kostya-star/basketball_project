@@ -15,7 +15,7 @@ export const Pagination: FC<IPaginationProps> = ({ currentPage, pagesAmount, onP
   return (
     <div>
       <ReactPaginate
-        pageCount={pagesAmount + 1}
+        pageCount={pagesAmount}
         onPageChange={(currentPage) => onPageChange(currentPage.selected + 1)}
         forcePage={currentPage - 1}
         breakLabel={'...'}

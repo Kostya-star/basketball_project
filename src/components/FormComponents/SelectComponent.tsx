@@ -120,6 +120,7 @@ export const SelectComponent = <T extends string>({
     }
   };
 
+
   return (
     <div
       onClick={getPositions}

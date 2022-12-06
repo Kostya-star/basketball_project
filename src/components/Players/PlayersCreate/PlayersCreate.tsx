@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { InputFile } from '../../FormComponents/InputFile';
 import { SelectComponent } from '../../FormComponents/SelectComponent';
@@ -13,6 +13,7 @@ import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
 import { IAddPLayerRequest } from '../../../types/players/addPLayerRequest';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
+
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -140,7 +141,7 @@ export const PlayersCreate = () => {
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
                     options={teamsOptions}
-                  />
+                    />
                   <div className="common__create__groupParameters">
                     <InputText<'height'> label="Height (cm)" name="height" />
                     <InputText<'weight'> label="Weight (kg)" name="weight" />

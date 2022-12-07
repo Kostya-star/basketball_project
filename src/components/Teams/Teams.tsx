@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
@@ -11,7 +11,6 @@ import qs from 'qs';
 import { createBrowserHistory } from 'history';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 
-
 export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -20,70 +19,72 @@ export const Teams = () => {
     teams: teams.data,
     currentPage: teams.page,
     pageSize: teams.size,
-    teamsCount: teams.count
+    teamsCount: teams.count,
   }));
 
-  // URL---------------------
+  const [searchValue, setSearchValue] = useState('');
+
   const history = createBrowserHistory();
-  
-  const onFetchTeams = (currentPage?: number, pageSize?: number, value?: string) => {
-    if(value) {
-      void dispatch(fetchTeams(currentPage, pageSize, value)).then(() => {
-        navigate(`?Name=${value}&Page=${currentPage}&PageSize=${pageSize}`);
-      })
-    } else {
-      void dispatch(fetchTeams(currentPage, pageSize)).then(() => {
-        navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
-      })
-    }
-  };
-  
+
+  // PERSIST URL---------------------
   useEffect(() => {
     if (!history.location.search) {
       if (pageSize === 25) {
-        onFetchTeams(currentPage, 6);
+        void dispatch(fetchTeams(currentPage, 6, searchValue));
         return;
       }
-      onFetchTeams(currentPage, pageSize);
+      void dispatch(fetchTeams(currentPage, pageSize, searchValue));
     } else {
       const UrlString = history.location.search.substring(1);
       const UrlObjFromString = qs.parse(UrlString);
+
       if (UrlObjFromString.Page && UrlObjFromString.PageSize) {
-        onFetchTeams(Number(UrlObjFromString.Page), Number(UrlObjFromString.PageSize));
+        if (UrlObjFromString.Name) {
+          void dispatch(
+            fetchTeams(
+              Number(UrlObjFromString.Page),
+              Number(UrlObjFromString.PageSize),
+              String(UrlObjFromString.Name)
+            )
+          );
+          setSearchValue(String(UrlObjFromString.Name))
+          return;
+        }
+        void dispatch(fetchTeams(Number(UrlObjFromString.Page), Number(UrlObjFromString.PageSize)));
       }
     }
   }, []);
+  // -------------------
 
+  useEffect(() => {
+    const search = searchValue ? `&Name=${searchValue}` : '';
+
+    navigate(`?Page=${currentPage}&PageSize=${pageSize}${search}`);
+  }, [currentPage, pageSize, searchValue]);
+
+  // PAGINATION
   const onPageChange = (currentPage: number) => {
-    onFetchTeams(currentPage, pageSize)
+    void dispatch(fetchTeams(currentPage, pageSize, searchValue));
   };
-  
-  // ---------------------
-  
+
   // PAGINATION SELECT
-  const onChange = (option: string) => {
-    onFetchTeams(currentPage, Number(option))
-  }
-  
+  const onPaginationSelectChange = (pageSize: string) => {
+    void dispatch(fetchTeams(currentPage, Number(pageSize), searchValue));
+  };
+
   const paginationSelectOptions = [
     { value: 6, label: 6 },
     { value: 12, label: 12 },
-    { value: 24, label: 24 }
-  ]
-  // --------------
+    { value: 24, label: 24 },
+  ];
 
   // SEARCH INPUT
-  const onChangeInput = (value: string) => {
-    if (value) {
-      const searchTimer = setTimeout(() => {
-        onFetchTeams(currentPage, pageSize, value)
-      }, 1000);
-      return () => clearTimeout(searchTimer);
-    }
+  const onChangeInput = (searchValue: string) => {
+    setSearchValue(searchValue);
+    void dispatch(fetchTeams(currentPage, pageSize, searchValue));
   };
-// ----------------
 
-  const pagesAmount = Math.ceil(teamsCount / pageSize)
+  const pagesAmount = Math.ceil(teamsCount / pageSize);
 
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id));
@@ -93,11 +94,10 @@ export const Teams = () => {
     return navigate('/TeamCreate');
   };
 
-
   return (
     <div className="common__container">
       <div className="common__header">
-        <InputSearch onChangeInput={onChangeInput}/>
+        <InputSearch value={searchValue} onChangeInput={onChangeInput} />
         <AddBtn onClick={onRedirectCreateTeam} />
       </div>
 
@@ -140,8 +140,9 @@ export const Teams = () => {
           isMulti={false}
           options={paginationSelectOptions}
           menuPlacement={'top'}
+          defaultValue={paginationSelectOptions.find((option) => option.value === 6)}
           value={paginationSelectOptions.find((option) => option.value === pageSize)}
-          onChange={onChange}
+          onChange={onPaginationSelectChange}
         />
       </div>
     </div>

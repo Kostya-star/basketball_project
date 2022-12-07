@@ -29,7 +29,7 @@ export const Players = () => {
   };
 
   useEffect(() => {
-    void  dispatch(fetchTeams()).then(() => {
+    void dispatch(fetchTeams()).then(() => {
       void onFecthPlayers();
     });
   }, []);

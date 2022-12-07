@@ -26,25 +26,21 @@ export const authAPI = {
 };
 
 export const teamsAPI = {
-  async getTeams(currentPage?: number, pageSize?: number, value?: string) {
+  async getTeams(currentPage?: number, pageSize?: number, searchValue?: string) {
+    
+    const activePage = currentPage ? `?Page=${currentPage}` : '';
+    const teamsPerPage = pageSize ? `&PageSize=${pageSize}` : '';
+    const search = searchValue ? `&Name=${searchValue}` : '';
+
     const teamParams = {
-      Name: value,
-      Page: currentPage,
-      PageSize: pageSize,
+      Page: activePage,
+      PageSize: teamsPerPage,
+      Name: search,
     } as ITeamsParamsGetRequest;
 
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    if ((teamParams.Page && teamParams.PageSize)) {
-      if(teamParams.Name) {
-        return await client.get<IGetTeamsResponse>(
-          `Team/GetTeams?Page=${teamParams?.Page}&PageSize=${teamParams?.PageSize}&Name=${teamParams?.Name}`
-        );
-      }
-      return await client.get<IGetTeamsResponse>(
-        `Team/GetTeams?Page=${teamParams?.Page}&PageSize=${teamParams?.PageSize}`
-      );
-    }
-    return await client.get<IGetTeamsResponse>(`Team/GetTeams`);
+    return await client.get<IGetTeamsResponse>(
+      `Team/GetTeams${teamParams?.Page}${teamParams?.PageSize}${teamParams?.Name}`
+    );
   },
 
   async addTeam(values: INewTeamValuesRequest) {

@@ -3,6 +3,6 @@ export interface IPlayersParamsGetRequest extends IGetTeamsParams {}
 
 export interface IGetTeamsParams {
   Name?: string
-  Page?: number
-  PageSize?: number
+  Page?: number | string 
+  PageSize?: number | string 
 }

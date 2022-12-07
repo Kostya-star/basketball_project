@@ -14,6 +14,7 @@ interface ISelectComponentProps<T> {
   name: T;
   isMulti: boolean;
   value?: PropsValue<ISelectOption>
+  defaultValue?: PropsValue<ISelectOption>
   menuPlacement?: MenuPlacement 
   onChange?: (option: string, name: string) => void;
   onBlur?: (name: string) => void;
@@ -27,6 +28,7 @@ export const SelectComponent = <T extends string>({
   options,
   isMulti,
   value,
+  defaultValue,
   menuPlacement,
   getPositions,
   onChange,
@@ -137,6 +139,7 @@ export const SelectComponent = <T extends string>({
         isMulti={IsMulti}
         menuPlacement={menuPlacement}
         value={value}
+        defaultValue={defaultValue}
         hideSelectedOptions={false}
         closeMenuOnSelect={!IsMulti}
         isSearchable={false}

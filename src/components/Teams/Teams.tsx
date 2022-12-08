@@ -10,6 +10,7 @@ import { Pagination } from '../pagination/Pagination';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
 import { SelectComponent } from '../FormComponents/SelectComponent';
+import { log } from 'console';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -28,13 +29,7 @@ export const Teams = () => {
 
   // PERSIST URL---------------------
   useEffect(() => {
-    if (!history.location.search) {
-      if (pageSize === 25) {
-        void dispatch(fetchTeams(currentPage, 6, searchValue));
-        return;
-      }
-      void dispatch(fetchTeams(currentPage, pageSize, searchValue));
-    } else {
+    if (history.location.search) {
       const UrlString = history.location.search.substring(1);
       const UrlObjFromString = qs.parse(UrlString);
 
@@ -46,21 +41,30 @@ export const Teams = () => {
               Number(UrlObjFromString.PageSize),
               String(UrlObjFromString.Name)
             )
-          );
+          )
           setSearchValue(String(UrlObjFromString.Name))
           return;
         }
         void dispatch(fetchTeams(Number(UrlObjFromString.Page), Number(UrlObjFromString.PageSize)));
       }
+    } else {
+      if (pageSize === 25) {
+        void dispatch(fetchTeams(currentPage, 6, searchValue));
+        return;
+      }
+      void dispatch(fetchTeams(currentPage, pageSize, searchValue))
     }
   }, []);
-  // -------------------
 
+  
+
+  // -------------------
+  
   useEffect(() => {
     const search = searchValue ? `&Name=${searchValue}` : '';
 
     navigate(`?Page=${currentPage}&PageSize=${pageSize}${search}`);
-  }, [currentPage, pageSize, searchValue]);
+  }, [currentPage, pageSize, searchValue, teams]);
 
   // PAGINATION
   const onPageChange = (currentPage: number) => {

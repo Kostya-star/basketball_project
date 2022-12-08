@@ -12,7 +12,7 @@ import { IAddTeamResponse } from '../types/teams/addTeamResp';
 import { IDeleteTeamResponse } from '../types/teams/deleteTeamResp';
 import { IAddPlayerResponse } from '../types/players/addPlayerResp';
 import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
-import { ITeamsParamsGetRequest } from '../types/IBaseParamsGetRequest';
+import { IGetTeamsParams, ITeamsParamsGetRequest } from '../types/IBaseParamsGetRequest';
 
 
 export const authAPI = {
@@ -26,20 +26,14 @@ export const authAPI = {
 };
 
 export const teamsAPI = {
-  async getTeams(currentPage?: number, pageSize?: number, searchValue?: string) {
+  async getTeams(teamsParams?: IGetTeamsParams) {
     
-    const activePage = currentPage ? `?Page=${currentPage}` : '';
-    const teamsPerPage = pageSize ? `&PageSize=${pageSize}` : '';
-    const search = searchValue ? `&Name=${searchValue}` : '';
-
-    const teamParams = {
-      Page: activePage,
-      PageSize: teamsPerPage,
-      Name: search,
-    } as ITeamsParamsGetRequest;
+    const currentPage = teamsParams?.Page ? `?Page=${teamsParams.Page}` : '';
+    const pageSize = teamsParams?.PageSize ? (currentPage ? `&PageSize=${teamsParams.PageSize}` : `?PageSize=${teamsParams.PageSize}`) : '';
+    const teamName = teamsParams?.Name ? `&Name=${teamsParams.Name}` : '';
 
     return await client.get<IGetTeamsResponse>(
-      `Team/GetTeams${teamParams?.Page}${teamParams?.PageSize}${teamParams?.Name}`
+      `Team/GetTeams${currentPage}${pageSize}${teamName}`
     );
   },
 

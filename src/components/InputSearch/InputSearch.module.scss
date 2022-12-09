@@ -1,19 +1,20 @@
 .search {
-  &__container {
-    position: relative;
-  }
   &__input {
-    width: 340px;
-    height: 22px;
-    padding: 8px 12px;
-    outline: none;
-    border: 0.5px solid #D1D1D1;
-    border-radius: 4px;
-  }
-  &__svg {
-    display: block;
-    position: absolute;
-    top: 12px;
-    right: 12px;
+    position: relative;
+
+    input {
+      width: 365px;
+      height: 40px;
+      padding: 8px 12px;
+      outline: none;
+      border: 0.5px solid #D1D1D1;
+      border-radius: 4px;
+    }
+
+    svg {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+    }
   }
 }

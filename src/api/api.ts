@@ -29,7 +29,7 @@ export const teamsAPI = {
   async getTeams(teamsParams?: IGetTeamsParams) {
     
     const currentPage = teamsParams?.Page ? `?Page=${teamsParams.Page}` : '';
-    const pageSize = teamsParams?.PageSize ? (currentPage ? `&PageSize=${teamsParams.PageSize}` : `?PageSize=${teamsParams.PageSize}`) : '';
+    const pageSize = teamsParams?.PageSize ? `&PageSize=${teamsParams.PageSize}` : '';
     const teamName = teamsParams?.Name ? `&Name=${teamsParams.Name}` : '';
 
     return await client.get<IGetTeamsResponse>(

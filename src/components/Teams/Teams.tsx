@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
@@ -10,6 +10,7 @@ import { Pagination } from '../pagination/Pagination';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
 import { SelectComponent } from '../FormComponents/SelectComponent';
+import debounce from 'lodash.debounce';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -81,9 +82,13 @@ export const Teams = () => {
   };
 
   // SEARCH INPUT
-  const onChangeInput = (Name: string) => {
-    setSearchName(Name);
+  const onChangeInput = useCallback(debounce((Name: string) => {
     void dispatch(fetchTeams({ Page: 1, PageSize, Name }));
+  }, 700), []);
+  
+  const onChangeInputHandle = (Name: string) => {
+    setSearchName(Name);
+    onChangeInput(Name)
   };
 
   const deleteTeam = (id: number) => {
@@ -105,7 +110,7 @@ export const Teams = () => {
   return (
     <div className="common__container">
       <div className="common__header">
-        <InputSearch value={Name} onChangeInput={onChangeInput} />
+        <InputSearch value={Name} onChangeInput={onChangeInputHandle} />
         <AddBtn onClick={onRedirectCreateTeam} />
       </div>
 

@@ -117,7 +117,7 @@ export const SelectComponent = <T extends string>({
         setSelectedOption(option);
       } else {
         setSelectedOption(option.value);
-        onChange?.(String(option.value), name);
+        onChange?.(option.value, name);
       }
     }
   };

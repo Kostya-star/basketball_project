@@ -15,76 +15,75 @@ export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { teams, currentPage, pageSize, teamsCount } = useAppSelector(({ teams }) => ({
+  const { teams, Page, PageSize, teamsCount } = useAppSelector(({ teams }) => ({
     teams: teams.data,
-    currentPage: teams.page,
-    pageSize: teams.size,
+    Page: teams.page,
+    PageSize: teams.size,
     teamsCount: teams.count,
   }));
 
-  const [searchValue, setSearchValue] = useState('');
+  const [Name, setSearchName] = useState('');
 
   const history = createBrowserHistory();
 
   // PERSIST URL---------------------
   useEffect(() => {
     if (history.location.search) {
-      console.log(history.location.search);
-      
       const UrlString = history.location.search.substring(1);
-      const UrlObjFromString = qs.parse(UrlString);
-      console.log(UrlObjFromString);
+      const { Page, PageSize, Name } = qs.parse(UrlString);
 
-      if (UrlObjFromString.Page && UrlObjFromString.PageSize) {
+      const page = Number(Page)
+      const pageSize = Number(PageSize)
 
-        if (UrlObjFromString.Name) {
-          setSearchValue(String(UrlObjFromString.Name));
+      if (page && pageSize) {
+        if (Name) {
           void dispatch(
             fetchTeams({
-              Page: Number(UrlObjFromString.Page),
-              PageSize: Number(UrlObjFromString.PageSize),
-              Name: String(UrlObjFromString.Name),
+              Page: page,
+              PageSize: pageSize,
+              Name: String(Name),
             })
           );
+          setSearchName(String(Name));
           return;
         }
         void dispatch(
           fetchTeams({
-            Page: Number(UrlObjFromString.Page),
-            PageSize: Number(UrlObjFromString.PageSize),
+            Page: page,
+            PageSize: pageSize,
           })
         );
       }
     } else {
-      if (pageSize === 25) {
-        void dispatch(fetchTeams({ Page: currentPage, PageSize: 6, Name: searchValue }));
+      if (PageSize === 25) {
+        void dispatch(fetchTeams({ Page, PageSize: 6, Name }));
         return;
       }
-      // used when logging in
-      void dispatch(fetchTeams({ Page: currentPage, PageSize: pageSize, Name: searchValue }));
+      // used when logging in and switching back from a different page
+      void dispatch(fetchTeams({ Page, PageSize, Name }));
     }
   }, []);
 
   useEffect(() => {
-    const search = searchValue ? `&Name=${searchValue}` : '';
+    const search = Name ? `&Name=${Name}` : '';
 
-    navigate(`?Page=${currentPage}&PageSize=${pageSize}${search}`);
-  }, [currentPage, pageSize, searchValue, teams]);
+    navigate(`?Page=${Page}&PageSize=${PageSize}${search}`);
+  }, [Page, PageSize, Name, teams]);
 
   // PAGINATION
-  const onPageChange = (currentPage: number) => {
-    void dispatch(fetchTeams({ Page: currentPage, PageSize: pageSize, Name: searchValue }));
+  const onPageChange = (Page: number) => {
+    void dispatch(fetchTeams({ Page, PageSize, Name }));
   };
 
   // PAGINATION SELECT
   const onPaginationSelectChange = (pageSize: string) => {
-    void dispatch(fetchTeams({ Page: 1, PageSize: Number(pageSize), Name: searchValue }));
+    void dispatch(fetchTeams({ Page: 1, PageSize: Number(pageSize), Name }));
   };
 
   // SEARCH INPUT
-  const onChangeInput = (searchValue: string) => {
-    setSearchValue(searchValue);
-    void dispatch(fetchTeams({ Page: currentPage, PageSize: pageSize, Name: searchValue }));
+  const onChangeInput = (Name: string) => {
+    setSearchName(Name);
+    void dispatch(fetchTeams({ Page: 1, PageSize, Name }));
   };
 
   const deleteTeam = (id: number) => {
@@ -95,18 +94,18 @@ export const Teams = () => {
     return navigate('/TeamCreate');
   };
 
-  const pagesAmount = Math.ceil(teamsCount / pageSize);
+  const pagesAmount = Math.ceil(teamsCount / PageSize);
 
   const paginationSelectOptions = [
-    { value: 6, label: 6, isDisabled: pageSize === 6 },
-    { value: 12, label: 12, isDisabled: pageSize === 12 },
-    { value: 24, label: 24, isDisabled: pageSize === 24 },
+    { value: 6, label: 6, isDisabled: PageSize === 6 },
+    { value: 12, label: 12, isDisabled: PageSize === 12 },
+    { value: 24, label: 24, isDisabled: PageSize === 24 },
   ];
 
   return (
     <div className="common__container">
       <div className="common__header">
-        <InputSearch value={searchValue} onChangeInput={onChangeInput} />
+        <InputSearch value={Name} onChangeInput={onChangeInput} />
         <AddBtn onClick={onRedirectCreateTeam} />
       </div>
 
@@ -140,18 +139,14 @@ export const Teams = () => {
 
       {teams?.length ? (
         <div className="common__pagination">
-          <Pagination
-            currentPage={currentPage}
-            pagesAmount={pagesAmount}
-            onPageChange={onPageChange}
-          />
+          <Pagination currentPage={Page} pagesAmount={pagesAmount} onPageChange={onPageChange} />
           <SelectComponent<'pagination_select'>
             name="pagination_select"
             isMulti={false}
             options={paginationSelectOptions}
             menuPlacement={'top'}
             defaultValue={paginationSelectOptions.find((option) => option.value === 6)}
-            value={paginationSelectOptions.find((option) => option.value === pageSize)}
+            value={paginationSelectOptions.find((option) => option.value === PageSize)}
             onChange={onPaginationSelectChange}
           />
         </div>

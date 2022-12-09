@@ -7,14 +7,15 @@ import { AddBtn } from '../AddBtn/AddBtn';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { fetchTeams } from './../../redux/slices/teamsSlice';
+import { TeamPlayerCard } from './../TeamPlayerCard/TeamPlayerCard';
 
 export const Players = () => {
   const dispatch = useAppDispatch();
-  const players = useAppSelector((state) => state.players.playersData.data);
+  const players = useAppSelector(({ players }) => players.playersData.data);
   const teams = useAppSelector(({ teams }) => teams.data);
   const navigate = useNavigate();
 
-  const obj = teams?.reduce((acc, team) => {
+  const teamNameObj = teams?.reduce((acc, team) => {
     // @ts-expect-error
     acc[team.id] = {
       name: team.name,
@@ -65,20 +66,12 @@ export const Players = () => {
       </div>
       <div className="common__filled_content">
         {players?.map((player, index) => (
-          <div
-            onClick={() => deletePlayer(player.id)}
-            className="common__filled_content__block"
-            key={index}
-          >
-            <img src={`http://dev.trainee.dex-it.ru${player.avatarUrl}`} alt="team" />
-            <div className="common__player">
-              <p>
-                {player.name} <span>#{player.number}</span>
-              </p>
-              {/* @ts-expect-error */}
-              <span>{obj[player.team]?.name}</span>
-            </div>
-          </div>
+          <TeamPlayerCard
+            item={player}
+            deleteItem={deletePlayer}
+            teamNameObj={teamNameObj}
+            key={`${player.id}__${index}`}
+          />
         ))}
       </div>
     </div>

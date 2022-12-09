@@ -34,7 +34,7 @@ export const SelectComponent = <T extends string>({
   onChange,
   onBlur,
 }: ISelectComponentProps<T>) => {
-  const [selectedOption, setSelectedOption] = useState<string | ISelectOption[] | null>(null);
+  // const [selectedOption, setSelectedOption] = useState<string | ISelectOption[] | null>(null);
 
   const IsMulti = isMulti;
 
@@ -114,9 +114,9 @@ export const SelectComponent = <T extends string>({
   const setOnChange = (option: any) => {
     if (option) {
       if (IsMulti) {
-        setSelectedOption(option);
+        // setSelectedOption(option);
       } else {
-        setSelectedOption(option.value);
+        // setSelectedOption(option.value);
         onChange?.(option.value, name);
       }
     }

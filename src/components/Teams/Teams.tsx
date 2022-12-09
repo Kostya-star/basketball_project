@@ -11,6 +11,7 @@ import qs from 'qs';
 import { createBrowserHistory } from 'history';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 import debounce from 'lodash.debounce';
+import { TeamPlayerCard } from '../TeamPlayerCard/TeamPlayerCard';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -117,22 +118,14 @@ export const Teams = () => {
         <AddBtn onClick={onRedirectCreateTeam} />
       </div>
 
-      {teams.length ? (
+      {teams?.length ? (
+
         <div className="common__filled_content">
           {teams?.map((team, index) => (
-            <div
-              key={index}
-              onClick={() => deleteTeam(team.id)}
-              className="common__filled_content__block"
-            >
-              <img src={`http://dev.trainee.dex-it.ru${team.imageUrl}`} alt="team" />
-              <div>
-                <p>{team.name}</p>
-                <span>Year of foundation: {team.foundationYear}</span>
-              </div>
-            </div>
+            <TeamPlayerCard item={team} deleteItem={deleteTeam} key={`${team.id}__${index}`} />
           ))}
         </div>
+        
       ) : (
         <div className="common__empty_content">
           <div className="common__empty_content__container">

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
@@ -33,8 +33,8 @@ export const Teams = () => {
       const UrlString = history.location.search.substring(1);
       const { Page, PageSize, Name } = qs.parse(UrlString);
 
-      const page = Number(Page)
-      const pageSize = Number(PageSize)
+      const page = Number(Page);
+      const pageSize = Number(PageSize);
 
       if (page && pageSize) {
         if (Name) {
@@ -82,13 +82,16 @@ export const Teams = () => {
   };
 
   // SEARCH INPUT
-  const onChangeInput = useCallback(debounce((Name: string) => {
-    void dispatch(fetchTeams({ Page: 1, PageSize, Name }));
-  }, 700), []);
-  
+  const onChangeInput = useCallback(
+    debounce((Name: string) => {
+      void dispatch(fetchTeams({ Page: 1, PageSize, Name }));
+    }, 700),
+    []
+  );
+
   const onChangeInputHandle = (Name: string) => {
     setSearchName(Name);
-    onChangeInput(Name)
+    onChangeInput(Name);
   };
 
   const deleteTeam = (id: number) => {

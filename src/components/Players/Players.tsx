@@ -67,8 +67,8 @@ export const Players = () => {
       <div className="common__filled_content">
         {players?.map((player, index) => (
           <Card
-            item={player}
-            deleteItem={deletePlayer}
+            {...player}
+            deleteCard={deletePlayer}
             obj={teamNameObj}
             key={index}
           />

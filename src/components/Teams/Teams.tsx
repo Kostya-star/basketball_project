@@ -24,7 +24,7 @@ export const Teams = () => {
     teamsCount: teams.count,
   }));
 
-  const [Name, setSearchName] = useState('');
+  const [Name, setName] = useState('');
 
   const history = createBrowserHistory();
 
@@ -46,7 +46,7 @@ export const Teams = () => {
               Name: String(Name),
             })
           );
-          setSearchName(String(Name));
+          setName(String(Name));
           return;
         }
         void dispatch(
@@ -91,7 +91,7 @@ export const Teams = () => {
   );
 
   const onChangeInputHandle = (Name: string) => {
-    setSearchName(Name);
+    setName(Name);
     onChangeInput(Name);
   };
 
@@ -121,7 +121,7 @@ export const Teams = () => {
       {teams?.length ? (
         <div className="common__filled_content">
           {teams?.map((team, index) => (
-            <Card item={team} deleteItem={deleteTeam} key={index} />
+            <Card {...team} deleteCard={deleteTeam} key={index} />
           ))}
         </div>
       ) : (

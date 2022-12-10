@@ -11,7 +11,7 @@ import qs from 'qs';
 import { createBrowserHistory } from 'history';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 import debounce from 'lodash.debounce';
-import { TeamPlayerCard } from '../TeamPlayerCard/TeamPlayerCard';
+import { Card } from '../Card/Card';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -119,13 +119,11 @@ export const Teams = () => {
       </div>
 
       {teams?.length ? (
-
         <div className="common__filled_content">
           {teams?.map((team, index) => (
-            <TeamPlayerCard item={team} deleteItem={deleteTeam} key={`${team.id}__${index}`} />
+            <Card item={team} deleteItem={deleteTeam} key={index} />
           ))}
         </div>
-        
       ) : (
         <div className="common__empty_content">
           <div className="common__empty_content__container">

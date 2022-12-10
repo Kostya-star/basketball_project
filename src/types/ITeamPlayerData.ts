@@ -13,3 +13,5 @@ export interface ITeamPlayerData {
   weight?: number;
   avatarUrl?: string;
 }
+
+export interface ICardData extends ITeamPlayerData {}

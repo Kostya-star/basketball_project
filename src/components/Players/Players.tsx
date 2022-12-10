@@ -7,7 +7,7 @@ import { AddBtn } from '../AddBtn/AddBtn';
 import { SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { fetchTeams } from './../../redux/slices/teamsSlice';
-import { TeamPlayerCard } from './../TeamPlayerCard/TeamPlayerCard';
+import { Card } from '../Card/Card';
 
 export const Players = () => {
   const dispatch = useAppDispatch();
@@ -66,11 +66,11 @@ export const Players = () => {
       </div>
       <div className="common__filled_content">
         {players?.map((player, index) => (
-          <TeamPlayerCard
+          <Card
             item={player}
             deleteItem={deletePlayer}
-            teamNameObj={teamNameObj}
-            key={`${player.id}__${index}`}
+            obj={teamNameObj}
+            key={index}
           />
         ))}
       </div>

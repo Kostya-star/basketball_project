@@ -1,15 +1,14 @@
 .layout {
   &__container {
     display: flex;
-    // height: calc(100vh - 84px);
-    height: 100vh;
+    height: calc(100vh - 84px);
+    overflow: hidden;
   }
   &__children__container {
     display: flex;
     padding: 32px 80px;
     background-color: #F6F6F6;
-    // height: calc(100vh - 104px);
-    // height: 100vh;
+    height: calc(100vh - 84px);
     width: 100%;
   }
 

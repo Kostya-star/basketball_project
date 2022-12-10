@@ -3,12 +3,12 @@
   // teams and players header with search and AddBtn
   &__container {
     width: 100%;
-    border: 1px solid red;
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
+    // position: fixed;
 
     &__group {
       display: flex;
@@ -24,6 +24,8 @@
     grid-row-gap: 20px;
     padding-top: 32px;
     flex-wrap: wrap;
+    overflow-y: auto;
+    height: calc(100vh - 290px);
   }
 
   // teams and players Empty
@@ -129,8 +131,9 @@
   &__pagination {
     display: flex;
     justify-content: space-between;
-    position: fixed;
-    width: calc(100% - 282px);
+    background-color: #F6F6F6;
+    // position: fixed;
+    // width: calc(100% - 280px);
     bottom: 0px;
   }
 }

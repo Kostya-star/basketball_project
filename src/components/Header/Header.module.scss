@@ -3,8 +3,10 @@
     display: flex;
     width: 100%;
     box-shadow: 0px 1px 10px rgba(209, 209, 209, 0.5);
+    background-color: #fff;
+    // position: fixed;
   }
-
+  
   &__logo {
     width: 50%;
     p {

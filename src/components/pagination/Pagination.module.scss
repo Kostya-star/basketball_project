@@ -1,20 +1,18 @@
 .pagination {
   user-select: none;
   display: flex;
-  // align-items: center;
+  align-items: center;
   gap: 20px;
+  padding: 0px;
   list-style: none;
   font-weight: 500;
+  color: #707070;
 
-  li {
-    color: #707070;
-
-    a {
-      display: inline-block;
-      text-align: center;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
+  a {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 15px;
+    cursor: pointer;
   }
 
   :global {
@@ -26,4 +24,3 @@
   }
 
 }
-

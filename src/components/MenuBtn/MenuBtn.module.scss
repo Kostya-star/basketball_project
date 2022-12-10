@@ -1,0 +1,28 @@
+.menu__button {
+  // transition: 0.2s;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 61px;
+  position: fixed;
+
+  &_hovered {
+    &:hover {
+      color: #FF768E;
+  
+      svg path {
+        fill: #FF768E;
+        transition: 0.2s;
+      }
+    }
+  }
+
+  &_selected {
+    color: #E4163A;
+
+    svg path {
+      fill: #E4163A;
+      transition: 0.2s;
+    }
+  }
+
+}

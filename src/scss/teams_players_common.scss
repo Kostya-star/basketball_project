@@ -3,6 +3,7 @@
   // teams and players header with search and AddBtn
   &__container {
     width: 100%;
+    border: 1px solid red;
   }
 
   &__header {
@@ -16,10 +17,13 @@
 
   // teams and players filled content
   &__filled_content {
-    display: flex;
+    // display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // grid-column-gap: 266px;
+    grid-row-gap: 20px;
     padding-top: 32px;
     flex-wrap: wrap;
-    gap: 55.5px;
   }
 
   // teams and players Empty
@@ -125,5 +129,8 @@
   &__pagination {
     display: flex;
     justify-content: space-between;
+    position: fixed;
+    width: calc(100% - 282px);
+    bottom: 0px;
   }
 }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchPlayers, removePlayer } from '../../redux/slices/playersSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
-import { SelectComponent } from '../FormComponents/SelectComponent';
+import { ISelectOption, SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { fetchTeams } from './../../redux/slices/teamsSlice';
 import { Card } from '../Card/Card';
@@ -29,47 +29,35 @@ export const Players = () => {
 
   const [Name, setName] = useState('');
 
-  // const onFecthPlayers = async () => {
-  //   const resp = await dispatch(fetchPlayers());
-  //   if (!resp?.data.data.length) return navigate('/PlayersEmpty');
-  // };
-
-  useEffect(() => {
-    if (players && !players.length) {
-      // void onFecthPlayers();
-    }
-  }, [players]);
-
   // URL
   useEffect(() => {
     void dispatch(fetchTeams()).then(() => {
-      
       if (history.location.search) {
-        console.log('mounted');
         const urlString = history.location.search.substring(1);
         const { Page, PageSize, Name } = qs.parse(urlString);
-        
+
         const page = Number(Page);
         const pageSize = Number(PageSize);
         if (Page && PageSize) {
           if (Name) {
-            void dispatch(fetchPlayers({
-              Page: page,
-              PageSize: pageSize,
-              Name: String(Name),
-            }));
+            void dispatch(
+              fetchPlayers({
+                Page: page,
+                PageSize: pageSize,
+                Name: String(Name),
+              })
+            );
             setName(String(Name));
             return;
           }
-          console.log(Page, PageSize);
-          void dispatch(fetchPlayers({
-            Page: page,
-            PageSize: pageSize,
-          }));
+          void dispatch(
+            fetchPlayers({
+              Page: page,
+              PageSize: pageSize,
+            })
+          );
         }
       } else {
-        console.log('no location');
-        
         // used when switching back from a different page
         void dispatch(fetchPlayers({ Page, PageSize, Name }));
       }
@@ -81,10 +69,14 @@ export const Players = () => {
 
     navigate(`?Page=${Page}&PageSize=${PageSize}${search}`);
   }, [Page, PageSize, Name, players]);
+  // --------------------
 
   // SEARCH INPUT
   const onChangeInput = useCallback(
-    debounce(async (Name: string) => await dispatch(fetchPlayers({ Page: 1, PageSize, Name })), 700),
+    debounce(
+      async (Name: string) => await dispatch(fetchPlayers({ Page: 1, PageSize, Name })),
+      700
+    ),
     []
   );
 
@@ -102,11 +94,47 @@ export const Players = () => {
   };
   // -------------------------------------------------
 
-  // PAGINATION SELECT 
-  const onPaginationSelectChange = (pageSize: string) => {
-    void dispatch(fetchPlayers({Page: 1, PageSize: Number(pageSize), Name}))
-  }
+  // PAGINATION SELECT
+  const paginationSelectOptions = [
+    { value: 6, label: 6, isDisabled: PageSize === 6 },
+    { value: 12, label: 12, isDisabled: PageSize === 12 },
+    { value: 24, label: 24, isDisabled: PageSize === 24 },
+  ];
 
+  const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
+    void dispatch(fetchPlayers({ Page: 1, PageSize: Number(pageSize), Name }));
+  };
+  // ----------------------------
+
+  // MULTI SELECT
+  const onChangeMultiSelect = (option: string | ISelectOption[]) => {
+    let TeamIds = '';
+
+    // @ts-expect-error
+    option?.forEach((o: ISelectOption) => {
+      teams?.forEach(team => {
+        if(o.value === team.name) {
+          TeamIds.in
+        }
+      })
+    })
+    console.log(TeamIds);
+    
+    // void dispatch(fetchPlayers({Page, PageSize, Name, TeamIds}))
+    // for (let i = 0; i < teams.length; i++) {
+    //   // @ts-expect-error
+    //   if (option[i]?.value === teams[i].name) {
+    //     teamId = teams[i].id;
+    //   }
+    // }
+    
+  };
+  // -------------------------
+// нужно найти игроков у которых поле team(number) === team.id потом взять название этой команды и 
+// если оно === option то забить в конечный результат
+
+
+// team.id = option.value === team.name => player.team === team.id
   const onRedirectCreatePlayer = () => {
     return navigate('/PlayersCreate');
   };
@@ -119,12 +147,7 @@ export const Players = () => {
 
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
 
-  const paginationSelectOptions = [
-    { value: 6, label: 6, isDisabled: PageSize === 6 },
-    { value: 12, label: 12, isDisabled: PageSize === 12 },
-    { value: 24, label: 24, isDisabled: PageSize === 24 },
-  ];
-
+  // GET BACK AND FIX SELECT ONchNAGE(OPTION) TYPE!!!)
 
   return (
     <div className="common__container">
@@ -135,6 +158,7 @@ export const Players = () => {
             name="multi_select"
             isMulti={true}
             options={teamsOptions}
+            onChange={onChangeMultiSelect}
           />
         </div>
         <AddBtn onClick={onRedirectCreatePlayer} />

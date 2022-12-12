@@ -1,7 +1,7 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { InputFile } from '../../FormComponents/InputFile';
-import { SelectComponent } from '../../FormComponents/SelectComponent';
+import { ISelectOption, SelectComponent } from '../../FormComponents/SelectComponent';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import { InputText } from '../../FormComponents/InputText';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
@@ -104,7 +104,7 @@ export const PlayersCreate = () => {
             setPlayersImage(image);
           };
 
-          const onChangeOption = (option: string, name: string) => {
+          const onChangeOption = (option: string | ISelectOption[], name: string) => {
             formik.setFieldValue(name, option);
           };
 

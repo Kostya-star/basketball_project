@@ -9,7 +9,7 @@ import '../../scss/teams_players_common.scss';
 import { Pagination } from '../pagination/Pagination';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
-import { SelectComponent } from '../FormComponents/SelectComponent';
+import { ISelectOption, SelectComponent } from '../FormComponents/SelectComponent';
 import debounce from 'lodash.debounce';
 import { Card } from '../Card/Card';
 
@@ -81,7 +81,7 @@ export const Teams = () => {
   // PAGINATION SELECT
   const pagesAmount = Math.ceil(teamsCount / PageSize);
 
-  const onPaginationSelectChange = (pageSize: string) => {
+  const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
     void dispatch(fetchTeams({ Page: 1, PageSize: Number(pageSize), Name }));
   };
 

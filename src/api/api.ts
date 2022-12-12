@@ -49,12 +49,13 @@ export const teamsAPI = {
 export const playersAPI = {
   async getPlayers(playersParams?: IPlayersParamsGetRequest) {
 
-    const currentPage = playersParams?.Page ? `?Page=${playersParams?.Page}` : ''
-    const pageSize = playersParams?.PageSize ? `&PageSize=${playersParams?.PageSize}` : ''
-    const teamName = playersParams?.Name ? `&Name=${playersParams?.Name}` : '';
+    const currentPage = playersParams?.Page ? `?Page=${playersParams.Page}` : ''
+    const pageSize = playersParams?.PageSize ? `&PageSize=${playersParams.PageSize}` : ''
+    const teamName = playersParams?.Name ? `&Name=${playersParams.Name}` : '';
+    const TeamIds = playersParams?.TeamIds ? `&TeamIds=${playersParams.TeamIds}` : ''
 
     return await client.get<IGetPlayersResponse>(
-      `Player/GetPlayers${currentPage}${pageSize}${teamName}`
+      `Player/GetPlayers${currentPage}${pageSize}${teamName}${TeamIds}`
     );
   },
 

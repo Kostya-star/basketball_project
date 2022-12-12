@@ -17,15 +17,16 @@
 
   // teams and players filled content
   &__filled_content {
-    // display: flex;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    // grid-column-gap: 266px;
-    grid-row-gap: 20px;
-    padding-top: 32px;
-    flex-wrap: wrap;
+    // grid-row-gap: 24px;
+    // grid-column-gap: 24px;
+    gap: 24px;
+    margin-top: 32px;
+    margin-bottom: 7px;
     overflow-y: auto;
     height: calc(100vh - 290px);
+    width: calc(100% + 17px);
   }
 
   // teams and players Empty
@@ -131,9 +132,6 @@
   &__pagination {
     display: flex;
     justify-content: space-between;
-    background-color: #F6F6F6;
-    // position: fixed;
-    // width: calc(100% - 280px);
-    bottom: 0px;
+    align-items: center;
   }
 }

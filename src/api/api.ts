@@ -12,7 +12,7 @@ import { IAddTeamResponse } from '../types/teams/addTeamResp';
 import { IDeleteTeamResponse } from '../types/teams/deleteTeamResp';
 import { IAddPlayerResponse } from '../types/players/addPlayerResp';
 import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
-import { IGetTeamsParams, ITeamsParamsGetRequest } from '../types/IBaseParamsGetRequest';
+import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './../types/IBaseParamsGetRequest';
 
 
 export const authAPI = {
@@ -26,7 +26,7 @@ export const authAPI = {
 };
 
 export const teamsAPI = {
-  async getTeams(teamsParams?: IGetTeamsParams) {
+  async getTeams(teamsParams?: ITeamsParamsGetRequest) {
     
     const currentPage = teamsParams?.Page ? `?Page=${teamsParams.Page}` : '';
     const pageSize = teamsParams?.PageSize ? `&PageSize=${teamsParams.PageSize}` : '';
@@ -47,8 +47,15 @@ export const teamsAPI = {
 };
 
 export const playersAPI = {
-  async getPlayers() {
-    return await client.get<IGetPlayersResponse>('Player/GetPlayers');
+  async getPlayers(playersParams?: IPlayersParamsGetRequest) {
+
+    const currentPage = playersParams?.Page ? `?Page=${playersParams?.Page}` : ''
+    const pageSize = playersParams?.PageSize ? `&PageSize=${playersParams?.PageSize}` : ''
+    const teamName = playersParams?.Name ? `&Name=${playersParams?.Name}` : '';
+
+    return await client.get<IGetPlayersResponse>(
+      `Player/GetPlayers${currentPage}${pageSize}${teamName}`
+    );
   },
 
   async getPositions() {

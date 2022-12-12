@@ -17,6 +17,8 @@ export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const history = createBrowserHistory();
+
   const { teams, Page, PageSize, teamsCount } = useAppSelector(({ teams }) => ({
     teams: teams.data,
     Page: teams.page,
@@ -26,7 +28,6 @@ export const Teams = () => {
 
   const [Name, setName] = useState('');
 
-  const history = createBrowserHistory();
 
   // PERSIST URL---------------------
   useEffect(() => {
@@ -78,6 +79,8 @@ export const Teams = () => {
   };
 
   // PAGINATION SELECT
+  const pagesAmount = Math.ceil(teamsCount / PageSize);
+
   const onPaginationSelectChange = (pageSize: string) => {
     void dispatch(fetchTeams({ Page: 1, PageSize: Number(pageSize), Name }));
   };
@@ -103,8 +106,6 @@ export const Teams = () => {
     return navigate('/TeamCreate');
   };
 
-  const pagesAmount = Math.ceil(teamsCount / PageSize);
-
   const paginationSelectOptions = [
     { value: 6, label: 6, isDisabled: PageSize === 6 },
     { value: 12, label: 12, isDisabled: PageSize === 12 },
@@ -121,7 +122,7 @@ export const Teams = () => {
       {teams?.length ? (
         <div className="common__filled_content">
           {teams?.map((team, index) => (
-            <Card {...team} deleteCard={deleteTeam} key={index} />
+            <Card {...team} image={team.imageUrl} deleteCard={deleteTeam} key={index} />
           ))}
         </div>
       ) : (

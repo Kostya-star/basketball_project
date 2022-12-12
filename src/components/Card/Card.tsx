@@ -4,30 +4,28 @@ import s from './Card.module.scss';
 
 interface ICardProps {
   id: number;
-  imageUrl?: string;
-  avatarUrl?: string;
+  image?: string;
   name: string;
   number?: number;
   foundationYear?: number;
   team?: number;
   deleteCard: (id: number) => void;
-  obj?: {};
+  teamName?: string;
 }
 
 export const Card: FC<ICardProps> = ({
   id,
   name,
-  imageUrl,
-  avatarUrl,
+  image,
   number,
   foundationYear,
   team,
-  obj,
+  teamName,
   deleteCard,
 }) => {
   return (
     <div onClick={() => deleteCard(id)} className={s.card}>
-      <img src={`${baseRequestUrl}${imageUrl ?? avatarUrl}`} alt="teamPlayerCard" />
+      <img src={`${baseRequestUrl}${image}`} alt="teamPlayerCard" />
       <div>
         <p>
           <>
@@ -37,8 +35,7 @@ export const Card: FC<ICardProps> = ({
         {foundationYear ? (
           <span>Year of foundation: {foundationYear}</span>
         ) : (
-          // @ts-expect-error
-          team && <span>{obj[team]?.name}</span>
+          team && <span>{teamName}</span>
         )}
       </div>
     </div>

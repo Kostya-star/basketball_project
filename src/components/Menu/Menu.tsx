@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
 import { MenuBtn } from '../MenuBtn/MenuBtn';
@@ -28,16 +28,21 @@ const clearCache = () => {
 const menuButtons = ['Teams', 'Players', 'Sign out'];
 
 export const Menu = () => {
-  const [activeBtn, setActiveBtn] = useState(0);
+  const [activeBtn, setActiveBtn] = useState<number | string>();
   const navigate = useNavigate();
-
+  
   const onClickHandle = (index: number) => {
+    
     setActiveBtn(index);
     menuButtons[index] === 'Teams' ? navigate('/Teams') : navigate('/Players');
     if (menuButtons[index] === 'Sign out') {
       onHandleSignOut();
     }
   };
+
+  useEffect(() => {
+    window.location.pathname === '/Teams' ? setActiveBtn(0) : setActiveBtn(1)
+  }, [])
 
   // SIGNOUT LOGIC
 

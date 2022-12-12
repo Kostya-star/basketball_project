@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { imageAPI, teamsAPI } from '../../api/api';
-import { INewTeamValues, ITeamData, ITeamState } from '../../types/teams/teams';
+import { INewTeamValues, ITeamState } from '../../types/teams/teams';
 import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
-import { IGetTeamsParams } from './../../types/IBaseParamsGetRequest';
+import { ITeamsParamsGetRequest } from './../../types/IBaseParamsGetRequest';
 
 const initialState = {
   data: [],
@@ -27,7 +27,7 @@ export const teamsSlice = createSlice({
 
 export const { setTeams } = teamsSlice.actions;
 
-export const fetchTeams = (teamsParams?: IGetTeamsParams) => async (dispatch: AppDispatch) => {
+export const fetchTeams = (teamsParams?: ITeamsParamsGetRequest) => async (dispatch: AppDispatch) => {
   const resp = await teamsAPI.getTeams(teamsParams);
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setTeams(resp.data));

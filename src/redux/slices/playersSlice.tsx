@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RespStatusEnum } from '../../types/enum';
+import { IPlayersParamsGetRequest } from '../../types/IBaseParamsGetRequest';
 import { IAddPLayerRequest } from '../../types/players/addPLayerRequest';
 import { IPlayerData, IPlayersState } from '../../types/players/players';
 import { AppDispatch } from '../store';
@@ -11,7 +12,12 @@ interface IPlayersSliceState {
 }
 
 const initialState: IPlayersSliceState = {
-  playersData: {} as IPlayersState,
+  playersData: {
+    data: [],
+    count: 0,
+    page: 1,
+    size: 6,
+  } as IPlayersState,
   positions: [],
 };
 
@@ -30,8 +36,8 @@ export const playersSlice = createSlice({
 
 export const { setPlayers, setPositions } = playersSlice.actions;
 
-export const fetchPlayers = () => async (dispatch: AppDispatch) => {
-  const resp = await playersAPI.getPlayers().catch((error) => {
+export const fetchPlayers = (playersParams?: IPlayersParamsGetRequest) => async (dispatch: AppDispatch) => {
+  const resp = await playersAPI.getPlayers(playersParams).catch((error) => {
     console.log(error);
     alert('Error ocured when fetching players');
   });
@@ -74,7 +80,7 @@ export const removePlayer = (id: number) => async (dispatch: AppDispatch) => {
     alert('Error when deleting the player');
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    void dispatch(fetchPlayers());
+    // void dispatch(fetchPlayers());
   }
 };
 

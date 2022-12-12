@@ -7,7 +7,7 @@ import s from './layout.module.scss';
 export const MainLayout: FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    return navigate('/Teams');
+    window.location.pathname === '/Teams' ? navigate('/Teams') : navigate('/Players')
   }, []);
 
   return (

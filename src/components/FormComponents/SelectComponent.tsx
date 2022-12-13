@@ -7,15 +7,16 @@ import classnames from 'classnames';
 export interface ISelectOption {
   value: string | number;
   label: string | number;
+  id?: number
 }
 
 interface ISelectComponentProps<T> {
   label?: string;
   name: T;
   isMulti: boolean;
-  value?: PropsValue<ISelectOption>
-  defaultValue?: PropsValue<ISelectOption>
-  menuPlacement?: MenuPlacement 
+  value?: PropsValue<ISelectOption> | PropsValue<ISelectOption[]>;
+  defaultValue?: PropsValue<ISelectOption>;
+  menuPlacement?: MenuPlacement;
   onChange?: (option: string | ISelectOption[], name: string) => void;
   onBlur?: (name: string) => void;
   options: ISelectOption[];
@@ -38,7 +39,7 @@ export const SelectComponent = <T extends string>({
 
   const IsMulti = isMulti;
 
-  const classNames: StylesConfig<ISelectOption, typeof IsMulti> = {
+  const classNames: StylesConfig<ISelectOption | ISelectOption[], typeof IsMulti> = {
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
@@ -114,15 +115,14 @@ export const SelectComponent = <T extends string>({
   const setOnChange = (option: any) => {
     if (option) {
       if (IsMulti) {
+        onChange?.(option, name);
         // setSelectedOption(option);
-        onChange?.(option, name)
       } else {
         // setSelectedOption(option.value);
         onChange?.(option.value, name);
       }
     }
   };
-
 
   return (
     <div

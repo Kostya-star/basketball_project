@@ -5,6 +5,6 @@ export interface IGetTeamsParams {
   Page?: number
   PageSize?: number
   Name?: string
-  TeamIds?: number[]
+  TeamIds?: string | number
 }
 

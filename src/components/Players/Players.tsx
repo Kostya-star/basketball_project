@@ -7,11 +7,10 @@ import { ISelectOption, SelectComponent } from '../FormComponents/SelectComponen
 import { InputSearch } from '../InputSearch/InputSearch';
 import { fetchTeams } from './../../redux/slices/teamsSlice';
 import { Card } from '../Card/Card';
-import  debounce  from 'lodash.debounce';
+import debounce from 'lodash.debounce';
 import { createBrowserHistory } from 'history';
 import qs from 'qs';
 import { Pagination } from '../pagination/Pagination';
-
 
 export const Players = () => {
   const navigate = useNavigate();
@@ -28,17 +27,33 @@ export const Players = () => {
   }));
 
   const [Name, setName] = useState('');
+  const [multiSelectValueInUrl, setMultiSelectValueInUrl] = useState('');
+// console.log(multiSelectValueInUrl);
 
   // URL
   useEffect(() => {
     void dispatch(fetchTeams()).then(() => {
       if (history.location.search) {
         const urlString = history.location.search.substring(1);
-        const { Page, PageSize, Name } = qs.parse(urlString);
-
+        const urlParams = qs.parse(urlString);
+        const { Page, PageSize, Name, TeamIds } = urlParams;
+        
         const page = Number(Page);
         const pageSize = Number(PageSize);
-        if (Page && PageSize) {
+
+        let convertIdToString = ``
+
+        if(Array.isArray(TeamIds)) {
+          TeamIds?.forEach(teamId => {
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            convertIdToString = convertIdToString.concat(`&TeamIds=${teamId}`)
+          })
+        } else {
+          convertIdToString = convertIdToString.concat(`&TeamIds=${TeamIds}`)
+        }
+        // console.log(typeof TeamIds);
+        
+        if (page && pageSize) {
           if (Name) {
             void dispatch(
               fetchPlayers({
@@ -46,9 +61,19 @@ export const Players = () => {
                 PageSize: pageSize,
                 Name: String(Name),
               })
-            );
-            setName(String(Name));
-            return;
+              );
+              setName(String(Name));
+              return;
+            }
+            if(typeof TeamIds !== 'undefined') {
+              // console.log(convertIdToString);
+              void dispatch(fetchPlayers({
+                Page: page,
+                PageSize: pageSize,
+                TeamIds: convertIdToString,
+              }))
+              setMultiSelectValueInUrl(convertIdToString)
+              return;
           }
           void dispatch(
             fetchPlayers({
@@ -58,6 +83,10 @@ export const Players = () => {
           );
         }
       } else {
+        if (PageSize === 25) {
+          void dispatch(fetchPlayers({ Page, PageSize: 6, Name }));
+          return;
+        }
         // used when switching back from a different page
         void dispatch(fetchPlayers({ Page, PageSize, Name }));
       }
@@ -66,9 +95,10 @@ export const Players = () => {
 
   useEffect(() => {
     const search = Name ? `&Name=${Name}` : '';
+    // const multiSelect = multiSelectValueInUrl ? `&TeamIds=${multiSelectValueInUrl.id}` : '';
 
-    navigate(`?Page=${Page}&PageSize=${PageSize}${search}`);
-  }, [Page, PageSize, Name, players]);
+    navigate(`?Page=${Page}&PageSize=${PageSize}${search}${multiSelectValueInUrl}`);
+  }, [Page, PageSize, Name, multiSelectValueInUrl, players]);
   // --------------------
 
   // SEARCH INPUT
@@ -107,34 +137,41 @@ export const Players = () => {
   // ----------------------------
 
   // MULTI SELECT
-  const onChangeMultiSelect = (option: string | ISelectOption[]) => {
-    let TeamIds = '';
+  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
 
-    // @ts-expect-error
-    option?.forEach((o: ISelectOption) => {
-      teams?.forEach(team => {
-        if(o.value === team.name) {
-          TeamIds.in
-        }
-      })
-    })
-    console.log(TeamIds);
-    
-    // void dispatch(fetchPlayers({Page, PageSize, Name, TeamIds}))
-    // for (let i = 0; i < teams.length; i++) {
-    //   // @ts-expect-error
-    //   if (option[i]?.value === teams[i].name) {
-    //     teamId = teams[i].id;
-    //   }
+  const replaceString = multiSelectValueInUrl.replace(/&TeamIds=/g,',').substring(1)
+  const arrOfStrings = Array.from(replaceString.split(','))
+  const arrOfValues = arrOfStrings.map(str => Number(str))
+  
+  const multiSelectValues = teamsOptions.filter((teamOption => {
+    let val;
+    // for(let i = 0; i < value.length; i++) {
+    //   if(teamOption.id === Number(value[i]))
+    //   val = teamOption
     // }
+    arrOfValues.forEach(v => {
+      if(teamOption.id === v) {
+        val = teamOption.id === v
+      }
+    })
+    return val;
+  }))
+  // console.log(multiSelectValues);
+
+  const onChangeMultiSelect = (options: string | ISelectOption[]) => {
+    let TeamIds = ``;
+    if (Array.isArray(options)) {
+      options?.forEach((o) => {
+        TeamIds = TeamIds.concat(`&TeamIds=${o.id}`);
+      });
+    }
     
+    setMultiSelectValueInUrl(TeamIds);
+    void dispatch(fetchPlayers({ Page, PageSize, Name, TeamIds }));
   };
   // -------------------------
-// нужно найти игроков у которых поле team(number) === team.id потом взять название этой команды и 
-// если оно === option то забить в конечный результат
 
-
-// team.id = option.value === team.name => player.team === team.id
+  // team.id = option.value === team.name => player.team === team.id
   const onRedirectCreatePlayer = () => {
     return navigate('/PlayersCreate');
   };
@@ -145,9 +182,6 @@ export const Players = () => {
     });
   };
 
-  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
-
-  // GET BACK AND FIX SELECT ONchNAGE(OPTION) TYPE!!!)
 
   return (
     <div className="common__container">
@@ -158,6 +192,7 @@ export const Players = () => {
             name="multi_select"
             isMulti={true}
             options={teamsOptions}
+            value={multiSelectValues}
             onChange={onChangeMultiSelect}
           />
         </div>
@@ -201,11 +236,11 @@ export const Players = () => {
   );
 };
 
-  // const teamNameObj = teams?.reduce((acc, team) => {
-  //   // @ts-expect-error
-  //   acc[team.id] = {
-  //     name: team.name,
-  //     id: team.id,
-  //   };
-  //   return acc;
-  // }, {});
+// const teamNameObj = teams?.reduce((acc, team) => {
+//   // @ts-expect-error
+//   acc[team.id] = {
+//     name: team.name,
+//     id: team.id,
+//   };
+//   return acc;
+// }, {});

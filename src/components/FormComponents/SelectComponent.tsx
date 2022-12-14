@@ -1,14 +1,9 @@
 import { ErrorMessage } from 'formik';
-import { useState } from 'react';
 import s from './FormItems.module.scss';
 import Select, { MenuPlacement, PropsValue, StylesConfig } from 'react-select';
 import classnames from 'classnames';
+import { ISelectOption } from '../../types/ISelectOption';
 
-export interface ISelectOption {
-  value: string | number;
-  label: string | number;
-  id?: number
-}
 
 interface ISelectComponentProps<T> {
   label?: string;

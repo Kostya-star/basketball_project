@@ -9,9 +9,12 @@ import '../../scss/teams_players_common.scss';
 import { Pagination } from '../pagination/Pagination';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
-import { ISelectOption, SelectComponent } from '../FormComponents/SelectComponent';
+import { SelectComponent } from '../FormComponents/SelectComponent';
 import debounce from 'lodash.debounce';
 import { Card } from '../Card/Card';
+import { Empty } from '../Empty/Empty';
+import { ISelectOption } from '../../types/ISelectOption';
+import { Navigation } from '../Navigation/Navigation';
 
 export const Teams = () => {
   const navigate = useNavigate();
@@ -27,7 +30,6 @@ export const Teams = () => {
   }));
 
   const [Name, setName] = useState('');
-
 
   // PERSIST URL---------------------
   useEffect(() => {
@@ -106,12 +108,6 @@ export const Teams = () => {
     return navigate('/TeamCreate');
   };
 
-  const paginationSelectOptions = [
-    { value: 6, label: 6, isDisabled: PageSize === 6 },
-    { value: 12, label: 12, isDisabled: PageSize === 12 },
-    { value: 24, label: 24, isDisabled: PageSize === 24 },
-  ];
-
   return (
     <div className="common__container">
       <div className="common__header">
@@ -127,27 +123,18 @@ export const Teams = () => {
         </div>
       ) : (
         <div className="common__empty_content">
-          <div className="common__empty_content__container">
-            <div>
-              <img src={teams__empty} alt="kids playing" />
-              <p>Empty here</p>
-              <span>Add new teams to continue</span>
-            </div>
-          </div>
+          <Empty image={teams__empty} text={'teams'} />
         </div>
       )}
 
       {teams?.length ? (
         <div className="common__pagination">
-          <Pagination currentPage={Page} pagesAmount={pagesAmount} onPageChange={onPageChange} />
-          <SelectComponent<'pagination_select'>
-            name="pagination_select"
-            isMulti={false}
-            options={paginationSelectOptions}
-            menuPlacement={'top'}
-            defaultValue={paginationSelectOptions.find((option) => option.value === 6)}
-            value={paginationSelectOptions.find((option) => option.value === PageSize)}
-            onChange={onPaginationSelectChange}
+          <Navigation
+            currentPage={Page}
+            teamsPlayersCount={teamsCount}
+            PageSize={PageSize}
+            onPageChange={onPageChange}
+            onPaginationSelectChange={onPaginationSelectChange}
           />
         </div>
       ) : null}

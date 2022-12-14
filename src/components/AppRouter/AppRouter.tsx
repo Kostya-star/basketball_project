@@ -9,7 +9,6 @@ import { SignUpPage } from '../../pages/SignUpPage';
 import { PlayersPage } from './../../pages/PlayersPage';
 import { TeamCreatePage } from './../../pages/TeamCreatePage';
 import { TeamsPage } from '../../pages/TeamsPage';
-import { PlayersEmptyPage } from '../../pages/PlayersEmptyPage';
 import { PlayersCreatePage } from '../../pages/PlayersCreatePage';
 
 export const AppRouter: FC = () => {
@@ -34,7 +33,6 @@ export const AppRouter: FC = () => {
           <Route path="Teams" element={<TeamsPage />} />
           <Route path="TeamCreate" element={<TeamCreatePage />} />
           <Route path="Players" element={<PlayersPage />} />
-          <Route path="PlayersEmpty" element={<PlayersEmptyPage />} />
           <Route path="PlayersCreate" element={<PlayersCreatePage />} />
         </Route>
       )}

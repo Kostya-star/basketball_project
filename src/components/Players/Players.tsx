@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchPlayers, removePlayer } from '../../redux/slices/playersSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
-import { ISelectOption, SelectComponent } from '../FormComponents/SelectComponent';
+import { SelectComponent } from '../FormComponents/SelectComponent';
 import { InputSearch } from '../InputSearch/InputSearch';
 import { fetchTeams } from './../../redux/slices/teamsSlice';
 import { Card } from '../Card/Card';
@@ -11,6 +11,11 @@ import debounce from 'lodash.debounce';
 import { createBrowserHistory } from 'history';
 import qs from 'qs';
 import { Pagination } from '../pagination/Pagination';
+import { IPlayerData } from '../../types/players/players';
+import players__empty from '../../assets/img/PlayersEmpty/players__empty.png';
+import { Empty } from '../Empty/Empty';
+import { Navigation } from '../Navigation/Navigation';
+import { ISelectOption } from '../../types/ISelectOption';
 
 export const Players = () => {
   const navigate = useNavigate();
@@ -26,16 +31,11 @@ export const Players = () => {
     teams: teams.data,
   }));
 
-  const [currentPage, setCurrentPage] = useState(Page);
-  const [cardsPerPage, setCardsPerPage] = useState(PageSize);
   const [Name, setName] = useState('');
   const [multiSelectValue, setMultiSelectValue] = useState('');
 
-  const isMounting = useRef(false)
-
-  // URL
+  // PERSISTING URL
   useEffect(() => {
-    isMounting.current = true
     void dispatch(fetchTeams()).then(() => {
       if (history.location.search) {
         const urlString = history.location.search.substring(1);
@@ -49,113 +49,88 @@ export const Players = () => {
 
         if (Array.isArray(TeamIds)) {
           TeamIds?.forEach((teamId) => {
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
-            convertIdToString = convertIdToString.concat(`&TeamIds=${teamId}`);
+            convertIdToString = convertIdToString.concat(`&TeamIds=${Number(teamId)}`);
           });
         } else {
-          convertIdToString = convertIdToString.concat(`&TeamIds=${TeamIds}`);
+          convertIdToString = convertIdToString.concat(`&TeamIds=${Number(TeamIds)}`);
         }
 
-        // console.log(urlParams);
-        if (page && pageSize) {
-          // if (Name) {
-          void dispatch(
-            fetchPlayers({
-              Page: page,
-              PageSize: pageSize,
-              Name: Name && String(Name),
-              TeamIds: TeamIds && convertIdToString,
-            })
-          );
-          if (Name) {
-            setName(String(Name));
-          }
-          if (TeamIds) {
-            setMultiSelectValue(convertIdToString);
-          }
+        void dispatch(
+          fetchPlayers({
+            Page: Number(Page) && page,
+            PageSize: Number(PageSize) && pageSize,
+            Name: Name && String(Name),
+            TeamIds: TeamIds && convertIdToString,
+          })
+        );
+        if (Name) {
+          setName(String(Name));
+        }
+        if (TeamIds) {
+          setMultiSelectValue(convertIdToString);
         }
       } else {
         if (PageSize === 25) {
-          void dispatch(fetchPlayers({ Page, PageSize: 6, Name }));
+          void dispatch(fetchPlayers({ Page, PageSize: 6 }));
           return;
         }
         // used when switching back from a different page
-        void dispatch(fetchPlayers({ Page, PageSize, Name }));
+        void dispatch(fetchPlayers({ Page, PageSize }));
       }
     });
   }, []);
 
-  useEffect(() => {
-    if(!isMounting.current) {
-      console.log(
-        `currentPage ${currentPage};  
-        cardsPerPage ${cardsPerPage}; 
-        Name ${Name};  
-        multiSelectValue ${multiSelectValue} `
-      );
-
-      if(Name) {
-        void onChangeInput()
-        return;
-      }
-  
-      void dispatch(
-        fetchPlayers({
-          Page: currentPage && currentPage,
-          PageSize: cardsPerPage && cardsPerPage,
-          // Name: Name && String(Name),
-          TeamIds: multiSelectValue && multiSelectValue,
-        })
-      );
-    }
-
-    isMounting.current = false
-
-  }, [currentPage, cardsPerPage, Name, multiSelectValue]);
-
+  // MOUNTING DATA INTO URL
   useEffect(() => {
     const search = Name ? `&Name=${Name}` : '';
 
-    navigate(`?Page=${currentPage}&PageSize=${cardsPerPage}${search}${multiSelectValue}`);
-  }, [currentPage, cardsPerPage, Name, multiSelectValue, players]);
+    navigate(`?Page=${Page}&PageSize=${PageSize}${search}${multiSelectValue}`);
+  }, [Page, PageSize, Name, multiSelectValue, players]);
 
   // SEARCH INPUT
+  const onChangeInputHandle = (Name: string) => {
+    setName(Name);
+    void onChangeInput(Name);
+  };
+
   const onChangeInput = useCallback(
     debounce(
-      async () => await dispatch(fetchPlayers({ Page: 1, PageSize: cardsPerPage, Name, TeamIds: multiSelectValue })),
+      async (Name: string) =>
+        await dispatch(fetchPlayers({ Page: 1, PageSize, Name, TeamIds: multiSelectValue })),
       700
     ),
     []
   );
 
-  const onChangeInputHandle = (Name: string) => {
-    setName(Name);
-  };
-  // --------------------------------------------------
-
   // PAGINATION
-  const pagesAmount = Math.ceil(playersCount / PageSize);
   const onPageChange = (Page: number) => {
-    setCurrentPage(Page);
+    void dispatch(fetchPlayers({ Page, PageSize, Name, TeamIds: multiSelectValue }));
   };
-  // -------------------------------------------------
 
   // PAGINATION SELECT
-  const paginationSelectOptions = [
-    { value: 6, label: 6, isDisabled: PageSize === 6 },
-    { value: 12, label: 12, isDisabled: PageSize === 12 },
-    { value: 24, label: 24, isDisabled: PageSize === 24 },
-  ];
-
   const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
-    setCardsPerPage(Number(pageSize));
-    setCurrentPage(1);
+    void dispatch(
+      fetchPlayers({ Page: 1, PageSize: Number(pageSize), Name, TeamIds: multiSelectValue })
+    );
   };
-  // ----------------------------
 
   // MULTI SELECT
+  const onChangeMultiSelect = (options: string | ISelectOption[]) => {
+    let TeamIds = ``;
+
+    if (Array.isArray(options)) {
+      options?.forEach((o) => {
+        TeamIds = TeamIds.concat(`&TeamIds=${o.id}`);
+      });
+    }
+
+    setMultiSelectValue(TeamIds);
+    void dispatch(fetchPlayers({ Page: 1, PageSize, Name, TeamIds }));
+  };
+
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
 
+  // CREATING VALUE FOR MULTI SELECT
   const replaceString = multiSelectValue.replace(/&TeamIds=/g, ',').substring(1);
   const arrOfStrings = Array.from(replaceString.split(','));
   const arrOfValues = arrOfStrings.map((str) => Number(str));
@@ -169,18 +144,7 @@ export const Players = () => {
     });
     return val;
   });
-
-  const onChangeMultiSelect = (options: string | ISelectOption[]) => {
-    let TeamIds = ``;
-    if (Array.isArray(options)) {
-      options?.forEach((o) => {
-        TeamIds = TeamIds.concat(`&TeamIds=${o.id}`);
-      });
-    }
-
-    setMultiSelectValue(TeamIds);
-    setCurrentPage(1);
-  };
+  // ------------------------
   // -------------------------
 
   const onRedirectCreatePlayer = () => {
@@ -191,6 +155,15 @@ export const Players = () => {
     void dispatch(removePlayer(id)).then(() => {
       void dispatch(fetchPlayers({ Page, PageSize, Name }));
     });
+  };
+
+  let teamName = '';
+  const mapTeamNamesForPlayers = (player: IPlayerData) => {
+    for (let i = 0; i < teams.length; i++) {
+      if (teams[i].id === player.team) {
+        teamName = teams[i].name;
+      }
+    }
   };
 
   return (
@@ -208,37 +181,36 @@ export const Players = () => {
         </div>
         <AddBtn onClick={onRedirectCreatePlayer} />
       </div>
-      <div className="common__filled_content">
-        {players?.map((player, index) => {
-          let teamName = '';
 
-          for (let i = 0; i < teams.length; i++) {
-            if (teams[i].id === player.team) {
-              teamName = teams[i].name;
-            }
-          }
-          return (
-            <Card
-              {...player}
-              image={player.avatarUrl}
-              deleteCard={deletePlayer}
-              teamName={teamName}
-              key={index}
-            />
-          );
-        })}
-      </div>
-      {teams?.length ? (
+      {players?.length ? (
+        <div className="common__filled_content">
+          {players?.map((player, index) => {
+            mapTeamNamesForPlayers(player);
+            return (
+              <Card
+                {...player}
+                image={player.avatarUrl}
+                deleteCard={deletePlayer}
+                teamName={teamName}
+                key={index}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="common__empty_content">
+          <Empty image={players__empty} text={'players'} />
+        </div>
+      )}
+
+      {players?.length ? (
         <div className="common__pagination">
-          <Pagination currentPage={Page} pagesAmount={pagesAmount} onPageChange={onPageChange} />
-          <SelectComponent<'pagination_select'>
-            name="pagination_select"
-            isMulti={false}
-            options={paginationSelectOptions}
-            menuPlacement={'top'}
-            defaultValue={paginationSelectOptions.find((option) => option.value === 6)}
-            value={paginationSelectOptions.find((option) => option.value === PageSize)}
-            onChange={onPaginationSelectChange}
+          <Navigation
+            currentPage={Page}
+            teamsPlayersCount={playersCount}
+            PageSize={PageSize}
+            onPageChange={onPageChange}
+            onPaginationSelectChange={onPaginationSelectChange}
           />
         </div>
       ) : null}

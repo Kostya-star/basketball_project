@@ -1,7 +1,7 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { InputFile } from '../../FormComponents/InputFile';
-import { ISelectOption, SelectComponent } from '../../FormComponents/SelectComponent';
+import { SelectComponent } from '../../FormComponents/SelectComponent';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import { InputText } from '../../FormComponents/InputText';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
@@ -13,6 +13,7 @@ import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
 import { IAddPLayerRequest } from '../../../types/players/addPLayerRequest';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
+import { ISelectOption } from '../../../types/ISelectOption';
 
 
 const validationSchema = Yup.object({

@@ -26,7 +26,7 @@
     margin-bottom: 7px;
     overflow-y: auto;
     height: calc(100vh - 290px);
-    width: calc(100% + 17px);
+    // width: calc(100% + 17px);
   }
 
   // teams and players Empty
@@ -35,37 +35,6 @@
     justify-content: center;
     align-items: center;
     height: 99%;
-
-    // background-color: yellow;
-    &__container {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width: 560px;
-      height: 570px;
-      text-align: center;
-      background-color: white;
-      border-radius: 15px;
-
-      img {
-        margin-bottom: 35px;
-      }
-
-      p {
-        font-family: 'Avenir', sans-serif;
-        line-height: 49px;
-        color: #FF768E;
-        font-weight: 700;
-        font-size: 36px;
-        margin-bottom: 24px;
-      }
-
-      span {
-        font-weight: 400;
-        font-size: 24px;
-        color: #707070;
-      }
-    }
 
   }
 
@@ -129,6 +98,7 @@
       }
     }
   }
+
   &__pagination {
     display: flex;
     justify-content: space-between;

@@ -6,10 +6,8 @@ import { InputSearch } from '../InputSearch/InputSearch';
 import teams__empty from '../../assets/img/TeamsEmpty/teams__empty.png';
 import { useAppDispatch, useAppSelector } from './../../redux/hooks';
 import '../../scss/teams_players_common.scss';
-import { Pagination } from '../pagination/Pagination';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
-import { SelectComponent } from '../FormComponents/SelectComponent';
 import debounce from 'lodash.debounce';
 import { Card } from '../Card/Card';
 import { Empty } from '../Empty/Empty';
@@ -28,51 +26,50 @@ export const Teams = () => {
     PageSize: teams.size,
     teamsCount: teams.count,
   }));
+  // console.log(PageSize);
 
   const [Name, setName] = useState('');
 
   // PERSIST URL---------------------
   useEffect(() => {
-    if (history.location.search) {
+    // if (history.location.search) {
       const UrlString = history.location.search.substring(1);
-      const { Page, PageSize, Name } = qs.parse(UrlString);
+      const { page, pageSize, name } = qs.parse(UrlString);
 
-      const page = Number(Page);
-      const pageSize = Number(PageSize);
+      const PAGE = Number(page) ? Number(page) : Number(Page);
+      const PAGE_SIZE = Number(pageSize)
+        ? Number(pageSize)
+        : Number(PageSize) !== 25
+        ? Number(PageSize)
+        : 6;
+      const SEARCH_VALUE = name && String(name);
 
-      if (page && pageSize) {
-        if (Name) {
-          void dispatch(
-            fetchTeams({
-              Page: page,
-              PageSize: pageSize,
-              Name: String(Name),
-            })
-          );
-          setName(String(Name));
-          return;
-        }
         void dispatch(
           fetchTeams({
-            Page: page,
-            PageSize: pageSize,
+            Page: PAGE,
+            PageSize: PAGE_SIZE,
+            Name: SEARCH_VALUE,
           })
         );
-      }
-    } else {
-      if (PageSize === 25) {
-        void dispatch(fetchTeams({ Page, PageSize: 6, Name }));
-        return;
-      }
+        if (SEARCH_VALUE) {
+          setName(String(SEARCH_VALUE));
+        }
+    // } else {
+      
+      // if (PageSize === 25) {
+      //   console.log('mounted');
+      //   void dispatch(fetchTeams({ Page, PageSize: 6 }));
+      //   return;
+      // }
       // used when logging in and switching back from a different page
-      void dispatch(fetchTeams({ Page, PageSize, Name }));
-    }
+    //   void dispatch(fetchTeams({ Page, PageSize }));
+    // }
   }, []);
 
   useEffect(() => {
-    const search = Name ? `&Name=${Name}` : '';
+    const search = Name ? `&name=${Name}` : '';
 
-    navigate(`?Page=${Page}&PageSize=${PageSize}${search}`);
+    navigate(`?page=${Page}&pageSize=${PageSize}${search}`);
   }, [Page, PageSize, Name, teams]);
 
   // PAGINATION
@@ -81,24 +78,26 @@ export const Teams = () => {
   };
 
   // PAGINATION SELECT
-  const pagesAmount = Math.ceil(teamsCount / PageSize);
-
   const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
     void dispatch(fetchTeams({ Page: 1, PageSize: Number(pageSize), Name }));
   };
 
   // SEARCH INPUT
-  const onChangeInput = useCallback(
-    debounce((Name: string) => {
-      void dispatch(fetchTeams({ Page: 1, PageSize, Name }));
-    }, 700),
-    []
-  );
-
   const onChangeInputHandle = (Name: string) => {
     setName(Name);
-    onChangeInput(Name);
+    void onChangeInput(Name);
   };
+
+  const onChangeInput = useCallback(
+    debounce((Name: string) => {
+      console.log(PageSize);
+      void dispatch(fetchTeams({ Page: 1, PageSize, Name }));
+    }, 700),
+    [Page, PageSize, Name]
+  );
+
+
+  // -----------------------
 
   const deleteTeam = (id: number) => {
     void dispatch(removeTeam(id));
@@ -107,6 +106,7 @@ export const Teams = () => {
   const onRedirectCreateTeam = () => {
     return navigate('/TeamCreate');
   };
+
 
   return (
     <div className="common__container">
@@ -129,13 +129,13 @@ export const Teams = () => {
 
       {teams?.length ? (
         <div className="common__pagination">
-          <Navigation
-            currentPage={Page}
-            teamsPlayersCount={teamsCount}
-            PageSize={PageSize}
-            onPageChange={onPageChange}
-            onPaginationSelectChange={onPaginationSelectChange}
-          />
+            <Navigation
+              currentPage={Page}
+              teamsPlayersCount={teamsCount}
+              PageSize={PageSize}
+              onPageChange={onPageChange}
+              onPaginationSelectChange={onPaginationSelectChange}
+            />
         </div>
       ) : null}
     </div>

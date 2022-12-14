@@ -20,6 +20,7 @@ export const MenuBtn: FC<IMenuBtnProps> = ({ index, activeBtn, btnName, onClickH
         [s.menu__button_hovered]: !activeBtn,
         [s.menu__button_selected]: activeBtn,
       })}
+      disabled={activeBtn}
     >
       {btnName === 'Teams' ? <TeamsSVG /> : btnName === 'Sign out' ? <SignOutSVG/> : <PlayersSVG />}
       <span>{btnName}</span>

@@ -10,12 +10,12 @@ import { Card } from '../Card/Card';
 import debounce from 'lodash.debounce';
 import { createBrowserHistory } from 'history';
 import qs from 'qs';
-import { Pagination } from '../pagination/Pagination';
 import { IPlayerData } from '../../types/players/players';
 import players__empty from '../../assets/img/PlayersEmpty/players__empty.png';
 import { Empty } from '../Empty/Empty';
 import { Navigation } from '../Navigation/Navigation';
 import { ISelectOption } from '../../types/ISelectOption';
+import { ITeamsPlayersParams } from '../../types/IBaseParamsGetRequest';
 
 export const Players = () => {
   const navigate = useNavigate();
@@ -37,98 +37,93 @@ export const Players = () => {
   // PERSISTING URL
   useEffect(() => {
     void dispatch(fetchTeams()).then(() => {
-      if (history.location.search) {
-        const urlString = history.location.search.substring(1);
-        const urlParams = qs.parse(urlString);
-        const { Page, PageSize, Name, TeamIds } = urlParams;
+      const urlString = history.location.search.substring(1);
+      const { page, pageSize, name, TeamIds } = qs.parse(urlString);
 
-        
-        let convertIdToString = ``;
-        
-        if (Array.isArray(TeamIds)) {
-          TeamIds?.forEach((teamId) => {
-            convertIdToString = convertIdToString.concat(`&TeamIds=${Number(teamId)}`);
-          });
-        } else {
-          convertIdToString = convertIdToString.concat(`&TeamIds=${Number(TeamIds)}`);
-        }
-        
-        const page = Number(Page) && Number(Page);
-        const pageSize = Number(PageSize) && Number(PageSize);
-        const name = Name && String(Name)
-        const teamIds = TeamIds && convertIdToString
+      let convertIdToString = ``;
 
-        void dispatch(
-          fetchPlayers({
-            Page: page,
-            PageSize: pageSize,
-            Name: name,
-            TeamIds: teamIds,
-          })
-        );
-        if (Name) {
-          setName(String(Name));
-        }
-        if (TeamIds) {
-          setMultiSelect(convertIdToString);
-        }
+      if (Array.isArray(TeamIds)) {
+        TeamIds?.forEach((teamId) => {
+          convertIdToString = convertIdToString.concat(`&TeamIds=${Number(teamId)}`);
+        });
       } else {
-        if (PageSize === 25) {
-          void dispatch(fetchPlayers({ Page, PageSize: 6 }));
-          return;
-        }
-        // used when switching back from a different page
-        void dispatch(fetchPlayers({ Page, PageSize }));
+        convertIdToString = convertIdToString.concat(`&TeamIds=${Number(TeamIds)}`);
       }
+
+      const PAGE = page ? Number(page) : Number(Page);
+      const PAGE_SIZE = pageSize
+        ? Number(pageSize)
+        : Number(PageSize) !== 25
+        ? Number(PageSize)
+        : 6;
+      const SEARCH_VALUE = name ? String(name) : '';
+      const TEAM_IDS = TeamIds ? String(convertIdToString) : '';
+
+      void dispatch(
+        fetchPlayers({
+          Page: PAGE,
+          PageSize: PAGE_SIZE,
+          Name: SEARCH_VALUE,
+          TeamIds: TEAM_IDS,
+        })
+      );
+      setName(SEARCH_VALUE);
+      setMultiSelect(TEAM_IDS);
     });
   }, []);
 
   // MOUNTING DATA INTO URL
   useEffect(() => {
-    const search = Name ? `&Name=${Name}` : '';
+    const search = Name ? `&name=${Name}` : '';
 
-    navigate(`?Page=${Page}&PageSize=${PageSize}${search}${multiSelect}`);
+    navigate(`?page=${Page}&pageSize=${PageSize}${search}${multiSelect}`);
   }, [Page, PageSize, Name, multiSelect, players]);
 
-  // SEARCH INPUT
-  const onChangeInputHandle = (Name: string) => {
-    setName(Name);
-    void onChangeInput(Name);
+  const onFetchPlayersHandler = (playersParams: ITeamsPlayersParams) => {
+    const { page, pageSize, search, multiSelectVal } = playersParams;
+    void dispatch(
+      fetchPlayers({
+        Page: page ?? Page,
+        PageSize: pageSize ?? PageSize,
+        Name: search ?? Name,
+        TeamIds: multiSelectVal ?? multiSelect,
+      })
+    );
   };
 
-  const onChangeInput = useCallback(
-    debounce(
-      async (Name: string) =>
-        await dispatch(fetchPlayers({ Page: 1, PageSize, Name, TeamIds: multiSelect })),
-      700
-    ),
-    [Page, PageSize, Name, multiSelect]
-  );
-
   // PAGINATION
-  const onPageChange = (Page: number) => {
-    void dispatch(fetchPlayers({ Page, PageSize, Name, TeamIds: multiSelect }));
+  const onPageChange = (page: number) => {
+    onFetchPlayersHandler({ page });
   };
 
   // PAGINATION SELECT
   const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
-    void dispatch(
-      fetchPlayers({ Page: 1, PageSize: Number(pageSize), Name, TeamIds: multiSelect })
-    );
+    onFetchPlayersHandler({ page: 1, pageSize: Number(pageSize) });
   };
+
+  // SEARCH INPUT
+  const onChangeInputHandle = (search: string) => {
+    setName(search);
+    void onChangeInput(search);
+  };
+
+  const onChangeInput = useCallback(
+    debounce(async (search: string) => onFetchPlayersHandler({ page: 1, search }), 700),
+    [Page, PageSize, multiSelect]
+  );
 
   // MULTI SELECT
   const onChangeMultiSelect = (options: string | ISelectOption[]) => {
-    let TeamIds = ``;
+    let multiSelectVal = ``;
 
     if (Array.isArray(options)) {
       options?.forEach((o) => {
-        TeamIds = TeamIds.concat(`&TeamIds=${o.id}`);
+        multiSelectVal = multiSelectVal.concat(`&TeamIds=${o.id}`);
       });
     }
 
-    setMultiSelect(TeamIds);
-    void dispatch(fetchPlayers({ Page: 1, PageSize, Name, TeamIds }));
+    setMultiSelect(multiSelectVal);
+    onFetchPlayersHandler({ page: 1, multiSelectVal });
   };
 
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));

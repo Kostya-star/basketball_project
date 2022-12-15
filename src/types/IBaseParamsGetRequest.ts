@@ -8,3 +8,9 @@ export interface IGetTeamsParams {
   TeamIds?: string
 }
 
+export interface ITeamsPlayersParams {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  multiSelectVal?: string
+}

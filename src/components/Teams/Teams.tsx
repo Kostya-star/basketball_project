@@ -57,9 +57,9 @@ export const Teams = () => {
   }, [Page, PageSize, Name, teams]);
 
   const onFetchTeamsHandler = (teamsParams: ITeamsPlayersParams) => {
-    const { page, pageSize, search } = teamsParams;
+    const { page, itemsPerPage, search } = teamsParams;
     void dispatch(
-      fetchTeams({ Page: page ?? Page, PageSize: pageSize ?? PageSize, Name: search ?? Name })
+      fetchTeams({ Page: page ?? Page, PageSize: itemsPerPage ?? PageSize, Name: search ?? Name })
     );
   };
 
@@ -70,7 +70,7 @@ export const Teams = () => {
 
   // PAGINATION SELECT
   const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
-    onFetchTeamsHandler({ pageSize: Number(pageSize), page: 1 });
+    onFetchTeamsHandler({ itemsPerPage: Number(pageSize), page: 1 });
   };
 
   // SEARCH INPUT

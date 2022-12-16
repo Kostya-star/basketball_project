@@ -3,7 +3,7 @@ import { ReactComponent as SearchSVG } from '../../assets/icons/searchSvg.svg';
 import { FC } from 'react';
 
 interface InputSearchProps {
-  value: string;
+  value?: string;
   onChangeInput: (value: string) => void;
 }
 

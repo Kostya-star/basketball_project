@@ -1,3 +1,5 @@
+import { ISelectOption } from "./ISelectOption";
+
 export interface ITeamsParamsGetRequest extends IGetTeamsParams {}
 export interface IPlayersParamsGetRequest extends IGetTeamsParams {}
 
@@ -10,7 +12,7 @@ export interface IGetTeamsParams {
 
 export interface ITeamsPlayersParams {
   page?: number;
-  pageSize?: number;
+  itemsPerPage?: number;
   search?: string;
-  multiSelectVal?: string
+  multiSelectVal?: ISelectOption[]
 }

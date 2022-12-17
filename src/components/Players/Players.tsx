@@ -115,7 +115,6 @@
 //   // MULTI SELECT
 //   const onChangeMultiSelect = (options: string | ISelectOption[]) => {
 //     let multiSelectVal = ``;
-    
 
 //     if (options && Array.isArray(options)) {
 //       options?.forEach((o) => {
@@ -125,7 +124,6 @@
 //       });
 //     }
 //     console.log(multiSelect);
-    
 
 //     setMultiSelect(multiSelectVal);
 //     onFetchPlayersHandler({ page: 1, multiSelectVal });
@@ -221,16 +219,6 @@
 //   );
 // };
 
-
-
-
-
-
-
-
-
-
-
 // import { useEffect, useState, useCallback, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -307,7 +295,6 @@
 //       const SEARCH_VALUE = name ? String(name) : '';
 //       // const TEAM_IDS = TeamIds ? String(convertIdToString) : '';
 //       const TEAM_IDS = TeamIds ? playersParams.multiSelectVal?.map((o) => `TeamIds=${o.id}`).join('&').replace('', '&') : '';
-      
 
 //       void dispatch(
 //         fetchPlayers({
@@ -324,7 +311,7 @@
 //         search: SEARCH_VALUE,
 //         multiSelectVal: TEAM_IDS as unknown as ISelectOption[]
 //       }))
-  
+
 //       // setMultiSelect(TEAM_IDS);
 //     });
 //   }, []);
@@ -334,10 +321,9 @@
 //   //   navigate(`?page=${Page}&pageSize=${PageSize}${search}${multiSelectValue}`);
 //   // }, [Page, PageSize, Name, multiSelect, players]);
 
-
 //   useEffect(() => {
 //     console.log('2 use effect');
-    
+
 //     const { page, pageSize, search, multiSelectVal } = playersParams;
 
 //     const PAGE = page ? `?page=${page}` : Page ? `?page=${Page}` : 1;
@@ -366,11 +352,10 @@
 //     navigate(`${PAGE}${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
 //   }, [playersParams]);
 
-
 //   // const onFetchPlayersHandler = (playersParams: ITeamsPlayersParams) => {
 //   //   const { page, pageSize, search, multiSelectVal } = playersParams;
 //   //   console.log(multiSelectValue);
-    
+
 //   //   void dispatch(
 //   //     fetchPlayers({
 //   //       Page: page ?? Page,
@@ -401,7 +386,7 @@
 //     }))
 
 //   };
-  
+
 //   // SEARCH INPUT
 //   const onChangeInputHandle = (search: string) => {
 //     // setName(search);
@@ -412,7 +397,6 @@
 //       search: search,
 //     }))
 
-    
 //     // void onChangeInput(search);
 //   };
 
@@ -423,7 +407,7 @@
 
 //   // MULTI SELECT
 //   const onChangeMultiSelect = (multiSelectArr: string | ISelectOption[]) => {
-    
+
 //     // setMultiSelect(() => multiSelectArr as ISelectOption[]);
 //     // setPlayersParams({page: 1, multiSelectVal: multiSelectArr as ISelectOption[]})
 //     setPlayersParams((rest) => ({
@@ -525,8 +509,6 @@
 //   );
 // };
 
-
-
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -552,106 +534,160 @@ export const Players = () => {
 
   const history = createBrowserHistory();
 
-  const { players, teams, currentPage, pageSize, playersCount } = useAppSelector(({ players, teams }) => ({
-    players: players.playersData.data,
-    currentPage: players.playersData.page,
-    pageSize: players.playersData.size,
-    playersCount: players.playersData.count,
-    teams: teams.data,
-  }));
+  const { players, teams, currentPage, pageSize, playersCount } = useAppSelector(
+    ({ players, teams }) => ({
+      players: players.playersData.data,
+      currentPage: players.playersData.page,
+      pageSize: players.playersData.size,
+      playersCount: players.playersData.count,
+      teams: teams.data,
+    })
+  );
 
   const [playersParams, setPlayersParams] = useState<ITeamsPlayersParams>({});
 
-  const isMounting = useRef(false);
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
+  const isNavigateRendering = useRef(false);
 
   // PERSISTING URL
-  
+
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
+
+  // useEffect(() => {
+  //   void dispatch(fetchTeams())
+    // .then((resp) => {
+    //   if (resp.data.data && teams.length) {
+    //     isMounted.current = true;
+    //   }
+    // });
+  // }, []);
   
+  // MOUNTING DATA INTO URL
+  
+
   useEffect(() => {
-    isMounting.current = true;
+    void dispatch(fetchTeams()).then(() => {
+      if(!isMounted.current) {
+        if (history.location.search) {
+        console.log(history.location.search);
+        console.log(teams);
+          if (teams.length) {
+            const { page, itemsPerPage, search, multiSelectVal } = playersParams;
+            
+            // const PAGE = page ?? currentPage ?? 1;
+            // const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
+            // const SEARCH = search ? `&Name=${search}` : '';
+            // const TEAM_IDS = multiSelectVal?.length
+            // ? multiSelectVal
+            // .map((o) => `TeamIds=${o.id}`)
+            // .join('&')
+            // .replace('', '&')
+            // : '';
+            
+            // navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
+            
+              
+              const urlString = history.location.search.substring(1);
+              const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
+      
+              const PAGE_ = Page ? Number(Page) : Number(currentPage);
+              const PAGE_SIZE_ = PageSize
+                ? Number(PageSize)
+                : Number(pageSize) !== 25
+                ? Number(pageSize)
+                : 6;
+              const SEARCH_VALUE_ = Name ? String(Name) : '';
+      
+              const TEAM_IDS_FOR_REQUEST =
+                TeamIds && typeof TeamIds === 'object'
+                  ? // @ts-expect-error
+                    TeamIds.map((t) => `TeamIds=${Number(t)}`)
+                      .join('&')
+                      .replace('', '&')
+                  : typeof TeamIds === 'string'
+                  ? [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('')
+                  : '';
+              // console.log(teams);
+      
+              const TEAM_IDS_FOR_STATE =
+                TeamIds &&
+                typeof TeamIds !== 'undefined' &&
+                teamsOptions.length &&
+                typeof TeamIds === 'string' &&
+                teamsOptions.filter((t) => t.id === Number(TeamIds));
+              // console.log(TeamIds);
+      
+              void dispatch(
+                fetchPlayers({
+                  Page: PAGE_,
+                  PageSize: PAGE_SIZE_,
+                  Name: SEARCH_VALUE_,
+                  TeamIds: TEAM_IDS_FOR_REQUEST,
+                })
+              );
+              setPlayersParams({
+                page: PAGE_,
+                itemsPerPage: PAGE_SIZE_,
+                search: SEARCH_VALUE_,
+                // multiSelectVal: TEAM_IDS_FOR_STATE as ISelectOption[],
+              });
+              isMounted.current = true
+            }
+          } else {
+              if (pageSize === 25) {
+                  void dispatch(fetchPlayers({ Page: currentPage, PageSize: 6 }));
+                  navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
+                  return;
+                }
+                void dispatch(fetchPlayers({ Page: currentPage, PageSize: pageSize })).then(() => {
+                  navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
+                });
+
+                console.log(history.location.search);
+                // const urlString = history.location.search.substring(1);
+                // const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
+          }
+      }
+    })
+  }, [teams.length]);
+
+  useEffect(() => {
+    if(isMounted.current) {
+      if(isNavigateRendering.current) {
+
+        const { page, itemsPerPage, search, multiSelectVal } = playersParams;
     
+        const PAGE = page ?? currentPage ?? 1;
+        const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
+        const SEARCH = search ? `&Name=${search}` : '';
+        const TEAM_IDS = multiSelectVal?.length
+          ? multiSelectVal
+              .map((o) => `TeamIds=${o.id}`)
+              .join('&')
+              .replace('', '&')
+          : '';
     
-    if (!isMounted.current) {
-      void dispatch(fetchTeams()).then(() => {
-          const urlString = history.location.search.substring(1);
-          const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
-  
-          const PAGE = Page ? Number(Page) : Number(currentPage);
-          const PAGE_SIZE = PageSize
-            ? Number(PageSize)
-            : Number(pageSize) !== 25
-            ? Number(pageSize)
-            : 6;
-          const SEARCH_VALUE = Name ? String(Name) : '';
-  
-          const TEAM_IDS_FOR_REQUEST =
-            TeamIds && typeof TeamIds === 'object'
-              ? // @ts-expect-error
-                TeamIds.map((t) => `TeamIds=${Number(t)}`)
-                  .join('&')
-                  .replace('', '&')
-              : typeof TeamIds === 'string'
-              ? [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('')
-              : '';
-  
-          const TEAM_IDS_FOR_STATE =
-            TeamIds &&
-            typeof TeamIds === 'string' &&
-            teamsOptions.filter((t) => t.id === Number(TeamIds));
-          console.log(teamsOptions);
-  
-          void dispatch(
-            fetchPlayers({
-              Page: PAGE,
-              PageSize: PAGE_SIZE,
-              Name: SEARCH_VALUE,
-              TeamIds: TEAM_IDS_FOR_REQUEST,
-            })
-          );
-          setPlayersParams({
-            page: PAGE,
-            itemsPerPage: PAGE_SIZE,
-            search: SEARCH_VALUE,
-            multiSelectVal: TEAM_IDS_FOR_STATE as ISelectOption[],
-          });
-          
-      });
-      isMounted.current = true
+        // if (!isMounting.current) {
+        //   void dispatch(
+        //     fetchPlayers({
+        //       Page: PAGE,
+        //       PageSize: PAGE_SIZE,
+        //       Name: search,
+        //       TeamIds: TEAM_IDS,
+        //     })
+        //   );
+        // }
+        console.log('2ue');
+        console.log(history.location.search);
+    
+        navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
+
+      }
+      isNavigateRendering.current = true
     }
   }, [teams.length]);
 
-  
-  // MOUNTING DATA INTO URL
 
-  useEffect(() => {
-    const { page, itemsPerPage, search, multiSelectVal } = playersParams;
-    const PAGE = page ?? currentPage ?? 1;
-    const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
-    const SEARCH = search ? `&Name=${search}` : '';
-    const TEAM_IDS = multiSelectVal?.length
-      ? multiSelectVal
-          .map((o) => `TeamIds=${o.id}`)
-          .join('&')
-          .replace('', '&')
-      : '';
-
-    if (!isMounting.current) {
-      void dispatch(
-        fetchPlayers({
-          Page: PAGE,
-          PageSize: PAGE_SIZE,
-          Name: search,
-          TeamIds: TEAM_IDS,
-        })
-      );
-    }
-
-    navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
-
-    isMounting.current = false;
-  }, [playersParams]);
 
   // PAGINATION
   const onPageChange = (page: number) => {
@@ -672,13 +708,13 @@ export const Players = () => {
 
   // SEARCH INPUT
   const onChangeInputHandle = (search: string) => {
-      setPlayersParams((rest) => ({
-        ...rest,
-        page: 1,
-        search,
-      }));
+    setPlayersParams((rest) => ({
+      ...rest,
+      page: 1,
+      search,
+    }));
 
-  //   // void onChangeInput(search);
+    //   // void onChangeInput(search);
   };
 
   // const onChangeInput = useCallback(
@@ -694,7 +730,6 @@ export const Players = () => {
       multiSelectVal: multiSelectArr as ISelectOption[],
     }));
   };
-
 
   const onRedirectCreatePlayer = () => {
     return navigate('/PlayersCreate');
@@ -714,8 +749,6 @@ export const Players = () => {
       }
     }
   };
-
-
 
   return (
     <div className="common__container">
@@ -768,8 +801,6 @@ export const Players = () => {
     </div>
   );
 };
-
-
 
 // // const teamNameObj = teams?.reduce((acc, team) => {
 // //   // @ts-expect-error

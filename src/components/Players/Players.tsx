@@ -563,61 +563,70 @@ export const Players = () => {
   const [playersParams, setPlayersParams] = useState<ITeamsPlayersParams>({});
 
   const isMounting = useRef(false);
-
-  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
-
-  const TEAM_IDS_FOR_STATE = teamsOptions.filter((t) => t.id === 4044)
+  const isMounted = useRef(false)
 
   // PERSISTING URL
+  
+  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
+  
   useEffect(() => {
     isMounting.current = true;
+    
+    
+    if (!isMounted.current) {
+      void dispatch(fetchTeams()).then(() => {
+          const urlString = history.location.search.substring(1);
+          const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
+  
+          const PAGE = Page ? Number(Page) : Number(currentPage);
+          const PAGE_SIZE = PageSize
+            ? Number(PageSize)
+            : Number(pageSize) !== 25
+            ? Number(pageSize)
+            : 6;
+          const SEARCH_VALUE = Name ? String(Name) : '';
+  
+          const TEAM_IDS_FOR_REQUEST =
+            TeamIds && typeof TeamIds === 'object'
+              ? // @ts-expect-error
+                TeamIds.map((t) => `TeamIds=${Number(t)}`)
+                  .join('&')
+                  .replace('', '&')
+              : typeof TeamIds === 'string'
+              ? [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('')
+              : '';
+  
+          const TEAM_IDS_FOR_STATE =
+            TeamIds &&
+            typeof TeamIds === 'string' &&
+            teamsOptions.filter((t) => t.id === Number(TeamIds));
+          console.log(teamsOptions);
+  
+          void dispatch(
+            fetchPlayers({
+              Page: PAGE,
+              PageSize: PAGE_SIZE,
+              Name: SEARCH_VALUE,
+              TeamIds: TEAM_IDS_FOR_REQUEST,
+            })
+          );
+          setPlayersParams({
+            page: PAGE,
+            itemsPerPage: PAGE_SIZE,
+            search: SEARCH_VALUE,
+            multiSelectVal: TEAM_IDS_FOR_STATE as ISelectOption[],
+          });
+          
+      });
+      isMounted.current = true
+    }
+  }, [teams.length]);
 
-    void dispatch(fetchTeams()).then(() => {
-      const urlString = history.location.search.substring(1);
-      const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
-      
-      const PAGE = Page ? Number(Page) : Number(currentPage);
-      const PAGE_SIZE = PageSize
-        ? Number(PageSize)
-        : Number(pageSize) !== 25
-        ? Number(pageSize)
-        : 6;
-        const SEARCH_VALUE = Name ? String(Name) : '';
-        const TEAM_IDS_FOR_REQUEST =
-          TeamIds &&
-          typeof TeamIds === 'object' &&
-          // @ts-expect-error
-          TeamIds.map((t) => `TeamIds=${Number(t)}`)
-            .join('&')
-            .replace('', '&');
-
-        const TEAM_IDS_FOR_STATE =
-          TeamIds &&
-          typeof TeamIds === 'string' &&
-          teamsOptions?.filter((t) => t.id === Number(TeamIds));
-        
-              void dispatch(
-                fetchPlayers({
-                  Page: PAGE,
-                  PageSize: PAGE_SIZE,
-                  Name: SEARCH_VALUE,
-                  TeamIds: TEAM_IDS_FOR_REQUEST,
-                })
-              );
-      setPlayersParams(({
-        page: PAGE,
-        itemsPerPage: PAGE_SIZE,
-        search: SEARCH_VALUE,
-        multiSelectVal: TEAM_IDS_FOR_STATE as ISelectOption[],
-      }));
-    });
-  }, []);
-
+  
   // MOUNTING DATA INTO URL
 
   useEffect(() => {
     const { page, itemsPerPage, search, multiSelectVal } = playersParams;
-
     const PAGE = page ?? currentPage ?? 1;
     const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
     const SEARCH = search ? `&Name=${search}` : '';
@@ -639,9 +648,9 @@ export const Players = () => {
       );
     }
 
-    isMounting.current = false;
-
     navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
+
+    isMounting.current = false;
   }, [playersParams]);
 
   // PAGINATION
@@ -705,6 +714,7 @@ export const Players = () => {
       }
     }
   };
+
 
 
   return (

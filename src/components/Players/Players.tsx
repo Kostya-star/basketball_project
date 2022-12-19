@@ -547,125 +547,146 @@ export const Players = () => {
   const [playersParams, setPlayersParams] = useState<ITeamsPlayersParams>({});
 
   const isMounted = useRef(false);
-  const isNavigateRendering = useRef(false);
 
   // PERSISTING URL
 
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
 
-  // useEffect(() => {
-  //   void dispatch(fetchTeams())
-    // .then((resp) => {
-    //   if (resp.data.data && teams.length) {
-    //     isMounted.current = true;
-    //   }
-    // });
-  // }, []);
+  useEffect(() => {
+    void dispatch(fetchTeams());
+  }, []);
   
   // MOUNTING DATA INTO URL
   
-
+  
   useEffect(() => {
-    void dispatch(fetchTeams()).then(() => {
+    // void dispatch(fetchTeams()).then(() => {
       if(!isMounted.current) {
         if (history.location.search) {
-        console.log(history.location.search);
-        console.log(teams);
-          if (teams.length) {
-            const { page, itemsPerPage, search, multiSelectVal } = playersParams;
-            
-            // const PAGE = page ?? currentPage ?? 1;
-            // const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
-            // const SEARCH = search ? `&Name=${search}` : '';
-            // const TEAM_IDS = multiSelectVal?.length
-            // ? multiSelectVal
-            // .map((o) => `TeamIds=${o.id}`)
-            // .join('&')
-            // .replace('', '&')
-            // : '';
-            
-            // navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
-            
-              
-              const urlString = history.location.search.substring(1);
-              const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
-      
-              const PAGE_ = Page ? Number(Page) : Number(currentPage);
-              const PAGE_SIZE_ = PageSize
-                ? Number(PageSize)
-                : Number(pageSize) !== 25
-                ? Number(pageSize)
-                : 6;
-              const SEARCH_VALUE_ = Name ? String(Name) : '';
-      
-              const TEAM_IDS_FOR_REQUEST =
-                TeamIds && typeof TeamIds === 'object'
-                  ? // @ts-expect-error
-                    TeamIds.map((t) => `TeamIds=${Number(t)}`)
-                      .join('&')
-                      .replace('', '&')
-                  : typeof TeamIds === 'string'
-                  ? [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('')
-                  : '';
-              // console.log(teams);
-      
-              const TEAM_IDS_FOR_STATE =
-                TeamIds &&
-                typeof TeamIds !== 'undefined' &&
-                teamsOptions.length &&
+          const urlString = history.location.search.substring(1);
+          const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
+
+          // if (Name && TeamIds) {
+            const TEAM_IDS_INTO_STRING =
+              (typeof TeamIds === 'object' &&
+                // @ts-expect-error
+                TeamIds.map((t) => `TeamIds=${Number(t)}`)
+                  .join('&')
+                  .replace('', '&')) ||
+              (typeof TeamIds === 'string' &&
+                [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('')) ||
+              '';
+
+              const search = Name ? `&Name=${String(Name)}` : '';
+
+              const TEAM_IDS_INTO_ARRAY = typeof TeamIds === 'object'  && teamsOptions.filter((t, ind) => t.id === Number(TeamIds));
                 typeof TeamIds === 'string' &&
                 teamsOptions.filter((t) => t.id === Number(TeamIds));
-              // console.log(TeamIds);
-      
-              void dispatch(
-                fetchPlayers({
-                  Page: PAGE_,
-                  PageSize: PAGE_SIZE_,
-                  Name: SEARCH_VALUE_,
-                  TeamIds: TEAM_IDS_FOR_REQUEST,
-                })
-              );
-              setPlayersParams({
-                page: PAGE_,
-                itemsPerPage: PAGE_SIZE_,
-                search: SEARCH_VALUE_,
-                // multiSelectVal: TEAM_IDS_FOR_STATE as ISelectOption[],
-              });
-              isMounted.current = true
-            }
-          } else {
-              if (pageSize === 25) {
-                  void dispatch(fetchPlayers({ Page: currentPage, PageSize: 6 }));
-                  navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
-                  return;
-                }
-                void dispatch(fetchPlayers({ Page: currentPage, PageSize: pageSize })).then(() => {
-                  navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
-                });
+              if(teams.length) {
 
-                console.log(history.location.search);
-                // const urlString = history.location.search.substring(1);
-                // const { Page, PageSize, Name, TeamIds } = qs.parse(urlString);
+                  console.log(teamsOptions.filter((t, ind) => t.id === [Number(TeamIds)][ind]));
+                  console.log(TeamIds);
+                  
+                }
+                void dispatch(
+                  fetchPlayers({
+                    Page: Number(Page),
+                    PageSize: Number(PageSize),
+                    Name: search,
+                    TeamIds: TEAM_IDS_INTO_STRING,
+                  })
+                );
+    
+                setPlayersParams({
+                  page: Number(Page),
+                  itemsPerPage: Number(PageSize),
+                  search: search,
+                  multiSelectVal: TEAM_IDS_INTO_ARRAY as ISelectOption[],
+                });
+  
+
+            
+
+            
+            navigate(`?Page=${Number(Page)}&PageSize=${Number(PageSize)}${search}${TEAM_IDS_INTO_STRING}`);
+            if (teams.length) {
+              
+              isMounted.current = true;
+            }
+          // }
+          // if (teams.length) {
+            // console.log(urlString);
+            // const PAGE = Page ? Number(Page) : Number(currentPage);
+            // const PAGE_SIZE = PageSize
+            // ? Number(PageSize)
+            // : Number(pageSize) !== 25
+            // ? Number(pageSize)
+            // : 6;
+            // const SEARCH = Name ? `&Name=${String(Name)}` : '';
+
+            // const TEAM_IDS_INTO_STRING =
+            // TeamIds && typeof TeamIds === 'object'
+            //   ? // @ts-expect-error
+            //     TeamIds.map((t) => `TeamIds=${Number(t)}`)
+            //       .join('&')
+            //       .replace('', '&')
+            //   : typeof TeamIds === 'string'
+            //   ? [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('')
+            //   : '';
+
+            // const PAGE = Number(Page);
+            // const PAGE_SIZE = Number(PageSize)
+            // const SEARCH = Name && typeof Name !== 'undefined' && `&Name=${String(Name)}`;
+
+            // const TEAM_IDS_INTO_STRING =
+            // TeamIds  ? typeof TeamIds === 'object' && TeamIds?.map((t) => `TeamIds=${Number(t)}`)
+            //       .join('&')
+            //       .replace('', '&')
+            //   : typeof TeamIds === 'string' && [Number(TeamIds)].map((id) => `&TeamIds=${id}`).join('');
+
+            // ${TEAM_IDS_INTO_STRING}`)
+            // console.log(teams);
+            // console.log(urlString);
+
+            // const TEAM_IDS_INTO_ARRAY =
+            //   TeamIds &&
+            //   typeof TeamIds !== 'undefined' &&
+            //   teamsOptions.length &&
+            //   typeof TeamIds === 'string' &&
+            //   teamsOptions.filter((t) => t.id === Number(TeamIds));
+
+          // }
+        } 
+        else {
+          if (pageSize === 25) {
+            // void dispatch(fetchPlayers({ Page: currentPage, PageSize: 6 }));
+            navigate(`?Page=${currentPage}&PageSize=${6}`);
+            console.log('no history');
+
+            return;
           }
+          // void dispatch(fetchPlayers({ Page: currentPage, PageSize: pageSize }));
+          console.log('no history');
+          navigate(`?Page=${currentPage}&PageSize=${pageSize}`);
+        } 
       }
-    })
-  }, [teams.length]);
+
+  }, [teams.length, history.location.search]);
 
   useEffect(() => {
-    if(isMounted.current) {
-      if(isNavigateRendering.current) {
-
-        const { page, itemsPerPage, search, multiSelectVal } = playersParams;
     
-        const PAGE = page ?? currentPage ?? 1;
-        const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
-        const SEARCH = search ? `&Name=${search}` : '';
-        const TEAM_IDS = multiSelectVal?.length
-          ? multiSelectVal
-              .map((o) => `TeamIds=${o.id}`)
-              .join('&')
-              .replace('', '&')
-          : '';
+    if(isMounted.current) {
+    const { page, itemsPerPage, search, multiSelectVal } = playersParams;
+    
+    const PAGE = page ?? currentPage ?? 1;
+    const PAGE_SIZE = itemsPerPage ?? pageSize ?? 6;
+    const SEARCH = search ? `&Name=${search}` : '';
+    const TEAM_IDS = multiSelectVal?.length
+    ? multiSelectVal
+    .map((o) => `TeamIds=${o.id}`)
+    .join('&')
+    .replace('', '&')
+    : '';
     
         // if (!isMounting.current) {
         //   void dispatch(
@@ -678,14 +699,10 @@ export const Players = () => {
         //   );
         // }
         console.log('2ue');
-        console.log(history.location.search);
-    
+        
         navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAM_IDS}`);
-
       }
-      isNavigateRendering.current = true
-    }
-  }, [teams.length]);
+  }, [playersParams]);
 
 
 

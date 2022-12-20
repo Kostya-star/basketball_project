@@ -7,7 +7,7 @@ export interface IGetTeamsParams {
   Page?: number
   PageSize?: number
   Name?: string
-  TeamIds?: string
+  TeamIds?: string | string[]
 }
 
 export interface ITeamsPlayersParams {

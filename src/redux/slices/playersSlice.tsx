@@ -39,7 +39,6 @@ export const { setPlayers, setPositions } = playersSlice.actions;
 export const fetchPlayers = (playersParams?: IPlayersParamsGetRequest) => async (dispatch: AppDispatch) => {
   const resp = await playersAPI.getPlayers(playersParams).catch((error) => {
     console.log(error);
-    alert('Error ocured when fetching players');
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     dispatch(setPlayers(resp.data));

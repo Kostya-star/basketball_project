@@ -1,4 +1,6 @@
 import axios from 'axios';
+import qs from 'qs';
+
 
 export const baseRequestUrl = 'http://dev.trainee.dex-it.ru'
 
@@ -15,5 +17,8 @@ client.interceptors.request.use((config) => {
   const token = localStorage.getItem('TOKEN');
   // @ts-expect-error
   config.headers.Authorization =  token ? `Bearer ${token}` : '';
+  // config.paramsSerializer = {
+  //   encode: (params) => qs.stringify(params, { arrayFormat: 'repeat' })
+  // }
   return config;
 });

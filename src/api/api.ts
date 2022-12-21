@@ -13,6 +13,7 @@ import { IDeleteTeamResponse } from '../types/teams/deleteTeamResp';
 import { IAddPlayerResponse } from '../types/players/addPlayerResp';
 import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
 import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './../types/IBaseParamsGetRequest';
+import qs from 'qs';
 
 
 export const authAPI = {
@@ -48,13 +49,17 @@ export const teamsAPI = {
 
 export const playersAPI = {
   async getPlayers(playersParams?: IPlayersParamsGetRequest) {
-
-    const currentPage = playersParams?.Page ? `?Page=${playersParams.Page}` : ''
-    const pageSize = playersParams?.PageSize ? `&PageSize=${playersParams.PageSize}` : ''
-
-    return await client.get<IGetPlayersResponse>(
-      `Player/GetPlayers${currentPage}${pageSize}${playersParams?.Name}${playersParams?.TeamIds}`
-    );
+    return await client.get<IGetPlayersResponse>(`Player/GetPlayers`, {
+      params: {
+        Page: playersParams?.Page,
+        PageSize: playersParams?.PageSize,
+        ...(playersParams?.Name ? { Name: playersParams?.Name } : {}),
+        ...(playersParams?.TeamIds ? { TeamIds: playersParams?.TeamIds } : {}),
+      },
+      paramsSerializer: {
+        indexes: null,
+      },
+    });
   },
 
   async getPositions() {

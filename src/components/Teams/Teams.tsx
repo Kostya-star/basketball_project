@@ -69,7 +69,7 @@ export const Teams = () => {
   };
 
   // PAGINATION SELECT
-  const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
+  const onPaginationSelectChange = (pageSize: string) => {
     onFetchTeamsHandler({ itemsPerPage: Number(pageSize), page: 1 });
   };
 

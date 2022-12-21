@@ -8,7 +8,7 @@ interface INavigationProps {
   teamsPlayersCount: number;
   PageSize: number;
   onPageChange: (Page: number) => void;
-  onPaginationSelectChange: (pageSize: string | ISelectOption[]) => void;
+  onPaginationSelectChange: (pageSize: string) => void;
 }
 
 export const Navigation: FC<INavigationProps> = ({

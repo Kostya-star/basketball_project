@@ -105,7 +105,7 @@ export const PlayersCreate = () => {
             setPlayersImage(image);
           };
 
-          const onChangeOption = (option: string | ISelectOption[], name: string) => {
+          const onChangeOption = (option: string, name: string) => {
             formik.setFieldValue(name, option);
           };
 

@@ -34,41 +34,41 @@ export const Players = () => {
   );
 
   const [playersParams, setPlayersParams] = useState<ITeamsPlayersParams>({});
+
+  const [searchInputValue, setSearchInputValue] = useState('')
+
   const isMounted = useRef<null | boolean>(null);
 
   // PERSISTING URL
 
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
 
-  const onFetchPlayersHandle = (params?: IPlayersParamsGetRequest) => {
+  const onFetchPlayersHandle = (params: IPlayersParamsGetRequest) => {
     
-    const Page = params?.Page ?? currentPage ?? 1;
-    const PageSize = params?.PageSize ?? pageSize ?? 6;
-    const Name = params?.Name ? `&Name=${String(params?.Name)}` : '';
-    let TeamIds =
-      (typeof params?.TeamIds === 'object' &&
-        params?.TeamIds.map((t) => `TeamIds=${Number(t)}`)
+    const Page = params.Page ?? currentPage;
+    const PageSize = params.PageSize ?? pageSize;
+    const Name = params.Name ? `&Name=${params.Name}` : '';
+    let TEAMIDS_INTO_STRING =
+      (typeof params.TeamIds === 'object' &&
+        params.TeamIds.map((t) => `TeamIds=${Number(t)}`)
           .join('&')
           .replace('', '&')) ||
-      (typeof params?.TeamIds === 'string' &&
-        [Number(params?.TeamIds)].map((id) => `&TeamIds=${id}`).join('')) ||
+      (typeof params.TeamIds === 'string' &&
+        [Number(params.TeamIds)].map((id) => `&TeamIds=${id}`).join('')) ||
       '';
 
-    if(TeamIds === '&TeamIds=0') TeamIds = ''
+    if(TEAMIDS_INTO_STRING === '&TeamIds=0') TEAMIDS_INTO_STRING = ''
 
-    console.log(teams);
-    console.log(history.location.search);
-    
     void dispatch(
       fetchPlayers({
         Page,
         PageSize,
         Name,
-        TeamIds,
+        TeamIds: TEAMIDS_INTO_STRING,
       })
     );
 
-    navigate(`?Page=${Page}&PageSize=${PageSize}${Name}${TeamIds}`);
+    navigate(`?Page=${Page}&PageSize=${PageSize}${Name}${TEAMIDS_INTO_STRING}`);
   };
 
   useEffect(() => {
@@ -76,19 +76,18 @@ export const Players = () => {
       if (history.location.search) {
         const { Page, PageSize, Name, TeamIds } = qs.parse(history.location.search.substring(1));
 
-
+          onFetchPlayersHandle({
+            Page: Number(Page) ,
+            PageSize: Number(PageSize),
+            Name: Name as string,
+            TeamIds: TeamIds as string | string[],
+          });
+  
+          isMounted.current = false;
+      } else {
         onFetchPlayersHandle({
-          Page: Number(Page),
-          PageSize: Number(PageSize),
-          Name: Name as string,
-          TeamIds: TeamIds as string | string[],
-        });
-        isMounted.current = false;
-      } 
-      else {
-        onFetchPlayersHandle({
-          Page: 1,
-          PageSize: 6,
+          Page: currentPage,
+          PageSize: pageSize,
         });
         isMounted.current = false;
       }
@@ -98,11 +97,11 @@ export const Players = () => {
   // MOUNTING DATA INTO URL
 
   useEffect(() => {
-    if (!isMounted.current) {
+    if (isMounted.current === false) {
       if (teams.length) {
         const { Page, PageSize, Name, TeamIds } = qs.parse(history.location.search.substring(1));
 
-        const searchRequest = Name ? String(Name) : '';
+        const search = Name ? String(Name) : '';
 
         const TEAM_IDS_INTO_ARRAY =
           (typeof TeamIds === 'string' && teamsOptions.filter((t) => t.id === Number(TeamIds))) ||
@@ -114,9 +113,10 @@ export const Players = () => {
         setPlayersParams({
           page: Number(Page),
           itemsPerPage: Number(PageSize),
-          search: searchRequest,
+          search,
           multiSelectVal: TEAM_IDS_INTO_ARRAY as ISelectOption[],
         });
+        setSearchInputValue(search)
       }
     }
   }, [history.location.search]);
@@ -124,9 +124,9 @@ export const Players = () => {
   useEffect(() => {
     if (isMounted.current) {
       const { page, itemsPerPage, search, multiSelectVal } = playersParams;
-
+      
       const TEAM_IDS = multiSelectVal?.length ? multiSelectVal.map((o) => String(o.id)) : '';
-
+      
       onFetchPlayersHandle({ Page: page, PageSize: itemsPerPage, Name: search, TeamIds: TEAM_IDS });
     }
     isMounted.current = true;
@@ -141,7 +141,7 @@ export const Players = () => {
   };
 
   // PAGINATION SELECT
-  const onPaginationSelectChange = (pageSize: string | ISelectOption[]) => {
+  const onPaginationSelectChange = (pageSize: string) => {
     setPlayersParams((rest) => ({
       ...rest,
       page: 1,
@@ -151,26 +151,28 @@ export const Players = () => {
 
   // SEARCH INPUT
   const onChangeInputHandle = (search: string) => {
-    setPlayersParams((rest) => ({
-      ...rest,
-      page: 1,
-      search,
-    }));
+    setSearchInputValue(search)
 
-    //   // void onChangeInput(search);
+    void onChangeInput(search);
   };
 
-  // const onChangeInput = useCallback(
-  // debounce(async (search: string) => onFetchPlayersHandler({ page: 1, search }), 700),
-  // [Page, PageSize, multiSelect]
-  // );
+  const onChangeInput = useCallback(
+    debounce(async (search: string) => {
+      setPlayersParams((rest) => ({
+        ...rest,
+        page: 1,
+        search,
+      }));
+    }, 700),
+    [playersParams.page, playersParams.itemsPerPage, playersParams.multiSelectVal]
+  );
 
   // MULTI SELECT
-  const onChangeMultiSelect = (multiSelectArr: string | ISelectOption[]) => {
+  const onChangeMultiSelect = (multiSelectVal: ISelectOption[]) => {
     setPlayersParams((rest) => ({
       ...rest,
       page: 1,
-      multiSelectVal: multiSelectArr as ISelectOption[],
+      multiSelectVal,
     }));
   };
 
@@ -197,13 +199,13 @@ export const Players = () => {
     <div className="common__container">
       <div className="common__header">
         <div className="common__header__group">
-          <InputSearch value={playersParams?.search} onChangeInput={onChangeInputHandle} />
+          <InputSearch value={searchInputValue} onChangeInput={onChangeInputHandle} />
           <SelectComponent<'multi_select'>
             name="multi_select"
             isMulti={true}
             options={teamsOptions}
             value={playersParams?.multiSelectVal}
-            onChange={onChangeMultiSelect}
+            onChangeMulti={onChangeMultiSelect}
           />
         </div>
         <AddBtn onClick={onRedirectCreatePlayer} />

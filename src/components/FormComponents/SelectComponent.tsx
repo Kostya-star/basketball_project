@@ -12,7 +12,8 @@ interface ISelectComponentProps<T> {
   value?: PropsValue<ISelectOption> | PropsValue<ISelectOption[]>;
   defaultValue?: PropsValue<ISelectOption>;
   menuPlacement?: MenuPlacement;
-  onChange?: (option: string | ISelectOption[], name: string) => void;
+  onChange?: (option: string, name: string) => void;
+  onChangeMulti?: (option: ISelectOption[]) => void;
   onBlur?: (name: string) => void;
   options: ISelectOption[];
   getPositions?: () => void;
@@ -26,6 +27,7 @@ export const SelectComponent = <T extends string>({
   value,
   defaultValue,
   menuPlacement,
+  onChangeMulti,
   getPositions,
   onChange,
   onBlur,
@@ -109,11 +111,9 @@ export const SelectComponent = <T extends string>({
   // const setOnChange = (option: ISelectOption | null) => {
   const setOnChange = (option: any) => {
     if (option) {
-      if (IsMulti) {
-        onChange?.(option, name);
-        // setSelectedOption(option);
-      } else {
-        // setSelectedOption(option.value);
+      if (IsMulti && onChangeMulti) {
+        onChangeMulti?.(option);
+      } else if(onChange){
         onChange?.(option.value, name);
       }
     }

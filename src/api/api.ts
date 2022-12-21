@@ -51,11 +51,9 @@ export const playersAPI = {
 
     const currentPage = playersParams?.Page ? `?Page=${playersParams.Page}` : ''
     const pageSize = playersParams?.PageSize ? `&PageSize=${playersParams.PageSize}` : ''
-    // const teamName = playersParams?.Name ? `&Name=${playersParams.Name}` : '';
-    const TeamIds = playersParams?.TeamIds ? `${playersParams.TeamIds}` : ''
 
     return await client.get<IGetPlayersResponse>(
-      `Player/GetPlayers${currentPage}${pageSize}${playersParams?.Name}${TeamIds}`
+      `Player/GetPlayers${currentPage}${pageSize}${playersParams?.Name}${playersParams?.TeamIds}`
     );
   },
 

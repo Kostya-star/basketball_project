@@ -8,6 +8,7 @@ interface InputSearchProps {
 }
 
 export const InputSearch: FC<InputSearchProps> = ({ value, onChangeInput }) => {
+  
   return (
     <div className={s.search__input}>
       <input

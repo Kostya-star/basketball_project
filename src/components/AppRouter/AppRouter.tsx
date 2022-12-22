@@ -22,6 +22,7 @@ export const AppRouter: FC = () => {
     }
   }, [])
 
+  
   return (
     <Routes>
       {isAuth && (

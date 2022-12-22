@@ -6,8 +6,10 @@ import s from './layout.module.scss';
 
 export const MainLayout: FC = () => {
   const navigate = useNavigate();
+
   useEffect(() => {
-    window.location.pathname === '/Teams' ? navigate('/Teams') : navigate('/Players')
+    (window.location.pathname === '/Teams' && navigate('/Teams')) ||
+      (window.location.pathname === '/Players' && navigate('/Players'));
   }, []);
 
   return (

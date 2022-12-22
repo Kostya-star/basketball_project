@@ -27,14 +27,17 @@ const clearCache = () => {
 
 const menuButtons = ['Teams', 'Players', 'Sign out'];
 
+
+
 export const Menu = () => {
   const [activeBtn, setActiveBtn] = useState<number | string>();
   const navigate = useNavigate();
   
   const onClickHandle = (index: number) => {
-    
     setActiveBtn(index);
+
     menuButtons[index] === 'Teams' ? navigate('/Teams') : navigate('/Players');
+
     if (menuButtons[index] === 'Sign out') {
       onHandleSignOut();
     }

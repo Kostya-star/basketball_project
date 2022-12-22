@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useHref, useNavigate } from 'react-router-dom';
 import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
@@ -13,77 +13,107 @@ import { Card } from '../Card/Card';
 import { Empty } from '../Empty/Empty';
 import { ISelectOption } from '../../types/ISelectOption';
 import { Navigation } from '../Navigation/Navigation';
-import { ITeamsPlayersParams } from '../../types/IBaseParamsGetRequest';
+import { ITeamsParamsGetRequest, ITeamsPlayersParams } from './../../types/IBaseParamsGetRequest';
 
 export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const history = createBrowserHistory();
 
-  const { teams, Page, PageSize, teamsCount } = useAppSelector(({ teams }) => ({
+  const { teams, currentPage, pageSize, teamsCount } = useAppSelector(({ teams }) => ({
     teams: teams.data,
-    Page: teams.page,
-    PageSize: teams.size,
+    currentPage: teams.page,
+    pageSize: teams.size,
     teamsCount: teams.count,
   }));
 
+  const [teamsParams, setTeamsParams] = useState<ITeamsPlayersParams>({});
   const [Name, setName] = useState('');
+
+  const onMount = useRef({
+    isMounting: true,
+    isMounted: false,
+  });
 
   // PERSIST URL---------------------
   useEffect(() => {
-    const UrlString = history.location.search.substring(1);
-    const { page, pageSize, name } = qs.parse(UrlString);
+    const { Page, PageSize, Name } = qs.parse(
+      history.location.search.substring(1)
+    ) as ITeamsParamsGetRequest;
 
-    const PAGE = page ? Number(page) : Number(Page);
-    const PAGE_SIZE = pageSize ? Number(pageSize) : Number(PageSize) !== 25 ? Number(PageSize) : 6;
-    const SEARCH_VALUE = name ? String(name) : '';
+    const PAGE = Page ?? currentPage;
+    const PAGE_SIZE = PageSize ?? (pageSize !== 25 ? pageSize : 6);
+    const SEARCH_VALUE = Name ? `&Name=${Name}` : '';
 
     void dispatch(
       fetchTeams({
         Page: PAGE,
         PageSize: PAGE_SIZE,
-        Name: SEARCH_VALUE,
+        Name,
       })
-    );
+    ).then(() => navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`));
 
-    setName(SEARCH_VALUE);
+    setTeamsParams({
+      page: PAGE,
+      itemsPerPage: PAGE_SIZE,
+      search: Name ?? '',
+    });
+
+    setName(Name ?? '');
   }, []);
 
   // MOUNTING PARAMS INTO URL
   useEffect(() => {
-    const search = Name ? `&name=${Name}` : '';
+    if (!onMount.current.isMounting) {
+      if (onMount.current.isMounted) {
+        const { page, itemsPerPage, search } = teamsParams;
 
-    navigate(`?page=${Page}&pageSize=${PageSize}${search}`);
-  }, [Page, PageSize, Name, teams]);
+        const SEARCH = Name ? `&Name=${Name}` : '';
 
-  const onFetchTeamsHandler = (teamsParams: ITeamsPlayersParams) => {
-    const { page, itemsPerPage, search } = teamsParams;
-    void dispatch(
-      fetchTeams({ Page: page ?? Page, PageSize: itemsPerPage ?? PageSize, Name: search ?? Name })
-    );
-  };
+        void dispatch(
+          fetchTeams({
+            Page: page,
+            PageSize: itemsPerPage,
+            Name: search,
+          })
+        );
+
+        navigate(`?Page=${page}&PageSize=${itemsPerPage}${SEARCH}`);
+      }
+      onMount.current.isMounted = true;
+    }
+    onMount.current.isMounting = false;
+  }, [teamsParams]);
 
   // PAGINATION
   const onPageChange = (page: number) => {
-    onFetchTeamsHandler({ page });
+    setTeamsParams((rest) => ({
+      ...rest,
+      page,
+    }));
   };
 
   // PAGINATION SELECT
   const onPaginationSelectChange = (pageSize: string) => {
-    onFetchTeamsHandler({ itemsPerPage: Number(pageSize), page: 1 });
+    setTeamsParams((rest) => ({
+      ...rest,
+      page: 1,
+      itemsPerPage: Number(pageSize),
+    }));
   };
 
   // SEARCH INPUT
   const onChangeInputHandle = (search: string) => {
     setName(search);
+
     void onChangeInput(search);
   };
 
   const onChangeInput = useCallback(
     debounce((search: string) => {
-      onFetchTeamsHandler({ search, page: 1 });
+      setTeamsParams((rest) => ({ ...rest, page: 1, search }));
     }, 700),
-    [Page, PageSize]
+    [teamsParams.page, teamsParams.itemsPerPage]
   );
 
   // -----------------------
@@ -118,9 +148,9 @@ export const Teams = () => {
       {teams?.length ? (
         <div className="common__pagination">
           <Navigation
-            currentPage={Page}
+            currentPage={currentPage}
             teamsPlayersCount={teamsCount}
-            PageSize={PageSize}
+            PageSize={pageSize}
             onPageChange={onPageChange}
             onPaginationSelectChange={onPaginationSelectChange}
           />

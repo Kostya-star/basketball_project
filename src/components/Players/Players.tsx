@@ -98,7 +98,7 @@ export const Players = () => {
         });
 
         setSearchInputValue(Name ?? '');
-      }
+      }  
     }
   }, [history.location.search]);
 

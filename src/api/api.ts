@@ -15,7 +15,6 @@ import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
 import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './../types/IBaseParamsGetRequest';
 import qs from 'qs';
 
-
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
     return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData);
@@ -28,14 +27,13 @@ export const authAPI = {
 
 export const teamsAPI = {
   async getTeams(teamsParams?: ITeamsParamsGetRequest) {
-    
-    const currentPage = teamsParams?.Page ? `?Page=${teamsParams.Page}` : '';
-    const pageSize = teamsParams?.PageSize ? `&PageSize=${teamsParams.PageSize}` : '';
-    const teamName = teamsParams?.Name ? `&Name=${teamsParams.Name}` : '';
-
-    return await client.get<IGetTeamsResponse>(
-      `Team/GetTeams${currentPage}${pageSize}${teamName}`
-    );
+    return await client.get<IGetTeamsResponse>('Team/GetTeams', {
+      params: {
+        Page: teamsParams?.Page,
+        PageSize: teamsParams?.PageSize,
+        ...(teamsParams?.Name ? { Name: teamsParams?.Name } : {}),
+      },
+    });
   },
 
   async addTeam(values: INewTeamValuesRequest) {
@@ -55,9 +53,6 @@ export const playersAPI = {
         PageSize: playersParams?.PageSize,
         ...(playersParams?.Name ? { Name: playersParams?.Name } : {}),
         ...(playersParams?.TeamIds ? { TeamIds: playersParams?.TeamIds } : {}),
-      },
-      paramsSerializer: {
-        indexes: null,
       },
     });
   },

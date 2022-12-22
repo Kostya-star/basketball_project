@@ -214,7 +214,7 @@ export const Players = () => {
               <Card
                 {...player}
                 image={player.avatarUrl}
-                deleteCard={deletePlayer}
+                // deleteCard={deletePlayer}
                 teamName={teamName}
                 key={index}
               />

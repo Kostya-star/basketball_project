@@ -51,7 +51,8 @@ export const Teams = () => {
         PageSize: PAGE_SIZE,
         Name,
       })
-    ).then(() => navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`));
+    )
+    // .then(() => navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`));
 
     setTeamsParams({
       page: PAGE,
@@ -60,6 +61,11 @@ export const Teams = () => {
     });
 
     setName(Name ?? '');
+    console.log(PAGE, PAGE_SIZE, SEARCH_VALUE);
+    
+    // eslint-disable-next-line no-debugger
+    debugger;
+    navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`);
   }, []);
 
   // MOUNTING PARAMS INTO URL
@@ -118,8 +124,8 @@ export const Teams = () => {
 
   // -----------------------
 
-  const deleteTeam = (id: number) => {
-    void dispatch(removeTeam(id));
+  const onRedirectTeamDetails = () => {
+    return navigate('/TeamDetails');
   };
 
   const onRedirectCreateTeam = () => {
@@ -136,7 +142,7 @@ export const Teams = () => {
       {teams?.length ? (
         <div className="common__filled_content">
           {teams?.map((team, index) => (
-            <Card {...team} image={team.imageUrl} deleteCard={deleteTeam} key={index} />
+            <Card {...team} image={team.imageUrl} onClick={onRedirectTeamDetails} key={index} />
           ))}
         </div>
       ) : (

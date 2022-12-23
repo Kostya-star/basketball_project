@@ -8,7 +8,7 @@
   &__header {
     display: flex;
     justify-content: space-between;
-    // position: fixed;
+    align-items: center;
 
     &__group {
       display: flex;
@@ -103,5 +103,59 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__details {
+    .common__header {
+      background-color: white;
+      border-radius: 10px 10px 0px 0px;
+    }
+    &__card {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      background: linear-gradient(26.45deg, #707070 0%, #393939 100.28%);
+      border-radius: 0px 0px 10px 10px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      color: white;
+      margin-bottom: 24px;
+      img {
+        width: 210px;
+        height: 210px;
+      }
+      h1 {
+        font-size: 36px;
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+      &__description {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 80px;
+        p {
+          h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+          }
+          span {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    &__list {
+      width: 100%;
+      background-color: white;
+      border-collapse: collapse;
+      tr {
+        outline: 0.5px solid #9C9C9C;
+      }
+      td {
+        padding: 9px;
+        text-align: center;
+      }
+    }
   }
 }

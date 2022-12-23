@@ -40,6 +40,7 @@ export const SelectComponent = <T extends string>({
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
+      height: '40px',
       backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
       fontSize: '14px',
       fontWeight: '500',

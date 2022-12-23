@@ -9,9 +9,9 @@ interface InfoHeaderProps {
 export const InfoHeader: FC<InfoHeaderProps> = ({ text }) => {
   return (
     <div className={s.infoHeader}>
-      <p>
+      {/* <p> */}
         <span>{text}</span>
-      </p>
+      {/* </p> */}
     </div>
   );
 };

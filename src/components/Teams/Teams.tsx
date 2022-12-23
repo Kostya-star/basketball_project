@@ -51,8 +51,7 @@ export const Teams = () => {
         PageSize: PAGE_SIZE,
         Name,
       })
-    )
-    // .then(() => navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`));
+    ).then(() => navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`));
 
     setTeamsParams({
       page: PAGE,
@@ -61,11 +60,8 @@ export const Teams = () => {
     });
 
     setName(Name ?? '');
-    console.log(PAGE, PAGE_SIZE, SEARCH_VALUE);
     
-    // eslint-disable-next-line no-debugger
-    debugger;
-    navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`);
+    // navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`);
   }, []);
 
   // MOUNTING PARAMS INTO URL

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'qs';
 
 
 export const baseRequestUrl = 'http://dev.trainee.dex-it.ru'

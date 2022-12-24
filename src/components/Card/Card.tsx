@@ -9,7 +9,7 @@ interface ICardProps {
   number?: number;
   foundationYear?: number;
   team?: number;
-  onClick?: () => void;
+  onClick?: (id: number) => void;
   teamName?: string;
 }
 
@@ -24,7 +24,7 @@ export const Card: FC<ICardProps> = ({
   onClick,
 }) => {
   return (
-    <div onClick={onClick} className={s.card}>
+    <div onClick={() => onClick?.(id)} className={s.card}>
       <img src={`${baseRequestUrl}${image}`} alt="teamPlayerCard" />
       <div>
         <p>

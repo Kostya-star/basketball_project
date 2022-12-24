@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { imageAPI, teamsAPI } from '../../api/api';
-import { INewTeamValues, ITeamState } from '../../types/teams/teams';
+import { INewTeamValues, ITeamData, ITeamState } from '../../types/teams/teams';
 import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 import { ITeamsParamsGetRequest } from './../../types/IBaseParamsGetRequest';
@@ -34,6 +34,11 @@ export const fetchTeams = (teamsParams?: ITeamsParamsGetRequest) => async (dispa
   }
   return resp;
 };
+
+export const getTeam = (id: number) => async(dispatch: AppDispatch) => {
+  const resp = await teamsAPI.getTeam(id)
+  return resp;
+}
 
 export const createTeam =
   (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {

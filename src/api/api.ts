@@ -36,6 +36,10 @@ export const teamsAPI = {
     });
   },
 
+  async getTeam(id: number) {
+    return await client.get(`Team/Get?id=${id}`)
+  },
+
   async addTeam(values: INewTeamValuesRequest) {
     return await client.post<IAddTeamResponse>('Team/Add', values);
   },

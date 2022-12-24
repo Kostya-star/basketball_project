@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHref, useNavigate } from 'react-router-dom';
-import { fetchTeams, removeTeam } from '../../redux/slices/teamsSlice';
+import { fetchTeams, getTeam, removeTeam } from '../../redux/slices/teamsSlice';
 import { AddBtn } from '../AddBtn/AddBtn';
 import { InputSearch } from '../InputSearch/InputSearch';
 import teams__empty from '../../assets/img/TeamsEmpty/teams__empty.png';
@@ -60,8 +60,6 @@ export const Teams = () => {
     });
 
     setName(Name ?? '');
-    
-    // navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH_VALUE}`);
   }, []);
 
   // MOUNTING PARAMS INTO URL
@@ -120,8 +118,8 @@ export const Teams = () => {
 
   // -----------------------
 
-  const onRedirectTeamDetails = () => {
-    return navigate('/TeamDetails');
+  const onRedirectTeamDetails = (id: number) => {
+    return navigate(`/TeamDetails?id=${id}`);
   };
 
   const onRedirectCreateTeam = () => {

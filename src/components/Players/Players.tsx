@@ -39,7 +39,6 @@ export const Players = () => {
 
   const isMounted = useRef<null | boolean>(null);
 
-  
   const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name, id: t.id }));
 
   // GETTING TEAMS AND MOUNTING HISTORY INTO URL
@@ -49,6 +48,8 @@ export const Players = () => {
         history.location.search.substring(1)
       ) as IPlayersParamsGetRequest;
 
+      const PAGE = Page ?? currentPage;
+      const PAGE_SIZE = PageSize ?? (pageSize !== 25 ? pageSize : 6);
       const SEARCH = Name ? `&Name=${Name}` : '';
       const TEAMIDS_INTO_STRING =
         (Array.isArray(TeamIds) &&
@@ -58,11 +59,7 @@ export const Players = () => {
         (typeof TeamIds === 'string' && [TeamIds].map((id) => `&TeamIds=${id}`).join('')) ||
         '';
 
-      navigate(
-        `?Page=${Page ?? currentPage}&PageSize=${
-          PageSize ?? pageSize
-        }${SEARCH}${TEAMIDS_INTO_STRING}`
-      );
+      navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAMIDS_INTO_STRING}`);
       isMounted.current = false;
     });
   }, []);
@@ -98,11 +95,11 @@ export const Players = () => {
         });
 
         setSearchInputValue(Name ?? '');
-      }  
+      }
     }
   }, [history.location.search]);
 
-// GETTING CERTAIN PLAYERS AND MOUNTING MODIFYING THE URL
+  // GETTING CERTAIN PLAYERS AND MOUNTING MODIFYING THE URL
   useEffect(() => {
     if (isMounted.current) {
       const { page, itemsPerPage, search, multiSelectVal } = playersParams;
@@ -173,12 +170,6 @@ export const Players = () => {
 
   const onRedirectCreatePlayer = () => {
     return navigate('/PlayersCreate');
-  };
-
-  const deletePlayer = (id: number) => {
-    void dispatch(removePlayer(id)).then(() => {
-      void dispatch(fetchPlayers({ Page: currentPage, PageSize: pageSize }));
-    });
   };
 
   let teamName = '';

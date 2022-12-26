@@ -119,6 +119,7 @@ export const PlayersCreate = () => {
                 <div className="common__create__image">
                   <InputFile<'avatarUrl'>
                     name="avatarUrl"
+                    // @ts-expect-error
                     image={playersImage}
                     onSavePhoto={onSavePlayerPhoto}
                   />

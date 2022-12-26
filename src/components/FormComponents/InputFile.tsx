@@ -6,13 +6,12 @@ import { baseRequestUrl } from '../../api/baseRequest';
 
 interface InputFileProps<T> {
   name: T;
-  image: File | null;
-  initialImage?: string
+  image: string;
   onSavePhoto: (image: File | null) => void;
 }
 
-export const InputFile = <T extends string>({ name, image, initialImage, onSavePhoto }: InputFileProps<T>) => {
-  const imgPreview = image ? URL.createObjectURL(image) : '';
+export const InputFile = <T extends string>({ name, image, onSavePhoto }: InputFileProps<T>) => {
+  // const imgPreview = image ? URL.createObjectURL(image) : '';
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -25,7 +24,7 @@ export const InputFile = <T extends string>({ name, image, initialImage, onSaveP
       <label htmlFor={name}>
         <input id={name} name={name} type="file" onChange={onChange} />
         <div>
-          <img src={imgPreview ?? `${baseRequestUrl}${initialImage}`} />
+          <img src={image ? `${baseRequestUrl}${image}` : ''} />
         </div>
       </label>
       <ErrorMessage className={s.form__error} name={name} component="span" />

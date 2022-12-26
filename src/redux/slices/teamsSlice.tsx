@@ -4,6 +4,7 @@ import { INewTeamValues, ITeamData, ITeamState } from '../../types/teams/teams';
 import { RespStatusEnum } from '../../types/enum';
 import { AppDispatch } from '../store';
 import { ITeamsParamsGetRequest } from './../../types/IBaseParamsGetRequest';
+import { IUpdateTeamRequest } from '../../types/teams/updateTeamRequest';
 
 const initialState = {
   data: [],
@@ -35,30 +36,56 @@ export const fetchTeams = (teamsParams?: ITeamsParamsGetRequest) => async (dispa
   return resp;
 };
 
-export const getTeam = (id: number) => async(dispatch: AppDispatch) => {
+export const getTeam = (id: number) => async() => {
   const resp = await teamsAPI.getTeam(id)
   return resp;
 }
 
-export const createTeam =
-  (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {
-    if (image) {
-      console.log(image);
-      const imageResp = await imageAPI.saveImage(image).catch((error) => {
-        alert('Error when uploading photo');
-        console.log(error);
-      });
-      if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
-        const imageUrl = imageResp.data;
-        teamValues.imageUrl = imageUrl;
+// export const createTeam =
+//   (teamValues: INewTeamValues, image: File | null) => async () => {
+//     if (image) {
+//       console.log(image);
+//       const imageResp = await imageAPI.saveImage(image).catch((error) => {
+//         console.log(error);
+//       });
+//       if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
+//         const imageUrl = imageResp.data;
+//         teamValues.imageUrl = imageUrl;
 
-        const resp = await teamsAPI.addTeam(teamValues)
-        return resp;
-      }
+//         const resp = await teamsAPI.addTeam(teamValues)
+//         return resp;
+//       }
+//     }
+//   };
+export const addPhoto = (image: File | null) => async() => {
+  if(image) {
+    const resp = await imageAPI.saveImage(image).catch((error) => {
+      console.log(error);
+    });
+
+    if(resp && resp.status === RespStatusEnum.SUCCESS) {
+      return resp.data
     }
-  };
+  }
+} 
 
-export const removeTeam = (id: number) => async (dispatch: AppDispatch) => {
+export const createTeam = (teamValues: INewTeamValues) => async () => {
+  const resp = await teamsAPI.addTeam(teamValues);
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp.data
+  }
+};
+
+export const editTeam = (newTeamValues: IUpdateTeamRequest) => async() => {
+  const resp = await teamsAPI.editTeam(newTeamValues).catch((error) => {
+    console.log(error);
+  });
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp
+  }
+}
+
+export const removeTeam = (id: number) => async () => {
   const resp = await teamsAPI.deleteTeam({id}).catch((error) => {
     console.log(error);
     alert('Error when deleting the team');

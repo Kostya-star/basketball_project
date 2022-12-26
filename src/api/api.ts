@@ -13,7 +13,10 @@ import { IDeleteTeamResponse } from '../types/teams/deleteTeamResp';
 import { IAddPlayerResponse } from '../types/players/addPlayerResp';
 import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
 import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './../types/IBaseParamsGetRequest';
-import qs from 'qs';
+import { ITeamData } from '../types/teams/teams';
+import { IUpdateTeamRequest } from '../types/teams/updateTeamRequest';
+import { IUpdateTeamResponse } from './../types/teams/updateTeamResponse';
+
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
@@ -42,6 +45,10 @@ export const teamsAPI = {
 
   async addTeam(values: INewTeamValuesRequest) {
     return await client.post<IAddTeamResponse>('Team/Add', values);
+  },
+
+  async editTeam(newValues: IUpdateTeamRequest) {
+    return await client.put<IUpdateTeamResponse>(`Team/Update`, newValues)
   },
 
   async deleteTeam({ id }: IDeleteTeamRequest) {

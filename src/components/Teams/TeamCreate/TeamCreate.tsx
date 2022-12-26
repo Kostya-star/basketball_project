@@ -4,7 +4,7 @@ import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { useEffect, useState } from 'react';
-import { createTeam, getTeam } from '../../../redux/slices/teamsSlice';
+import { addPhoto, createTeam, editTeam, getTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
 import { useNavigate } from 'react-router-dom';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
@@ -30,43 +30,60 @@ const validationSchema = Yup.object({
   imageUrl: Yup.mixed().required('Required'),
 });
 
-
 export const TeamCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
-  const [teamImage, setTeamImage] = useState<File | null>(null);
+
+  const [teamImage, setTeamImage] = useState('');
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
-  
+
   const [teamData, setTeamData] = useState({} as ITeamData);
-  
+
+  const { id } = qs.parse(location.search.substring(1));
+
   useEffect(() => {
-    const { id } = qs.parse(location.search.substring(1));
     if (id) {
       void dispatch(getTeam(Number(id))).then((resp) => {
         setTeamData(resp.data);
-        // console.log(resp.data.imageUrl);
       });
     }
   }, []);
-  
-  
-  const onCancelButton = () => {
-    navigate(`/Teams`);
-  };
-  
+
   const onSubmit = async (values: INewTeamValues) => {
     setDisabledSubmit(true);
-    const resp = await dispatch(createTeam(values, teamImage)).catch((error) => {
+
+    // const { id } = qs.parse(location.search.substring(1));
+    if (id) {
+      const newTeamValues = {
+        ...values,
+        id: Number(id),
+      };
+      void dispatch(editTeam(newTeamValues)).then(() => {
+        onRedirectTeamDetails();
+      });
+      setDisabledSubmit(false);
+      return;
+    }
+
+    const resp = await dispatch(createTeam(values)).catch((error) => {
       if (error && error.response.status === RespStatusEnum.EXISTS) {
         setServerResponse('User with the specified login already exists');
       }
     });
-    if (resp?.data) {
-      onCancelButton();
+    if (resp) {
+      onRedirectTeams();
     }
+
     setDisabledSubmit(false);
+  };
+
+  const onRedirectTeams = () => {
+    navigate(`/Teams`);
+  };
+
+  const onRedirectTeamDetails = () => {
+    navigate(`/TeamDetails?id=${Number(id)}`);
   };
 
   const initialValues = {
@@ -74,9 +91,8 @@ export const TeamCreate = () => {
     division: teamData?.division ?? '',
     conference: teamData?.conference ?? '',
     foundationYear: teamData?.foundationYear ?? '',
-    imageUrl: teamData?.imageUrl ? `${baseRequestUrl}${teamData?.imageUrl}` : '',
+    imageUrl: teamData?.imageUrl ?? '',
   } as unknown as INewTeamValues;
-
 
   return (
     <div className="common__create">
@@ -91,12 +107,13 @@ export const TeamCreate = () => {
       >
         {(formik) => {
           const onSaveTeamPhoto = (image: File | null) => {
-            formik.setFieldValue('imageUrl', image);
-            setTeamImage(image);
+            void dispatch(addPhoto(image)).then((imgString) => {
+              if (imgString) {
+                formik.setFieldValue('imageUrl', imgString);
+                setTeamImage(imgString);
+              }
+            });
           };
-          console.log(`${baseRequestUrl}${teamData?.imageUrl}`);
-          
-          
 
           return (
             <Form>
@@ -104,8 +121,7 @@ export const TeamCreate = () => {
                 <div className="common__create__image">
                   <InputFile<'imageUrl'>
                     name="imageUrl"
-                    image={teamImage}
-                    initialImage={teamData?.imageUrl}
+                    image={teamImage || teamData.imageUrl}
                     onSavePhoto={onSaveTeamPhoto}
                   />
                 </div>
@@ -116,7 +132,17 @@ export const TeamCreate = () => {
                   <InputText<'conference'> label="Conference" name="conference" />
                   <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className="common__create__buttons">
-                    <button onClick={onCancelButton}>Cancel</button>
+                    <button
+                      onClick={() => {
+                        if (id) {
+                          onRedirectTeamDetails();
+                          return;
+                        }
+                        onRedirectTeams();
+                      }}
+                    >
+                      Cancel
+                    </button>
                     <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>

@@ -1,0 +1,39 @@
+.details__card {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: linear-gradient(26.45deg, #707070 0%, #393939 100.28%);
+  border-radius: 0px 0px 10px 10px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  color: white;
+  margin-bottom: 24px;
+
+  img {
+    width: 210px;
+    height: 210px;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  &__description {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 80px;
+
+    div {
+      h3 {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      span {
+        font-size: 18px;
+      }
+    }
+  }
+}

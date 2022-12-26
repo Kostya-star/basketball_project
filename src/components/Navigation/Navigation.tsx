@@ -31,7 +31,6 @@ export const Navigation: FC<INavigationProps> = ({
 
   return (
     <>
-      {' '}
       <Pagination currentPage={currentPage} pagesAmount={pagesAmount} onPageChange={onPageChange} />
       <SelectComponent<'pagination_select'>
         name="pagination_select"
@@ -40,6 +39,7 @@ export const Navigation: FC<INavigationProps> = ({
         menuPlacement={'top'}
         defaultValue={paginationSelectDefaultValue}
         value={paginationSelectValue}
+        border={true}
         onChange={onPaginationSelectChange}
       />
     </>

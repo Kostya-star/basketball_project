@@ -19,13 +19,10 @@
   &__filled_content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    // grid-row-gap: 24px;
-    // grid-column-gap: 24px;
     gap: 24px;
     margin-top: 32px;
     overflow-y: auto;
     height: calc(100vh - 290px);
-    // width: calc(100% + 17px);
   }
 
   // teams and players Empty
@@ -107,81 +104,6 @@
     .common__header {
       background-color: white;
       border-radius: 10px 10px 0px 0px;
-    }
-
-    &__card {
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      background: linear-gradient(26.45deg, #707070 0%, #393939 100.28%);
-      border-radius: 0px 0px 10px 10px;
-      padding-top: 60px;
-      padding-bottom: 60px;
-      color: white;
-      margin-bottom: 24px;
-
-      img {
-        width: 210px;
-        height: 210px;
-      }
-
-      h1 {
-        font-size: 36px;
-        margin-bottom: 0;
-        margin-top: 0;
-      }
-
-      &__description {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 80px;
-
-        div {
-          h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
-          }
-
-          span {
-            font-size: 18px;
-          }
-        }
-      }
-    }
-
-    &__table {
-      overflow-y: auto;
-      height: calc(100vh - 580px);
-      table {
-        width: 100%;
-        font-size: 14px;
-        font-weight: 500;
-        background-color: white;
-        border-collapse: collapse;
-        tr {
-          border: 0.5px solid #9C9C9C;
-        }
-        
-        td {
-          padding: 9px;
-          padding-left: 32px;
-          padding-right: 13px;
-        }
-        img {
-          width: 52px;
-          height: 38px;
-        }
-      }
-      &__playerBlock {
-        display: flex;
-        div {
-          margin-right: 5px;
-          span {
-            font-size: 12px;
-          }
-        }
-      }
-      
     }
   }
 }

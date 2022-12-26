@@ -191,6 +191,7 @@ export const Players = () => {
             isMulti={true}
             options={teamsOptions}
             value={playersParams?.multiSelectVal}
+            border={true}
             onChangeMulti={onChangeMultiSelect}
           />
         </div>

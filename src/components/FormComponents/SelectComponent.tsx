@@ -12,10 +12,11 @@ interface ISelectComponentProps<T> {
   value?: PropsValue<ISelectOption> | PropsValue<ISelectOption[]>;
   defaultValue?: PropsValue<ISelectOption>;
   menuPlacement?: MenuPlacement;
+  options: ISelectOption[];
+  border?: boolean
   onChange?: (option: string, name: string) => void;
   onChangeMulti?: (option: ISelectOption[]) => void;
   onBlur?: (name: string) => void;
-  options: ISelectOption[];
   getPositions?: () => void;
 }
 
@@ -27,6 +28,7 @@ export const SelectComponent = <T extends string>({
   value,
   defaultValue,
   menuPlacement,
+  border,
   onChangeMulti,
   getPositions,
   onChange,
@@ -42,9 +44,10 @@ export const SelectComponent = <T extends string>({
       color: '#707070',
       height: '40px',
       backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
+      border: border ? '0.5px solid #D1D1D1' : 'none',
       fontSize: '14px',
       fontWeight: '500',
-      border: 0,
+      // border: 0,
       boxShadow: 'none',
       transition: '0.2s',
       '&:hover': {

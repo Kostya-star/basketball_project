@@ -43,6 +43,7 @@ export const getTeam = (id: number) => async(dispatch: AppDispatch) => {
 export const createTeam =
   (teamValues: INewTeamValues, image: File | null) => async (dispatch: AppDispatch) => {
     if (image) {
+      console.log(image);
       const imageResp = await imageAPI.saveImage(image).catch((error) => {
         alert('Error when uploading photo');
         console.log(error);

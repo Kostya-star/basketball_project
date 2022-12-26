@@ -3,14 +3,16 @@ import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { useState } from 'react';
-import { createTeam } from '../../../redux/slices/teamsSlice';
+import { useEffect, useState } from 'react';
+import { createTeam, getTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
 import { useNavigate } from 'react-router-dom';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
-import { INewTeamValues } from '../../../types/teams/teams';
+import { INewTeamValues, ITeamData } from '../../../types/teams/teams';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
+import qs from 'qs';
+import { baseRequestUrl } from './../../../api/baseRequest';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -28,26 +30,32 @@ const validationSchema = Yup.object({
   imageUrl: Yup.mixed().required('Required'),
 });
 
-const initialValues = {
-  name: '',
-  division: '',
-  conference: '',
-  foundationYear: '',
-  imageUrl: '',
-} as unknown as INewTeamValues;
 
 export const TeamCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  
   const [teamImage, setTeamImage] = useState<File | null>(null);
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
-
+  
+  const [teamData, setTeamData] = useState({} as ITeamData);
+  
+  useEffect(() => {
+    const { id } = qs.parse(location.search.substring(1));
+    if (id) {
+      void dispatch(getTeam(Number(id))).then((resp) => {
+        setTeamData(resp.data);
+        // console.log(resp.data.imageUrl);
+      });
+    }
+  }, []);
+  
+  
   const onCancelButton = () => {
     navigate(`/Teams`);
   };
-
+  
   const onSubmit = async (values: INewTeamValues) => {
     setDisabledSubmit(true);
     const resp = await dispatch(createTeam(values, teamImage)).catch((error) => {
@@ -61,6 +69,15 @@ export const TeamCreate = () => {
     setDisabledSubmit(false);
   };
 
+  const initialValues = {
+    name: teamData?.name ?? '',
+    division: teamData?.division ?? '',
+    conference: teamData?.conference ?? '',
+    foundationYear: teamData?.foundationYear ?? '',
+    imageUrl: teamData?.imageUrl ? `${baseRequestUrl}${teamData?.imageUrl}` : '',
+  } as unknown as INewTeamValues;
+
+
   return (
     <div className="common__create">
       <InfoHeader text="Teams / Add new team" />
@@ -70,12 +87,16 @@ export const TeamCreate = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         validateOnMount
+        enableReinitialize
       >
         {(formik) => {
           const onSaveTeamPhoto = (image: File | null) => {
             formik.setFieldValue('imageUrl', image);
             setTeamImage(image);
           };
+          console.log(`${baseRequestUrl}${teamData?.imageUrl}`);
+          
+          
 
           return (
             <Form>
@@ -84,6 +105,7 @@ export const TeamCreate = () => {
                   <InputFile<'imageUrl'>
                     name="imageUrl"
                     image={teamImage}
+                    initialImage={teamData?.imageUrl}
                     onSavePhoto={onSaveTeamPhoto}
                   />
                 </div>

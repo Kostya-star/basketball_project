@@ -4,7 +4,7 @@ import { ReactComponent as DeleteSVG } from '../../../assets/icons/deleteSvg.svg
 import { useEffect, useState } from 'react';
 import { getTeam } from '../../../redux/slices/teamsSlice';
 import { useAppDispatch } from './../../../redux/hooks';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 import { ITeamData } from '../../../types/teams/teams';
 import { fetchPlayers } from './../../../redux/slices/playersSlice';
@@ -12,9 +12,11 @@ import { IPlayerData } from '../../../types/players/players';
 import { DetailsCard } from '../../DetailsCard/DetailsCard';
 import { DetailsTable } from '../../DetailsTable/DetailsTable';
 
+
 export const TeamDetails = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const navigate = useNavigate()
 
   const [teamData, setTeamData] = useState({} as ITeamData);
   const [playersInTeam, setPlayersInTeam] = useState([] as IPlayerData[]);
@@ -35,14 +37,25 @@ export const TeamDetails = () => {
     }
   }, []);
 
+  const onEditTeamHandle = () => {
+    const { id } = qs.parse(location.search.substring(1));
+    if(id) {
+      navigate(`/TeamCreate?id=${Number(id)}`)
+    }
+  }
+
+  const onDeleteTeamHandle = () => {
+    console.log('delete');
+  }
+
   return (
     <div className="common__container">
       <div className="common__details">
         <div className="common__header">
           <InfoHeader text={`Teams / ${teamData?.name}`} />
-          <EditSVG />
+          <EditSVG onClick={onEditTeamHandle}/>
           &nbsp; &nbsp;
-          <DeleteSVG />
+          <DeleteSVG onClick={onDeleteTeamHandle}/>
           &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
 

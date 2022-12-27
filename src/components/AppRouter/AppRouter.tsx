@@ -11,6 +11,7 @@ import { TeamCreatePage } from './../../pages/TeamCreatePage';
 import { TeamsPage } from '../../pages/TeamsPage';
 import { PlayersCreatePage } from '../../pages/PlayersCreatePage';
 import { TeamDetailsPage } from '../../pages/TeamDetailsPage';
+import { PlayerDetailsPage } from '../../pages/PlayerDetailsPage';
 
 export const AppRouter: FC = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export const AppRouter: FC = () => {
           <Route path="TeamDetails" element={<TeamDetailsPage />} />
           <Route path="Players" element={<PlayersPage />} />
           <Route path="PlayersCreate" element={<PlayersCreatePage />} />
+          <Route path="PlayerDetails" element={<PlayerDetailsPage />} />
         </Route>
       )}
 

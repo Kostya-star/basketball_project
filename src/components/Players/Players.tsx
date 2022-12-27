@@ -181,6 +181,10 @@ export const Players = () => {
     }
   };
 
+  const onRedirectPlayerDetails = (id: number) => {
+    navigate(`/PlayerDetails?id=${id}`)
+  }
+
   return (
     <div className="common__container">
       <div className="common__header">
@@ -206,7 +210,7 @@ export const Players = () => {
               <Card
                 {...player}
                 image={player.avatarUrl}
-                // deleteCard={deletePlayer}
+                onClick={onRedirectPlayerDetails}
                 teamName={teamName}
                 key={index}
               />

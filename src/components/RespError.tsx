@@ -14,12 +14,13 @@ export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
   const userSuccess = response === 'User was created successfully'
   const userUnauthorized = response === 'Unauthorized'
   const notFound = response === 'Not Found'
+  const teamContainsPlayers = response === "Can't delete a team that contains players"
   
   useEffect(() => {
     if (response) {
       const authTimer = setTimeout(() => {
         setResponse('')
-      }, 3000);
+      }, 4000);
       return () => clearTimeout(authTimer);
     }
   }, [response]);
@@ -29,7 +30,7 @@ export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
       className={classnames('server__response', {
         // "auth__error_show": unauthorized ?? userExists,
         // "auth__error_hide": unauthorized === false || userExists === false
-        "server__error": userNotExist || userUnauthorized || notFound,
+        "server__error": userNotExist || userUnauthorized || notFound || teamContainsPlayers,
         "server__success": userSuccess,
       })}
     >

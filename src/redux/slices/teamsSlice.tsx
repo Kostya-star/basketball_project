@@ -86,14 +86,12 @@ export const editTeam = (newTeamValues: IUpdateTeamRequest) => async() => {
 }
 
 export const removeTeam = (id: number) => async () => {
-  const resp = await teamsAPI.deleteTeam({id}).catch((error) => {
-    console.log(error);
-    alert('Error when deleting the team');
-  });
+  const resp = await teamsAPI.deleteTeam({id})
 
-  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+  // if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp
     // void dispatch(fetchTeams());
-  }
+  // }
 };
 
 export default teamsSlice.reducer;

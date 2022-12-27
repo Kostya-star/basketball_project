@@ -46,6 +46,15 @@ export const fetchPlayers = (playersParams?: IPlayersParamsGetRequest) => async 
   }
 };
 
+export const getPlayer = (id: number) => async () => {
+  const resp = await playersAPI.getPlayer(id).catch((error) => {
+    console.log(error);
+  });
+  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp;
+  }
+};
+
 export const createPlayer =
   (newPlayer: IAddPLayerRequest, image: File | null) => async (dispatch: AppDispatch) => {
     if (image) {

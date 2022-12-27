@@ -91,7 +91,7 @@ export const PlayersCreate = () => {
 
   return (
     <div className="common__create">
-      <InfoHeader text="Players / Add new player" />
+      {/* <InfoHeader name="Players / Add new player" /> */}
 
       <Formik
         initialValues={initialValues}

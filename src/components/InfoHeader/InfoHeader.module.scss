@@ -1,11 +1,46 @@
 .infoHeader {
-  padding-left: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
+  padding-left: 32px;
+  padding-right: 38px;
   padding-top: 24px;
   padding-bottom: 24px;
-  span {
-    color: #E4163A;
-    font-weight: 500;
-    font-size: 14px;
+
+  div {
+
+    a,
+    span {
+      color: #E4163A;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    a {
+      -webkit-animation: blink 2s linear infinite; 
+      animation: blink 2s linear infinite; 
+    }
+    
+    @-webkit-keyframes blink { 
+      0% { color: #E4163A; }
+      50% { color: #FBB; }
+      100% { color: #E4163A; }
+    }
+    
+    @keyframes blink {  
+      0% { color: #E4163A; }
+      50% { color: #FBB; }
+      100% { color: #E4163A; } 
+    }
   }
+
+div {
+  svg {
+    &:first-child {
+      margin-right: 20px;
+    }
+  }
+}
 }

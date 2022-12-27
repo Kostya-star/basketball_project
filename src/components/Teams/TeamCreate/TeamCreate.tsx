@@ -53,7 +53,6 @@ export const TeamCreate = () => {
   const onSubmit = async (values: INewTeamValues) => {
     setDisabledSubmit(true);
 
-    // const { id } = qs.parse(location.search.substring(1));
     if (id) {
       const newTeamValues = {
         ...values,
@@ -94,9 +93,23 @@ export const TeamCreate = () => {
     imageUrl: teamData?.imageUrl ?? '',
   } as unknown as INewTeamValues;
 
+  const onClickHandler = () => {
+    if (id) {
+      onRedirectTeamDetails();
+      return;
+    }
+    onRedirectTeams();
+  };
+
+
+  const getBackLink = 'Teams'
+
   return (
     <div className="common__create">
-      <InfoHeader text="Teams / Add new team" />
+      <InfoHeader
+        getBackLink={getBackLink}
+        name={'Add new team'}
+      />
 
       <Formik
         initialValues={initialValues}
@@ -132,17 +145,7 @@ export const TeamCreate = () => {
                   <InputText<'conference'> label="Conference" name="conference" />
                   <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
                   <div className="common__create__buttons">
-                    <button
-                      onClick={() => {
-                        if (id) {
-                          onRedirectTeamDetails();
-                          return;
-                        }
-                        onRedirectTeams();
-                      }}
-                    >
-                      Cancel
-                    </button>
+                    <button onClick={onClickHandler}>Cancel</button>
                     <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>

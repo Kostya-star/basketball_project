@@ -16,6 +16,7 @@ import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './../types/IBa
 import { ITeamData } from '../types/teams/teams';
 import { IUpdateTeamRequest } from '../types/teams/updateTeamRequest';
 import { IUpdateTeamResponse } from './../types/teams/updateTeamResponse';
+import { IGetPlayerResponse } from '../types/players/getPlayerResponse';
 
 
 export const authAPI = {
@@ -66,6 +67,10 @@ export const playersAPI = {
         ...(playersParams?.TeamIds ? { TeamIds: playersParams?.TeamIds } : {}),
       },
     });
+  },
+
+  async getPlayer(id: number) {
+    return await client.get<IGetPlayerResponse>(`Player/Get?id=${id}`)
   },
 
   async getPositions() {

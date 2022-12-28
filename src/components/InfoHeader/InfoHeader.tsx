@@ -9,16 +9,16 @@ interface InfoHeaderProps {
   getBackLink: string;
   name: string;
   SVGs?: boolean;
-  onEditTeamHandle?: () => void;
-  onDeleteTeamHandle?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export const InfoHeader: FC<InfoHeaderProps> = ({
   getBackLink,
   name,
   SVGs,
-  onEditTeamHandle,
-  onDeleteTeamHandle,
+  onEdit,
+  onDelete,
 }) => {
   return (
     <div className={s.infoHeader}>
@@ -27,8 +27,8 @@ export const InfoHeader: FC<InfoHeaderProps> = ({
       </div>
       {SVGs && (
         <div>
-          <EditSVG onClick={onEditTeamHandle} />
-          <DeleteSVG onClick={onDeleteTeamHandle} />
+          <EditSVG onClick={onEdit} />
+          <DeleteSVG onClick={onDelete} />
         </div>
       )}
     </div>

@@ -9,11 +9,13 @@ import { InputDate } from '../../FormComponents/InputDate';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
-import { getPositions, createPlayer } from '../../../redux/slices/playersSlice';
+import { getPositions, createPlayer, getPlayer, addPhoto } from '../../../redux/slices/playersSlice';
 import { IAddPLayerRequest } from '../../../types/players/addPLayerRequest';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
 import { ISelectOption } from '../../../types/ISelectOption';
+import qs from 'qs';
+import { IGetPlayerResponse } from '../../../types/players/getPlayerResponse';
 
 
 const validationSchema = Yup.object({
@@ -24,70 +26,91 @@ const validationSchema = Yup.object({
   team: Yup.string().required('Required'),
   height: Yup.string()
     .required('Required')
-    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+    .matches(/^[0-9]+$/, 'Field can only contain numbers')
+    .matches(/^[1-9][0-9]*$/, 'Year must not start with 0'),
   weight: Yup.string()
     .required('Required')
-    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+    .matches(/^[0-9]+$/, 'Field can only contain numbers')
+    .matches(/^[1-9][0-9]*$/, 'Year must not start with 0'),
   birthday: Yup.string().required('Required'),
   number: Yup.string()
     .required('Required')
-    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+    .matches(/^[0-9]+$/, 'Field can only contain numbers')
+    .matches(/^[1-9][0-9]*$/, 'Year must not start with 0'),
   avatarUrl: Yup.mixed().required('Required'),
 });
 
-const initialValues = {
-  name: '',
-  position: '',
-  team: '',
-  height: '',
-  weight: '',
-  birthday: '',
-  number: '',
-  avatarUrl: '',
-} as unknown as IAddPLayerRequest;
 
 export const PlayersCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [playersImage, setPlayersImage] = useState<File | null>(null);
+  const [playersImage, setPlayersImage] = useState('');
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
+  const [playerData, setPlayerData] = useState({} as IGetPlayerResponse);
 
   const positions = useAppSelector(({ players }) => players.positions);
   const teams = useAppSelector(({ teams }) => teams.data);
 
-  const positionOptions = positions?.map((p) => ({ value: p, label: p }));
-  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
+  const { id } = qs.parse(location.search.substring(1));
 
-  const onGetPositions = () => {
-    if (!positions.length) {
-      void dispatch(getPositions());
+  useEffect(() => {
+    if (id) {
+      void dispatch(getPlayer(Number(id))).then((resp) => {
+        if(resp) {
+          setPlayerData(resp.data);
+        }
+      });
     }
-  };
-
+  }, []);
+  
+  
   const onSubmit = async (newPlayer: IAddPLayerRequest) => {
     setDisabledSubmit(true);
     const teamId = teams?.find((team) => team.name === String(newPlayer.team));
     if (teamId) {
       const newPlayerWithTeamId = { ...newPlayer, team: teamId.id };
-      const resp = await dispatch(createPlayer(newPlayerWithTeamId, playersImage)).catch(
-        (error) => {
-          if (error && error.response.status === RespStatusEnum.EXISTS) {
-            setServerResponse('User with the specified login already exists');
-          }
+      const resp = await dispatch(createPlayer(newPlayerWithTeamId)).catch((error) => {
+        if (error && error.response.status === RespStatusEnum.EXISTS) {
+          setServerResponse('User with the specified login already exists');
         }
-      );
+      });
       if (resp?.data) {
         onCancelButton();
       }
     }
     setDisabledSubmit(false);
   };
+  
+  const positionOptions = positions?.map((p) => ({ value: p, label: p }));
+  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
+  
+  const onGetPositions = () => {
+    if (!positions.length) {
+      void dispatch(getPositions());
+    }
+  };
+
+  console.log(playerData);
+  console.log(positionOptions);
+  const initialPosition = positionOptions?.find(o => o.value === playerData.position)
+  
+  const initialValues = {
+    name: playerData?.name ?? '',
+    position: playerData?.position && positionOptions ? initialPosition : '',
+    team: playerData?.teamName ?? '',
+    height: playerData.height ?? '',
+    weight: playerData.weight ?? '',
+    birthday: playerData.birthday ?? '',
+    number: playerData.number ?? '',
+    avatarUrl: playerData.avatarUrl ?? '',
+  } as unknown as IAddPLayerRequest;
 
   const onCancelButton = () => {
     return navigate('/Players');
   };
+
 
   return (
     <div className="common__create">
@@ -98,11 +121,18 @@ export const PlayersCreate = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         validateOnMount
+        enableReinitialize
       >
         {(formik) => {
+          console.log(formik);
+          
           const onSavePlayerPhoto = (image: File | null) => {
-            formik.setFieldValue('avatarUrl', image);
-            setPlayersImage(image);
+            void dispatch(addPhoto(image)).then(imgString => {
+              if(imgString) {
+                formik.setFieldValue('avatarUrl', imgString);
+                setPlayersImage(imgString);
+              }
+            })
           };
 
           const onChangeOption = (option: string, name: string) => {
@@ -119,8 +149,7 @@ export const PlayersCreate = () => {
                 <div className="common__create__image">
                   <InputFile<'avatarUrl'>
                     name="avatarUrl"
-                    // @ts-expect-error
-                    image={playersImage}
+                    image={playersImage || playerData.avatarUrl}
                     onSavePhoto={onSavePlayerPhoto}
                   />
                 </div>
@@ -135,6 +164,7 @@ export const PlayersCreate = () => {
                     onBlur={onBlurOption}
                     getPositions={onGetPositions}
                     options={positionOptions}
+                    defaultValue={initialPosition}
                   />
                   <SelectComponent<'team'>
                     label="Teams"

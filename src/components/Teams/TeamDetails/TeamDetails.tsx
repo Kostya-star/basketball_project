@@ -73,20 +73,20 @@ export const TeamDetails = () => {
             getBackLink={getBackLink}
             name={teamData?.name}
             SVGs={true}
-            onEditTeamHandle={onEditTeamHandle}
-            onDeleteTeamHandle={onDeleteTeamHandle}
+            onEdit={onEditTeamHandle}
+            onDelete={onDeleteTeamHandle}
           />
         </div>
 
         {/* <DetailsCard {...teamData} /> */}
         <DetailsCard
           cardData={{
+            name: teamData.name,
+            image: teamData.imageUrl,
             foundationYear: teamData.foundationYear,
             division: teamData.division,
             conference: teamData.conference,
           }}
-          name={teamData.name}
-          image={teamData.imageUrl}
         />
 
         {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}

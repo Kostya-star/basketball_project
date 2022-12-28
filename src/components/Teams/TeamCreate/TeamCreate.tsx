@@ -26,7 +26,8 @@ const validationSchema = Yup.object({
     .matches(/^[a-zA-Z\s*]+$/, 'Field can only contain Latin letters'),
   foundationYear: Yup.string()
     .required('Required')
-    .matches(/^[0-9]+$/, 'Field can only contain numbers'),
+    .matches(/^[0-9]+$/, 'Field can only contain numbers')
+    .matches(/^[1-9][0-9]*$/, 'Year must not start with 0'),
   imageUrl: Yup.mixed().required('Required'),
 });
 

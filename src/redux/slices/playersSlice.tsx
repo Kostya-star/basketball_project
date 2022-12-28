@@ -55,22 +55,28 @@ export const getPlayer = (id: number) => async () => {
   }
 };
 
-export const createPlayer =
-  (newPlayer: IAddPLayerRequest, image: File | null) => async (dispatch: AppDispatch) => {
-    if (image) {
-      const imageResp = await imageAPI.saveImage(image).catch((error) => {
-        alert('Error when uploading photo');
-        console.log(error);
-      });
-      if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
-        const imageURL = imageResp.data;
-        newPlayer.avatarUrl = imageURL;
+export const createPlayer = (newPlayer: IAddPLayerRequest) => async () => {
+  // if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
+    // const imageURL = imageResp.data;
+    // newPlayer.avatarUrl = imageURL;
 
-        const resp = await playersAPI.addPlayer(newPlayer);
-        return resp;
-      }
+    const resp = await playersAPI.addPlayer(newPlayer);
+    return resp;
+  // }
+};
+
+
+export const addPhoto = (image: File | null) => async () => {
+  if (image) {
+    const resp = await imageAPI.saveImage(image).catch((error) => {
+      alert('Error when uploading photo');
+      console.log(error);
+    });
+    if (resp && resp.status === RespStatusEnum.SUCCESS) {
+      return resp.data;
     }
-  };
+  }
+};
 
 export const getPositions = () => async (dispatch: AppDispatch) => {
   const resp = await playersAPI.getPositions().catch((error) => {
@@ -82,12 +88,12 @@ export const getPositions = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const removePlayer = (id: number) => async (dispatch: AppDispatch) => {
+export const removePlayer = (id: number) => async () => {
   const resp = await playersAPI.deletePlayer({id}).catch((error) => {
     console.log(error);
-    alert('Error when deleting the player');
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp
     // void dispatch(fetchPlayers());
   }
 };

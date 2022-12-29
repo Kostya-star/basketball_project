@@ -125,7 +125,7 @@ export const SelectComponent = <T extends string>({
 
   return (
     <div
-      onClick={getPositions}
+      // onClick={getPositions}
       className={classnames({
         [s.select]: !IsMulti,
         [s.select__multi]: IsMulti,

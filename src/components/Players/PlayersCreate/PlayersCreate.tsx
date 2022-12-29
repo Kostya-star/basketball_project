@@ -9,7 +9,13 @@ import { InputDate } from '../../FormComponents/InputDate';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
-import { getPositions, createPlayer, getPlayer, addPhoto } from '../../../redux/slices/playersSlice';
+import {
+  getPositions,
+  createPlayer,
+  getPlayer,
+  addPhoto,
+  editPlayer,
+} from '../../../redux/slices/playersSlice';
 import { IAddPLayerRequest } from '../../../types/players/addPLayerRequest';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
@@ -40,7 +46,6 @@ const validationSchema = Yup.object({
   avatarUrl: Yup.mixed().required('Required'),
 });
 
-
 export const PlayersCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -49,26 +54,67 @@ export const PlayersCreate = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
   const [playerData, setPlayerData] = useState({} as IGetPlayerResponse);
+  const [positions, setPositions] = useState<string[]>([]);
 
-  const positions = useAppSelector(({ players }) => players.positions);
   const teams = useAppSelector(({ teams }) => teams.data);
 
   const { id } = qs.parse(location.search.substring(1));
 
   useEffect(() => {
+    void dispatch(getPositions()).then((positionsArray) => {
+      if (positionsArray) {
+        setPositions(positionsArray);
+      }
+    });
     if (id) {
       void dispatch(getPlayer(Number(id))).then((resp) => {
-        if(resp) {
+        if (resp) {
           setPlayerData(resp.data);
         }
       });
     }
   }, []);
-  
-  
+
+  const positionOptions = positions?.map((p) => ({ value: p, label: p }));
+  const initialPosition = positionOptions?.find((o) => o.value === playerData?.position);
+
+  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
+  const initialSelectedTeam = teamsOptions?.find((t) => t.value === playerData.teamName);
+
+  const date = playerData.birthday?.replace('T00:00:00', '');
+
+  const initialValues = {
+    name: playerData?.name ?? '',
+    position: initialPosition?.value ?? '',
+    team: initialSelectedTeam?.value ?? '',
+    height: playerData?.height ?? '',
+    weight: playerData?.weight ?? '',
+    birthday: date ?? '',
+    number: playerData?.number ?? '',
+    avatarUrl: playerData?.avatarUrl ?? '',
+  } as unknown as IAddPLayerRequest;
+
   const onSubmit = async (newPlayer: IAddPLayerRequest) => {
     setDisabledSubmit(true);
     const teamId = teams?.find((team) => team.name === String(newPlayer.team));
+    
+    if(id) {
+      if(teamId) {
+        const newPlayerValues = {
+          ...newPlayer,
+          id: Number(id),
+          team: teamId.id
+        };
+        void dispatch(editPlayer(newPlayerValues)).then((resp) => {
+          console.log(resp);
+          
+          onRedirectPlayerDetails()
+        })
+        setDisabledSubmit(false);
+        return;
+      }
+    }
+
     if (teamId) {
       const newPlayerWithTeamId = { ...newPlayer, team: teamId.id };
       const resp = await dispatch(createPlayer(newPlayerWithTeamId)).catch((error) => {
@@ -77,40 +123,27 @@ export const PlayersCreate = () => {
         }
       });
       if (resp?.data) {
-        onCancelButton();
+        onRedirectPlayers();
       }
     }
     setDisabledSubmit(false);
   };
-  
-  const positionOptions = positions?.map((p) => ({ value: p, label: p }));
-  const teamsOptions = teams?.map((t) => ({ value: t.name, label: t.name }));
-  
-  const onGetPositions = () => {
-    if (!positions.length) {
-      void dispatch(getPositions());
-    }
-  };
 
-  console.log(playerData);
-  console.log(positionOptions);
-  const initialPosition = positionOptions?.find(o => o.value === playerData.position)
-  
-  const initialValues = {
-    name: playerData?.name ?? '',
-    position: playerData?.position && positionOptions ? initialPosition : '',
-    team: playerData?.teamName ?? '',
-    height: playerData.height ?? '',
-    weight: playerData.weight ?? '',
-    birthday: playerData.birthday ?? '',
-    number: playerData.number ?? '',
-    avatarUrl: playerData.avatarUrl ?? '',
-  } as unknown as IAddPLayerRequest;
 
-  const onCancelButton = () => {
+  const onRedirectPlayers = () => {
     return navigate('/Players');
   };
 
+  const onRedirectPlayerDetails = () => {
+    navigate(`/PlayerDetails?id=${Number(id)}`)
+  }
+
+  const onCancel = () => {
+    if(id) {
+      return onRedirectPlayerDetails()
+    }
+    onRedirectPlayers()
+  }
 
   return (
     <div className="common__create">
@@ -124,15 +157,13 @@ export const PlayersCreate = () => {
         enableReinitialize
       >
         {(formik) => {
-          console.log(formik);
-          
           const onSavePlayerPhoto = (image: File | null) => {
-            void dispatch(addPhoto(image)).then(imgString => {
-              if(imgString) {
+            void dispatch(addPhoto(image)).then((imgString) => {
+              if (imgString) {
                 formik.setFieldValue('avatarUrl', imgString);
                 setPlayersImage(imgString);
               }
-            })
+            });
           };
 
           const onChangeOption = (option: string, name: string) => {
@@ -142,6 +173,21 @@ export const PlayersCreate = () => {
           const onBlurOption = (name: string) => {
             formik.setFieldTouched(name, true);
           };
+          
+          const currentSelectedPosition = positionOptions?.find(
+            (o) => o.value === formik.values.position
+            );
+            const currentSelectedTeam = teamsOptions.find(
+              (t) => t.value === String(formik.values.team)
+              );
+
+          const onChangeDateHandler = (date: string, name: string) => {
+            formik.setFieldValue(name, date);
+          };
+          
+          const onBlurDateHandler = (name: string) => {
+            formik.setFieldTouched(name, true);
+          }
 
           return (
             <Form>
@@ -162,9 +208,8 @@ export const PlayersCreate = () => {
                     isMulti={false}
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
-                    getPositions={onGetPositions}
                     options={positionOptions}
-                    defaultValue={initialPosition}
+                    value={currentSelectedPosition ?? initialPosition}
                   />
                   <SelectComponent<'team'>
                     label="Teams"
@@ -173,17 +218,24 @@ export const PlayersCreate = () => {
                     onChange={onChangeOption}
                     onBlur={onBlurOption}
                     options={teamsOptions}
-                    />
+                    value={currentSelectedTeam ?? initialSelectedTeam}
+                  />
                   <div className="common__create__groupParameters">
                     <InputText<'height'> label="Height (cm)" name="height" />
                     <InputText<'weight'> label="Weight (kg)" name="weight" />
                   </div>
                   <div className="common__create__groupParameters">
-                    <InputDate<'birthday'> label="Birthday" name="birthday" />
+                    <InputDate<'birthday'>
+                      label="Birthday"
+                      name="birthday"
+                      onChange={onChangeDateHandler}
+                      onBlur={onBlurDateHandler}
+                      value={formik.values.birthday ?? date}
+                    />
                     <InputText<'number'> label="Number" name="number" />
                   </div>
                   <div className="common__create__buttons">
-                    <button onClick={onCancelButton}>Cancel</button>
+                    <button onClick={onCancel}>Cancel</button>
                     <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>

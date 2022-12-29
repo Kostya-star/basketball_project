@@ -15,6 +15,7 @@ export const DetailsCardPlayerContent: FC<IDetailsCardPlayerContentProps> = ({
   weight,
   age,
 }) => {
+  
   return (
     <>
       <div>

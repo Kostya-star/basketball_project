@@ -17,6 +17,7 @@ import { ITeamData } from '../types/teams/teams';
 import { IUpdateTeamRequest } from '../types/teams/updateTeamRequest';
 import { IUpdateTeamResponse } from './../types/teams/updateTeamResponse';
 import { IGetPlayerResponse } from '../types/players/getPlayerResponse';
+import { IUpdatePlayerRequest } from '../types/players/updatePlayerRequest';
 
 
 export const authAPI = {
@@ -79,6 +80,10 @@ export const playersAPI = {
 
   async addPlayer(newPlayer: IAddPLayerRequest) {
     return await client.post<IAddPlayerResponse>('Player/Add', newPlayer);
+  },
+
+  async editPlayer(newPlayer: IUpdatePlayerRequest) {
+    return await client.put<any>('Player/Update', newPlayer);
   },
 
   async deletePlayer({ id }: IDeletePlayerRequest) {

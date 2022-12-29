@@ -3,12 +3,12 @@ import { RespStatusEnum } from '../../types/enum';
 import { IPlayersParamsGetRequest } from '../../types/IBaseParamsGetRequest';
 import { IAddPLayerRequest } from '../../types/players/addPLayerRequest';
 import { IPlayerData, IPlayersState } from '../../types/players/players';
+import { IUpdatePlayerRequest } from '../../types/players/updatePlayerRequest';
 import { AppDispatch } from '../store';
 import { imageAPI, playersAPI, teamsAPI } from './../../api/api';
 
 interface IPlayersSliceState {
   playersData: IPlayersState;
-  positions: string[];
 }
 
 const initialState: IPlayersSliceState = {
@@ -18,7 +18,6 @@ const initialState: IPlayersSliceState = {
     page: 1,
     size: 6,
   } as IPlayersState,
-  positions: [],
 };
 
 export const playersSlice = createSlice({
@@ -28,13 +27,10 @@ export const playersSlice = createSlice({
     setPlayers(state, action: PayloadAction<IPlayersState>) {
       state.playersData = action.payload;
     },
-    setPositions(state, { payload }: PayloadAction<string[]>) {
-      state.positions = payload;
-    },
   },
 });
 
-export const { setPlayers, setPositions } = playersSlice.actions;
+export const { setPlayers} = playersSlice.actions;
 
 export const fetchPlayers = (playersParams?: IPlayersParamsGetRequest) => async (dispatch: AppDispatch) => {
   const resp = await playersAPI.getPlayers(playersParams).catch((error) => {
@@ -84,9 +80,18 @@ export const getPositions = () => async (dispatch: AppDispatch) => {
     alert(error);
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    dispatch(setPositions(resp.data));
+    return resp.data
   }
 };
+
+export const editPlayer = (editedPlayer: IUpdatePlayerRequest) => async() => {
+  const resp = await playersAPI.editPlayer(editedPlayer).catch(error => {
+    console.log(error);
+  })
+  if(resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp
+  }
+}
 
 export const removePlayer = (id: number) => async () => {
   const resp = await playersAPI.deletePlayer({id}).catch((error) => {
@@ -94,7 +99,6 @@ export const removePlayer = (id: number) => async () => {
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
     return resp
-    // void dispatch(fetchPlayers());
   }
 };
 

@@ -44,8 +44,7 @@ export const TeamCreate = () => {
 
   const onSubmit = async (values: INewTeamValues) => {
     setDisabledSubmit(true);
-
-    if (id) {
+    if(id) {
       const newTeamValues = {
         ...values,
         id: Number(id),

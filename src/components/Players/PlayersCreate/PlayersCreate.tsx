@@ -8,7 +8,7 @@ import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { InputDate } from '../../FormComponents/InputDate';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector, useStateData } from './../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from './../../../redux/hooks';
 import {
   getPositions,
   createPlayer,
@@ -21,6 +21,7 @@ import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
 import qs from 'qs';
 import { IGetPlayerResponse } from './../../../types/players/getPlayerResponse';
+import { useStateData } from '../../../hooks';
 
 const validationSchema = Yup.object({
   name: Yup.string()

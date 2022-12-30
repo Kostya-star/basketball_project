@@ -2,7 +2,7 @@ import { InputText } from '../../FormComponents/InputText';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import { useAppDispatch, useStateData } from '../../../redux/hooks';
+import { useAppDispatch } from '../../../redux/hooks';
 import { useState } from 'react';
 import { addPhoto, createTeam, editTeam, getTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
@@ -12,6 +12,7 @@ import { INewTeamValues, ITeamData } from '../../../types/teams/teams';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
 import qs from 'qs';
+import { useStateData } from '../../../hooks';
 
 const validationSchema = Yup.object({
   name: Yup.string()

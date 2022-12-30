@@ -1,4 +1,4 @@
-import { useAppDispatch, useStateData } from './../../../redux/hooks';
+import { useAppDispatch } from './../../../redux/hooks';
 import qs from 'qs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPlayer, removePlayer } from '../../../redux/slices/playersSlice';
@@ -6,6 +6,7 @@ import { DetailsCard } from '../../DetailsCard/DetailsCard';
 import { IGetPlayerResponse } from '../../../types/players/getPlayerResponse';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { RespStatusEnum } from '../../../types/enum';
+import { useStateData } from '../../../hooks';
 
 
 export const PlayerDetails = () => {

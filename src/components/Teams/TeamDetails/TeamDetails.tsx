@@ -1,6 +1,6 @@
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useStateData } from './../../../redux/hooks';
+import { useAppDispatch } from './../../../redux/hooks';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 import { ITeamData } from '../../../types/teams/teams';
@@ -11,6 +11,7 @@ import { DetailsTable } from '../../DetailsTable/DetailsTable';
 import { getTeam, removeTeam } from './../../../redux/slices/teamsSlice';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
+import { useStateData } from '../../../hooks';
 
 export const TeamDetails = () => {
   const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import '../scss/auth-common.scss';
+import s from  './FormBg.module.scss';
 
 interface IFormBgProps {
   src: string;
@@ -8,8 +8,8 @@ interface IFormBgProps {
 export const FormBg: FC<IFormBgProps> = ({ src }) => {
 
   return (
-    <div className="auth__background">
-      <p className="auth__background_img">
+    <div className={s.auth__background}>
+      <p className={s.auth__background_img}>
         <img src={src} alt="boys playing basketball" />
       </p>
     </div>

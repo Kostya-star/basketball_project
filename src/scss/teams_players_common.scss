@@ -8,7 +8,8 @@
   &__header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    // align-items: center;
+    height: 40px;
 
     &__group {
       display: flex;
@@ -104,8 +105,58 @@
     .common__header {
       background-color: white;
       border-radius: 10px 10px 0px 0px;
+
       svg {
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .common {
+    &__filled_content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__header {
+      &__group {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .common {
+    &__filled_content {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    &__header {
+      &__group {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .common {
+    &__filled_content {
+      grid-template-columns: repeat(2, 1fr);
+      // margin-top: 110px;
+      gap: 12px;
+    }
+
+    &__header {
+      flex-direction: column;
+      // maybe the mistake is here 
+      height: 120px;
+      // -----------------------
+      
+      &__group {
+        margin-bottom: 10px;
       }
     }
   }

@@ -7,7 +7,7 @@ import signInImg from '../../assets/img/imgSignIn/signin-img.png';
 import { InputPassword } from '../FormComponents/InputPassword';
 import { InputText } from '../FormComponents/InputText';
 import '../../scss/auth-common.scss';
-import { FormBg } from '../FormBg';
+import { FormBg } from '../FormBg/FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login } from '../../redux/slices/authSlice';

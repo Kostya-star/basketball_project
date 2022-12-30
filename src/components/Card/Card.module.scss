@@ -46,3 +46,26 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .card {
+    width: 170px;
+    height: 180px;
+
+    img {
+      margin-top: 20px;
+      margin-bottom: 0px;
+      width: 120px;
+      height: 90px;
+    }
+
+    div {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      p {
+        font-size: 15px;
+      }
+    }
+
+  }
+}

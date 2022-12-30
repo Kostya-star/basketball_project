@@ -28,9 +28,7 @@ export const Card: FC<ICardProps> = ({
       <img src={`${baseRequestUrl}${image}`} alt="teamPlayerCard" />
       <div>
         <p>
-          <>
-            {name} {number && <span>#{number}</span>}
-          </>
+          {name} {number && <span>#{number}</span>}
         </p>
         {foundationYear ? (
           <span>Year of foundation: {foundationYear}</span>

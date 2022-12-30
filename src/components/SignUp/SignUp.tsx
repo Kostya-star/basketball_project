@@ -7,7 +7,7 @@ import { InputCheckbox } from '../FormComponents/InputCheckbox';
 import { InputSubmit } from '../FormComponents/InputSubmit';
 import { FC, useEffect, useState } from 'react';
 import '../../scss/auth-common.scss';
-import { FormBg } from '../FormBg';
+import { FormBg } from '../FormBg/FormBg';
 import { FormLink } from '../FormLink';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { signUp } from '../../redux/slices/authSlice';
@@ -49,7 +49,7 @@ export const SignUp: FC = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const onSubmit = async (values: ISignUpFormikValues) => {
@@ -103,12 +103,7 @@ export const SignUp: FC = () => {
         </div>
       </div>
 
-      {serverResponse && (
-        <RespError
-          response={serverResponse}
-          setResponse={setServerResponse}
-        />
-      )}
+      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
 
       <FormBg src={SignUpImg} />
     </div>

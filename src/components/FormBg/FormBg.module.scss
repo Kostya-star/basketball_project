@@ -1,0 +1,50 @@
+.auth {
+  &__background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    width: 50%;
+
+    &_img {
+      &::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F5FBFF;
+        z-index: -1;
+      }
+
+    }
+
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .auth {
+    &__background {
+
+      &_img {
+        img {
+          width: 500px;
+          height: 300px;
+        }
+      }
+
+    }
+  }
+
+}
+
+@media screen and (max-width: 1050px) {
+  .auth {
+    &__background {
+      display: none;
+    }
+  }
+
+}

@@ -20,7 +20,7 @@ export const teamsSlice = createSlice({
     setTeams(state, { payload }: PayloadAction<ITeamState>) {
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     },
   },
@@ -28,70 +28,53 @@ export const teamsSlice = createSlice({
 
 export const { setTeams } = teamsSlice.actions;
 
-export const fetchTeams = (teamsParams?: ITeamsParamsGetRequest) => async (dispatch: AppDispatch) => {
-  const resp = await teamsAPI.getTeams(teamsParams);
-  if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    dispatch(setTeams(resp.data));
+export const fetchTeams =
+  (teamsParams?: ITeamsParamsGetRequest) => async (dispatch: AppDispatch) => {
+    const resp = await teamsAPI.getTeams(teamsParams);
+    if (resp && resp.status === RespStatusEnum.SUCCESS) {
+      dispatch(setTeams(resp.data));
+    }
+    return resp;
+  };
+
+export const getTeam = (id: number) => async () => {
+  if (id) {
+    const resp = await teamsAPI.getTeam(id);
+    return resp;
   }
-  return resp;
 };
 
-export const getTeam = (id: number) => async() => {
-  const resp = await teamsAPI.getTeam(id)
-  return resp;
-}
-
-// export const createTeam =
-//   (teamValues: INewTeamValues, image: File | null) => async () => {
-//     if (image) {
-//       console.log(image);
-//       const imageResp = await imageAPI.saveImage(image).catch((error) => {
-//         console.log(error);
-//       });
-//       if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
-//         const imageUrl = imageResp.data;
-//         teamValues.imageUrl = imageUrl;
-
-//         const resp = await teamsAPI.addTeam(teamValues)
-//         return resp;
-//       }
-//     }
-//   };
-export const addPhoto = (image: File | null) => async() => {
-  if(image) {
+export const addPhoto = (image: File | null) => async () => {
+  if (image) {
     const resp = await imageAPI.saveImage(image).catch((error) => {
       console.log(error);
     });
 
-    if(resp && resp.status === RespStatusEnum.SUCCESS) {
-      return resp.data
+    if (resp && resp.status === RespStatusEnum.SUCCESS) {
+      return resp.data;
     }
-  }
-} 
-
-export const createTeam = (teamValues: INewTeamValues) => async () => {
-  const resp = await teamsAPI.addTeam(teamValues);
-  if(resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp.data
   }
 };
 
-export const editTeam = (newTeamValues: IUpdateTeamRequest) => async() => {
+export const createTeam = (teamValues: INewTeamValues) => async () => {
+  const resp = await teamsAPI.addTeam(teamValues);
+  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp.data;
+  }
+};
+
+export const editTeam = (newTeamValues: IUpdateTeamRequest) => async () => {
   const resp = await teamsAPI.editTeam(newTeamValues).catch((error) => {
     console.log(error);
   });
-  if(resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp
+  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp;
   }
-}
+};
 
 export const removeTeam = (id: number) => async () => {
-  const resp = await teamsAPI.deleteTeam({id})
-
-  // if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp
-    // void dispatch(fetchTeams());
-  // }
+  const resp = await teamsAPI.deleteTeam({ id });
+  return resp;
 };
 
 export default teamsSlice.reducer;

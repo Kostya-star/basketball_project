@@ -30,37 +30,34 @@ export const playersSlice = createSlice({
   },
 });
 
-export const { setPlayers} = playersSlice.actions;
+export const { setPlayers } = playersSlice.actions;
 
-export const fetchPlayers = (playersParams?: IPlayersParamsGetRequest) => async (dispatch: AppDispatch) => {
-  const resp = await playersAPI.getPlayers(playersParams).catch((error) => {
-    console.log(error);
-  });
-  if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    dispatch(setPlayers(resp.data));
-    return resp;
-  }
-};
+export const fetchPlayers =
+  (playersParams?: IPlayersParamsGetRequest) => async (dispatch: AppDispatch) => {
+    const resp = await playersAPI.getPlayers(playersParams).catch((error) => {
+      console.log(error);
+    });
+    if (resp && resp.status === RespStatusEnum.SUCCESS) {
+      dispatch(setPlayers(resp.data));
+      return resp;
+    }
+  };
 
 export const getPlayer = (id: number) => async () => {
-  const resp = await playersAPI.getPlayer(id).catch((error) => {
-    console.log(error);
-  });
-  if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp;
+  if (id) {
+    const resp = await playersAPI.getPlayer(id).catch((error) => {
+      console.log(error);
+    });
+    if (resp && resp.status === RespStatusEnum.SUCCESS) {
+      return resp;
+    }
   }
 };
 
 export const createPlayer = (newPlayer: IAddPLayerRequest) => async () => {
-  // if (imageResp && imageResp.status === RespStatusEnum.SUCCESS) {
-    // const imageURL = imageResp.data;
-    // newPlayer.avatarUrl = imageURL;
-
-    const resp = await playersAPI.addPlayer(newPlayer);
-    return resp;
-  // }
+  const resp = await playersAPI.addPlayer(newPlayer);
+  return resp;
 };
-
 
 export const addPhoto = (image: File | null) => async () => {
   if (image) {
@@ -74,31 +71,31 @@ export const addPhoto = (image: File | null) => async () => {
   }
 };
 
-export const getPositions = () => async (dispatch: AppDispatch) => {
+export const getPositions = () => async () => {
   const resp = await playersAPI.getPositions().catch((error) => {
     console.log(error);
     alert(error);
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp.data
+    return resp;
   }
 };
 
-export const editPlayer = (editedPlayer: IUpdatePlayerRequest) => async() => {
-  const resp = await playersAPI.editPlayer(editedPlayer).catch(error => {
-    console.log(error);
-  })
-  if(resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp
-  }
-}
-
-export const removePlayer = (id: number) => async () => {
-  const resp = await playersAPI.deletePlayer({id}).catch((error) => {
+export const editPlayer = (editedPlayer: IUpdatePlayerRequest) => async () => {
+  const resp = await playersAPI.editPlayer(editedPlayer).catch((error) => {
     console.log(error);
   });
   if (resp && resp.status === RespStatusEnum.SUCCESS) {
-    return resp
+    return resp;
+  }
+};
+
+export const removePlayer = (id: number) => async () => {
+  const resp = await playersAPI.deletePlayer({ id }).catch((error) => {
+    console.log(error);
+  });
+  if (resp && resp.status === RespStatusEnum.SUCCESS) {
+    return resp;
   }
 };
 

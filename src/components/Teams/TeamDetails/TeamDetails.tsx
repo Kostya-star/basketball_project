@@ -1,6 +1,6 @@
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from './../../../redux/hooks';
+import { useAppDispatch, useStateData } from './../../../redux/hooks';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 import { ITeamData } from '../../../types/teams/teams';
@@ -17,27 +17,13 @@ export const TeamDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [teamData, setTeamData] = useState({} as ITeamData);
-  const [playersInTeam, setPlayersInTeam] = useState([] as IPlayerData[]);
-
   const [serverResponse, setServerResponse] = useState('');
 
-  const { id } = qs.parse(location.search.substring(1));
+  const { id } = qs.parse(location.search.substring(1)) as {id: string};
 
-  useEffect(() => {
-    if (id) {
-      void dispatch(getTeam(Number(id))).then((resp) => {
-        setTeamData(resp.data);
-
-        void dispatch(fetchPlayers()).then((resp) => {
-          const sortedPlayers = resp?.data.data.filter((player) => player.team === Number(id));
-          if (sortedPlayers) {
-            setPlayersInTeam(sortedPlayers);
-          }
-        });
-      });
-    }
-  }, []);
+  const teamData: ITeamData = useStateData(getTeam, id);
+  const players = useStateData(fetchPlayers);
+  const playersInTable = players?.data.filter((player: IPlayerData) => player.team === Number(id));
 
   const onEditTeamHandle = () => {
     if (id) {
@@ -61,9 +47,6 @@ export const TeamDetails = () => {
 
   const getBackLink = 'Teams'
 
-  const teamDetailsArr = Object.keys(teamData).filter(
-    (key) => key.includes('foundationYear') && key.includes('division')
-  );
 
   return (
     <div className="common__container">
@@ -78,20 +61,19 @@ export const TeamDetails = () => {
           />
         </div>
 
-        {/* <DetailsCard {...teamData} /> */}
         <DetailsCard
           cardData={{
-            name: teamData.name,
-            image: teamData.imageUrl,
-            foundationYear: teamData.foundationYear,
-            division: teamData.division,
-            conference: teamData.conference,
+            name: teamData?.name,
+            image: teamData?.imageUrl,
+            foundationYear: teamData?.foundationYear,
+            division: teamData?.division,
+            conference: teamData?.conference,
           }}
         />
 
         {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
 
-        {playersInTeam?.length ? <DetailsTable playersInTeam={playersInTeam} /> : null}
+        {playersInTable?.length ? <DetailsTable playersInTable={playersInTable} /> : null}
       </div>
     </div>
   );

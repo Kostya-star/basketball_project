@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import ReactPaginate from 'react-paginate';
 import s from './Pagination.module.scss'
 import {ReactComponent as PreviousLabel} from '../../assets/icons/pagination__left.svg'

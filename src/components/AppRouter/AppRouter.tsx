@@ -16,15 +16,14 @@ import { PlayerDetailsPage } from '../../pages/PlayerDetailsPage';
 export const AppRouter: FC = () => {
   const navigate = useNavigate();
 
-  const isAuth = window.localStorage.getItem('isAuth')
+  const isAuth = window.localStorage.getItem('isAuth');
 
   useEffect(() => {
     if (!isAuth) {
       return navigate('/SignIn');
     }
-  }, [])
+  }, []);
 
-  
   return (
     <Routes>
       {isAuth && (

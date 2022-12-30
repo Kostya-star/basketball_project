@@ -1,43 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from './../../../redux/hooks';
+import { useAppDispatch, useStateData } from './../../../redux/hooks';
 import qs from 'qs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPlayer, removePlayer } from '../../../redux/slices/playersSlice';
-import { IPlayerData } from '../../../types/players/players';
 import { DetailsCard } from '../../DetailsCard/DetailsCard';
 import { IGetPlayerResponse } from '../../../types/players/getPlayerResponse';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { RespStatusEnum } from '../../../types/enum';
+
 
 export const PlayerDetails = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [playerData, setPlayerData] = useState({} as IGetPlayerResponse);
+  const { id } = qs.parse(location.search.substring(1)) as {id: string};
 
-  const { id } = qs.parse(location.search.substring(1));
-
-  useEffect(() => {
-    if (id) {
-      void dispatch(getPlayer(Number(id))).then((resp) => {
-        if (resp) {
-          setPlayerData(resp?.data);
-        }
-      });
-    }
-  }, []);
-
-  const playerBirthYear = new Date(playerData.birthday).getFullYear();
-  const yearNow = new Date().getFullYear();
-  const playerAge = yearNow - playerBirthYear;
-
+  const playerData: IGetPlayerResponse = useStateData(getPlayer, id);
+  
   const onEditPlayerHandle = () => {
     if (id) {
       navigate(`/PlayersCreate?id=${Number(id)}`);
     }
   };
-
+  
   const onDeletePlayerHandle = () => {
     void dispatch(removePlayer(Number(id))).then((resp) => {
       if (resp && resp.status === RespStatusEnum.SUCCESS) {
@@ -45,6 +30,10 @@ export const PlayerDetails = () => {
       }
     });
   };
+  
+  const playerBirthYear = new Date(playerData?.birthday).getFullYear();
+  const yearNow = new Date().getFullYear();
+  const playerAge = yearNow - playerBirthYear;
 
   const getBackLink = 'Players';
 
@@ -63,14 +52,14 @@ export const PlayerDetails = () => {
 
         <DetailsCard
           cardData={{
-            name: playerData.name,
-            image: playerData.avatarUrl,
-            position: playerData.position,
-            teamName: playerData.teamName,
-            height: playerData.height,
-            weight: playerData.weight,
+            name: playerData?.name,
+            image: playerData?.avatarUrl,
+            position: playerData?.position,
+            teamName: playerData?.teamName,
+            height: playerData?.height,
+            weight: playerData?.weight,
             age: playerAge,
-            number: playerData.number,
+            number: playerData?.number,
           }}
         />
       </div>

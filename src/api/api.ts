@@ -18,6 +18,8 @@ import { IUpdateTeamRequest } from '../types/teams/updateTeamRequest';
 import { IUpdateTeamResponse } from './../types/teams/updateTeamResponse';
 import { IGetPlayerResponse } from '../types/players/getPlayerResponse';
 import { IUpdatePlayerRequest } from '../types/players/updatePlayerRequest';
+import { IUpdatePlayerResponse } from '../types/players/updatePlayerResponse';
+import { IGetTeamResponse } from '../types/teams/getTeamResp';
 
 
 export const authAPI = {
@@ -42,7 +44,7 @@ export const teamsAPI = {
   },
 
   async getTeam(id: number) {
-    return await client.get(`Team/Get?id=${id}`)
+    return await client.get<IGetTeamResponse>(`Team/Get?id=${id}`)
   },
 
   async addTeam(values: INewTeamValuesRequest) {
@@ -83,7 +85,7 @@ export const playersAPI = {
   },
 
   async editPlayer(newPlayer: IUpdatePlayerRequest) {
-    return await client.put<any>('Player/Update', newPlayer);
+    return await client.put<IUpdatePlayerResponse>('Player/Update', newPlayer);
   },
 
   async deletePlayer({ id }: IDeletePlayerRequest) {

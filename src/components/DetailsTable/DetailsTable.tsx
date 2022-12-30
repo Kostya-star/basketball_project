@@ -5,10 +5,10 @@ import s from './DetailsTable.module.scss';
 
 
 interface IDetailsTableProps {
-  playersInTeam: IPlayerData[];
+  playersInTable: IPlayerData[];
 }
 
-export const DetailsTable: FC<IDetailsTableProps> = ({ playersInTeam }) => {
+export const DetailsTable: FC<IDetailsTableProps> = ({ playersInTable }) => {
   return (
     <div className={s.table}>
       <table>
@@ -25,7 +25,7 @@ export const DetailsTable: FC<IDetailsTableProps> = ({ playersInTeam }) => {
           </tr>
         </thead>
 
-        {playersInTeam.map((player) => {
+        {playersInTable.map((player) => {
           const playerBirthYear = new Date(player.birthday).getFullYear();
           const yearNow = new Date().getFullYear();
           const playerAge = yearNow - playerBirthYear;

@@ -2,8 +2,8 @@ import { InputText } from '../../FormComponents/InputText';
 import { Form, Formik } from 'formik';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { useEffect, useState } from 'react';
+import { useAppDispatch, useStateData } from '../../../redux/hooks';
+import { useState } from 'react';
 import { addPhoto, createTeam, editTeam, getTeam } from '../../../redux/slices/teamsSlice';
 import { InputFile } from '../../FormComponents/InputFile';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,6 @@ import { INewTeamValues, ITeamData } from '../../../types/teams/teams';
 import { RespStatusEnum } from '../../../types/enum';
 import { RespError } from '../../RespError';
 import qs from 'qs';
-import { baseRequestUrl } from './../../../api/baseRequest';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -39,17 +38,9 @@ export const TeamCreate = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
-  const [teamData, setTeamData] = useState({} as ITeamData);
+  const { id } = qs.parse(location.search.substring(1)) as { id: string };
 
-  const { id } = qs.parse(location.search.substring(1));
-
-  useEffect(() => {
-    if (id) {
-      void dispatch(getTeam(Number(id))).then((resp) => {
-        setTeamData(resp.data);
-      });
-    }
-  }, []);
+  const teamData: ITeamData = useStateData(getTeam, id);
 
   const onSubmit = async (values: INewTeamValues) => {
     setDisabledSubmit(true);
@@ -96,21 +87,16 @@ export const TeamCreate = () => {
 
   const onClickHandler = () => {
     if (id) {
-      onRedirectTeamDetails();
-      return;
+      return onRedirectTeamDetails();
     }
     onRedirectTeams();
   };
 
-
-  const getBackLink = 'Teams'
+  const getBackLink = 'Teams';
 
   return (
     <div className="common__create">
-      <InfoHeader
-        getBackLink={getBackLink}
-        name={'Add new team'}
-      />
+      <InfoHeader getBackLink={getBackLink} name="Add new team" />
 
       <Formik
         initialValues={initialValues}
@@ -135,7 +121,7 @@ export const TeamCreate = () => {
                 <div className="common__create__image">
                   <InputFile<'imageUrl'>
                     name="imageUrl"
-                    image={teamImage || teamData.imageUrl}
+                    image={teamImage || teamData?.imageUrl}
                     onSavePhoto={onSaveTeamPhoto}
                   />
                 </div>

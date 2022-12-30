@@ -28,7 +28,6 @@ const clearCache = () => {
 const menuButtons = ['Teams', 'Players', 'Sign out'];
 
 
-
 export const Menu = () => {
   const [activeBtn, setActiveBtn] = useState<number | string>();
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ export const Menu = () => {
   };
 
   useEffect(() => {
-    window.location.pathname === '/Teams' ? setActiveBtn(0) : setActiveBtn(1)
+    window.location.pathname.includes('Team') ? setActiveBtn(0) : setActiveBtn(1)
   }, [])
 
   // SIGNOUT LOGIC

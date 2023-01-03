@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Menu } from '../Menu/Menu';
@@ -12,11 +12,13 @@ export const MainLayout: FC = () => {
       (window.location.pathname === '/Players' && navigate('/Players'));
   }, []);
 
+  const [openMenu, setOpenMenu] = useState(false)
+
   return (
     <div>
-      <Header />
+      <Header setOpenMenu={() => setOpenMenu(!openMenu)}/>
       <div className={s.layout__container}>
-        <Menu />
+        <Menu openMenu={openMenu}/>
         <div className={s.layout__children__container}>
           <Outlet />
         </div>

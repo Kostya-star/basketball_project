@@ -1,7 +1,6 @@
 .addBtn {
   width: 104px;
-  height: 40px;
-  padding: 12px 17px 12px 6px;
+  padding: 11px 17px 12px 6px;
   border-radius: 4px;
   background-color: #E4163A;
   color: white;
@@ -10,7 +9,12 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 600px) {
+// @media screen and (max-width: 870px) {
+//   .addBtn {
+//     height: 40px;
+//   }
+// }
+@media screen and (max-width: 650px) {
   .addBtn {
     width: 100%;
   }

@@ -258,15 +258,16 @@ input[type='file'] {
 @media screen and (max-width: 870px) {
   .select{
     &__multi {
-      margin-left: 0;
+      width: 100px;
     }
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
   .select{
     &__multi {
       width: 100%;
+      margin-left: 0;
     }
   }
 }

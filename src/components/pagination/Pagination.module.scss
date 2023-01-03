@@ -2,7 +2,7 @@
   user-select: none;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   padding: 0px;
   list-style: none;
   font-weight: 500;
@@ -23,4 +23,10 @@
     }
   }
 
+}
+
+@media screen and (max-width: 650px) {
+  .pagination {
+    gap: 0;
+  }
 }

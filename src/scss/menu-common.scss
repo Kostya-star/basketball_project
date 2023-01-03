@@ -30,10 +30,17 @@
     width: 55px;
 
     &:nth-child(3) {
-      // position: fixed;
       position: absolute;
       bottom: 0px;
     }
   }
 
+}
+
+@media screen and (max-width: 650px) {
+  .menu {
+    &__close {
+      display: none;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import '../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
 import { MenuBtn } from '../MenuBtn/MenuBtn';
@@ -28,7 +28,11 @@ const clearCache = () => {
 const menuButtons = ['Teams', 'Players', 'Sign out'];
 
 
-export const Menu = () => {
+interface IMenuProps {
+  openMenu: boolean
+}
+
+export const Menu: FC<IMenuProps> = ({ openMenu }) => {
   const [activeBtn, setActiveBtn] = useState<number | string>();
   const navigate = useNavigate();
   
@@ -56,7 +60,7 @@ export const Menu = () => {
   };
 
   return (
-    <div className="menu__wrapper">
+    <div className={`menu__wrapper ${!openMenu && 'menu__close'}`}>
       <div className="menu__group">
         {menuButtons.map((button, index) => (
           <div className="menu__block" key={button + '_' + index}>

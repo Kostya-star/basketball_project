@@ -19,6 +19,8 @@ export const Pagination: FC<IPaginationProps> = ({ currentPage, pagesAmount, onP
         onPageChange={(currentPage) => onPageChange(currentPage.selected + 1)}
         forcePage={currentPage - 1}
         breakLabel={'...'}
+        pageRangeDisplayed={1}
+        marginPagesDisplayed={1}
         previousLabel={<PreviousLabel/> }
         nextLabel={<NextLabel/>}
         className={s.pagination}

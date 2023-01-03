@@ -4,12 +4,21 @@
     height: calc(100vh - 84px);
     // overflow: hidden;
   }
+
   &__children__container {
     display: flex;
     padding: 32px 80px;
     background-color: #F6F6F6;
-    // height: calc(100vh - 84px);
+    // height: 100vh;
     width: 100%;
   }
 
+}
+
+@media screen and (max-width: 530px) {
+  .layout {
+    &__children__container {
+      padding: 12px;
+    }
+  }
 }

@@ -4,7 +4,9 @@
   align-items: center;
   justify-content: space-between;
   // width: 364px;
-  height: 383px;
+  // min-width: 170px;
+  // min-height: 190px;
+  max-height: 383px;
   background: linear-gradient(121.57deg, #707070 1.62%, #393939 81.02%);
   border-radius: 4px;
   cursor: pointer;
@@ -47,10 +49,10 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
   .card {
-    width: 170px;
-    height: 180px;
+    min-width: 180px;
+    max-height: 180px;
 
     img {
       margin-top: 20px;
@@ -62,6 +64,7 @@
     div {
       padding-top: 10px;
       padding-bottom: 10px;
+
       p {
         font-size: 15px;
       }

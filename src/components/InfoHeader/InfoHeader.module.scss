@@ -19,28 +19,52 @@
     }
 
     a {
-      -webkit-animation: blink 2s linear infinite; 
-      animation: blink 2s linear infinite; 
+      -webkit-animation: blink 2s linear infinite;
+      animation: blink 2s linear infinite;
     }
-    
-    @-webkit-keyframes blink { 
-      0% { color: #E4163A; }
-      50% { color: #FBB; }
-      100% { color: #E4163A; }
+
+    @-webkit-keyframes blink {
+      0% {
+        color: #E4163A;
+      }
+
+      50% {
+        color: #FBB;
+      }
+
+      100% {
+        color: #E4163A;
+      }
     }
-    
-    @keyframes blink {  
-      0% { color: #E4163A; }
-      50% { color: #FBB; }
-      100% { color: #E4163A; } 
+
+    @keyframes blink {
+      0% {
+        color: #E4163A;
+      }
+
+      50% {
+        color: #FBB;
+      }
+
+      100% {
+        color: #E4163A;
+      }
     }
   }
 
-div {
-  svg {
-    &:first-child {
-      margin-right: 20px;
+  div {
+    svg {
+      &:first-child {
+        margin-right: 20px;
+      }
     }
   }
 }
+
+
+@media screen and (max-width: 1250px) {
+  .infoHeader {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
 }

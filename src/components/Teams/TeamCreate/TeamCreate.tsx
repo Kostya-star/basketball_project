@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useAppDispatch } from '../../../redux/hooks';
 import { useState } from 'react';
 import { addPhoto, createTeam, editTeam, getTeam } from '../../../redux/slices/teamsSlice';
-import { InputFile } from '../../FormComponents/InputFile';
+import { InputFile } from '../../InputFile/InputFile';
 import { useNavigate } from 'react-router-dom';
 import { InfoHeader } from '../../InfoHeader/InfoHeader';
 import { INewTeamValues, ITeamData } from '../../../types/teams/teams';
@@ -45,7 +45,7 @@ export const TeamCreate = () => {
 
   const onSubmit = async (values: INewTeamValues) => {
     setDisabledSubmit(true);
-    if(id) {
+    if (id) {
       const newTeamValues = {
         ...values,
         id: Number(id),
@@ -116,8 +116,8 @@ export const TeamCreate = () => {
           };
 
           return (
-            <Form>
-              <div className="common__create__content">
+            <div className="common__create__content">
+              <Form>
                 <div className="common__create__image">
                   <InputFile<'imageUrl'>
                     name="imageUrl"
@@ -136,8 +136,8 @@ export const TeamCreate = () => {
                     <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>
-              </div>
-            </Form>
+              </Form>
+            </div>
           );
         }}
       </Formik>

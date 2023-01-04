@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
-import { InputFile } from '../../FormComponents/InputFile';
+import { InputFile } from '../../InputFile/InputFile';
 import { SelectComponent } from '../../FormComponents/SelectComponent';
 import { InputSubmit } from '../../FormComponents/InputSubmit';
 import { InputText } from '../../FormComponents/InputText';
@@ -172,8 +172,8 @@ export const PlayersCreate = () => {
           };
 
           return (
-            <Form>
-              <div className="common__create__content">
+            <div className="common__create__content">
+              <Form>
                 <div className="common__create__image">
                   <InputFile<'avatarUrl'>
                     name="avatarUrl"
@@ -221,8 +221,8 @@ export const PlayersCreate = () => {
                     <InputSubmit isDisabled={disabledSubmit} value="Save" />
                   </div>
                 </div>
-              </div>
-            </Form>
+              </Form>
+            </div>
           );
         }}
       </Formik>

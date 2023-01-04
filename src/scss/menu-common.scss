@@ -49,7 +49,8 @@
       z-index: 10;
 
       transform-origin: top center;
-      animation: translateX 350ms ease-in-out forwards ;
+      animation: translateX 350ms ease-in-out forwards;
+
       @keyframes translateX {
         0% {
           opacity: 0;
@@ -79,7 +80,7 @@
     }
 
     &__group {
-      padding-top: 95px;
+      padding-top: 95px;   
     }
 
     &__close {

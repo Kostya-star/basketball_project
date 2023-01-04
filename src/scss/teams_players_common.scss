@@ -37,17 +37,23 @@
   // create for teams and players
 
   &__create {
-    width: 100%;
-    height: 650px;
+    width: 100%;    
+    // height: 650px;
     background-color: #fff;
     border-radius: 5px;
 
     &__content {
       display: flex;
-      padding: 48px 230px 48px 73px;
+      margin-top: 48px;
+      margin-left: 73px;
+      // width: fit-content;
+      form {
+        display: flex;
+      }
     }
 
     &__image {
+      // width: 30%;
       margin-right: 136px;
     }
 
@@ -108,6 +114,28 @@
 
       svg {
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .common {
+    &__create {
+      &__content {
+        margin: 0;
+        // flex-direction: column;
+        justify-content: center;
+        form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border: 1px solid red;
+          width: fit-content;
+        }
+      }
+      &__image {
+        margin-right: 0;
       }
     }
   }

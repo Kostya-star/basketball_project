@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import s from './FormItems.module.scss';
+import s from './InputFile.module.scss'
 import { ErrorMessage } from 'formik';
 import { baseRequestUrl } from '../../api/baseRequest';
 
@@ -23,9 +23,9 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto }: InputF
     <div className={s.setImage}>
       <label htmlFor={name}>
         <input id={name} name={name} type="file" onChange={onChange} />
-        <div>
+        <p>
           <img src={image ? `${baseRequestUrl}${image}` : ''} />
-        </div>
+        </p>
       </label>
       <ErrorMessage className={s.form__error} name={name} component="span" />
     </div>

@@ -1,20 +1,17 @@
-import { ReactComponent as HeaderAvatar } from '../../assets/icons/header__avatar.svg';
+import { ReactComponent as HeaderAvatar } from '../../assets/icons/userAvatar.svg';
 import headerLogo from '../../assets/img/Header/header__logo.png';
-import { useAppSelector } from '../../redux/hooks';
 import s from './Header.module.scss';
 import { ReactComponent as ToggleButton } from '../../assets/icons/header_toggle__button.svg';
 import { FC } from 'react';
-
+import classnames from 'classnames';
 
 interface IHeaderProps {
-  setOpenMenu: () => void
+  openMenu: boolean;
+  setOpenMenu: () => void;
 }
 
-export const Header: FC<IHeaderProps> = ({setOpenMenu }) => {
-  const { name } = useAppSelector(({ auth }) => ({
-    name: auth.signInResp.name,
-  }));
-
+export const Header: FC<IHeaderProps> = ({ openMenu, setOpenMenu }) => {
+  const userName = localStorage.getItem('userName');
 
   return (
     <div className={s.header__wrapper}>
@@ -28,8 +25,12 @@ export const Header: FC<IHeaderProps> = ({setOpenMenu }) => {
           <img src={headerLogo} alt="logo" />
         </p>
       </div>
-      <div className={s.header__credentials}>
-        <span>{name}</span>
+      <div
+        className={classnames(s.header__credentials, {
+          [s.header__showCredentials]: openMenu,
+        })}
+      >
+        <span>{userName}</span>
         <HeaderAvatar />
       </div>
     </div>

@@ -16,7 +16,7 @@ export const MainLayout: FC = () => {
 
   return (
     <div>
-      <Header setOpenMenu={() => setOpenMenu(!openMenu)}/>
+      <Header openMenu={openMenu} setOpenMenu={() => setOpenMenu(!openMenu)}/>
       <div className={s.layout__container}>
         <Menu openMenu={openMenu}/>
         <div className={s.layout__children__container}>

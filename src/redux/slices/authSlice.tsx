@@ -29,7 +29,7 @@ export const authSlice = createSlice({
     },
   });
   
-  export const { signInSuccess} = authSlice.actions;
+  export const { signInSuccess, signUpSuccess} = authSlice.actions;
 
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
@@ -40,6 +40,7 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
       window.localStorage.setItem('isAuth', JSON.stringify(true));
       dispatch(signInSuccess({ signInData: response.data }));
       window.localStorage.setItem('TOKEN', response.data.token);
+      window.localStorage.setItem('userName', response.data.name);
     }
   }
   return response;
@@ -48,7 +49,7 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
 export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispatch) => {
   const response = await authAPI.signUp(signupData)
   if (response?.status === RespStatusEnum.SUCCESS) {
-    dispatch(authSlice.actions.signUpSuccess(response.data));
+    dispatch(signUpSuccess(response.data));
   }
   return response
 };

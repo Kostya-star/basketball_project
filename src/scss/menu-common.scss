@@ -39,6 +39,49 @@
 
 @media screen and (max-width: 650px) {
   .menu {
+    &__wrapper {
+      position: absolute;
+      height: calc(100vh - 86px);
+      width: 200px;
+      padding-left: 20px;
+      background-color: white;
+      align-items: start;
+      z-index: 10;
+
+      transform-origin: top center;
+      animation: translateX 350ms ease-in-out forwards ;
+      @keyframes translateX {
+        0% {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+
+        80% {
+          transform: translateX(10px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 100%;
+        width: calc(100vw - 220px);
+        height: calc(100vh - 84px);
+        background-color: #414141;
+        opacity: 0.6;
+        z-index: 9;
+      }
+    }
+
+    &__group {
+      padding-top: 95px;
+    }
+
     &__close {
       display: none;
     }

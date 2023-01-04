@@ -1,14 +1,12 @@
 .menu__button {
-  // transition: 0.2s;
   cursor: pointer;
   transition: 0.2s;
   width: 61px;
-  // position: fixed;
 
   &_hovered {
     &:hover {
       color: #FF768E;
-  
+
       svg path {
         fill: #FF768E;
         transition: 0.2s;
@@ -25,4 +23,15 @@
     }
   }
 
+}
+
+@media screen and (max-width: 650px) {
+  .menu__button {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    svg {
+      margin-right: 10px;
+    }
+  }
 }

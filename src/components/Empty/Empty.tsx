@@ -11,7 +11,7 @@ export const Empty: FC<IEmptyProps> = ({ image, text }) => {
   return (
     <div className={s.empty__container}>
       <div>
-        <img src={image} alt="kids playing" />
+        <img src={image} alt="play" />
         <p>Empty here</p>
         <span>Add new {text} to continue</span>
       </div>

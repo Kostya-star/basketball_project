@@ -24,7 +24,7 @@
       border-radius: 15px;
       opacity: 0.3;
       transition: 0.5s;
-      z-index: 100;
+      z-index: 9;
     }
 
     &:hover {
@@ -43,7 +43,7 @@
         width: 100%;
         height: 100%;
         opacity: 1;
-        z-index: 100;
+        z-index: 9;
       }
 
     }
@@ -56,6 +56,14 @@
   }
 }
 
+.error {
+  display: block;
+  font-size: 12px;
+  // margin-top: 5px;
+  color: #FF768E;
+}
+
+
 input[type='file'] {
   display: none;
 }
@@ -63,9 +71,10 @@ input[type='file'] {
 
 @media screen and (max-width: 1250px) {
   .setImage {
-    p{
+    p {
       width: 185px;
       height: 145px;
+
       img {
         width: 185px;
         height: 145px;
@@ -73,4 +82,3 @@ input[type='file'] {
     }
   }
 }
-

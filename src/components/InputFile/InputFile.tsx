@@ -27,7 +27,7 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto }: InputF
           <img src={image ? `${baseRequestUrl}${image}` : ''} />
         </p>
       </label>
-      <ErrorMessage className={s.form__error} name={name} component="span" />
+      <ErrorMessage className={s.error} name={name} component="span" />
     </div>
   );
 };

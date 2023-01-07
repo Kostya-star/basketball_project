@@ -19,9 +19,9 @@ export const DetailsTable: FC<IDetailsTableProps> = ({ playersInTable }) => {
           <tr>
             <td width="5%">#</td>
             <td width="60%">Player</td>
-            <td>Height</td>
-            <td>Weight</td>
-            <td>Age</td>
+            <td className={s.height}>Height</td>
+            <td className={s.weight}>Weight</td>
+            <td className={s.age}>Age</td>
           </tr>
         </thead>
 
@@ -47,9 +47,9 @@ export const DetailsTable: FC<IDetailsTableProps> = ({ playersInTable }) => {
                     </div>
                   </div>
                 </td>
-                <td>{player.height} cm</td>
-                <td>{player.weight} kg</td>
-                <td>{playerAge}</td>
+                <td className={s.height}>{player.height} cm</td>
+                <td className={s.weight}>{player.weight} kg</td>
+                <td className={s.age}>{playerAge}</td>
               </tr>
             </tbody>
           );

@@ -12,7 +12,7 @@
 
   &__input {
     display: block;
-    width: 366px;
+    width: 355px;
     // margin-bottom: 5px;
     height: 40px;
     background-color: #F6F6F6;
@@ -34,7 +34,7 @@
   }
 
   &__submitBtn {
-    width: 370px;
+    width: 358px;
     height: 40px;
     border: none;
     border-radius: 4px;
@@ -145,7 +145,7 @@
       width: 17px;
       height: 17px;
       top: 12px;
-      right: 10px;
+      right: 15px;
       cursor: pointer;
       user-select: none;
     }
@@ -178,6 +178,16 @@
   }
 }
 
+@media screen and (max-width: 1250px) {
+  .form{
+    &__group {
+      height: 90px;;
+    }
+  }
+  .select {
+    height: 90px;
+  }
+}
 @media screen and (max-width: 1150px) {
   .select{
     &__multi {

@@ -3,6 +3,8 @@
   // teams and players header with search and AddBtn
   &__container {
     width: 100%;
+    // height: calc(100vh - 150px);
+    // height: fit-content;
   }
 
   &__header {
@@ -31,24 +33,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 99%;
+    height: calc(100vh - 157px);
   }
 
   // create for teams and players
 
   &__create {
-    width: 100%;    
-    // height: 650px;
+    width: 100%;
+    // height: calc(100vh - 84px);
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
+    // height: fit-content;
+
 
     &__content {
       display: flex;
       margin-top: 48px;
       margin-left: 73px;
-      // width: fit-content;
       form {
         display: flex;
+        padding-left: 5px;
+        padding-right: 5px;
       }
     }
 
@@ -126,14 +131,15 @@
         margin: 0;
         // flex-direction: column;
         justify-content: center;
+
         form {
           display: flex;
           flex-direction: column;
           align-items: center;
-          border: 1px solid red;
           width: fit-content;
         }
       }
+
       &__image {
         margin-right: 0;
       }
@@ -177,6 +183,11 @@
       max-height: calc(100vh - 390px);
     }
 
+    &__empty_content {
+      align-items: start;
+      // padding-top: 20px;
+      height: calc(100vh - 235px);
+    }
   }
 }
 

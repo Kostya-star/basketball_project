@@ -22,3 +22,12 @@
     }
   }
 }
+
+@media screen and (max-width: 650px) {
+  .layout {
+    &__container {
+      height: calc(100vh - 71px);
+      // height: fit-content;
+    }
+  }
+}

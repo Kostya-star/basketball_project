@@ -1,10 +1,8 @@
 .empty {
   &__container {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    width: 560px;
-    height: 570px;
+    padding: 50px 100px;
     text-align: center;
     background-color: white;
     border-radius: 15px;
@@ -29,4 +27,32 @@
     }
   }
 
+}
+
+@media screen and (max-width: 800px) {
+  .empty__container {
+    img {
+      width: 264px;
+      height: 243px;
+    }
+    p {
+      font-size: 30px;
+    }
+    span {
+      font-size: 20px;
+    }
+  }
+}
+@media screen and (max-width: 650px) {
+  .empty__container {
+    margin-top: 20px;
+    img {
+      margin-bottom: 0;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .empty__container {
+    padding: 30px 40px;
+  }
 }

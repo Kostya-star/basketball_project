@@ -70,3 +70,14 @@
     padding-bottom: 14px;
   }
 }
+
+@media screen and (max-width: 650px) {
+  .infoHeader {
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    div {
+      padding: 10px;
+    }
+  }
+}

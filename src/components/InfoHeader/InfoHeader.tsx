@@ -3,7 +3,6 @@ import s from './InfoHeader.module.scss';
 import { ReactComponent as EditSVG } from '../../assets/icons/editSvg.svg';
 import { ReactComponent as DeleteSVG } from '../../assets/icons/deleteSvg.svg';
 import { Link } from 'react-router-dom';
-import { Teams } from './../Teams/Teams';
 
 interface InfoHeaderProps {
   getBackLink: string;

@@ -95,53 +95,55 @@ export const TeamCreate = () => {
   const getBackLink = 'Teams';
 
   return (
-    <div className="common__create">
-      <InfoHeader getBackLink={getBackLink} name="Add new team" />
+    <div className="common__container">
+      <div className="common__create">
+        <InfoHeader getBackLink={getBackLink} name="Add new team" />
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-        validateOnMount
-        enableReinitialize
-      >
-        {(formik) => {
-          const onSaveTeamPhoto = (image: File | null) => {
-            void dispatch(addPhoto(image)).then((imgString) => {
-              if (imgString) {
-                formik.setFieldValue('imageUrl', imgString);
-                setTeamImage(imgString);
-              }
-            });
-          };
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          validateOnMount
+          enableReinitialize
+        >
+          {(formik) => {
+            const onSaveTeamPhoto = (image: File | null) => {
+              void dispatch(addPhoto(image)).then((imgString) => {
+                if (imgString) {
+                  formik.setFieldValue('imageUrl', imgString);
+                  setTeamImage(imgString);
+                }
+              });
+            };
 
-          return (
-            <div className="common__create__content">
-              <Form>
-                <div className="common__create__image">
-                  <InputFile<'imageUrl'>
-                    name="imageUrl"
-                    image={teamImage || teamData?.imageUrl}
-                    onSavePhoto={onSaveTeamPhoto}
-                  />
-                </div>
-
-                <div>
-                  <InputText<'name'> label="Name" name="name" />
-                  <InputText<'division'> label="Division" name="division" />
-                  <InputText<'conference'> label="Conference" name="conference" />
-                  <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
-                  <div className="common__create__buttons">
-                    <button onClick={onClickHandler}>Cancel</button>
-                    <InputSubmit isDisabled={disabledSubmit} value="Save" />
+            return (
+              <div className="common__create__content">
+                <Form>
+                  <div className="common__create__image">
+                    <InputFile<'imageUrl'>
+                      name="imageUrl"
+                      image={teamImage || teamData?.imageUrl}
+                      onSavePhoto={onSaveTeamPhoto}
+                    />
                   </div>
-                </div>
-              </Form>
-            </div>
-          );
-        }}
-      </Formik>
-      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+
+                  <div>
+                    <InputText<'name'> label="Name" name="name" />
+                    <InputText<'division'> label="Division" name="division" />
+                    <InputText<'conference'> label="Conference" name="conference" />
+                    <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
+                    <div className="common__create__buttons">
+                      <button onClick={onClickHandler}>Cancel</button>
+                      <InputSubmit isDisabled={disabledSubmit} value="Save" />
+                    </div>
+                  </div>
+                </Form>
+              </div>
+            );
+          }}
+        </Formik>
+        {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+      </div>
     </div>
   );
 };

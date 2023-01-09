@@ -3,8 +3,8 @@
   // teams and players header with search and AddBtn
   &__container {
     width: 100%;
-    // height: calc(100vh - 150px);
-    // height: fit-content;
+    min-height: calc(100vh - 116px);
+    height: fit-content;
   }
 
   &__header {
@@ -165,6 +165,9 @@
 
 @media screen and (max-width: 650px) {
   .common {
+    &__container {
+      height: calc(100vh - 95px);
+    }
     &__header {
       flex-direction: column;
 
@@ -180,6 +183,7 @@
       justify-content: space-between;
       gap: 10px;
       margin-top: 16px;
+      margin-bottom: 20px;
       max-height: calc(100vh - 390px);
     }
 
@@ -187,6 +191,13 @@
       align-items: start;
       // padding-top: 20px;
       height: calc(100vh - 235px);
+    }
+
+    &__pagination {
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      right: 5px;
     }
   }
 }

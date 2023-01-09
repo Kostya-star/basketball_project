@@ -14,7 +14,11 @@ export const Header: FC<IHeaderProps> = ({ openMenu, setOpenMenu }) => {
   const userName = localStorage.getItem('userName');
 
   return (
-    <div className={s.header__wrapper}>
+    <div
+      className={classnames(s.header__wrapper, {
+        [s.header__wrapper_fixed]: openMenu,
+      })}
+    >
       <div className={s.header_toggle__button}>
         <button onClick={setOpenMenu}>
           <ToggleButton />
@@ -25,11 +29,7 @@ export const Header: FC<IHeaderProps> = ({ openMenu, setOpenMenu }) => {
           <img src={headerLogo} alt="logo" />
         </p>
       </div>
-      <div
-        className={classnames(s.header__credentials, {
-          [s.header__showCredentials]: openMenu,
-        })}
-      >
+      <div className={s.header__credentials}>
         <span>{userName}</span>
         <HeaderAvatar />
       </div>

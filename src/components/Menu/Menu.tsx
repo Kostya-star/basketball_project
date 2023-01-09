@@ -2,6 +2,7 @@ import { useState, useEffect, FC } from 'react';
 import '../../scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
 import { MenuBtn } from '../MenuBtn/MenuBtn';
+import { ReactComponent as HeaderAvatar } from '../../assets/icons/userAvatar.svg';
 
 export interface IMenuButtonProps {
   isActive: boolean;
@@ -27,15 +28,15 @@ const clearCache = () => {
 
 const menuButtons = ['Teams', 'Players', 'Sign out'];
 
-
 interface IMenuProps {
-  openMenu: boolean
+  openMenu: boolean;
+  closeMenu: () => void
 }
 
-export const Menu: FC<IMenuProps> = ({ openMenu }) => {
+export const Menu: FC<IMenuProps> = ({ openMenu, closeMenu }) => {
   const [activeBtn, setActiveBtn] = useState<number | string>();
   const navigate = useNavigate();
-  
+
   const onClickHandle = (index: number) => {
     setActiveBtn(index);
 
@@ -47,8 +48,8 @@ export const Menu: FC<IMenuProps> = ({ openMenu }) => {
   };
 
   useEffect(() => {
-    window.location.pathname.includes('Team') ? setActiveBtn(0) : setActiveBtn(1)
-  }, [])
+    window.location.pathname.includes('Team') ? setActiveBtn(0) : setActiveBtn(1);
+  }, []);
 
   // SIGNOUT LOGIC
 
@@ -59,9 +60,24 @@ export const Menu: FC<IMenuProps> = ({ openMenu }) => {
     clearCache();
   };
 
+  // HOW TO CLOSE MENU WHEN CLICKING OUTSIDE IN REACT
+  window.addEventListener('click', (e: Event) => {
+    if(document.querySelector('.menu__wrapper') === e.target) {
+      closeMenu()
+    }
+  })
+
+  const userName = localStorage.getItem('userName');
+
   return (
     <div className={`menu__wrapper ${!openMenu && 'menu__close'}`}>
       <div className="menu__group">
+        {openMenu && (
+          <div className="menu__credentials">
+            <HeaderAvatar />
+            <span>{userName}</span>
+          </div>
+        )}
         {menuButtons.map((button, index) => (
           <div className="menu__block" key={button + '_' + index}>
             <MenuBtn

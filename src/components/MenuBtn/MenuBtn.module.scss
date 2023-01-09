@@ -1,35 +1,43 @@
-.menu__button {
-  cursor: pointer;
-  transition: 0.2s;
-  width: 61px;
-
-  &_hovered {
-    &:hover {
-      color: #FF768E;
-
+.menu {
+  &__button {
+    width: 60px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    padding-left: 0;
+    &_hovered {
+      &:hover {
+        color: #FF768E;
+  
+        svg path {
+          fill: #FF768E;
+          transition: 0.2s;
+        }
+      }
+    }
+  
+    &_selected {
+      color: #E4163A;
+  
       svg path {
-        fill: #FF768E;
+        fill: #E4163A;
         transition: 0.2s;
       }
     }
-  }
 
-  &_selected {
-    color: #E4163A;
-
-    svg path {
-      fill: #E4163A;
-      transition: 0.2s;
+    span {
+      display: block;
     }
   }
-
 }
 
 @media screen and (max-width: 650px) {
   .menu__button {
     display: flex;
     align-items: center;
-    width: 100px;
+    width: auto;
+
     svg {
       margin-right: 10px;
     }

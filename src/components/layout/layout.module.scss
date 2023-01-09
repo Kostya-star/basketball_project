@@ -2,14 +2,13 @@
   &__container {
     display: flex;
     height: calc(100vh - 84px);
-    // overflow: hidden;
+    // height: fit-content;
   }
 
   &__children__container {
     display: flex;
     padding: 32px 80px;
     background-color: #F6F6F6;
-    // height: 100vh;
     width: 100%;
   }
 
@@ -26,7 +25,8 @@
 @media screen and (max-width: 650px) {
   .layout {
     &__container {
-      height: calc(100vh - 71px);
+      // height: calc(100vh - 71px);
+      height: fit-content;
       // height: fit-content;
     }
   }

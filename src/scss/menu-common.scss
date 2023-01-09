@@ -4,19 +4,10 @@
     flex-direction: column;
     align-items: center;
     width: 140px;
-
-    span {
-      display: block;
-    }
-
-    button {
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
   }
 
   &__group {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,11 +16,9 @@
   }
 
   &__block {
-    height: 80px;
-    font-size: 14px;
-    width: 55px;
+    padding-bottom: 30px;
 
-    &:nth-child(3) {
+    &:last-child {
       position: absolute;
       bottom: 0px;
     }
@@ -38,12 +27,14 @@
 }
 
 @media screen and (max-width: 650px) {
+
   .menu {
     &__wrapper {
-      position: absolute;
-      height: calc(100vh - 71px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
       width: 200px;
-      padding-left: 20px;
       background-color: white;
       align-items: start;
       z-index: 10;
@@ -67,8 +58,8 @@
         content: '';
         position: absolute;
         left: 100%;
-        width: calc(100vw - 220px);
-        height: calc(100vh - 71px);
+        width: calc(100vw - 200px);
+        height: 100vh;
         background-color: #414141;
         opacity: 0.6;
         z-index: 9;
@@ -76,13 +67,31 @@
     }
 
     &__group {
-      padding-top: 95px;   
+      align-items: start;
+    }
+
+    &__credentials {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      font-weight: 500;
+      font-size: 15px;
+      width: 180px;
+      border-bottom: 0.5px solid #9C9C9C;
+      padding-left: 20px;
+      padding-bottom: 20px;
+      padding-top: 71px;
+
+      svg {
+        margin-right: 10px;
+      }
     }
 
     &__block {
-      height: 45px;
+      padding-left: 20px;
+
       &:last-child {
-        height: 95px;
+        bottom: 35px;
       }
     }
 

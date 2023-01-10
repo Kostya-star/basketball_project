@@ -1,18 +1,17 @@
-import { ReactComponent as HeaderAvatar } from '../../assets/icons/userAvatar.svg';
-import headerLogo from '../../assets/img/Header/header__logo.png';
+import { ReactComponent as HeaderAvatar } from 'assets/icons/userAvatar.svg';
+import headerLogo from 'assets/img/Header/header__logo.png';
 import s from './Header.module.scss';
-import { ReactComponent as ToggleButton } from '../../assets/icons/header_toggle__button.svg';
+import { ReactComponent as ToggleButton } from 'assets/icons/header_toggle__button.svg';
 import { FC, LegacyRef } from 'react';
 import classnames from 'classnames';
 
 interface IHeaderProps {
-  userName: string
+  userName: string;
   openMenu: boolean;
   toggleMenu: () => void;
 }
 
 export const Header: FC<IHeaderProps> = ({ openMenu, userName, toggleMenu }) => {
-
   return (
     <div
       className={classnames(s.header__wrapper, {

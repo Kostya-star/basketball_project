@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { imageAPI, teamsAPI } from '../../api/api';
-import { INewTeamValues, ITeamData, ITeamState } from '../../types/teams/teams';
-import { RespStatusEnum } from '../../types/enum';
-import { AppDispatch } from '../store';
-import { ITeamsParamsGetRequest } from './../../types/IBaseParamsGetRequest';
-import { IUpdateTeamRequest } from '../../types/teams/updateTeamRequest';
+import { imageAPI, teamsAPI } from 'api/api';
+import { INewTeamValues, ITeamData, ITeamState } from 'types/teams/teams';
+import { RespStatusEnum } from 'types/enum';
+import { AppDispatch } from 'store';
+import { ITeamsParamsGetRequest } from './types/IBaseParamsGetRequest';
+import { IUpdateTeamRequest } from 'types/teams/updateTeamRequest';
 
 const initialState = {
   data: [],

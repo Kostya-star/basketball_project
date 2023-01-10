@@ -1,16 +1,16 @@
 import { FC, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../redux/hooks';
-import { MainLayout } from '../layout/MainLayout';
-import { NotFoundPage } from '../../pages/NotFoundPage';
-import { SignInPage } from '../../pages/SignInPage';
-import { SignUpPage } from '../../pages/SignUpPage';
-import { PlayersPage } from './../../pages/PlayersPage';
-import { TeamCreatePage } from './../../pages/TeamCreatePage';
-import { TeamsPage } from '../../pages/TeamsPage';
-import { PlayersCreatePage } from '../../pages/PlayersCreatePage';
-import { TeamDetailsPage } from '../../pages/TeamDetailsPage';
-import { PlayerDetailsPage } from '../../pages/PlayerDetailsPage';
+import { useAppSelector } from 'redux/hooks';
+import { MainLayout } from 'layout/MainLayout';
+import { NotFoundPage } from 'pages/NotFoundPage';
+import { SignInPage } from 'pages/SignInPage';
+import { SignUpPage } from 'pages/SignUpPage';
+import { PlayersPage } from './pages/PlayersPage';
+import { TeamCreatePage } from './pages/TeamCreatePage';
+import { TeamsPage } from 'pages/TeamsPage';
+import { PlayersCreatePage } from 'pages/PlayersCreatePage';
+import { TeamDetailsPage } from 'pages/TeamDetailsPage';
+import { PlayerDetailsPage } from 'pages/PlayerDetailsPage';
 
 export const AppRouter: FC = () => {
   const navigate = useNavigate();

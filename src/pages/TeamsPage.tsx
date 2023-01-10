@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHref, useNavigate } from 'react-router-dom';
-import { fetchTeams, getTeam, removeTeam } from '../redux/slices/teamsSlice';
-import { AddBtn } from '../components/AddBtn/AddBtn';
-import { InputSearch } from '../components/InputSearch/InputSearch';
-import teams__empty from '../assets/img/TeamsEmpty/teams__empty.png';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import '../scss/teams_players_common.scss';
+import { fetchTeams, getTeam, removeTeam } from 'redux/slices/teamsSlice';
+import { AddBtn } from 'components/AddBtn/AddBtn';
+import { InputSearch } from 'components/InputSearch/InputSearch';
+import teams__empty from 'assets/img/TeamsEmpty/teams__empty.png';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import 'scss/teams_players_common.scss';
 import qs from 'qs';
 import { createBrowserHistory } from 'history';
 import debounce from 'lodash.debounce';
-import { Card } from '../components/Card/Card';
-import { Empty } from '../components/Empty/Empty';
-import { ISelectOption } from '../types/ISelectOption';
-import { Navigation } from '../components/Navigation/Navigation';
-import { ITeamsParamsGetRequest, ITeamsPlayersParams } from '../types/IBaseParamsGetRequest';
+import { Card } from 'components/Card/Card';
+import { Empty } from 'components/Empty/Empty';
+import { ISelectOption } from 'types/ISelectOption';
+import { Navigation } from 'components/Navigation/Navigation';
+import { ITeamsParamsGetRequest, ITeamsPlayersParams } from 'types/IBaseParamsGetRequest';
 
 export const TeamsPage = () => {
   const navigate = useNavigate();

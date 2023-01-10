@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { baseRequestUrl } from '../../api/baseRequest';
+import { baseRequestUrl } from 'api/baseRequest';
 import s from './Card.module.scss';
 
 interface ICardProps {

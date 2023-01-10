@@ -1,28 +1,27 @@
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
-import { InputFile } from '../components/InputFile/InputFile';
-import { SelectComponent } from '../components/FormComponents/SelectComponent';
-import { InputSubmit } from '../components/FormComponents/InputSubmit';
-import { InputText } from '../components/FormComponents/InputText';
-import { InfoHeader } from '../components/InfoHeader/InfoHeader';
-import { InputDate } from '../components/FormComponents/InputDate';
+import { InputFile } from 'components/InputFile/InputFile';
+import { SelectComponent } from 'components/FormComponents/SelectComponent';
+import { InputSubmit } from 'components/FormComponents/InputSubmit';
+import { InputText } from 'components/FormComponents/InputText';
+import { InfoHeader } from 'components/InfoHeader/InfoHeader';
+import { InputDate } from 'components/FormComponents/InputDate';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {
   getPositions,
   createPlayer,
   getPlayer,
   addPhoto,
   editPlayer,
-} from '../redux/slices/playersSlice';
-import { IAddPLayerRequest } from '../types/players/addPLayerRequest';
-import { RespStatusEnum } from '../types/enum';
-import { RespError } from '../components/RespError';
+} from 'redux/slices/playersSlice';
+import { IAddPLayerRequest } from 'types/players/addPLayerRequest';
+import { RespStatusEnum } from 'types/enum';
+import { RespError } from 'components/RespError';
 import qs from 'qs';
-import { IGetPlayerResponse } from '../types/players/getPlayerResponse';
-import { useStateData } from '../hooks';
-
+import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
+import { useStateData } from 'hooks';
 
 const validationSchema = Yup.object({
   name: Yup.string()

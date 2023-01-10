@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { FC } from 'react';
-import { ReactComponent as TeamsSVG } from '../../assets/icons/menu__team.svg';
-import { ReactComponent as PlayersSVG } from '../../assets/icons/menu__players.svg';
-import { ReactComponent as SignOutSVG } from '../../assets/icons/menu__signOut.svg';
+import { ReactComponent as TeamsSVG } from 'assets/icons/menu__team.svg';
+import { ReactComponent as PlayersSVG } from 'assets/icons/menu__players.svg';
+import { ReactComponent as SignOutSVG } from 'assets/icons/menu__signOut.svg';
 import s from './MenuBtn.module.scss';
 
 interface IMenuBtnProps {
@@ -22,7 +22,13 @@ export const MenuBtn: FC<IMenuBtnProps> = ({ index, activeBtn, btnName, onClickH
       })}
       disabled={activeBtn}
     >
-      {btnName === 'Teams' ? <TeamsSVG /> : btnName === 'Sign out' ? <SignOutSVG/> : <PlayersSVG />}
+      {btnName === 'Teams' ? (
+        <TeamsSVG />
+      ) : btnName === 'Sign out' ? (
+        <SignOutSVG />
+      ) : (
+        <PlayersSVG />
+      )}
       <span>{btnName}</span>
     </button>
   );

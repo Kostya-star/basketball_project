@@ -1,18 +1,18 @@
-import { InputText } from '../components/FormComponents/InputText';
+import { InputText } from 'components/FormComponents/InputText';
 import { Form, Formik } from 'formik';
-import { InputSubmit } from '../components/FormComponents/InputSubmit';
+import { InputSubmit } from 'components/FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch } from 'redux/hooks';
 import { useState } from 'react';
-import { addPhoto, createTeam, editTeam, getTeam } from '../redux/slices/teamsSlice';
-import { InputFile } from '../components/InputFile/InputFile';
+import { addPhoto, createTeam, editTeam, getTeam } from 'redux/slices/teamsSlice';
+import { InputFile } from 'components/InputFile/InputFile';
 import { useNavigate } from 'react-router-dom';
-import { InfoHeader } from '../components/InfoHeader/InfoHeader';
-import { INewTeamValues, ITeamData } from '../types/teams/teams';
-import { RespStatusEnum } from '../types/enum';
-import { RespError } from '../components/RespError';
+import { InfoHeader } from 'components/InfoHeader/InfoHeader';
+import { INewTeamValues, ITeamData } from 'types/teams/teams';
+import { RespStatusEnum } from 'types/enum';
+import { RespError } from 'components/RespError';
 import qs from 'qs';
-import { useStateData } from '../hooks';
+import { useStateData } from 'hooks';
 
 const validationSchema = Yup.object({
   name: Yup.string()

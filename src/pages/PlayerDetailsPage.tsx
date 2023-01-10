@@ -1,29 +1,28 @@
-import { useAppDispatch } from './../redux/hooks';
+import { useAppDispatch } from './redux/hooks';
 import qs from 'qs';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getPlayer, removePlayer } from '../redux/slices/playersSlice';
-import { DetailsCard } from '../components/DetailsCard/DetailsCard';
-import { IGetPlayerResponse } from '../types/players/getPlayerResponse';
-import { InfoHeader } from '../components/InfoHeader/InfoHeader';
-import { RespStatusEnum } from '../types/enum';
-import { useStateData } from '../hooks';
-
+import { getPlayer, removePlayer } from 'redux/slices/playersSlice';
+import { DetailsCard } from 'components/DetailsCard/DetailsCard';
+import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
+import { InfoHeader } from 'components/InfoHeader/InfoHeader';
+import { RespStatusEnum } from 'types/enum';
+import { useStateData } from 'hooks';
 
 export const PlayerDetailsPage = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { id } = qs.parse(location.search.substring(1)) as {id: string};
+  const { id } = qs.parse(location.search.substring(1)) as { id: string };
 
   const playerData: IGetPlayerResponse = useStateData(getPlayer, id);
-  
+
   const onEditPlayerHandle = () => {
     if (id) {
       navigate(`/PlayersCreate?id=${Number(id)}`);
     }
   };
-  
+
   const onDeletePlayerHandle = () => {
     void dispatch(removePlayer(Number(id))).then((resp) => {
       if (resp && resp.status === RespStatusEnum.SUCCESS) {
@@ -31,7 +30,7 @@ export const PlayerDetailsPage = () => {
       }
     });
   };
-  
+
   const playerBirthYear = new Date(playerData?.birthday).getFullYear();
   const yearNow = new Date().getFullYear();
   const playerAge = yearNow - playerBirthYear;

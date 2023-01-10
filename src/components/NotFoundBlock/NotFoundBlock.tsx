@@ -1,6 +1,5 @@
-import s from './NotFoundBlock.module.scss'
-import notFound from '../../assets/img/NotFound/notFound.png'
-
+import s from './NotFoundBlock.module.scss';
+import notFound from 'assets/img/NotFound/notFound.png';
 
 export const NotFoundBlock = () => {
   return (
@@ -14,4 +13,4 @@ export const NotFoundBlock = () => {
       </div>
     </div>
   );
-}
+};

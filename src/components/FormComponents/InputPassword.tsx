@@ -1,22 +1,22 @@
 import { FC, useState } from 'react';
 import { useField, ErrorMessage } from 'formik';
 import s from './FormItems.module.scss';
-import { ReactComponent as EyeClosed } from '../../assets/icons/eye-closed.svg';
-import { ReactComponent as EyeOpened } from '../../assets/icons/eye-open.svg';
+import { ReactComponent as EyeClosed } from 'assets/icons/eye-closed.svg';
+import { ReactComponent as EyeOpened } from 'assets/icons/eye-open.svg';
 
 interface InputPasswordProps<T> {
   label: string;
-  name: T
+  name: T;
 }
 
-export const InputPassword = <T extends string>({ label, ...props }:InputPasswordProps<T> ) => {
+export const InputPassword = <T extends string>({ label, ...props }: InputPasswordProps<T>) => {
   const [field, meta] = useField(props);
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const onHandlePasswordVisible = () => {
-    setIsPasswordVisible(!isPasswordVisible)
-  }
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <div className={s.form__group}>
@@ -37,7 +37,7 @@ export const InputPassword = <T extends string>({ label, ...props }:InputPasswor
           )}
         </div>
       </div>
-      <ErrorMessage className={s.form__error} name={props.name} component="span"/>
+      <ErrorMessage className={s.form__error} name={props.name} component="span" />
     </div>
   );
 };

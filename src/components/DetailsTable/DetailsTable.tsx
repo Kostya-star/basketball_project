@@ -1,8 +1,7 @@
 import { FC } from 'react';
-import { baseRequestUrl } from '../../api/baseRequest';
-import { IPlayerData } from '../../types/players/players';
+import { baseRequestUrl } from 'api/baseRequest';
+import { IPlayerData } from 'types/players/players';
 import s from './DetailsTable.module.scss';
-
 
 interface IDetailsTableProps {
   playersInTable: IPlayerData[];

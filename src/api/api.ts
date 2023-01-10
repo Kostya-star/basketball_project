@@ -1,26 +1,25 @@
 import { client } from './baseRequest';
-import { ISignInRequest } from '../types/auth/SignInRequest';
-import { IAuthResponseType } from '../types/auth/authResp';
-import { ISignUpRequest } from '../types/auth/SignUpRequest';
-import { IGetTeamsResponse } from '../types/teams/getTeamsResp';
-import { INewTeamValuesRequest } from '../types/teams/addTeamRequest';
-import { IGetPlayersResponse } from '../types/players/getPlayersResp';
-import { IAddPLayerRequest } from '../types/players/addPLayerRequest';
-import { IDeleteTeamRequest } from '../types/teams/deleteTeamRequest';
-import { IDeletePlayerRequest } from '../types/players/deletePlayerRequest';
-import { IAddTeamResponse } from '../types/teams/addTeamResp';
-import { IDeleteTeamResponse } from '../types/teams/deleteTeamResp';
-import { IAddPlayerResponse } from '../types/players/addPlayerResp';
-import { IDeletePlayerResponse } from '../types/players/deletePlayerResp';
-import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './../types/IBaseParamsGetRequest';
-import { ITeamData } from '../types/teams/teams';
-import { IUpdateTeamRequest } from '../types/teams/updateTeamRequest';
-import { IUpdateTeamResponse } from './../types/teams/updateTeamResponse';
-import { IGetPlayerResponse } from '../types/players/getPlayerResponse';
-import { IUpdatePlayerRequest } from '../types/players/updatePlayerRequest';
-import { IUpdatePlayerResponse } from '../types/players/updatePlayerResponse';
-import { IGetTeamResponse } from '../types/teams/getTeamResp';
-
+import { ISignInRequest } from 'types/auth/SignInRequest';
+import { IAuthResponseType } from 'types/auth/authResp';
+import { ISignUpRequest } from 'types/auth/SignUpRequest';
+import { IGetTeamsResponse } from 'types/teams/getTeamsResp';
+import { INewTeamValuesRequest } from 'types/teams/addTeamRequest';
+import { IGetPlayersResponse } from 'types/players/getPlayersResp';
+import { IAddPLayerRequest } from 'types/players/addPLayerRequest';
+import { IDeleteTeamRequest } from 'types/teams/deleteTeamRequest';
+import { IDeletePlayerRequest } from 'types/players/deletePlayerRequest';
+import { IAddTeamResponse } from 'types/teams/addTeamResp';
+import { IDeleteTeamResponse } from 'types/teams/deleteTeamResp';
+import { IAddPlayerResponse } from 'types/players/addPlayerResp';
+import { IDeletePlayerResponse } from 'types/players/deletePlayerResp';
+import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './types/IBaseParamsGetRequest';
+import { ITeamData } from 'types/teams/teams';
+import { IUpdateTeamRequest } from 'types/teams/updateTeamRequest';
+import { IUpdateTeamResponse } from './types/teams/updateTeamResponse';
+import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
+import { IUpdatePlayerRequest } from 'types/players/updatePlayerRequest';
+import { IUpdatePlayerResponse } from 'types/players/updatePlayerResponse';
+import { IGetTeamResponse } from 'types/teams/getTeamResp';
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
@@ -44,7 +43,7 @@ export const teamsAPI = {
   },
 
   async getTeam(id: number) {
-    return await client.get<IGetTeamResponse>(`Team/Get?id=${id}`)
+    return await client.get<IGetTeamResponse>(`Team/Get?id=${id}`);
   },
 
   async addTeam(values: INewTeamValuesRequest) {
@@ -52,7 +51,7 @@ export const teamsAPI = {
   },
 
   async editTeam(newValues: IUpdateTeamRequest) {
-    return await client.put<IUpdateTeamResponse>(`Team/Update`, newValues)
+    return await client.put<IUpdateTeamResponse>(`Team/Update`, newValues);
   },
 
   async deleteTeam({ id }: IDeleteTeamRequest) {
@@ -73,7 +72,7 @@ export const playersAPI = {
   },
 
   async getPlayer(id: number) {
-    return await client.get<IGetPlayerResponse>(`Player/Get?id=${id}`)
+    return await client.get<IGetPlayerResponse>(`Player/Get?id=${id}`);
   },
 
   async getPositions() {

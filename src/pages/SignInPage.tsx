@@ -1,18 +1,18 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-import { InputSubmit } from '../components/FormComponents/InputSubmit';
+import { InputSubmit } from 'components/FormComponents/InputSubmit';
 import * as Yup from 'yup';
-import signInImg from '../assets/img/imgSignIn/signin-img.png';
-import { InputPassword } from '../components/FormComponents/InputPassword';
-import { InputText } from '../components/FormComponents/InputText';
-import '../scss/auth-common.scss';
-import { FormBg } from '../components/FormBg/FormBg';
-import { FormLink } from '../components/FormLink';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { login } from '../redux/slices/authSlice';
-import { RespError } from '../components/RespError';
-import { ISignInFormikValues } from '../types/auth/auth';
+import signInImg from 'assets/img/imgSignIn/signin-img.png';
+import { InputPassword } from 'components/FormComponents/InputPassword';
+import { InputText } from 'components/FormComponents/InputText';
+import 'scss/auth-common.scss';
+import { FormBg } from 'components/FormBg/FormBg';
+import { FormLink } from 'components/FormLink';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { login } from 'redux/slices/authSlice';
+import { RespError } from 'components/RespError';
+import { ISignInFormikValues } from 'types/auth/auth';
 
 interface ISignInProps {
   children?: React.ReactNode;

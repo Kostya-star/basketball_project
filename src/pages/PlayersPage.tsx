@@ -1,22 +1,21 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { fetchPlayers, removePlayer } from '../redux/slices/playersSlice';
-import { AddBtn } from '../components/AddBtn/AddBtn';
-import { SelectComponent } from '../components/FormComponents/SelectComponent';
-import { InputSearch } from '../components/InputSearch/InputSearch';
-import { fetchTeams } from '../redux/slices/teamsSlice';
-import { Card } from '../components/Card/Card';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { fetchPlayers, removePlayer } from 'redux/slices/playersSlice';
+import { AddBtn } from 'components/AddBtn/AddBtn';
+import { SelectComponent } from 'components/FormComponents/SelectComponent';
+import { InputSearch } from 'components/InputSearch/InputSearch';
+import { fetchTeams } from 'redux/slices/teamsSlice';
+import { Card } from 'components/Card/Card';
 import debounce from 'lodash.debounce';
 import { createBrowserHistory } from 'history';
 import qs from 'qs';
-import { IPlayerData } from '../types/players/players';
-import players__empty from '../assets/img/PlayersEmpty/players__empty.png';
-import { Empty } from '../components/Empty/Empty';
-import { Navigation } from '../components/Navigation/Navigation';
-import { ISelectOption } from '../types/ISelectOption';
-import { IPlayersParamsGetRequest, ITeamsPlayersParams } from '../types/IBaseParamsGetRequest';
-
+import { IPlayerData } from 'types/players/players';
+import players__empty from 'assets/img/PlayersEmpty/players__empty.png';
+import { Empty } from 'components/Empty/Empty';
+import { Navigation } from 'components/Navigation/Navigation';
+import { ISelectOption } from 'types/ISelectOption';
+import { IPlayersParamsGetRequest, ITeamsPlayersParams } from 'types/IBaseParamsGetRequest';
 
 export const PlayersPage = () => {
   const navigate = useNavigate();
@@ -183,8 +182,8 @@ export const PlayersPage = () => {
   };
 
   const onRedirectPlayerDetails = (id: number) => {
-    navigate(`/PlayerDetails?id=${id}`)
-  }
+    navigate(`/PlayerDetails?id=${id}`);
+  };
 
   return (
     <div className="common__container">

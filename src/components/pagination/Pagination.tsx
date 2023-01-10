@@ -1,17 +1,16 @@
 import { FC } from 'react';
 import ReactPaginate from 'react-paginate';
-import s from './Pagination.module.scss'
-import {ReactComponent as PreviousLabel} from '../../assets/icons/pagination__left.svg'
-import {ReactComponent as NextLabel} from '../../assets/icons/pagination__right.svg'
+import s from './Pagination.module.scss';
+import { ReactComponent as PreviousLabel } from 'assets/icons/pagination__left.svg';
+import { ReactComponent as NextLabel } from 'assets/icons/pagination__right.svg';
 
 interface IPaginationProps {
-  onPageChange: (currentPage: number) => void 
-  currentPage: number
-  pagesAmount: number
+  onPageChange: (currentPage: number) => void;
+  currentPage: number;
+  pagesAmount: number;
 }
 
 export const Pagination: FC<IPaginationProps> = ({ currentPage, pagesAmount, onPageChange }) => {
-
   return (
     <div>
       <ReactPaginate
@@ -21,8 +20,8 @@ export const Pagination: FC<IPaginationProps> = ({ currentPage, pagesAmount, onP
         breakLabel={'...'}
         pageRangeDisplayed={1}
         marginPagesDisplayed={1}
-        previousLabel={<PreviousLabel/> }
-        nextLabel={<NextLabel/>}
+        previousLabel={<PreviousLabel />}
+        nextLabel={<NextLabel />}
         className={s.pagination}
       />
     </div>

@@ -1,9 +1,8 @@
 import { FC, useEffect, useState, useRef } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Header } from '../Header/Header';
-import { Menu } from '../Menu/Menu';
+import { Header } from 'Header/Header';
+import { Menu } from 'Menu/Menu';
 import s from './layout.module.scss';
-
 
 const clearCache = () => {
   if ('caches' in window) {
@@ -25,7 +24,6 @@ const clearCache = () => {
 const menuButtons = ['Teams', 'Players', 'Sign out'];
 
 const userName = localStorage.getItem('userName');
-
 
 export const MainLayout: FC = () => {
   const [activeBtn, setActiveBtn] = useState<number>();
@@ -72,7 +70,6 @@ export const MainLayout: FC = () => {
     window.localStorage.removeItem('TOKEN');
     clearCache();
   };
-
 
   return (
     <div>

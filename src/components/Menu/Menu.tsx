@@ -1,9 +1,8 @@
 import { useState, useEffect, FC } from 'react';
-import '../../scss/menu-common.scss';
+import 'scss/menu-common.scss';
 import { useNavigate } from 'react-router-dom';
-import { MenuBtn } from '../MenuBtn/MenuBtn';
-import { ReactComponent as HeaderAvatar } from '../../assets/icons/userAvatar.svg';
-
+import { MenuBtn } from 'MenuBtn/MenuBtn';
+import { ReactComponent as HeaderAvatar } from 'assets/icons/userAvatar.svg';
 
 interface IMenuProps {
   activeBtn: number;

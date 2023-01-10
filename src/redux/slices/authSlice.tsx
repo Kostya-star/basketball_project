@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authAPI } from '../../api/api';
-import { ISignInRequest } from '../../types/auth/SignInRequest';
-import { IAuthResponseType } from '../../types/auth/authResp';
-import { ISignUpRequest } from '../../types/auth/SignUpRequest';
-import { RespStatusEnum } from '../../types/enum';
-import { AppDispatch } from '../store';
+import { authAPI } from 'api/api';
+import { ISignInRequest } from 'types/auth/SignInRequest';
+import { IAuthResponseType } from 'types/auth/authResp';
+import { ISignUpRequest } from 'types/auth/SignUpRequest';
+import { RespStatusEnum } from 'types/enum';
+import { AppDispatch } from 'store';
 
 export interface IAuthState {
   signInResp: IAuthResponseType;
@@ -26,14 +26,13 @@ export const authSlice = createSlice({
     signUpSuccess(state, action: PayloadAction<IAuthResponseType>) {
       state.signUpResp = action.payload;
     },
-    },
-  });
-  
-  export const { signInSuccess, signUpSuccess} = authSlice.actions;
+  },
+});
 
+export const { signInSuccess, signUpSuccess } = authSlice.actions;
 
 export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch) => {
-  const response = await authAPI.signIn(loginData)
+  const response = await authAPI.signIn(loginData);
 
   if (response && response.status === RespStatusEnum.SUCCESS) {
     if (response?.status === RespStatusEnum.SUCCESS) {
@@ -47,12 +46,11 @@ export const login = (loginData: ISignInRequest) => async (dispatch: AppDispatch
 };
 
 export const signUp = (signupData: ISignUpRequest) => async (dispatch: AppDispatch) => {
-  const response = await authAPI.signUp(signupData)
+  const response = await authAPI.signUp(signupData);
   if (response?.status === RespStatusEnum.SUCCESS) {
     dispatch(signUpSuccess(response.data));
   }
-  return response
+  return response;
 };
-
 
 export default authSlice.reducer;

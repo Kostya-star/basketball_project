@@ -2,8 +2,7 @@ import { ErrorMessage } from 'formik';
 import s from './FormItems.module.scss';
 import Select, { MenuPlacement, PropsValue, StylesConfig } from 'react-select';
 import classnames from 'classnames';
-import { ISelectOption } from '../../types/ISelectOption';
-
+import { ISelectOption } from 'types/ISelectOption';
 
 interface ISelectComponentProps<T> {
   label?: string;
@@ -13,7 +12,7 @@ interface ISelectComponentProps<T> {
   defaultValue?: PropsValue<ISelectOption>;
   menuPlacement?: MenuPlacement;
   options: ISelectOption[];
-  border?: boolean
+  border?: boolean;
   onChange?: (option: string, name: string) => void;
   onChangeMulti?: (option: ISelectOption[]) => void;
   onBlur?: (name: string) => void;
@@ -117,7 +116,7 @@ export const SelectComponent = <T extends string>({
     if (option) {
       if (IsMulti && onChangeMulti) {
         onChangeMulti?.(option);
-      } else if(onChange){
+      } else if (onChange) {
         onChange?.(option.value, name);
       }
     }

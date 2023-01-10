@@ -6,12 +6,12 @@ import { FC, LegacyRef } from 'react';
 import classnames from 'classnames';
 
 interface IHeaderProps {
+  userName: string
   openMenu: boolean;
   toggleMenu: () => void;
 }
 
-export const Header: FC<IHeaderProps> = ({ openMenu, toggleMenu }) => {
-  const userName = localStorage.getItem('userName');
+export const Header: FC<IHeaderProps> = ({ openMenu, userName, toggleMenu }) => {
 
   return (
     <div

@@ -2,7 +2,6 @@ import { FC, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks';
 import { MainLayout } from '../layout/MainLayout';
-import { Teams } from '../Teams/Teams';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 import { SignInPage } from '../../pages/SignInPage';
 import { SignUpPage } from '../../pages/SignUpPage';

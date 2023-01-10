@@ -155,7 +155,7 @@
       width: 15px;
       height: 15px;
       top: 13px;
-      right: 11px;
+      right: 16px;
       cursor: pointer;
       user-select: none;
     }
@@ -195,13 +195,13 @@
     }
   }
 }
-@media screen and (max-width: 870px) {
-  .select{
-    &__multi {
-      width: 100px;
-    }
-  }
-}
+// @media screen and (max-width: 870px) {
+  // .select{
+  //   &__multi {
+  //     width: 100px;
+  //   }
+  // }
+// }
 
 @media screen and (max-width: 650px) {
   .select{
@@ -211,3 +211,22 @@
     }
   }
 }
+// @media screen and (max-width: 395px) {
+//   .form {
+//     &__input {
+//       width: 300px;
+//     }
+//     &__group {
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//     }
+    
+//   }
+//   .select {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     width: 305px;
+//   }
+// }

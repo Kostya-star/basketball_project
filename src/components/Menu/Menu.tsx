@@ -30,10 +30,9 @@ const menuButtons = ['Teams', 'Players', 'Sign out'];
 
 interface IMenuProps {
   openMenu: boolean;
-  closeMenu: () => void
 }
 
-export const Menu: FC<IMenuProps> = ({ openMenu, closeMenu }) => {
+export const Menu: FC<IMenuProps> = ({ openMenu }) => {
   const [activeBtn, setActiveBtn] = useState<number | string>();
   const navigate = useNavigate();
 
@@ -59,13 +58,6 @@ export const Menu: FC<IMenuProps> = ({ openMenu, closeMenu }) => {
     window.localStorage.removeItem('TOKEN');
     clearCache();
   };
-
-  // HOW TO CLOSE MENU WHEN CLICKING OUTSIDE IN REACT
-  window.addEventListener('click', (e: Event) => {
-    if(document.querySelector('.menu__wrapper') === e.target) {
-      closeMenu()
-    }
-  })
 
   const userName = localStorage.getItem('userName');
 

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useRef } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Menu } from '../Menu/Menu';
@@ -12,13 +12,28 @@ export const MainLayout: FC = () => {
       (window.location.pathname === '/Players' && navigate('/Players'));
   }, []);
 
-  const [openMenu, setOpenMenu] = useState(false)
+  const [openMenu, setOpenMenu] = useState(false);
+
+  useEffect(() => {
+    const onHandleClickOutsideMenu = (e: Event) => {
+      if (document.querySelector('.menu__wrapper') === e.target) {
+        setOpenMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', onHandleClickOutsideMenu);
+
+    return () => {
+      document.removeEventListener('mousedown', onHandleClickOutsideMenu);
+    };
+  }, [openMenu]);
+
 
   return (
     <div>
-      <Header openMenu={openMenu} setOpenMenu={() => setOpenMenu(!openMenu)}/>
+      <Header openMenu={openMenu} toggleMenu={() => setOpenMenu(!openMenu)} />
       <div className={s.layout__container}>
-        <Menu openMenu={openMenu} closeMenu={() => setOpenMenu(false)}/>
+        <Menu openMenu={openMenu} />
         <div className={s.layout__children__container}>
           <Outlet />
         </div>

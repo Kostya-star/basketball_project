@@ -2,15 +2,15 @@ import { ReactComponent as HeaderAvatar } from '../../assets/icons/userAvatar.sv
 import headerLogo from '../../assets/img/Header/header__logo.png';
 import s from './Header.module.scss';
 import { ReactComponent as ToggleButton } from '../../assets/icons/header_toggle__button.svg';
-import { FC } from 'react';
+import { FC, LegacyRef } from 'react';
 import classnames from 'classnames';
 
 interface IHeaderProps {
   openMenu: boolean;
-  setOpenMenu: () => void;
+  toggleMenu: () => void;
 }
 
-export const Header: FC<IHeaderProps> = ({ openMenu, setOpenMenu }) => {
+export const Header: FC<IHeaderProps> = ({ openMenu, toggleMenu }) => {
   const userName = localStorage.getItem('userName');
 
   return (
@@ -20,7 +20,7 @@ export const Header: FC<IHeaderProps> = ({ openMenu, setOpenMenu }) => {
       })}
     >
       <div className={s.header_toggle__button}>
-        <button onClick={setOpenMenu}>
+        <button onClick={toggleMenu}>
           <ToggleButton />
         </button>
       </div>

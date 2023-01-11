@@ -1,4 +1,4 @@
-import { useAppDispatch } from './redux/hooks';
+import { useAppDispatch } from 'redux/hooks';
 import qs from 'qs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPlayer, removePlayer } from 'redux/slices/playersSlice';

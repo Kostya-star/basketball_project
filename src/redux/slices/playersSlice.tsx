@@ -4,8 +4,8 @@ import { IPlayersParamsGetRequest } from 'types/IBaseParamsGetRequest';
 import { IAddPLayerRequest } from 'types/players/addPLayerRequest';
 import { IPlayerData, IPlayersState } from 'types/players/players';
 import { IUpdatePlayerRequest } from 'types/players/updatePlayerRequest';
-import { AppDispatch } from 'store';
-import { imageAPI, playersAPI, teamsAPI } from './api/api';
+import { AppDispatch } from '../store';
+import { imageAPI, playersAPI, teamsAPI } from 'api/api';
 
 interface IPlayersSliceState {
   playersData: IPlayersState;

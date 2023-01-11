@@ -4,7 +4,7 @@ import { ISignInRequest } from 'types/auth/SignInRequest';
 import { IAuthResponseType } from 'types/auth/authResp';
 import { ISignUpRequest } from 'types/auth/SignUpRequest';
 import { RespStatusEnum } from 'types/enum';
-import { AppDispatch } from 'store';
+import { AppDispatch } from 'redux/store';
 
 export interface IAuthState {
   signInResp: IAuthResponseType;
@@ -15,6 +15,7 @@ const initialState: IAuthState = {
   signInResp: {} as IAuthResponseType,
   signUpResp: {} as IAuthResponseType,
 };
+
 
 export const authSlice = createSlice({
   name: 'auth',

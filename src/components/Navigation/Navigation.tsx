@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { ISelectOption } from 'types/ISelectOption';
-import { SelectComponent } from 'FormComponents/SelectComponent';
-import { Pagination } from 'pagination/Pagination';
+import { SelectComponent } from 'components/FormComponents/SelectComponent';
+import { Pagination } from 'components/pagination/Pagination';
 
 interface INavigationProps {
   currentPage: number;

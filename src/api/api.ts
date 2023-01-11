@@ -1,25 +1,25 @@
-import { client } from './baseRequest';
-import { ISignInRequest } from 'types/auth/SignInRequest';
 import { IAuthResponseType } from 'types/auth/authResp';
+import { ISignInRequest } from 'types/auth/SignInRequest';
 import { ISignUpRequest } from 'types/auth/SignUpRequest';
-import { IGetTeamsResponse } from 'types/teams/getTeamsResp';
-import { INewTeamValuesRequest } from 'types/teams/addTeamRequest';
-import { IGetPlayersResponse } from 'types/players/getPlayersResp';
+import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from 'types/IBaseParamsGetRequest';
 import { IAddPLayerRequest } from 'types/players/addPLayerRequest';
-import { IDeleteTeamRequest } from 'types/teams/deleteTeamRequest';
-import { IDeletePlayerRequest } from 'types/players/deletePlayerRequest';
-import { IAddTeamResponse } from 'types/teams/addTeamResp';
-import { IDeleteTeamResponse } from 'types/teams/deleteTeamResp';
 import { IAddPlayerResponse } from 'types/players/addPlayerResp';
+import { IDeletePlayerRequest } from 'types/players/deletePlayerRequest';
 import { IDeletePlayerResponse } from 'types/players/deletePlayerResp';
-import { IPlayersParamsGetRequest, ITeamsParamsGetRequest } from './types/IBaseParamsGetRequest';
-import { ITeamData } from 'types/teams/teams';
-import { IUpdateTeamRequest } from 'types/teams/updateTeamRequest';
-import { IUpdateTeamResponse } from './types/teams/updateTeamResponse';
 import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
+import { IGetPlayersResponse } from 'types/players/getPlayersResp';
 import { IUpdatePlayerRequest } from 'types/players/updatePlayerRequest';
 import { IUpdatePlayerResponse } from 'types/players/updatePlayerResponse';
+import { INewTeamValuesRequest } from 'types/teams/addTeamRequest';
+import { IAddTeamResponse } from 'types/teams/addTeamResp';
+import { IDeleteTeamRequest } from 'types/teams/deleteTeamRequest';
+import { IDeleteTeamResponse } from 'types/teams/deleteTeamResp';
 import { IGetTeamResponse } from 'types/teams/getTeamResp';
+import { IGetTeamsResponse } from 'types/teams/getTeamsResp';
+import { IUpdateTeamRequest } from 'types/teams/updateTeamRequest';
+import { IUpdateTeamResponse } from 'types/teams/updateTeamResponse';
+import { client } from './baseRequest';
+
 
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {

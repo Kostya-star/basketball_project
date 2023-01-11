@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useRef } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Header } from 'Header/Header';
-import { Menu } from 'Menu/Menu';
+import { Header } from 'components/Header/Header';
+import { Menu } from 'components/Menu/Menu';
 import s from './layout.module.scss';
 
 const clearCache = () => {

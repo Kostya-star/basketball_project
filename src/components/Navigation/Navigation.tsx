@@ -1,4 +1,4 @@
-import { SelectComponent } from 'components/FormComponents/SelectComponent';
+import { InputSelect } from 'components/InputSelect/InputSelect';
 import { Pagination } from 'components/pagination/Pagination';
 import { FC } from 'react';
 
@@ -31,7 +31,7 @@ export const Navigation: FC<INavigationProps> = ({
   return (
     <>
       <Pagination currentPage={currentPage} pagesAmount={pagesAmount} onPageChange={onPageChange} />
-      <SelectComponent<'pagination_select'>
+      <InputSelect<'pagination_select'>
         name="pagination_select"
         isMulti={false}
         options={paginationSelectOptions}

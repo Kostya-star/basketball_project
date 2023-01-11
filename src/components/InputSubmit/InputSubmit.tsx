@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { FC } from 'react';
-import s from './FormItems.module.scss';
+import s from './InputSubmit.module.scss';
 
 interface InputSubmitProps {
   value: string;
@@ -12,9 +12,9 @@ export const InputSubmit: FC<InputSubmitProps> = ({ isDisabled, value }) => {
     <>
       <input
         disabled={isDisabled}
-        className={classnames(s.form__submitBtn, {
-          [s.form__submitBtn__disabled]: isDisabled,
-          [s.form__submitBtn_hover]: !isDisabled,
+        className={classnames(s.submitBtn, {
+          [s.submitBtn_disabled]: isDisabled,
+          [s.submitBtn_hover]: !isDisabled,
         })}
         value={value}
         type="submit"

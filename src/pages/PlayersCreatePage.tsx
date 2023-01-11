@@ -1,9 +1,9 @@
-import { InputDate } from 'components/FormComponents/InputDate';
-import { InputSubmit } from 'components/FormComponents/InputSubmit';
-import { InputText } from 'components/FormComponents/InputText';
-import { SelectComponent } from 'components/FormComponents/SelectComponent';
 import { InfoHeader } from 'components/InfoHeader/InfoHeader';
+import { InputDate } from 'components/InputDate/InputDate';
 import { InputFile } from 'components/InputFile/InputFile';
+import { InputSelect } from 'components/InputSelect/InputSelect';
+import { InputSubmit } from 'components/InputSubmit/InputSubmit';
+import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
 import { Form, Formik } from 'formik';
 import { useStateData } from 'hooks';
@@ -184,7 +184,7 @@ export const PlayersCreatePage = () => {
 
                 <div>
                   <InputText<'name'> label="Name" name="name" />
-                  <SelectComponent<'position'>
+                  <InputSelect<'position'>
                     label="Positions"
                     name="position"
                     isMulti={false}
@@ -193,7 +193,7 @@ export const PlayersCreatePage = () => {
                     options={positionOptions}
                     value={currentSelectedPosition ?? initialSelectedPosition}
                   />
-                  <SelectComponent<'team'>
+                  <InputSelect<'team'>
                     label="Teams"
                     name="team"
                     isMulti={false}

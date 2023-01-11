@@ -1,7 +1,6 @@
-import classnames from 'classnames';
 import { ErrorMessage, Field } from 'formik';
 import { ChangeEvent } from 'react';
-import s from './FormItems.module.scss';
+import s from './InputDate.module.scss';
 
 interface InputDateProps<T> {
   label: string;
@@ -19,17 +18,10 @@ export const InputDate = <T extends string>({
   onBlur,
 }: InputDateProps<T>) => {
   return (
-    <div className={s.form__group}>
-      <label className={s.form__label} htmlFor="date-input">
-        {label}
-      </label>
+    <div className={s.date__container}>
+      <label htmlFor="date-input">{label}</label>
       <div className={s.inputBlock}>
         <Field
-          className={classnames(s.form__input, {
-            // [s.form__submitBtn__disabled]: isDisabled,
-            // [s.showDate]: field.value,
-            // [s.hideDate]: !field.value
-          })}
           type="date"
           id="date-input"
           value={value}
@@ -37,7 +29,7 @@ export const InputDate = <T extends string>({
           onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value, name)}
         />
       </div>
-      <ErrorMessage className={s.form__error} name={name} component="span" />
+      <ErrorMessage className={s.date__error} name={name} component="span" />
     </div>
   );
 };

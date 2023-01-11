@@ -1,7 +1,7 @@
-import { InputSubmit } from 'components/FormComponents/InputSubmit';
-import { InputText } from 'components/FormComponents/InputText';
 import { InfoHeader } from 'components/InfoHeader/InfoHeader';
 import { InputFile } from 'components/InputFile/InputFile';
+import { InputSubmit } from 'components/InputSubmit/InputSubmit';
+import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
 import { Form, Formik } from 'formik';
 import { useStateData } from 'hooks';

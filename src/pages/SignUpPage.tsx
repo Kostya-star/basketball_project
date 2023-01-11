@@ -1,10 +1,10 @@
 import SignUpImg from 'assets/img/imgSignUp/signup-Img.png';
 import { FormBg } from 'components/FormBg/FormBg';
-import { InputCheckbox } from 'components/FormComponents/InputCheckbox';
-import { InputPassword } from 'components/FormComponents/InputPassword';
-import { InputSubmit } from 'components/FormComponents/InputSubmit';
-import { InputText } from 'components/FormComponents/InputText';
 import { FormLink } from 'components/FormLink';
+import { InputCheckbox } from 'components/InputCheckbox/InputCheckbox';
+import { InputPassword } from 'components/InputPassword/InputPassword';
+import { InputSubmit } from 'components/InputSubmit/InputSubmit';
+import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
 import { Form, Formik } from 'formik';
 import { FC, useState } from 'react';

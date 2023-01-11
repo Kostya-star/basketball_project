@@ -97,8 +97,11 @@
     }
 
     &__groupParameters {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 15px;
+      // display: flex;
+      // justify-content: space-between;
 
       input {
         width: 171px;

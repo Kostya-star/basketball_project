@@ -1,0 +1,29 @@
+.submitBtn {
+  width: 358px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: #E4163A;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 25px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &_hover {
+    &:hover {
+      background-color: #FF5761;
+    }
+
+    &:active {
+      background-color: #C60E2E;
+    }
+  }
+
+  &_disabled {
+    background-color: #F6F6F6;
+    color: #D1D1D1;
+    cursor: auto;
+  }
+}

@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { ErrorMessage, useField } from 'formik';
-import s from './FormItems.module.scss';
+import s from './InputCheckbox.module.scss';
+
 
 interface InputCheckboxProps<T> {
   label: string;
@@ -29,7 +30,7 @@ export const InputCheckbox = <T extends string>({ label, ...props }: InputCheckb
         />
         {label}
       </label>
-      <ErrorMessage className={s.form__error} name={props.name} component="span" />
+      <ErrorMessage className={s.checkbox__error} name={props.name} component="span" />
     </div>
   );
 };

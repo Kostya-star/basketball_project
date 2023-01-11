@@ -1,0 +1,22 @@
+.select {
+  height: 100px;
+  margin-top: 0;
+
+  label {
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  &__multi {
+    width: 364px;
+    margin-left: 24px;
+  }
+
+  &__error {
+    display: block;
+    font-size: 12px;
+    margin-top: 5px;
+    color: #FF768E;
+  }
+}

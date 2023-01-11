@@ -81,7 +81,7 @@ export const PlayersCreatePage = () => {
       const newPlayerWithTeamId = { ...newPlayer, team: teamId.id };
       const resp = await dispatch(createPlayer(newPlayerWithTeamId)).catch((error) => {
         if (error && error.response.status === RespStatusEnum.EXISTS) {
-          setServerResponse('User with the specified login already exists');
+          setServerResponse('Player with the specified name already exists');
         }
       });
       if (resp?.data) {

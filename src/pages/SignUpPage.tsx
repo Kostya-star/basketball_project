@@ -28,7 +28,7 @@ const validationSchema = Yup.object({
   userName: Yup.string()
     .required('Required')
     .max(15, 'Must be 15 characters or less')
-    .matches(/[a-zA-Z]/, 'Name can only contain Latin letters'),
+    .matches(/[a-zA-Z]+$/, 'Name can only contain Latin letters'),
   login: Yup.string()
     .required('Required')
     .matches(/^[a-zA-Z0-9]+$/, 'Login can only contain Latin letters and numbers'),
@@ -36,8 +36,8 @@ const validationSchema = Yup.object({
     .required('Required')
     .min(6, 'The password must be at least 6 chars')
     .matches(
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-      'Password must contain at least one number and one special char'
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9!@#$%^&]+)$/,
+      'Password must contain at least letters and numbers'
     ),
   confirmPassword: Yup.string()
     .required('Required')

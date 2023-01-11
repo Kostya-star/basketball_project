@@ -59,7 +59,7 @@ export const TeamCreatePage = () => {
 
     const resp = await dispatch(createTeam(values)).catch((error) => {
       if (error && error.response.status === RespStatusEnum.EXISTS) {
-        setServerResponse('User with the specified login already exists');
+        setServerResponse('Team with the specified name already exists');
       }
     });
     if (resp) {

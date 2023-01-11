@@ -1,3 +1,3 @@
-import { ITeamData } from "./teams";
+import { ITeamData } from './teams';
 
-export interface IDeleteTeamResponse extends ITeamData {} 
+export interface IDeleteTeamResponse extends ITeamData {}

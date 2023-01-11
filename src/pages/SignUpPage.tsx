@@ -1,20 +1,20 @@
 import SignUpImg from 'assets/img/imgSignUp/signup-Img.png';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { InputText } from 'components/FormComponents/InputText';
-import { InputPassword } from 'components/FormComponents/InputPassword';
-import { InputCheckbox } from 'components/FormComponents/InputCheckbox';
-import { InputSubmit } from 'components/FormComponents/InputSubmit';
-import { FC, useEffect, useState } from 'react';
-import 'scss/auth-common.scss';
 import { FormBg } from 'components/FormBg/FormBg';
+import { InputCheckbox } from 'components/FormComponents/InputCheckbox';
+import { InputPassword } from 'components/FormComponents/InputPassword';
+import { InputSubmit } from 'components/FormComponents/InputSubmit';
+import { InputText } from 'components/FormComponents/InputText';
 import { FormLink } from 'components/FormLink';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { signUp } from 'redux/slices/authSlice';
 import { RespError } from 'components/RespError';
+import { Form, Formik } from 'formik';
+import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'redux/hooks';
+import { signUp } from 'redux/slices/authSlice';
+import 'scss/auth-common.scss';
 import { ISignUpFormikValues } from 'types/auth/auth';
 import { RespStatusEnum } from 'types/enum';
-import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const initialValues = {
   userName: '',

@@ -1,7 +1,7 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
-import teamsReducer from './slices/teamsSlice';
 import playersReducer from './slices/playersSlice';
+import teamsReducer from './slices/teamsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -9,13 +9,11 @@ export const store = configureStore({
     teams: teamsReducer,
     players: playersReducer,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
 });
 
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-

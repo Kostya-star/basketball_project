@@ -20,7 +20,6 @@ import { IUpdateTeamRequest } from 'types/teams/updateTeamRequest';
 import { IUpdateTeamResponse } from 'types/teams/updateTeamResponse';
 import { client } from './baseRequest';
 
-
 export const authAPI = {
   async signIn(signInUserData: ISignInRequest) {
     return await client.post<IAuthResponseType>(`Auth/SignIn`, signInUserData);

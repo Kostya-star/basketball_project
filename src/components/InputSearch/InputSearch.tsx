@@ -1,7 +1,6 @@
-import s from './InputSearch.module.scss';
 import { ReactComponent as SearchSVG } from 'assets/icons/searchSvg.svg';
 import { FC } from 'react';
-import { Field } from 'formik';
+import s from './InputSearch.module.scss';
 
 interface InputSearchProps {
   value?: string;

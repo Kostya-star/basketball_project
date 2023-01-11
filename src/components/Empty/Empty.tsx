@@ -1,10 +1,9 @@
 import { FC } from 'react';
-import s from './Empty.module.scss'
-
+import s from './Empty.module.scss';
 
 interface IEmptyProps {
-  image: string
-  text: string
+  image: string;
+  text: string;
 }
 
 export const Empty: FC<IEmptyProps> = ({ image, text }) => {

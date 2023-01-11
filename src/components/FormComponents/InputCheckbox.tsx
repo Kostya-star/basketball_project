@@ -1,16 +1,14 @@
-import React from 'react';
+import classnames from 'classnames';
 import { ErrorMessage, useField } from 'formik';
 import s from './FormItems.module.scss';
-import classnames from 'classnames';
-
 
 interface InputCheckboxProps<T> {
   label: string;
   name: string;
-  id: T
+  id: T;
 }
 
-export const InputCheckbox = <T extends string> ({ label, ...props }: InputCheckboxProps<T>) => {
+export const InputCheckbox = <T extends string>({ label, ...props }: InputCheckboxProps<T>) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
   return (
@@ -22,7 +20,7 @@ export const InputCheckbox = <T extends string> ({ label, ...props }: InputCheck
         htmlFor={props.name}
       >
         <input
-          type='checkbox'
+          type="checkbox"
           className={classnames(s.checkbox__input, {
             [s.checkbox__input_checked]: field.checked,
           })}
@@ -31,7 +29,7 @@ export const InputCheckbox = <T extends string> ({ label, ...props }: InputCheck
         />
         {label}
       </label>
-      <ErrorMessage className={s.form__error} name={props.name} component="span"/>
+      <ErrorMessage className={s.form__error} name={props.name} component="span" />
     </div>
   );
 };

@@ -1,6 +1,6 @@
+import classnames from 'classnames';
 import { FC, useEffect } from 'react';
 import 'scss/serverRespPopUp.scss';
-import classnames from 'classnames';
 
 interface IRespErrorProps {
   response: string;

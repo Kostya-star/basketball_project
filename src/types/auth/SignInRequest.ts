@@ -1,3 +1,3 @@
-import { ISignInFormikValues } from "./auth";
+import { ISignInFormikValues } from './auth';
 
-export interface ISignInRequest extends ISignInFormikValues{}
+export interface ISignInRequest extends ISignInFormikValues {}

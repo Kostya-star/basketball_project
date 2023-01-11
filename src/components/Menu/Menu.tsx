@@ -1,7 +1,7 @@
+import { ReactComponent as HeaderAvatar } from 'assets/icons/userAvatar.svg';
+import { MenuBtn } from 'components/MenuBtn/MenuBtn';
 import { FC } from 'react';
 import 'scss/menu-common.scss';
-import { MenuBtn } from 'components/MenuBtn/MenuBtn';
-import { ReactComponent as HeaderAvatar } from 'assets/icons/userAvatar.svg';
 
 interface IMenuProps {
   activeBtn: number;

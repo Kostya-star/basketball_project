@@ -11,7 +11,6 @@ import { TeamsPage } from 'pages/TeamsPage';
 import { FC, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-
 export const AppRouter: FC = () => {
   const navigate = useNavigate();
 

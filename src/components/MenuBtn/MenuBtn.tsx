@@ -1,8 +1,8 @@
-import classnames from 'classnames';
-import { FC } from 'react';
-import { ReactComponent as TeamsSVG } from 'assets/icons/menu__team.svg';
 import { ReactComponent as PlayersSVG } from 'assets/icons/menu__players.svg';
 import { ReactComponent as SignOutSVG } from 'assets/icons/menu__signOut.svg';
+import { ReactComponent as TeamsSVG } from 'assets/icons/menu__team.svg';
+import classnames from 'classnames';
+import { FC } from 'react';
 import s from './MenuBtn.module.scss';
 
 interface IMenuBtnProps {

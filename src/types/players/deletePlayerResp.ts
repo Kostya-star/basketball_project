@@ -1,3 +1,3 @@
-import { IPlayerData } from "./players";
+import { IPlayerData } from './players';
 
 export interface IDeletePlayerResponse extends IPlayerData {}

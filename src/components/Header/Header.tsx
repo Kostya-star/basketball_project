@@ -1,9 +1,9 @@
+import { ReactComponent as ToggleButton } from 'assets/icons/header_toggle__button.svg';
 import { ReactComponent as HeaderAvatar } from 'assets/icons/userAvatar.svg';
 import headerLogo from 'assets/img/Header/header__logo.png';
-import s from './Header.module.scss';
-import { ReactComponent as ToggleButton } from 'assets/icons/header_toggle__button.svg';
-import { FC, LegacyRef } from 'react';
 import classnames from 'classnames';
+import { FC } from 'react';
+import s from './Header.module.scss';
 
 interface IHeaderProps {
   userName: string;

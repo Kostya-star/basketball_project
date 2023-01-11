@@ -1,3 +1,3 @@
-import { INewTeamValues } from "./teams";
+import { INewTeamValues } from './teams';
 
-export interface INewTeamValuesRequest extends INewTeamValues{}
+export interface INewTeamValuesRequest extends INewTeamValues {}

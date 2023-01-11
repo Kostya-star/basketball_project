@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { baseRequestUrl } from 'api/baseRequest';
+import { FC } from 'react';
 import { IPlayerData } from 'types/players/players';
 import s from './DetailsTable.module.scss';
 

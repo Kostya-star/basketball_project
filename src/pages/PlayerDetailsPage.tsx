@@ -1,12 +1,12 @@
-import { useAppDispatch } from 'redux/hooks';
+import { DetailsCard } from 'components/DetailsCard/DetailsCard';
+import { InfoHeader } from 'components/InfoHeader/InfoHeader';
+import { useStateData } from 'hooks';
 import qs from 'qs';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'redux/hooks';
 import { getPlayer, removePlayer } from 'redux/slices/playersSlice';
-import { DetailsCard } from 'components/DetailsCard/DetailsCard';
-import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
-import { InfoHeader } from 'components/InfoHeader/InfoHeader';
 import { RespStatusEnum } from 'types/enum';
-import { useStateData } from 'hooks';
+import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
 
 export const PlayerDetailsPage = () => {
   const dispatch = useAppDispatch();

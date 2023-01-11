@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import s from './InfoHeader.module.scss';
-import { ReactComponent as EditSVG } from 'assets/icons/editSvg.svg';
 import { ReactComponent as DeleteSVG } from 'assets/icons/deleteSvg.svg';
+import { ReactComponent as EditSVG } from 'assets/icons/editSvg.svg';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import s from './InfoHeader.module.scss';
 
 interface InfoHeaderProps {
   getBackLink: string;

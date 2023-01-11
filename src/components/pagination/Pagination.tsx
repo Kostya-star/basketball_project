@@ -1,8 +1,8 @@
+import { ReactComponent as PreviousLabel } from 'assets/icons/pagination__left.svg';
+import { ReactComponent as NextLabel } from 'assets/icons/pagination__right.svg';
 import { FC } from 'react';
 import ReactPaginate from 'react-paginate';
 import s from './Pagination.module.scss';
-import { ReactComponent as PreviousLabel } from 'assets/icons/pagination__left.svg';
-import { ReactComponent as NextLabel } from 'assets/icons/pagination__right.svg';
 
 interface IPaginationProps {
   onPageChange: (currentPage: number) => void;

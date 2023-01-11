@@ -1,17 +1,17 @@
-import { InfoHeader } from 'components/InfoHeader/InfoHeader';
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from 'redux/hooks';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import qs from 'qs';
-import { ITeamData } from 'types/teams/teams';
-import { fetchPlayers } from 'redux/slices/playersSlice';
-import { IPlayerData } from 'types/players/players';
 import { DetailsCard } from 'components/DetailsCard/DetailsCard';
 import { DetailsTable } from 'components/DetailsTable/DetailsTable';
-import { getTeam, removeTeam } from 'redux/slices/teamsSlice';
-import { RespStatusEnum } from 'types/enum';
+import { InfoHeader } from 'components/InfoHeader/InfoHeader';
 import { RespError } from 'components/RespError';
 import { useStateData } from 'hooks';
+import qs from 'qs';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'redux/hooks';
+import { fetchPlayers } from 'redux/slices/playersSlice';
+import { getTeam, removeTeam } from 'redux/slices/teamsSlice';
+import { RespStatusEnum } from 'types/enum';
+import { IPlayerData } from 'types/players/players';
+import { ITeamData } from 'types/teams/teams';
 
 export const TeamDetailsPage = () => {
   const dispatch = useAppDispatch();

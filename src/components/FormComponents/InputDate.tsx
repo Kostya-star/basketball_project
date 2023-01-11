@@ -1,16 +1,7 @@
 import classnames from 'classnames';
-import s from './FormItems.module.scss';
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps,
-  ErrorMessage,
-  withFormik,
-} from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import { ChangeEvent } from 'react';
+import s from './FormItems.module.scss';
 
 interface InputDateProps<T> {
   label: string;
@@ -20,7 +11,13 @@ interface InputDateProps<T> {
   onBlur: (e: any) => void;
 }
 
-export const InputDate = <T extends string>({ label, name, value, onChange, onBlur }: InputDateProps<T>) => {
+export const InputDate = <T extends string>({
+  label,
+  name,
+  value,
+  onChange,
+  onBlur,
+}: InputDateProps<T>) => {
   return (
     <div className={s.form__group}>
       <label className={s.form__label} htmlFor="date-input">

@@ -1,7 +1,7 @@
-import { FC } from 'react';
 import { baseRequestUrl } from 'api/baseRequest';
 import { DetailsCardPlayerContent } from 'components/DetailsCardPlayerContent/DetailsCardPlayerContent';
 import { DetailsCardTeamContent } from 'components/DetailsCardTeamContent/DetailsCardTeamContent';
+import { FC } from 'react';
 import s from './DetailsCard.module.scss';
 
 interface IDetailsCardProps {

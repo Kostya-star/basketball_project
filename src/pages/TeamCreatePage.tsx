@@ -1,18 +1,18 @@
-import { InputText } from 'components/FormComponents/InputText';
-import { Form, Formik } from 'formik';
 import { InputSubmit } from 'components/FormComponents/InputSubmit';
-import * as Yup from 'yup';
-import { useAppDispatch } from 'redux/hooks';
-import { useState } from 'react';
-import { addPhoto, createTeam, editTeam, getTeam } from 'redux/slices/teamsSlice';
-import { InputFile } from 'components/InputFile/InputFile';
-import { useNavigate } from 'react-router-dom';
+import { InputText } from 'components/FormComponents/InputText';
 import { InfoHeader } from 'components/InfoHeader/InfoHeader';
-import { INewTeamValues, ITeamData } from 'types/teams/teams';
-import { RespStatusEnum } from 'types/enum';
+import { InputFile } from 'components/InputFile/InputFile';
 import { RespError } from 'components/RespError';
-import qs from 'qs';
+import { Form, Formik } from 'formik';
 import { useStateData } from 'hooks';
+import qs from 'qs';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'redux/hooks';
+import { addPhoto, createTeam, editTeam, getTeam } from 'redux/slices/teamsSlice';
+import { RespStatusEnum } from 'types/enum';
+import { INewTeamValues, ITeamData } from 'types/teams/teams';
+import * as Yup from 'yup';
 
 const validationSchema = Yup.object({
   name: Yup.string()

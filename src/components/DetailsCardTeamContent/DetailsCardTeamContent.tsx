@@ -1,10 +1,9 @@
 import { FC } from 'react';
 
-
 interface IDetailsCardTeamContentProps {
-  foundationYear: number
-  division: string
-  conference: string
+  foundationYear: number;
+  division: string;
+  conference: string;
 }
 
 export const DetailsCardTeamContent: FC<IDetailsCardTeamContentProps> = ({

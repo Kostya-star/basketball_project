@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authAPI } from 'api/api';
-import { ISignInRequest } from 'types/auth/SignInRequest';
+import { AppDispatch } from 'redux/store';
 import { IAuthResponseType } from 'types/auth/authResp';
+import { ISignInRequest } from 'types/auth/SignInRequest';
 import { ISignUpRequest } from 'types/auth/SignUpRequest';
 import { RespStatusEnum } from 'types/enum';
-import { AppDispatch } from 'redux/store';
 
 export interface IAuthState {
   signInResp: IAuthResponseType;
@@ -15,7 +15,6 @@ const initialState: IAuthState = {
   signInResp: {} as IAuthResponseType,
   signUpResp: {} as IAuthResponseType,
 };
-
 
 export const authSlice = createSlice({
   name: 'auth',

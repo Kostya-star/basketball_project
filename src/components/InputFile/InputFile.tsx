@@ -1,7 +1,7 @@
+import { baseRequestUrl } from 'api/baseRequest';
+import { ErrorMessage } from 'formik';
 import { ChangeEvent } from 'react';
 import s from './InputFile.module.scss';
-import { ErrorMessage } from 'formik';
-import { baseRequestUrl } from 'api/baseRequest';
 
 interface InputFileProps<T> {
   name: T;

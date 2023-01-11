@@ -1,7 +1,6 @@
-import { FC } from 'react';
 import classnames from 'classnames';
+import { FC } from 'react';
 import s from './FormItems.module.scss';
-
 
 interface InputSubmitProps {
   value: string;

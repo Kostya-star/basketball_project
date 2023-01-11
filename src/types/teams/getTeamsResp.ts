@@ -1,3 +1,3 @@
-import { ITeamState } from "./teams";
+import { ITeamState } from './teams';
 
-export interface IGetTeamsResponse extends ITeamState{}
+export interface IGetTeamsResponse extends ITeamState {}

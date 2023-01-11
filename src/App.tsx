@@ -1,10 +1,7 @@
-import axios from 'axios';
-import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './components/AppRouter/AppRouter';
 
 const App: React.FC = () => {
-
   return (
     <BrowserRouter>
       <AppRouter />
@@ -13,7 +10,6 @@ const App: React.FC = () => {
 };
 
 export default App;
-
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // import { createProxyMiddleware } from 'http-proxy-middleware';

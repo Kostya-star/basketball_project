@@ -1,5 +1,5 @@
-import { SetStateAction, useEffect, useState } from "react";
-import { useAppDispatch } from "./redux/hooks";
+import { SetStateAction, useEffect, useState } from 'react';
+import { useAppDispatch } from './redux/hooks';
 
 // CUSTOM USE STATE HOOK
 export const useStateData = (func: Function, id?: string) => {

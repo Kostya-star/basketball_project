@@ -1,8 +1,8 @@
-import { FC, useState } from 'react';
-import { useField, ErrorMessage } from 'formik';
-import s from './FormItems.module.scss';
 import { ReactComponent as EyeClosed } from 'assets/icons/eye-closed.svg';
 import { ReactComponent as EyeOpened } from 'assets/icons/eye-open.svg';
+import { ErrorMessage, useField } from 'formik';
+import { useState } from 'react';
+import s from './FormItems.module.scss';
 
 interface InputPasswordProps<T> {
   label: string;

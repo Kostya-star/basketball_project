@@ -1,5 +1,5 @@
-import {IPlayerData} from './players'
+import { IPlayerData } from './players';
 
 export interface IGetPlayerResponse extends IPlayerData {
-  teamName: string
+  teamName: string;
 }

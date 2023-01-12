@@ -5,11 +5,12 @@ import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'redux/hooks';
 import { login } from 'redux/slices/authSlice';
+import 'scss/all.scss';
 import 'scss/auth-common.scss';
 import { ISignInFormikValues } from 'types/auth/auth';
 import * as Yup from 'yup';
@@ -72,6 +73,7 @@ export const SignInPage: FC<ISignInProps> = () => {
               return (
                 <Form>
                   <InputText<'login'> label="Login" name="login" />
+                  <ErrorMessage className="form__error" name="login" component="span" />
                   <InputPassword<'password'> label="Password" name="password" />
                   <InputSubmit isDisabled={disabledSubmit} value="Sign In" />
                 </Form>

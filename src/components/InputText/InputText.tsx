@@ -1,4 +1,4 @@
-import { ErrorMessage, useField } from 'formik';
+import { useField } from 'formik';
 import s from './InputText.module.scss';
 
 interface InputTextProps<T> {
@@ -13,7 +13,7 @@ export const InputText = <T extends string>({ label, ...props }: InputTextProps<
     <div className={s.text__container}>
       <label htmlFor={props.name}>{label}</label>
       <input type="text" {...field} />
-      <ErrorMessage className={s.text__error} name={props.name} component="span" />
+      {/* <ErrorMessage className={s.text__error} name={props.name} component="span" /> */}
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom'
 import { AppRouter } from './components/AppRouter/AppRouter';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <AppRouter />
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

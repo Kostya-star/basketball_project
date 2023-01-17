@@ -31,10 +31,11 @@ const validationSchema = Yup.object({
     .required('Required')
     .min(6, 'The password must be at least 6 chars')
     .matches(
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-      'Password must contain at least one number and one special char'
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9!@#$%^&]+)$/,
+      'Password must contain at least letters and numbers'
     ),
 });
+
 
 export const SignInPage: FC<ISignInProps> = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
@@ -64,7 +65,7 @@ export const SignInPage: FC<ISignInProps> = () => {
           <h1 className="form__heading">Sign In</h1>
           <Formik
             initialValues={initialValues}
-            // validationSchema={validationSchema}
+            validationSchema={validationSchema}
             onSubmit={onSubmit}
             validateOnMount
           >

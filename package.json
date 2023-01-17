@@ -1,7 +1,8 @@
 {
   "name": "basketball-project",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "https://kostya-star.github.io/basketball_project/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -17,6 +18,7 @@
     "classnames": "^2.3.2",
     "csstype": "^3.1.1",
     "form-data": "^4.0.0",
+    "gh-pages": "^4.0.0",
     "history": "^5.3.0",
     "lodash.debounce": "^4.0.8",
     "qs": "^6.11.0",
@@ -35,7 +37,9 @@
     "build": "react-scripts build",
     "lint": "eslint --ext .ts,.tsx src --fix",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "prettier": {
     "singleQuote": true,

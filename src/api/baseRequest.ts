@@ -7,9 +7,9 @@ export const client = axios.create({
   paramsSerializer: {
     indexes: null,
   },
-  // headers: {
-  //     Authorization: `Bearer ${window.localStorage.getItem('TOKEN')}`
-  //   }
+  headers: {
+    "Access-Control-Allow-Origin": '*',
+  }
 });
 
 client.interceptors.request.use((config) => {

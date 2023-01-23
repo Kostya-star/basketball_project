@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseRequestUrl = 'http://dev.trainee.dex-it.ru';
+export const baseRequestUrl = '//dev.trainee.dex-it.ru';
 
 export const client = axios.create({
   baseURL: `${baseRequestUrl}/api/`,

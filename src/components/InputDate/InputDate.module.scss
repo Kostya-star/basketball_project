@@ -1,48 +1,33 @@
 .date {
-  &__container {
-    height: 95px;
-    margin-top: 0;
-
-    label {
-      display: inline-block;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
-    .inputBlock {
-      input[type='date'] {
-        cursor: pointer;
-        display: block;
-        // width: 177px;
-        width: 100%;
-        background-color: #F6F6F6;
-        outline: none;
-        border: none;
-        border-radius: 4px;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: #D1D1D1;
-          border: none
-        }
-
-        &:focus {
-          background: #F6F6F6;
-          box-shadow: 0px 0px 5px #D9D9D9;
-          border: none;
-        }
-
-      }
-    }
-
+  label {
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 8px;
   }
 
-  &__error {
+  input[type='date'] {
+    cursor: pointer;
     display: block;
-    font-size: 12px;
-    margin-top: 5px;
-    color: #FF768E;
+    width: 169px;
+    background-color: #F6F6F6;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: #D1D1D1;
+      border: none
+    }
+
+    &:focus {
+      background: #F6F6F6;
+      box-shadow: 0px 0px 5px #D9D9D9;
+      border: none;
+    }
+
   }
+
 }
 
 ::-webkit-calendar-picker-indicator {

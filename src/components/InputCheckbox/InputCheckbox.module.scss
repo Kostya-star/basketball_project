@@ -1,16 +1,11 @@
 .checkbox {
-  height: 50px;
-  margin-top: 0;
 
   &__label {
     font-size: 14px;
-    margin-bottom: 8px;
     cursor: pointer;
 
     &_error {
-      display: block;
       color: #E4163A;
-      margin-bottom: 5px;
     }
   }
 

@@ -10,14 +10,9 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'redux/hooks';
 import { login } from 'redux/slices/authSlice';
-import 'scss/all.scss';
-import 'scss/auth-common.scss';
+import 'scss/form.scss';
 import { ISignInFormikValues } from 'types/auth/auth';
 import * as Yup from 'yup';
-
-interface ISignInProps {
-  children?: React.ReactNode;
-}
 
 const initialValues = {
   login: '',
@@ -37,7 +32,7 @@ const validationSchema = Yup.object({
     ),
 });
 
-export const SignInPage: FC<ISignInProps> = () => {
+export const SignInPage: FC = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
@@ -72,9 +67,16 @@ export const SignInPage: FC<ISignInProps> = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText<'login'> label="Login" name="login" />
-                  <ErrorMessage className="form__error" name="login" component="span" />
-                  <InputPassword<'password'> label="Password" name="password" />
+                  <div className="form__group">
+                    <InputText<'login'> label="Login" name="login" />
+                    <ErrorMessage className="form__error" name="login" component="span" />
+                  </div>
+
+                  <div className="form__group">
+                    <InputPassword<'password'> label="Password" name="password" />
+                    <ErrorMessage className="form__error" name="password" component="span" />
+                  </div>
+
                   <InputSubmit isDisabled={disabledSubmit} value="Sign In" />
                 </Form>
               );

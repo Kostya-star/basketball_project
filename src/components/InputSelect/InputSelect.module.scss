@@ -1,6 +1,4 @@
 .select {
-  height: 100px;
-  margin-top: 0;
 
   label {
     display: inline-block;
@@ -13,10 +11,4 @@
     margin-left: 24px;
   }
 
-  &__error {
-    display: block;
-    font-size: 12px;
-    margin-top: 5px;
-    color: #FF768E;
-  }
 }

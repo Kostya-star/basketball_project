@@ -40,7 +40,7 @@ export const InputSelect = <T extends string>({
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
-      height: '40px',
+      padding: '3px 0px',
       backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
       border: border ? '0.5px solid #D1D1D1' : 'none',
       fontSize: '14px',
@@ -144,9 +144,9 @@ export const InputSelect = <T extends string>({
         onBlur={() => onBlur?.(name)}
       />
 
-      {name !== 'multi_select' && name !== 'pagination_select' && (
+      {/* {name !== 'multi_select' && name !== 'pagination_select' && (
         <ErrorMessage className={s.select__error} name={name} component="span" />
-      )}
+      )} */}
     </div>
   );
 };

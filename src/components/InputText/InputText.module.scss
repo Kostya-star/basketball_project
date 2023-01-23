@@ -1,8 +1,4 @@
 .text {
-  &__container {
-    height: 95px;
-    margin-top: 0;
-
     label {
       display: inline-block;
       font-size: 13px;
@@ -12,8 +8,7 @@
     input {
       display: block;
       width: 100%;
-      // margin-bottom: 5px;
-      height: 40px;
+      padding: 13.5px 0px;
       background-color: #F6F6F6;
       outline: none;
       border: none;
@@ -33,12 +28,4 @@
 
     }
 
-  }
-
-  // &__error {
-  //   display: block;
-  //   font-size: 12px;
-  //   margin-top: 5px;
-  //   color: #FF768E;
-  // }
 }

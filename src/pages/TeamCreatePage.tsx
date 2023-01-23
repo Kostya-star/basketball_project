@@ -1,9 +1,10 @@
+import { CancelBtn } from 'components/CancelBtn/CancelBtn';
 import { InfoHeader } from 'components/InfoHeader/InfoHeader';
 import { InputFile } from 'components/InputFile/InputFile';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
-import { Form, Formik } from 'formik';
+import { Form, Formik, ErrorMessage } from 'formik';
 import { useStateData } from 'hooks';
 import qs from 'qs';
 import { useState } from 'react';
@@ -85,7 +86,7 @@ export const TeamCreatePage = () => {
     imageUrl: teamData?.imageUrl ?? '',
   } as unknown as INewTeamValues;
 
-  const onClickHandler = () => {
+  const onNavigateBack = () => {
     if (id) {
       return onRedirectTeamDetails();
     }
@@ -125,16 +126,40 @@ export const TeamCreatePage = () => {
                       image={teamImage || teamData?.imageUrl}
                       onSavePhoto={onSaveTeamPhoto}
                     />
+                    <ErrorMessage className="form__error" name="imageUrl" component="span" />
                   </div>
 
-                  <div>
-                    <InputText<'name'> label="Name" name="name" />
-                    <InputText<'division'> label="Division" name="division" />
-                    <InputText<'conference'> label="Conference" name="conference" />
-                    <InputText<'foundationYear'> label="Year of foundation" name="foundationYear" />
+                  <div className="form">
+                    <div className="form__group">
+                      <InputText<'name'> label="Name" name="name" />
+                      <ErrorMessage className="form__error" name="name" component="span" />
+                    </div>
+
+                    <div className="form__group">
+                      <InputText<'division'> label="Division" name="division" />
+                      <ErrorMessage className="form__error" name="division" component="span" />
+                    </div>
+
+                    <div className="form__group">
+                      <InputText<'conference'> label="Conference" name="conference" />
+                      <ErrorMessage className="form__error" name="conference" component="span" />
+                    </div>
+
+                    <div className="form__group">
+                      <InputText<'foundationYear'>
+                        label="Year of foundation"
+                        name="foundationYear"
+                      />
+                      <ErrorMessage
+                        className="form__error"
+                        name="foundationYear"
+                        component="span"
+                      />
+                    </div>
+
                     <div className="common__create__buttons">
-                      <button onClick={onClickHandler}>Cancel</button>
-                      <InputSubmit isDisabled={disabledSubmit} value="Save" />
+                      <CancelBtn onClick={onNavigateBack} />
+                      <InputSubmit isDisabled={disabledSubmit} value="Save" width={true} />
                     </div>
                   </div>
                 </Form>

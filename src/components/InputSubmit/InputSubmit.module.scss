@@ -1,6 +1,6 @@
 .submitBtn {
-  width: 358px;
-  height: 40px;
+  width: 100%;
+  padding: 11.5px 0;
   border: none;
   border-radius: 4px;
   background-color: #E4163A;
@@ -10,6 +10,12 @@
   margin-top: 8px;
   cursor: pointer;
   transition: 0.3s;
+
+  &_sized {
+    width: 169px;
+    margin: 0px;
+
+  }
 
   &_hover {
     &:hover {
@@ -26,4 +32,5 @@
     color: #D1D1D1;
     cursor: auto;
   }
+
 }

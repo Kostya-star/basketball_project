@@ -1,3 +1,4 @@
+import { CancelBtn } from 'components/CancelBtn/CancelBtn';
 import { InfoHeader } from 'components/InfoHeader/InfoHeader';
 import { InputDate } from 'components/InputDate/InputDate';
 import { InputFile } from 'components/InputFile/InputFile';
@@ -5,7 +6,7 @@ import { InputSelect } from 'components/InputSelect/InputSelect';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
-import { Form, Formik } from 'formik';
+import { Form, Formik, ErrorMessage } from 'formik';
 import { useStateData } from 'hooks';
 import qs from 'qs';
 import { useState } from 'react';
@@ -99,7 +100,7 @@ export const PlayersCreatePage = () => {
     navigate(`/PlayerDetails?id=${Number(id)}`);
   };
 
-  const onCancel = () => {
+  const onNavigateBack = () => {
     if (id) {
       return onRedirectPlayerDetails();
     }
@@ -180,45 +181,73 @@ export const PlayersCreatePage = () => {
                     image={playersImage || playerData?.avatarUrl}
                     onSavePhoto={onSavePlayerPhoto}
                   />
+                  <ErrorMessage className="form__error" name="avatarUrl" component="span" />
                 </div>
 
-                <div>
-                  <InputText<'name'> label="Name" name="name" />
-                  <InputSelect<'position'>
-                    label="Positions"
-                    name="position"
-                    isMulti={false}
-                    onChange={onChangeOption}
-                    onBlur={onBlurOption}
-                    options={positionOptions}
-                    value={currentSelectedPosition ?? initialSelectedPosition}
-                  />
-                  <InputSelect<'team'>
-                    label="Teams"
-                    name="team"
-                    isMulti={false}
-                    onChange={onChangeOption}
-                    onBlur={onBlurOption}
-                    options={teamsOptions}
-                    value={currentSelectedTeam ?? initialSelectedTeam}
-                  />
-                  <div className="common__create__groupParameters">
-                    <InputText<'height'> label="Height (cm)" name="height" />
-                    <InputText<'weight'> label="Weight (kg)" name="weight" />
+                <div className="form">
+                  <div className="form__group">
+                    <InputText<'name'> label="Name" name="name" />
+                    <ErrorMessage className="form__error" name="name" component="span" />
                   </div>
-                  <div className="common__create__groupParameters">
-                    <InputDate<'birthday'>
-                      label="Birthday"
-                      name="birthday"
-                      onChange={onChangeDateHandler}
-                      onBlur={onBlurDateHandler}
-                      value={formik.values.birthday ?? date}
+
+                  <div className="form__group">
+                    <InputSelect<'position'>
+                      label="Positions"
+                      name="position"
+                      isMulti={false}
+                      onChange={onChangeOption}
+                      onBlur={onBlurOption}
+                      options={positionOptions}
+                      value={currentSelectedPosition ?? initialSelectedPosition}
                     />
-                    <InputText<'number'> label="Number" name="number" />
+                    <ErrorMessage className="form__error" name="position" component="span" />
                   </div>
+
+                  <div className="form__group">
+                    <InputSelect<'team'>
+                      label="Teams"
+                      name="team"
+                      isMulti={false}
+                      onChange={onChangeOption}
+                      onBlur={onBlurOption}
+                      options={teamsOptions}
+                      value={currentSelectedTeam ?? initialSelectedTeam}
+                    />
+                    <ErrorMessage className="form__error" name="team" component="span" />
+                  </div>
+
+                  <div className="common__create__groupParameters">
+                    <div className="form__group">
+                      <InputText<'height'> label="Height (cm)" name="height" />
+                      <ErrorMessage className="form__error" name="height" component="span" />
+                    </div>
+                    <div className="form__group">
+                      <InputText<'weight'> label="Weight (kg)" name="weight" />
+                      <ErrorMessage className="form__error" name="weight" component="span" />
+                    </div>
+                  </div>
+
+                  <div className="common__create__groupParameters">
+                    <div className="form__group">
+                      <InputDate<'birthday'>
+                        label="Birthday"
+                        name="birthday"
+                        onChange={onChangeDateHandler}
+                        onBlur={onBlurDateHandler}
+                        value={formik.values.birthday ?? date}
+                      />
+                      <ErrorMessage className="form__error" name="birthday" component="span" />
+                    </div>
+
+                    <div className="form__group">
+                      <InputText<'number'> label="Number" name="number" />
+                      <ErrorMessage className="form__error" name="number" component="span" />
+                    </div>
+                  </div>
+
                   <div className="common__create__buttons">
-                    <button onClick={onCancel}>Cancel</button>
-                    <InputSubmit isDisabled={disabledSubmit} value="Save" />
+                    <CancelBtn onClick={onNavigateBack} />
+                    <InputSubmit isDisabled={disabledSubmit} value="Save" width={true} />
                   </div>
                 </div>
               </Form>

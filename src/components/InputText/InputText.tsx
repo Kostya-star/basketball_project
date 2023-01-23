@@ -10,10 +10,9 @@ export const InputText = <T extends string>({ label, ...props }: InputTextProps<
   const [field, _] = useField(props);
 
   return (
-    <div className={s.text__container}>
+    <div className={s.text}>
       <label htmlFor={props.name}>{label}</label>
       <input type="text" {...field} />
-      {/* <ErrorMessage className={s.text__error} name={props.name} component="span" /> */}
     </div>
   );
 };

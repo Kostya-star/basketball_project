@@ -6,9 +6,8 @@ import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'redux/hooks';
 import { signUp } from 'redux/slices/authSlice';
 import 'scss/auth-common.scss';
@@ -49,7 +48,6 @@ export const SignUpPage: FC = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const onSubmit = async (values: ISignUpFormikValues) => {
@@ -84,15 +82,37 @@ export const SignUpPage: FC = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText<'userName'> label="Name" name="userName" />
-                  <InputText<'login'> label="Login" name="login" />
-                  <InputPassword<'password'> label="Password" name="password" />
-                  <InputPassword<'confirmPassword'>
-                    label="Enter your password again"
-                    name="confirmPassword"
-                  />
+                  <div className="form__group">
+                    <InputText<'userName'> label="Name" name="userName" />
+                    <ErrorMessage className="form__error" name="userName" component="span" />
+                  </div>
 
-                  <InputCheckbox<'check'> name="check" id="check" label="I accept the agreement" />
+                  <div className="form__group">
+                    <InputText<'login'> label="Login" name="login" />
+                    <ErrorMessage className="form__error" name="login" component="span" />
+                  </div>
+
+                  <div className="form__group">
+                    <InputPassword<'password'> label="Password" name="password" />
+                    <ErrorMessage className="form__error" name="password" component="span" />
+                  </div>
+
+                  <div className="form__group">
+                    <InputPassword<'confirmPassword'>
+                      label="Enter your password again"
+                      name="confirmPassword"
+                    />
+                    <ErrorMessage className="form__error" name="confirmPassword" component="span" />
+                  </div>
+
+                  <div style={{ height: '40px' }}>
+                    <InputCheckbox<'check'>
+                      name="check"
+                      id="check"
+                      label="I accept the agreement"
+                    />
+                    <ErrorMessage className="form__error" name="check" component="span" />
+                  </div>
 
                   <InputSubmit isDisabled={disabledSubmit} value="Sign Up" />
                 </Form>

@@ -19,7 +19,7 @@ export const InputPassword = <T extends string>({ label, ...props }: InputPasswo
   };
 
   return (
-    <div className={s.password__container}>
+    <div className={s.password}>
       <label className={s.form__label} htmlFor={props.name}>
         {label}
       </label>
@@ -36,7 +36,6 @@ export const InputPassword = <T extends string>({ label, ...props }: InputPasswo
           )}
         </div>
       </div>
-      <ErrorMessage className={s.password__error} name={props.name} component="span" />
     </div>
   );
 };

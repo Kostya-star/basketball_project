@@ -59,14 +59,16 @@ export const PlayersPage = () => {
         (typeof TeamIds === 'string' && [TeamIds].map((id) => `&TeamIds=${id}`).join('')) ||
         '';
 
+        isMounted.current = false;
       navigate(`?Page=${PAGE}&PageSize=${PAGE_SIZE}${SEARCH}${TEAMIDS_INTO_STRING}`);
-      isMounted.current = false;
     });
   }, []);
 
   // RETREIVING VALUES
   useEffect(() => {
+    
     if (isMounted.current === false) {
+      console.log('asd');
       if (teams.length) {
         const { Page, PageSize, Name, TeamIds } = qs.parse(
           history.location.search.substring(1)
@@ -77,6 +79,7 @@ export const PlayersPage = () => {
           (Array.isArray(TeamIds) &&
             teamsOptions.filter((t) => TeamIds.some((id) => t.id === Number(id)))) ||
           '';
+
 
         void dispatch(
           fetchPlayers({

@@ -19,9 +19,7 @@
     "plugin:react-hooks/recommended",
     "plugin:react/recommended",
     "standard-with-typescript",
-    // "plugin:prettier/recommended",
     "prettier"
-    // "prettier/react"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser", // добавил сам

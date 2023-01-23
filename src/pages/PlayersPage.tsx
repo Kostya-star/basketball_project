@@ -2,8 +2,8 @@ import players__empty from 'assets/img/PlayersEmpty/players__empty.png';
 import { AddBtn } from 'components/AddBtn/AddBtn';
 import { Card } from 'components/Card/Card';
 import { Empty } from 'components/Empty/Empty';
-import { SelectComponent } from 'components/FormComponents/SelectComponent';
 import { InputSearch } from 'components/InputSearch/InputSearch';
+import { InputSelect } from 'components/InputSelect/InputSelect';
 import { Navigation } from 'components/Navigation/Navigation';
 import { createBrowserHistory } from 'history';
 import debounce from 'lodash.debounce';
@@ -193,7 +193,7 @@ export const PlayersPage = () => {
       <div className="common__header">
         <div className="common__header__group">
           <InputSearch value={searchInputValue} onChangeInput={onChangeInputHandle} />
-          <SelectComponent<'multi_select'>
+          <InputSelect<'multi_select'>
             name="multi_select"
             isMulti={true}
             options={teamsOptions}

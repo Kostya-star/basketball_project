@@ -2,9 +2,9 @@ import classnames from 'classnames';
 import { ErrorMessage } from 'formik';
 import Select, { MenuPlacement, PropsValue, StylesConfig } from 'react-select';
 import { ISelectOption } from 'types/ISelectOption';
-import s from './FormItems.module.scss';
+import s from './InputSelect.module.scss'
 
-interface ISelectComponentProps<T> {
+interface InputSelectProps<T> {
   label?: string;
   name: T;
   isMulti: boolean;
@@ -19,7 +19,7 @@ interface ISelectComponentProps<T> {
   getPositions?: () => void;
 }
 
-export const SelectComponent = <T extends string>({
+export const InputSelect = <T extends string>({
   label,
   name,
   options,
@@ -29,10 +29,9 @@ export const SelectComponent = <T extends string>({
   menuPlacement,
   border,
   onChangeMulti,
-  getPositions,
   onChange,
   onBlur,
-}: ISelectComponentProps<T>) => {
+}: InputSelectProps<T>) => {
   // const [selectedOption, setSelectedOption] = useState<string | ISelectOption[] | null>(null);
 
   const IsMulti = isMulti;
@@ -41,7 +40,7 @@ export const SelectComponent = <T extends string>({
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
-      height: '40px',
+      padding: '3px 0px',
       backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
       border: border ? '0.5px solid #D1D1D1' : 'none',
       fontSize: '14px',
@@ -124,7 +123,6 @@ export const SelectComponent = <T extends string>({
 
   return (
     <div
-      // onClick={getPositions}
       className={classnames({
         [s.select]: !IsMulti,
         [s.select__multi]: IsMulti,
@@ -146,9 +144,9 @@ export const SelectComponent = <T extends string>({
         onBlur={() => onBlur?.(name)}
       />
 
-      {name !== 'multi_select' && name !== 'pagination_select' && (
-        <ErrorMessage className={s.form__error} name={name} component="span" />
-      )}
+      {/* {name !== 'multi_select' && name !== 'pagination_select' && (
+        <ErrorMessage className={s.select__error} name={name} component="span" />
+      )} */}
     </div>
   );
 };

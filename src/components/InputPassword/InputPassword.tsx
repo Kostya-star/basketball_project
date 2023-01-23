@@ -2,7 +2,7 @@ import { ReactComponent as EyeClosed } from 'assets/icons/eye-closed.svg';
 import { ReactComponent as EyeOpened } from 'assets/icons/eye-open.svg';
 import { ErrorMessage, useField } from 'formik';
 import { useState } from 'react';
-import s from './FormItems.module.scss';
+import s from './InputPassword.module.scss';
 
 interface InputPasswordProps<T> {
   label: string;
@@ -19,25 +19,23 @@ export const InputPassword = <T extends string>({ label, ...props }: InputPasswo
   };
 
   return (
-    <div className={s.form__group}>
+    <div className={s.password}>
       <label className={s.form__label} htmlFor={props.name}>
         {label}
       </label>
       <div className={s.inputBlock}>
         <input
-          className={s.form__input}
           type={!isPasswordVisible ? 'password' : 'text'}
           {...field}
         />
         <div onClick={onHandlePasswordVisible}>
           {isPasswordVisible ? (
-            <EyeOpened className={s.password__eye__opened} />
+            <EyeOpened className={s.password__svg__opened} />
           ) : (
-            <EyeClosed className={s.password__eye__closed} />
+            <EyeClosed className={s.password__svg__closed} />
           )}
         </div>
       </div>
-      <ErrorMessage className={s.form__error} name={props.name} component="span" />
     </div>
   );
 };

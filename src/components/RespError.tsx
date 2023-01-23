@@ -8,7 +8,9 @@ interface IRespErrorProps {
 }
 
 export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
-  const userNotExist = response === 'User with the specified login already exists';
+  const userExists = response === 'User with the specified login already exists';
+  const teamExists = response === 'Team with the specified name already exists';
+  const playerExists = response === 'Player with the specified name already exists';
   const userSuccess = response === 'User was created successfully';
   const userUnauthorized = response === 'Unauthorized';
   const notFound = response === 'Not Found';
@@ -28,7 +30,13 @@ export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
       className={classnames('server__response', {
         // "auth__error_show": unauthorized ?? userExists,
         // "auth__error_hide": unauthorized === false || userExists === false
-        server__error: userNotExist || userUnauthorized || notFound || teamContainsPlayers,
+        server__error:
+          userExists ||
+          userUnauthorized ||
+          notFound ||
+          teamContainsPlayers ||
+          teamExists ||
+          playerExists,
         server__success: userSuccess,
       })}
     >

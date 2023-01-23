@@ -65,44 +65,11 @@
     &__buttons {
       display: flex;
       justify-content: space-between;
-      // margin-top: 20px;
-
-      button {
-        width: 171px;
-        height: 40px;
-        background-color: white;
-        border: 1.5px solid #9C9C9C;
-        font-weight: 500;
-        font-size: 15px;
-        color: #9C9C9C;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: #D1D1D1;
-          color: white;
-        }
-
-        &:active {
-          background-color: #9C9C9C;
-          color: white;
-        }
-      }
-
-      input {
-        width: 175px;
-        margin: 0px;
-      }
     }
 
     &__groupParameters {
       display: flex;
       justify-content: space-between;
-
-      input {
-        width: 171px;
-      }
     }
   }
 

@@ -1,22 +1,18 @@
 import signInImg from 'assets/img/imgSignIn/signin-img.png';
 import { FormBg } from 'components/FormBg/FormBg';
-import { InputPassword } from 'components/FormComponents/InputPassword';
-import { InputSubmit } from 'components/FormComponents/InputSubmit';
-import { InputText } from 'components/FormComponents/InputText';
 import { FormLink } from 'components/FormLink';
+import { InputPassword } from 'components/InputPassword/InputPassword';
+import { InputSubmit } from 'components/InputSubmit/InputSubmit';
+import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'redux/hooks';
 import { login } from 'redux/slices/authSlice';
-import 'scss/auth-common.scss';
+import 'scss/form.scss';
 import { ISignInFormikValues } from 'types/auth/auth';
 import * as Yup from 'yup';
-
-interface ISignInProps {
-  children?: React.ReactNode;
-}
 
 const initialValues = {
   login: '',
@@ -36,8 +32,7 @@ const validationSchema = Yup.object({
     ),
 });
 
-
-export const SignInPage: FC<ISignInProps> = () => {
+export const SignInPage: FC = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
@@ -46,7 +41,6 @@ export const SignInPage: FC<ISignInProps> = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = async (loginData: ISignInFormikValues) => {
-    
     setDisabledSubmit(true);
     const resp = await dispatch(login(loginData)).catch((error) => {
       if (error) {
@@ -73,8 +67,16 @@ export const SignInPage: FC<ISignInProps> = () => {
             {(formik) => {
               return (
                 <Form>
-                  <InputText<'login'> label="Login" name="login" />
-                  <InputPassword<'password'> label="Password" name="password" />
+                  <div className="form__group">
+                    <InputText<'login'> label="Login" name="login" />
+                    <ErrorMessage className="form__error" name="login" component="span" />
+                  </div>
+
+                  <div className="form__group">
+                    <InputPassword<'password'> label="Password" name="password" />
+                    <ErrorMessage className="form__error" name="password" component="span" />
+                  </div>
+
                   <InputSubmit isDisabled={disabledSubmit} value="Sign In" />
                 </Form>
               );

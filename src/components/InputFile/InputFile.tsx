@@ -10,7 +10,6 @@ interface InputFileProps<T> {
 }
 
 export const InputFile = <T extends string>({ name, image, onSavePhoto }: InputFileProps<T>) => {
-  // const imgPreview = image ? URL.createObjectURL(image) : '';
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -26,7 +25,6 @@ export const InputFile = <T extends string>({ name, image, onSavePhoto }: InputF
           <img src={image ? `${baseRequestUrl}${image}` : ''} />
         </p>
       </label>
-      <ErrorMessage className={s.error} name={name} component="span" />
     </div>
   );
 };

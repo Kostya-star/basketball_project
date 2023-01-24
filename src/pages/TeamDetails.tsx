@@ -1,7 +1,7 @@
 import { DetailsCard } from 'components/DetailsCard/DetailsCard';
 import { DetailsTable } from 'components/DetailsTable/DetailsTable';
 import { InfoHeader } from 'components/InfoHeader/InfoHeader';
-import { RespError } from 'components/RespError';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
 import { useStateData } from 'hooks';
 import qs from 'qs';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import { RespStatusEnum } from 'types/enum';
 import { IPlayerData } from 'types/players/players';
 import { ITeamData } from 'types/teams/teams';
 
-export const TeamDetailsPage = () => {
+export const TeamDetails = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -71,7 +71,9 @@ export const TeamDetailsPage = () => {
           }}
         />
 
-        {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+        {serverResponse && (
+          <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+        )}
 
         {playersInTable?.length ? <DetailsTable playersInTable={playersInTable} /> : null}
       </div>

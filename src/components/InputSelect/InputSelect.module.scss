@@ -12,3 +12,30 @@
   }
 
 }
+
+// MEDIA
+
+@media screen and (max-width: 1150px) {
+  .select {
+    &__multi {
+      width: 200px;
+    }
+  }
+}
+@media screen and (max-width: 870px) {
+  .select {
+    &__multi {
+      width: 150px;
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .select {
+    &__multi {
+      width: 100%;
+      margin-left: 0px;
+      // margin-bottom: 16px;
+    }
+  }
+}

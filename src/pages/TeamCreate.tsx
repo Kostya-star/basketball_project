@@ -3,8 +3,8 @@ import { InfoHeader } from 'components/InfoHeader/InfoHeader';
 import { InputFile } from 'components/InputFile/InputFile';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
-import { RespError } from 'components/RespError';
-import { Form, Formik, ErrorMessage } from 'formik';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { useStateData } from 'hooks';
 import qs from 'qs';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ const validationSchema = Yup.object({
   imageUrl: Yup.mixed().required('Required'),
 });
 
-export const TeamCreatePage = () => {
+export const TeamCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -167,7 +167,9 @@ export const TeamCreatePage = () => {
             );
           }}
         </Formik>
-        {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+        {serverResponse && (
+          <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+        )}
       </div>
     </div>
   );

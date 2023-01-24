@@ -1,13 +1,15 @@
 import { ReactComponent as HeaderAvatar } from 'assets/icons/userAvatar.svg';
 import { MenuBtn } from 'components/MenuBtn/MenuBtn';
-import { FC } from 'react';
-import 'scss/menu-common.scss';
+import { FC, MouseEvent } from 'react';
+import s from './Menu.module.scss'
+// import 'scss/menu-common.scss';
 
 interface IMenuProps {
   activeBtn: number;
   menuButtons: string[];
   userName: string;
   openMenu: boolean;
+  setOpenMenu: (val: boolean) => void
   onClickMenuButtons: (index: number) => void;
 }
 
@@ -16,19 +18,29 @@ export const Menu: FC<IMenuProps> = ({
   menuButtons,
   userName,
   openMenu,
+  setOpenMenu,
   onClickMenuButtons,
 }) => {
+
+  const getMenuClass = (e: MouseEvent<HTMLDivElement>) => {
+    const menuClass = document.querySelector(`.${s.menu__wrapper}`)
+
+    if (menuClass === e.target) {
+      setOpenMenu(false);
+    }
+  }
+
   return (
-    <div className={`menu__wrapper ${!openMenu && 'menu__close'}`}>
-      <div className="menu__group">
+    <div onClick={getMenuClass} className={`${s.menu__wrapper} ${!openMenu && `${s.menu__close}`}`}>
+      <div className={s.menu__group}>
         {openMenu && (
-          <div className="menu__credentials">
+          <div className={s.menu__credentials}>
             <HeaderAvatar />
             <span>{userName}</span>
           </div>
         )}
         {menuButtons.map((button, index) => (
-          <div className="menu__block" key={button + '_' + index}>
+          <div className={s.menu__block} key={button + '_' + index}>
             <MenuBtn
               index={index}
               activeBtn={activeBtn === index}

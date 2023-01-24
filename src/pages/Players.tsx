@@ -17,7 +17,7 @@ import { IPlayersParamsGetRequest, ITeamsPlayersParams } from 'types/IBaseParams
 import { ISelectOption } from 'types/ISelectOption';
 import { IPlayerData } from 'types/players/players';
 
-export const PlayersPage = () => {
+export const Players = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

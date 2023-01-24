@@ -14,7 +14,7 @@ import { fetchTeams } from 'redux/slices/teamsSlice';
 import 'scss/teams_players_common.scss';
 import { ITeamsParamsGetRequest, ITeamsPlayersParams } from 'types/IBaseParamsGetRequest';
 
-export const TeamsPage = () => {
+export const Teams = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const history = createBrowserHistory();

@@ -1,16 +1,16 @@
 import SignUpImg from 'assets/img/imgSignUp/signup-Img.png';
 import { FormBg } from 'components/FormBg/FormBg';
-import { FormLink } from 'components/FormLink';
+import { FormLink } from 'components/FormLink/FormLink';
 import { InputCheckbox } from 'components/InputCheckbox/InputCheckbox';
 import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
-import { RespError } from 'components/RespError';
-import { ErrorMessage, Form, Formik } from 'formik';
-import { FC, useState } from 'react';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
+import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
+import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { signUp } from 'redux/slices/authSlice';
-import 'scss/auth-common.scss';
+import 'scss/auth.scss';
 import { ISignUpFormikValues } from 'types/auth/auth';
 import { RespStatusEnum } from 'types/enum';
 import * as Yup from 'yup';
@@ -44,13 +44,16 @@ const validationSchema = Yup.object({
   check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
 });
 
-export const SignUpPage: FC = () => {
+export const SignUp = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (values: ISignUpFormikValues) => {
+  const onSubmit = async (
+    values: ISignUpFormikValues,
+    { resetForm }: FormikHelpers<ISignUpFormikValues>
+  ) => {
     setDisabledSubmit(true);
     const { userName, login, password } = values;
     const signUpUserData = { userName, login, password };
@@ -62,6 +65,7 @@ export const SignUpPage: FC = () => {
     });
     if (resp && resp.status === RespStatusEnum.SUCCESS) {
       setServerResponse('User was created successfully');
+      resetForm();
     }
 
     setDisabledSubmit(false);
@@ -123,7 +127,9 @@ export const SignUpPage: FC = () => {
         </div>
       </div>
 
-      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+      {serverResponse && (
+        <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+      )}
 
       <FormBg src={SignUpImg} />
     </div>

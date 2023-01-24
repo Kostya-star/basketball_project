@@ -1,12 +1,12 @@
 import signInImg from 'assets/img/imgSignIn/signin-img.png';
 import { FormBg } from 'components/FormBg/FormBg';
-import { FormLink } from 'components/FormLink';
+import { FormLink } from 'components/FormLink/FormLink';
 import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
-import { RespError } from 'components/RespError';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
 import { ErrorMessage, Form, Formik } from 'formik';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'redux/hooks';
 import { login } from 'redux/slices/authSlice';
@@ -32,7 +32,7 @@ const validationSchema = Yup.object({
     ),
 });
 
-export const SignInPage: FC = () => {
+export const SignIn = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 
@@ -86,7 +86,9 @@ export const SignInPage: FC = () => {
         </div>
       </div>
 
-      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+      {serverResponse && (
+        <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+      )}
 
       <FormBg src={signInImg} />
     </div>

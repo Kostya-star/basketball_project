@@ -1,6 +1,6 @@
 import SignUpImg from 'assets/img/imgSignUp/signup-Img.png';
 import { FormBg } from 'components/FormBg/FormBg';
-import { FormLink } from 'components/FormLink';
+import { FormLink } from 'components/FormLink/FormLink';
 import { InputCheckbox } from 'components/InputCheckbox/InputCheckbox';
 import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';

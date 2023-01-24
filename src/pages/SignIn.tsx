@@ -1,6 +1,6 @@
 import signInImg from 'assets/img/imgSignIn/signin-img.png';
 import { FormBg } from 'components/FormBg/FormBg';
-import { FormLink } from 'components/FormLink';
+import { FormLink } from 'components/FormLink/FormLink';
 import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';

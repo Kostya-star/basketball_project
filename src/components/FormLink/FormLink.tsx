@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import 'scss/auth.scss';
+import s from './FormLink.module.scss';
 
 interface IFormLinkProps {
   mainText: string;
@@ -10,7 +10,7 @@ interface IFormLinkProps {
 
 export const FormLink: FC<IFormLinkProps> = ({ mainText, path, linkText }) => {
   return (
-    <div className="form__link">
+    <div className={s.link}>
       {mainText}
       <Link to={path}> {linkText} </Link>
     </div>

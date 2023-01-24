@@ -7,10 +7,10 @@ import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
 import { RespError } from 'components/RespError';
 import { ErrorMessage, Form, Formik } from 'formik';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { signUp } from 'redux/slices/authSlice';
-import 'scss/auth-common.scss';
+import 'scss/auth.scss';
 import { ISignUpFormikValues } from 'types/auth/auth';
 import { RespStatusEnum } from 'types/enum';
 import * as Yup from 'yup';
@@ -44,7 +44,7 @@ const validationSchema = Yup.object({
   check: Yup.bool().oneOf([true], 'Accept Terms & Conditions is required'),
 });
 
-export const SignUpPage: FC = () => {
+export const SignUp = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 

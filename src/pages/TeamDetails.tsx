@@ -13,7 +13,7 @@ import { RespStatusEnum } from 'types/enum';
 import { IPlayerData } from 'types/players/players';
 import { ITeamData } from 'types/teams/teams';
 
-export const TeamDetailsPage = () => {
+export const TeamDetails = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();

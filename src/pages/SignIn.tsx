@@ -32,7 +32,7 @@ const validationSchema = Yup.object({
     ),
 });
 
-export const SignInPage: FC = () => {
+export const SignIn = () => {
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [serverResponse, setServerResponse] = useState('');
 

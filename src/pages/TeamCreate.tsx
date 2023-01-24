@@ -32,7 +32,7 @@ const validationSchema = Yup.object({
   imageUrl: Yup.mixed().required('Required'),
 });
 
-export const TeamCreatePage = () => {
+export const TeamCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

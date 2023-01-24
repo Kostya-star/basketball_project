@@ -1,13 +1,13 @@
 import { MainLayout } from 'components/layout/MainLayout';
-import { NotFoundPage } from 'pages/NotFoundPage';
-import { PlayerDetailsPage } from 'pages/PlayerDetailsPage';
-import { PlayersCreatePage } from 'pages/PlayersCreatePage';
-import { PlayersPage } from 'pages/PlayersPage';
-import { SignInPage } from 'pages/SignInPage';
-import { SignUpPage } from 'pages/SignUpPage';
-import { TeamCreatePage } from 'pages/TeamCreatePage';
-import { TeamDetailsPage } from 'pages/TeamDetailsPage';
-import { TeamsPage } from 'pages/TeamsPage';
+import { NotFound } from 'pages/NotFound';
+import { PlayerDetails } from 'pages/PlayerDetails';
+import { Players } from 'pages/Players';
+import { PlayersCreate } from 'pages/PlayersCreate';
+import { SignIn } from 'pages/SignIn';
+import { SignUp } from 'pages/SignUp';
+import { TeamCreate } from 'pages/TeamCreate';
+import { TeamDetails } from 'pages/TeamDetails';
+import { Teams } from 'pages/Teams';
 import { FC, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -26,19 +26,19 @@ export const AppRouter: FC = () => {
     <Routes>
       {isAuth && (
         <Route path="/" element={<MainLayout />}>
-          <Route path="Teams" element={<TeamsPage />} />
-          <Route path="TeamCreate" element={<TeamCreatePage />} />
-          <Route path="TeamDetails" element={<TeamDetailsPage />} />
-          <Route path="Players" element={<PlayersPage />} />
-          <Route path="PlayersCreate" element={<PlayersCreatePage />} />
-          <Route path="PlayerDetails" element={<PlayerDetailsPage />} />
+          <Route path="Teams" element={<Teams />} />
+          <Route path="TeamCreate" element={<TeamCreate />} />
+          <Route path="TeamDetails" element={<TeamDetails />} />
+          <Route path="Players" element={<Players />} />
+          <Route path="PlayersCreate" element={<PlayersCreate />} />
+          <Route path="PlayerDetails" element={<PlayerDetails />} />
         </Route>
       )}
 
-      <Route path="/SignUp" element={<SignUpPage />} />
-      <Route path="/SignIn" element={<SignInPage />} />
+      <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/SignIn" element={<SignIn />} />
 
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

@@ -1,3 +1,3 @@
 import { NotFoundBlock } from 'components/NotFoundBlock/NotFoundBlock';
 
-export const NotFoundPage = () => <NotFoundBlock />;
+export const NotFound = () => <NotFoundBlock />;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import 'scss/auth-common.scss';
+import 'scss/auth.scss';
 
 interface IFormLinkProps {
   mainText: string;

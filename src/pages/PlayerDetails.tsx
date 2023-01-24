@@ -8,7 +8,7 @@ import { getPlayer, removePlayer } from 'redux/slices/playersSlice';
 import { RespStatusEnum } from 'types/enum';
 import { IGetPlayerResponse } from 'types/players/getPlayerResponse';
 
-export const PlayerDetailsPage = () => {
+export const PlayerDetails = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();

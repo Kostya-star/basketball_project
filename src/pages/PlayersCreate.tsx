@@ -46,7 +46,7 @@ const validationSchema = Yup.object({
   avatarUrl: Yup.mixed().required('Required'),
 });
 
-export const PlayersCreatePage = () => {
+export const PlayersCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

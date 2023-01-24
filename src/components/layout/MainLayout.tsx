@@ -36,19 +36,6 @@ export const MainLayout: FC = () => {
   }, []);
 
   // MENU CODE
-  useEffect(() => {
-    const onHandleClickOutsideMenu = (e: Event) => {
-      if (document.querySelector('.menu__wrapper') === e.target) {
-        setOpenMenu(false);
-      }
-    };
-
-    document.addEventListener('mousedown', onHandleClickOutsideMenu);
-
-    return () => {
-      document.removeEventListener('mousedown', onHandleClickOutsideMenu);
-    };
-  }, [openMenu]);
 
   const onClickMenuButtons = (index: number) => {
     setActiveBtn(index);
@@ -63,6 +50,8 @@ export const MainLayout: FC = () => {
   useEffect(() => {
     window.location.pathname.includes('Team') ? setActiveBtn(0) : setActiveBtn(1);
   }, []);
+
+
 
   const onHandleSignOut = () => {
     window.localStorage.removeItem('isAuth');
@@ -84,6 +73,7 @@ export const MainLayout: FC = () => {
           menuButtons={menuButtons}
           userName={userName as string}
           openMenu={openMenu}
+          setOpenMenu={setOpenMenu}
           onClickMenuButtons={onClickMenuButtons}
         />
         <div className={s.layout__children__container}>

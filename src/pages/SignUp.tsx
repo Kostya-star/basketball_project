@@ -6,7 +6,7 @@ import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
 import { ServerResponse } from 'components/ServerResponse/ServerResponse';
-import { ErrorMessage, Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { signUp } from 'redux/slices/authSlice';
@@ -50,7 +50,10 @@ export const SignUp = () => {
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (values: ISignUpFormikValues) => {
+  const onSubmit = async (
+    values: ISignUpFormikValues,
+    { resetForm }: FormikHelpers<ISignUpFormikValues>
+  ) => {
     setDisabledSubmit(true);
     const { userName, login, password } = values;
     const signUpUserData = { userName, login, password };
@@ -62,6 +65,7 @@ export const SignUp = () => {
     });
     if (resp && resp.status === RespStatusEnum.SUCCESS) {
       setServerResponse('User was created successfully');
+      resetForm();
     }
 
     setDisabledSubmit(false);

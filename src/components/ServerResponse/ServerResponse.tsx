@@ -1,13 +1,14 @@
 import classnames from 'classnames';
 import { FC, useEffect } from 'react';
-import 'scss/serverRespPopUp.scss';
+// import 'scss/serverRespPopUp.scss';
+import s from './ServerResponse.module.scss'
 
-interface IRespErrorProps {
+interface IServerResponseProps {
   response: string;
   setResponse: (resp: string) => void;
 }
 
-export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
+export const ServerResponse: FC<IServerResponseProps> = ({ response, setResponse }) => {
   const userExists = response === 'User with the specified login already exists';
   const teamExists = response === 'Team with the specified name already exists';
   const playerExists = response === 'Player with the specified name already exists';
@@ -27,17 +28,17 @@ export const RespError: FC<IRespErrorProps> = ({ response, setResponse }) => {
 
   return (
     <div
-      className={classnames('server__response', {
+      className={classnames(`${s.server__response}`, {
         // "auth__error_show": unauthorized ?? userExists,
         // "auth__error_hide": unauthorized === false || userExists === false
-        server__error:
+        [s.server__error]:
           userExists ||
           userUnauthorized ||
           notFound ||
           teamContainsPlayers ||
           teamExists ||
           playerExists,
-        server__success: userSuccess,
+        [s.server__success]: userSuccess,
       })}
     >
       {response}

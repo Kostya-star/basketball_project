@@ -4,9 +4,9 @@ import { FormLink } from 'components/FormLink';
 import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
-import { RespError } from 'components/RespError';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
 import { ErrorMessage, Form, Formik } from 'formik';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'redux/hooks';
 import { login } from 'redux/slices/authSlice';
@@ -86,7 +86,9 @@ export const SignIn = () => {
         </div>
       </div>
 
-      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+      {serverResponse && (
+        <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+      )}
 
       <FormBg src={signInImg} />
     </div>

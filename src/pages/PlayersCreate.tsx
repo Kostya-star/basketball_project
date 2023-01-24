@@ -5,8 +5,8 @@ import { InputFile } from 'components/InputFile/InputFile';
 import { InputSelect } from 'components/InputSelect/InputSelect';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
-import { RespError } from 'components/RespError';
-import { Form, Formik, ErrorMessage } from 'formik';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { useStateData } from 'hooks';
 import qs from 'qs';
 import { useState } from 'react';
@@ -255,7 +255,9 @@ export const PlayersCreate = () => {
           );
         }}
       </Formik>
-      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+      {serverResponse && (
+        <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+      )}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { InputCheckbox } from 'components/InputCheckbox/InputCheckbox';
 import { InputPassword } from 'components/InputPassword/InputPassword';
 import { InputSubmit } from 'components/InputSubmit/InputSubmit';
 import { InputText } from 'components/InputText/InputText';
-import { RespError } from 'components/RespError';
+import { ServerResponse } from 'components/ServerResponse/ServerResponse';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
@@ -123,7 +123,9 @@ export const SignUp = () => {
         </div>
       </div>
 
-      {serverResponse && <RespError response={serverResponse} setResponse={setServerResponse} />}
+      {serverResponse && (
+        <ServerResponse response={serverResponse} setResponse={setServerResponse} />
+      )}
 
       <FormBg src={SignUpImg} />
     </div>

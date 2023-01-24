@@ -70,12 +70,14 @@
     &__groupParameters {
       display: flex;
       justify-content: space-between;
+      gap: 10px;
     }
   }
 
   &__pagination {
     display: flex;
     justify-content: space-between;
+    margin-top: 15px;
     // align-items: center;
   }
 
@@ -110,6 +112,9 @@
       &__image {
         margin-right: 0;
       }
+    }
+    &__pagination {
+      margin-top: 35px;
     }
   }
 }

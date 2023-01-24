@@ -40,7 +40,7 @@ export const InputSelect = <T extends string>({
     control: (baseStyles) => ({
       ...baseStyles,
       color: '#707070',
-      padding: '3px 0px',
+      padding: IsMulti ? '1px 0px' : '3px 0px',
       backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
       border: border ? '0.5px solid #D1D1D1' : 'none',
       fontSize: '14px',
